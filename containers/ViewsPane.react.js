@@ -1,0 +1,28 @@
+import { setSidePane } from "../actions/panes";
+
+import { connectToPresentState } from "../utils/state";
+
+import Component from "../components/ViewsPane.react";
+import { createNewView, deleteView, renameView, setViewsList, resaveView } from "../actions/views";
+import { loadView } from "../actions/ui";
+
+function mapStateToProps(state) {
+  return {
+    entries: state.views,
+    key: state.views.length,
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onClose: () => dispatch(setSidePane()),
+    onCreateView: () => dispatch(createNewView()),
+    onDeleteView: (view) => dispatch(deleteView(view)),
+    onEntriesListChange: (viewsList) => dispatch(setViewsList(viewsList)),
+    onLoadView: (view) => dispatch(loadView(view)),
+    onRenameView: (view, name) => dispatch(renameView(view, name)),
+    onResaveView: (view) => dispatch(resaveView(view)),
+  };
+}
+
+export default connectToPresentState(Component, mapStateToProps, mapDispatchToProps);

@@ -1,0 +1,46 @@
+.mr-dropdown {
+  position: relative;
+  border-radius: 8px;
+  background: #ececec;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.mr-dropdown select {
+  display: block;
+  padding: 0 16px 0 4px;
+  border: none;
+  color: rgba(0,0,0,.87);
+  appearance: none;
+  background: none;
+  height: 100%;
+  z-index: 1;
+  position: relative;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 11px;
+  cursor: inherit;
+}
+
+.mr-dropdown label {
+  margin: 0 0 0 6px;
+  white-space: nowrap;
+  font-size: 11px;
+  line-height: 1;
+}
+
+.mr-dropdown::after {
+  content: "▼";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  line-height: 32px;
+  right: 4px;
+  z-index: 0;
+  font-size: 11px;
+}
+
+.mr-dropdown:hover::after {
+  color: #3c7383;
+}

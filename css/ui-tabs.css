@@ -1,0 +1,22 @@
+.mr-ui-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.mr-ui-tabs .MuiTabs-root {
+  min-height: 31px;
+  border-bottom: 1px solid #dadce0;
+}
+
+
+.mr-ui-tabs .MuiTab-root {
+  padding: 0;
+  min-height: 31px;
+  text-transform: unset;
+  min-width: 120px;
+}
+
+.mr-ui-tabs .MuiTabPanel-root {
+  padding: 8px;
+  flex-grow: 1;
+}

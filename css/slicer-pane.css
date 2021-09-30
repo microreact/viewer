@@ -1,0 +1,25 @@
+.mr-slicer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mr-slicer .vega-embed.has-actions {
+  padding-right: 0;
+}
+
+.mr-slicer .vega-embed details {
+  display: none;
+}
+
+.mr-slicer .mr-floating-filter {
+  padding: 8px;
+  padding-top: 24px;
+}
+
+/* .mr-slicer .mr-slicer-menu-trigger {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+} */

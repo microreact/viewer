@@ -1,0 +1,18 @@
+.mr-history-pane {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.mr-history-pane .MuiListSubheader-root {
+  padding: 0 8px;
+  background-color: var(--background-main);
+}
+
+.mr-history-pane .MuiListItem-root {
+  padding: 0 8px;
+}
+.mr-history-pane .MuiListItemIcon-root {
+  min-width: 32px;
+}

@@ -1,0 +1,116 @@
+.mr-tree {
+  position: relative;
+  background-color: #ffffff;
+}
+
+.mr-tree .mr-lasso-canvas {
+  position: absolute;
+  /* z-index: 1; */
+}
+
+/*#region Context menu */
+
+.mr-tree {
+  width: 100%;
+  height: 100%;
+}
+
+/*#endregion*/
+
+
+/*#region Metadata & styles menus */
+
+.microreact-viewer .mr-controls-menu.mr-tree-styles-menu {
+  width: 240px;
+}
+
+.microreact-viewer .mr-controls-menu.mr-tree-metadata-menu {
+  width: 280px;
+}
+
+.microreact-viewer .mr-controls-menu.mr-tree-metadata-menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.microreact-viewer .mr-controls-menu.mr-tree-metadata-menu > ul {
+  flex-grow: 1;
+  overflow-x: hidden;
+  overflow-y: auto;  
+  margin-right: -8px;
+  margin-bottom: -8px;
+  color: #000000bf;
+}
+
+/*#endregion*/
+
+
+/*#region Style scale-bar  */
+
+.mr-tree .mr-tree-scalebar {
+  position: absolute;
+  bottom: 4px;
+  left: 4px;
+  width: 88px;
+  height: 16px;
+  color: "#222222";
+  font-size: 10px;
+  padding: 0 4px;
+  pointer-events: auto;
+  transform: translate(0);
+  background-color: hsla(0,0%,100%,.75);
+  border-bottom: 1px solid #333;
+  color: #333;
+  box-sizing: border-box;
+  text-align: center;
+  font-weight: 500;
+}
+
+.mr-tree .mr-tree-framerate {
+  position: absolute;
+  bottom: 4px;
+  left: 96px;
+  height: 16px;
+  color: "#222222";
+  font-size: 10px;
+  padding: 0 4px;
+  pointer-events: auto;
+  transform: translate(0);
+  background-color: hsla(0,0%,100%,.75);
+  color: #333;
+  box-sizing: border-box;
+  text-align: center;
+  font-weight: 500;
+}
+
+
+/*#endregion*/
+
+
+/*#region Style zoom mode toggle buttons  */
+.mr-tree .mr-zoom-controls .mr-button > div {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+.mr-tree .mr-zoom-controls .mr-button .mr-horizontal {
+  height: 10px;
+}
+.mr-tree .mr-zoom-controls .mr-button .mr-vertical {
+  width: 10px;
+}
+/*#endregion*/
+
+
+/*#region Selection */
+
+.mr-tree-selection-box {
+  box-shadow: 0 0 5px rgba(0,0,0,.1);
+  background-color: rgba(0,0,0,.1);
+  border: 1px solid #d4d4d4;
+  pointer-events: none;
+  position: fixed;
+  z-index: 500;
+}
+/*#endregion*/

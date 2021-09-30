@@ -1,0 +1,18 @@
+.mr-ui-slider {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.mr-ui-slider label {
+  min-height: 24px;
+  margin-top: 8px;
+  /* margin-bottom: -8px; */
+}
+
+.mr-ui-slider .MuiSlider-root
+{
+  margin: 0 8px;
+  width: calc(100% - 16px);
+  padding: 11px 0;
+}

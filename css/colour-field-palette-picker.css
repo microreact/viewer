@@ -1,0 +1,214 @@
+.mr-colour-field-palette-picker {
+  border-color: rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  display: flex;
+  flex-direction: column;
+  margin: 16px 0;
+  padding: 8px;
+  position: relative;
+  position: relative;
+}
+
+/*#region Floating label */
+
+.mr-colour-field-palette-picker > label.mr-floating-label {
+  background-color: var(--background-main);
+  color: rgba(0, 0, 0, 0.54);
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  left: -6px;
+  letter-spacing: 0.00938em;
+  line-height: 1;
+  padding: 0 8px;
+  padding: 0;
+  position: absolute;
+  top: 0;
+  transform-origin: top left;
+  transform: translate(14px, -6px) scale(0.75);
+}
+
+.mr-colour-field-palette-picker.mr-expanded > label.mr-floating-label {
+  top: -1px;
+  left: -7px;
+}
+
+/*#endregion*/
+
+/*#region Value label */
+.mr-colour-field-palette-picker > span.mr-value {
+  width: calc(100% - 24px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/*#endregion*/
+
+
+/*#region Collapsed styles */
+
+.mr-colour-field-palette-picker.mr-expandable {
+  cursor: pointer;
+}
+
+.mr-colour-field-palette-picker.mr-expandable:hover {
+  border-color: rgba(0, 0, 0, 0.87);
+}
+
+.mr-colour-field-palette-picker.mr-expandable .mr-colour-palette {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+/*#endregion*/
+
+
+/*#region Expanded styles */
+
+.mr-colour-field-palette-picker.mr-expanded {
+  border-color: var(--primary-main);
+  border-width: 2px;
+  /* height: 100% !important; */
+  /* flex-shrink: 1; */
+  /* overflow: hidden; */
+}
+
+/*#endregion*/
+
+
+/*#region Toggle button */
+
+.mr-colour-field-palette-picker .mr-toggle-button {
+  color: var(--text-secondary);
+  padding: 2px;
+  position: absolute;
+  right: 5px;
+  top: 6px;
+}
+
+.mr-colour-field-palette-picker.mr-expanded .mr-toggle-button {
+  transform: rotate(180deg);
+}
+
+.mr-colour-field-palette-picker .mr-edit-button {
+  color: var(--text-secondary);
+  padding: 2px;
+  position: absolute;
+  right: 32px;
+  top: 6px;
+}
+
+/*#endregion*/
+
+
+/*#region Controls */
+
+.mr-colour-field-palette-picker .mr-controls {
+  font-size: 13px;
+  margin: 8px 0;
+}
+
+.mr-colour-field-palette-picker .mr-controls .MuiFormControl-root:first-child {
+  width: 80px;
+}
+
+.mr-colour-field-palette-picker .mr-controls .MuiFormControl-root:last-child {
+  width: 48px;
+  margin-left: 8px;
+}
+
+/* .mr-colour-field-palette-picker .mr-header .mr-form-contol {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  padding: 4px 0;
+}
+
+.mr-colour-field-palette-picker .mr-header .mr-form-contol > label {
+  width: 48px;
+  display: flex;
+  align-items: center;
+} */
+
+.mr-colour-field-palette-picker .mr-controls .MuiInputLabel-root,
+.mr-colour-field-palette-picker .mr-controls .MuiInputBase-root,
+.mr-colour-field-palette-picker .mr-controls .MuiInputBase-input {
+  font-size: inherit;
+}
+
+.mr-colour-field-palette-picker .mr-controls .MuiSelect-select {
+  padding: 4px 8px;
+}
+
+/*#endregion*/
+
+
+/*#region List */
+
+.mr-colour-field-palette-picker .mr-list {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.mr-colour-field-palette-picker .mr-list .MuiListSubheader-root {
+  background-color: var(--background-main);
+}
+
+.mr-colour-field-palette-picker .mr-list ul {
+  padding: 0;
+}
+
+.mr-colour-field-palette-picker .mr-list .MuiListSubheader-root.MuiListSubheader-gutters {
+  padding: 0;
+  text-transform: capitalize;
+  line-height: 24px;
+}
+
+.mr-colour-field-palette-picker .mr-list .MuiListItem-root.MuiListItem-gutters {
+  cursor: pointer;
+  padding: 5px;
+  flex-direction: column;
+  align-items: start;
+  border-radius: 4px;
+}
+.mr-colour-field-palette-picker .mr-list .MuiListItem-root.MuiListItem-gutters:hover {
+  background-color: var(--background-hover);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1);
+}
+
+.mr-colour-field-palette-picker .mr-list .MuiListItem-root.MuiListItem-gutters small {
+  font-size: 10px;
+}
+
+/*#endregion*/
+
+
+/*#region Customise */
+
+.mr-colour-field-palette-picker .mr-customise-button {
+  margin: 0 -8px -8px -8px;
+  padding: 8px 8px 4px 8px;
+  font-size: 11px;
+  position: relative;
+}
+
+.mr-colour-field-palette-picker .mr-customise-button .MuiButton-label {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+  width: 100%;
+  padding-left: 20px;
+  height: 24px;
+  text-transform: none;
+  text-align: left;
+}
+
+.mr-colour-field-palette-picker .mr-customise-button .MuiButton-startIcon {
+  position: absolute;
+  left: 8px;
+  margin: 0;
+}
+
+/*#endregion*/

@@ -1,0 +1,21 @@
+.mr-ui-side-pane-header {
+  padding: 0px 12px;
+  background-color: var(--background-main);
+  height: 40px;
+  line-height: 40px;
+}
+
+.mr-ui-side-pane-header .mr-actions {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  z-index: 4;
+}
+
+.mr-ui-side-pane-header .mr-actions button {
+  padding: 10px;
+}
+
+.mr-ui-side-pane-header .mr-actions button svg {
+  font-size: 1.25rem;
+}

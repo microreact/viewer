@@ -1,0 +1,42 @@
+.mr-loading {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+}
+
+.mr-loading img {
+  display: block;
+  margin: 0 auto 16px;
+  width: 160px;
+}
+
+.mr-loading p {
+  position: relative;
+  margin-bottom: 48px;
+
+  font-family: "Saira Semi Condensed", "Roboto", "Helvetica", "Arial", sans-serif;
+  line-height: 1.5;
+  font-weight: 500;
+  color: #3c7383;
+  font-size: 34px;
+}
+
+.mr-loading p::after {
+  overflow: hidden;
+  position: absolute;
+  display: inline-block;
+  vertical-align: bottom;
+  animation: ellipsis steps(4,end) calc(0.28s * 4) infinite;
+  content: "\2026"; /* ascii code for the ellipsis character */
+  width: 0px;
+  left: 100%;
+}
+
+@keyframes ellipsis {
+  to {
+    width: 1em;
+  }
+}

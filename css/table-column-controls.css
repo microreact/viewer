@@ -1,0 +1,105 @@
+/*#region Accordions  */
+
+.mr-table-column-menu .mr-table-column-controls .MuiAccordion-root,
+.mr-table-column-menu .mr-table-column-controls .MuiAccordion-root.Mui-expanded {
+  margin: 0;
+}
+
+.mr-table-column-controls .MuiAccordionSummary-root,
+.mr-table-column-controls .MuiAccordionSummary-root.Mui-expanded {
+  min-height: 32px;
+  padding: 0;
+  flex-direction: row-reverse;
+}
+
+.mr-table-column-controls .MuiAccordionSummary-expandIcon {
+  padding: 0;
+  margin: 0 2px 0 -4px;
+}
+
+.mr-table-column-controls .MuiAccordionSummary-content,
+.mr-table-column-controls .MuiAccordionSummary-content.Mui-expanded {
+  margin: 0;
+}
+
+.mr-table-column-controls .MuiAccordionDetails-root {
+  padding: 0;
+  display: block;
+}
+
+.mr-table-column-controls .MuiAccordionSummary-expandIcon.Mui-expanded {
+  transform: rotate(90deg);;
+}
+
+/*#endregion*/
+
+
+/*#region Filter by values section */
+
+
+/*#endregion*/
+
+/*#region Filter by values section */
+
+
+
+/*#endregion*/
+
+
+/* 
+
+
+.mr-table-column-controls section {
+  display: flex;
+}
+
+.mr-table-column-controls section:not(:last-child) {
+  border-bottom: 1px solid #ebebeb;
+}
+
+.mr-table-column-controls section.mr-actions {
+  flex-direction: row;
+  padding: 0;
+}
+
+.mr-table-column-controls section.mr-actions > * {
+  min-width: auto;
+  flex-grow: 1;
+  padding: 0;
+}
+
+.mr-table-column-controls section.mr-filters {
+  flex-direction: column;
+  padding: 8px;
+}
+
+.mr-table-column-controls section.mr-filters p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.mr-table-column-controls .mr-dropdown {
+  height: 30px;
+  margin: 4px 0;
+  background-color: #f5f5f5;
+  border: 1px solid #dcdcdc;
+  border-radius: 1px;
+}
+
+.mr-table-column-controls .mr-dropdown select {
+  width: 100%;
+}
+
+.mr-table-column-controls .material-icons.mr-rotated {
+  transform: rotate(90deg);
+}
+
+.mr-table-column-controls input {
+  border-radius: 1px;
+  border: 1px solid #dcdcdc;
+  box-sizing: border-box;
+  height: 30px;
+  margin: 4px 0 8px;
+  padding: 4px;
+  width: 100%;
+} */

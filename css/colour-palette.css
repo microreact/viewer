@@ -1,0 +1,21 @@
+.mr-colour-palette {
+  display: flex;
+  height: 10px;
+  width: 100%;
+  position: relative;
+}
+
+.mr-colour-palette span {
+  flex-grow: 1;
+}
+
+.mr-colour-palette .mr-edit {
+  position: absolute;
+  bottom: -4px;
+  right: -12px;
+  display: none;
+}
+
+li.MuiAutocomplete-option:hover .mr-edit {
+  display: unset;
+}

@@ -1,0 +1,60 @@
+.mr-save-view-menu.libmr-Menu-element {
+  color: rgba(0,0,0,0.87);
+  height: 320px;
+  text-align: left;
+  width: 480px;
+  overflow: hidden;
+}
+
+.mr-save-view-menu h2 {
+  color:rgba(0, 0, 0, 0.54);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 0 8px;
+  text-transform: uppercase;
+}
+
+.mr-save-view-menu-thumbnail {
+  position: relative;
+  height: 216px;
+  display: flex;
+  background-color: #efefef;
+  margin: 0 -16px 8px;
+  align-items: center;
+  justify-content: center;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.mr-save-view-menu-thumbnail > img {
+  height: 100%;
+  object-fit: contain;
+  width: 100%;
+}
+
+.mr-save-view-menu-thumbnail > .mdl-progress {
+  position: absolute;
+  top: 0;
+}
+
+.mr-save-view-button {
+  float: right;
+  margin: 0;
+}
+
+.mr-save-view-url {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  display: flex;
+}
+
+.mr-save-view-url input {
+  height: 36px;
+  padding: 0 8px;
+  flex-grow: 1;
+  border: none;
+  background: transparent;
+}
+
+.mr-save-view-url button {
+  box-shadow: none;
+}

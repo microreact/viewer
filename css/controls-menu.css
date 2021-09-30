@@ -1,0 +1,117 @@
+/*#region Add a bit of space to the top on the menu to match Google Flights style */
+
+.mr-controls-menu
+{
+  margin-top: 8px;
+  /* padding: 8px; */
+}
+
+/*#endregion*/
+
+
+/*#region Reverse the order of chip contents to match Google Fonts menus */
+
+.mr-controls-menu-trigger.MuiChip-root
+{
+  flex-direction: row-reverse;
+}
+
+.mr-controls-menu-trigger.MuiChip-root .MuiChip-label
+{
+  padding: 0 0 0 6px;
+  /* font-size: 11px; */
+  /* line-height: 1; */
+  /* background-color: red; */
+}
+
+.mr-controls-menu-trigger.MuiChip-root .MuiChip-icon
+{
+  margin: 0;
+}
+
+.mr-controls-menu-trigger.MuiChip-root .MuiChip-deleteIcon
+{
+  margin: 0 -2px 0 4px;
+}
+
+/*#endregion*/
+
+
+/*#region Reset border and background of chip menu trigger to match control buttons */
+
+.mr-controls-menu-trigger.MuiChip-root
+{
+  /* background-color: #E0E0E0; */
+  border: none;
+  box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24);
+}
+
+.mr-controls-menu-trigger.MuiChip-clickable.MuiChip-outlined:hover,
+.mr-controls-menu-trigger.MuiChip-clickable.MuiChip-outlined:focus,
+.mr-controls-menu-trigger.active.MuiChip-root
+{
+  /* background: rgb(213, 213, 213); */
+  box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);
+  /* color: #333; */
+}
+
+/*#endregion*/
+
+
+/*#region Style labels of form controls   */
+
+.mr-controls-menu .MuiFormControlLabel-root
+{
+  margin: 0;
+  width: 100%;
+}
+
+/*#endregion*/
+
+
+/*#region Style separators  */
+.mr-controls-menu hr
+{
+  border-style: solid none none none;
+  border-width: 1px;
+  border-color: #e0e0e0;
+  margin: 7px -16px 8px -16px;
+}
+
+.mr-controls-menu .mr-subheader {
+  color: rgb(60, 64, 67);
+  margin-top: -4px;
+  margin-bottom: 8px;
+}
+
+/*#endregion*/
+
+
+/*#region dense list items */
+
+.mr-controls-menu .MuiListItem-dense
+{
+  padding: 0 8px;
+}
+.mr-controls-menu .MuiListItem-dense .MuiListItemIcon-root
+{
+  min-width: 24px;
+}
+.mr-controls-menu .MuiListItem-dense .MuiCheckbox-root
+{
+  padding: 3px;
+}
+
+/*#endregion*/
+
+
+/*#region Undo margins of tabs */
+
+.mr-controls-menu .mr-ui-tabs .MuiTabs-root {
+  margin: 0 -8px;
+}
+.mr-controls-menu .MuiTabPanel-root {
+  margin: 0;
+}
+
+/*#endregion*/

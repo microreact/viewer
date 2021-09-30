@@ -1,0 +1,47 @@
+.mr-map {
+  width: 100%;
+  height: 100%;
+}
+
+/*#region Re-position Mapbox watermark and copyright */
+.mr-map .mapboxgl-ctrl-logo {
+  margin-bottom: -8px;
+  margin-left: -8px;
+}
+
+.mr-map .mapboxgl-ctrl.mapboxgl-ctrl-scale {
+  bottom: 28px;
+  left: 4px;
+  position: absolute;
+}
+.mr-map .mapboxgl-ctrl-attrib-button {
+  display: none;
+}
+
+.mr-map .mapboxgl-ctrl-attrib.mapboxgl-compact {
+  margin-right: 2px !important;
+  margin-bottom: 0px;
+}
+
+.mr-map .mr-tooltip {
+  position: absolute;
+  padding: 4px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  max-width: 300px;
+  font-size: 12px;
+  line-height: 16px;
+  z-index: 9;
+  pointer-events: none;
+}
+
+/*#endregion*/
+
+/*#region  */
+
+.mr-map.hovered .overlays {
+  cursor: pointer !important;
+  /* overflow: visible !important; */
+}
+
+/*#endregion*/

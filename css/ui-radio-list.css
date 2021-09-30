@@ -1,0 +1,8 @@
+.mr-ui-radio-list .MuiRadio-root
+{
+  padding: 5px 9px;
+}
+
+.mr-ui-radio-list .MuiFormControlLabel-root {
+  align-items: flex-start;
+}

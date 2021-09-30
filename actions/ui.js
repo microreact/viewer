@@ -1,0 +1,523 @@
+/* eslint-disable indent */
+/* eslint-disable no-use-before-define */
+
+import { nameWithoutExtention, loadFiles, loadFile, clearLoadedContent, serialiseBlobs } from "../utils/files";
+
+import { addDataset, updateDataset } from "./datasets";
+import { addFile, updateFile } from "./files";
+import { addGeographicCoordinatesMap, addGeoData } from "./maps";
+import { addNetwork } from "./networks";
+import { addTable } from "./tables";
+import { addTree } from "./trees";
+import { addYearMonthDayTimeline } from "./timelines";
+
+import mainDatasetConfigSelector from "../selectors/datasets/main-dataset-config";
+
+import { detectAnnotationFields } from "../utils/datasets";
+import { exportHtmlElementAsDataUrl, getContainerElement } from "../utils/html";
+import { getPresentState, newId } from "../utils/state";
+import { longestCommonStartingSubstring } from "../utils/text";
+import { publish } from "../utils/events";
+
+import updateSchema, { version } from "../schema";
+import isValidTreeSelector from "../selectors/trees/is-valid-tree";
+import isValidNetworkSelector from "../selectors/networks/is-valid-network";
+import { emptyArray } from "../constants";
+import { getPageHash, setPageHash } from "../utils/browser";
+import { addMissingPaneTabs } from "../utils/panes";
+import layoutModelSelector from "../selectors/panes/layout-model";
+import { setLayoutModel } from "./panes";
+
+function createLabelFromFileName(file, allFiles) {
+  const hasMoreThanOfTheSameType = allFiles.filter((x) => x.type === file.type).length > 1;
+
+  if (hasMoreThanOfTheSameType) {
+    let fileName = file.name || file.id;
+    if (allFiles.length > 1 && allFiles.every((x) => !!x.name)) {
+      const prefix = longestCommonStartingSubstring(allFiles.map((x) => x.name));
+      if (prefix && prefix.length) {
+        fileName = fileName.substring(prefix.length);
+      }
+    }
+
+    return nameWithoutExtention(fileName);
+  }
+  else {
+    const fileNamesByType = {
+      data: "Metadata",
+      tree: "Tree",
+      network: "Network",
+      geo: "Regions",
+    };
+    return fileNamesByType[file.type] || file.id;
+  }
+}
+
+export function addFiles(rawFiles, paneId) {
+  return async (dispatch, getState) => {
+    dispatch(config({ loading: true }));
+
+    const fileDescriptors = await loadFiles(rawFiles);
+    if (paneId) {
+      for (const file of fileDescriptors) {
+        file.paneId = paneId;
+      }
+    }
+
+    const failedFiles = fileDescriptors.filter((x) => !!x.error);
+
+    if (failedFiles.length === 0) {
+      if (fileDescriptors.length === 1 && fileDescriptors[0].type === "microreact") {
+        dispatch(load(fileDescriptors[0]._content));
+      }
+      else {
+        dispatch(commitFiles(fileDescriptors));
+      }
+    }
+    else {
+      const state = getPresentState(getState());
+      const nextPendingFiles = [ ...(state.config.pending || emptyArray) ];
+      for (const processedFile of fileDescriptors) {
+        const pendingFileIndex = nextPendingFiles.findIndex((x) => x.id === processedFile.id);
+        if (pendingFileIndex >= 0) {
+          nextPendingFiles[pendingFileIndex] = {
+            ...nextPendingFiles[pendingFileIndex],
+            ...processedFile,
+          };
+        }
+        else {
+          nextPendingFiles.push(processedFile);
+        }
+      }
+      dispatch(
+        config({
+          loading: false,
+          pending: nextPendingFiles,
+        })
+      );
+    }
+  };
+}
+
+export function addHistoryEntry(source, label) {
+  return {
+    type: "MICROREACT VIEWER/ADD HISTORY ENTRY",
+    label: `${source}: ${label}`,
+    payload: undefined,
+  };
+}
+
+export function batch(actions) {
+  return {
+    payload: actions,
+    type: "MICROREACT VIEWER/BATCH",
+  };
+}
+
+export function commitFiles(fileDescriptors) {
+  return (dispatch, getState) => {
+    const state = getPresentState(getState());
+    // const fileDescriptors = [ ...fileDescriptors ];
+    const actions = [];
+    const orphanPanes = [];
+
+    for (const file of fileDescriptors) {
+      actions.push(
+        addFile(file)
+      );
+      if (file.type === "data") {
+        const dataset = file._content;
+        actions.push(
+          addDataset(
+            file.id,
+          )
+        );
+        const { dataFields } = detectAnnotationFields(dataset.columns);
+        const paneId = file.paneId || newId(state.tables, "table");
+        const label = createLabelFromFileName(file, fileDescriptors);
+
+        actions.push(
+          addTable(
+            paneId,
+            label,
+            file.id,
+            dataFields.map(
+              (field) => ({
+                field: field.name,
+                fixed: field.name === (file.idFieldName || file.linkFieldName),
+              })
+            ),
+          )
+        );
+
+        if (!file.paneId) {
+          orphanPanes.push({
+            paneId,
+            label,
+            component: "Table",
+          });
+        }
+
+        //#region Add a map if the data file includes default LATITUDE and LONGITUDE columns
+        const latitudeField = dataset.columns.find((x) => /(__LATITUDE$)|(^LATITUDE$)/i.test(x.name));
+        const longitudeField = dataset.columns.find((x) => /(__LONGITUDE$)|(^LONGITUDE$)/i.test(x.name));
+        if (latitudeField && longitudeField) {
+          actions.push(
+            addGeographicCoordinatesMap(
+              "Map",
+              latitudeField.name,
+              longitudeField.name,
+            )
+          );
+        }
+        //#endregion
+
+        //#region Add a timeline if data include YEAR, MONTH, and DAY columns
+        const yearField = dataset.columns.find((x) => /(__year$)|(^year$)/i.test(x.name));
+        const monthField = dataset.columns.find((x) => /(__month$)|(^month$)/i.test(x.name));
+        const dayField = dataset.columns.find((x) => /(__day$)|(^day$)/i.test(x.name));
+        if (yearField) {
+          actions.push(
+            addYearMonthDayTimeline(
+              "Timeline",
+              yearField.name,
+              monthField ? monthField.name : undefined,
+              dayField ? dayField.name : undefined,
+            )
+          );
+        }
+        //#endregion
+      }
+      else if (file.type === "tree") {
+        const paneId = file.paneId || newId(state.trees, "tree");
+        const label = createLabelFromFileName(file, fileDescriptors);
+        actions.push(
+          addTree(
+            paneId,
+            label,
+            file.id,
+            file.labelFieldName,
+          )
+        );
+        if (!file.paneId) {
+          orphanPanes.push({
+            paneId,
+            label,
+            component: "Tree",
+          });
+        }
+      }
+      else if (file.type === "network") {
+        const paneId = file.paneId || newId(state.networks, "network");
+        const label = createLabelFromFileName(file, fileDescriptors);
+        actions.push(
+          addNetwork(
+            paneId,
+            label,
+            file.id,
+            file.labelFieldName,
+          )
+        );
+        if (!file.paneId) {
+          orphanPanes.push({
+            paneId,
+            label,
+            component: "Network",
+          });
+        }
+      }
+      else if (file.type === "geo") {
+        actions.push(
+          addGeoData(
+            file.paneId,
+            file.id,
+            {
+              linkType: file.linkType,
+              linkFieldName: file.masterFieldName,
+              linkPropertyName: file.linkPropertyName,
+            },
+          )
+        );
+      }
+    }
+
+    actions.push(
+      config({
+        loading: false,
+        pending: undefined,
+      })
+    );
+
+    if (orphanPanes.length && state.panes.model) {
+      actions.push(
+        setLayoutModel(
+          addMissingPaneTabs(
+            layoutModelSelector(state),
+            orphanPanes,
+          )
+        )
+      );
+    }
+
+    dispatch(
+      batch(actions)
+    );
+
+    dispatch(verify());
+  };
+}
+
+export function config(payload) {
+  return {
+    payload,
+    type: "MICROREACT VIEWER/CONFIG",
+  };
+}
+
+export function closePaneEditor(paneId) {
+  return config({ editor: null });
+}
+
+export function fetchFile(fileId, rawFile) {
+  return async (dispatch) => {
+    dispatch(config({ loading: true }));
+    try {
+      rawFile.id = fileId;
+      const processedFile = await loadFile(rawFile);
+      return dispatch(
+        batch([
+          updateFile(processedFile),
+          config({ loading: false }),
+        ])
+      );
+    }
+    catch (err) {
+      console.error(err);
+      return dispatch(
+        config({ processingError: err.message || err })
+      );
+    }
+  };
+}
+
+export function addOrUpdateFile(fileId, paneId, rawFile) {
+  return async (dispatch) => {
+    if (fileId) {
+      return dispatch(fetchFile(fileId, rawFile));
+    }
+    else {
+      return dispatch(addFiles([ rawFile ], paneId));
+    }
+  };
+}
+
+export function openPaneEditor(paneId) {
+  return config({
+    editor: {
+      mode: "edit",
+      paneId,
+    },
+  });
+}
+
+export function load(payload) {
+  return (dispatch) => {
+    if (payload.files) {
+      payload.files = clearLoadedContent(payload.files);
+    }
+
+    const loadMainDocumentAction = dispatch(loadDocument(payload));
+
+    if (payload.schema && payload.views) {
+      const currentViewId = getPageHash();
+      if (currentViewId) {
+        const viewDocument = payload.views.find((x) => x.meta.id === currentViewId);
+        if (viewDocument) {
+          dispatch(loadView(viewDocument));
+        }
+      }
+    }
+
+    return loadMainDocumentAction;
+  };
+}
+
+export function loadDocument(payload) {
+  return (dispatch) => {
+    // TODO: no need to show a loader as files are not fetched here
+    // dispatch(update({ isLoading: true }));
+    const doc = updateSchema(payload);
+    return dispatch({
+      label: doc.schema ? "Project: Load project" : "Project: Load view",
+      payload: doc,
+      type: "MICROREACT VIEWER/LOAD",
+    });
+  };
+}
+
+export function loadView(viewDocument) {
+  return (dispatch, getState) => {
+    const state = getPresentState(getState());
+    setPageHash(viewDocument.meta.id, viewDocument.meta.name);
+    return (
+      dispatch(
+        loadDocument(
+          {
+            ...viewDocument,
+            files: state.files,
+            meta: state.meta,
+            views: state.views,
+          }
+        )
+      )
+    );
+  };
+}
+
+export function reset() {
+  return {
+    type: "MICROREACT VIEWER/LOAD",
+    payload: updateSchema(),
+  };
+}
+
+export function save() {
+  return (dispatch, getState) => {
+    return Promise.resolve()
+      .then(() => publish("before-screenshot"))
+      .then(
+        () => exportHtmlElementAsDataUrl(
+          getContainerElement().querySelector("main.MuiPaper-root"),
+          true /* resize */,
+        )
+      )
+      .then(async (image) => {
+        publish("after-screenshot");
+
+        const state = getPresentState(getState());
+        const doc = { ...state };
+
+        // Set schema and metadata
+        doc.schema = `https://microreact.org/schema/v${version}.json`;
+        doc.meta = { ...doc.meta };
+        doc.meta.image = image;
+        doc.meta.timestamp = (new Date()).toISOString();
+
+        // Remove config attributes
+        doc.config = undefined;
+
+        // Serialise file blobs and remove file loaded content
+        doc.files = clearLoadedContent(doc.files);
+        await serialiseBlobs(doc.files);
+
+        return doc;
+      });
+  };
+}
+
+export function setMasterDataset(datasetId) {
+  return (dispatch, getState) => {
+    dispatch(
+      updateDataset(
+        datasetId,
+        { idFieldName: "" },
+      )
+    );
+
+    dispatch(verify());
+  };
+}
+
+export function query(updater) {
+  return {
+    delay: true,
+    payload: updater,
+    type: "MICROREACT VIEWER/QUERY",
+  };
+}
+
+export function verify() {
+  return (dispatch, getState) => {
+    const state = getPresentState(getState());
+
+    //#region Check that all files are loaded without errors
+    //#endregion
+
+    //#region Check that Dataset has an ID column
+    if (state.datasets) {
+      const masterDataset = mainDatasetConfigSelector(state);
+      if (!masterDataset || !masterDataset.idFieldName) {
+        const paneId = (
+          masterDataset
+           ?
+           Object.entries(state.tables).find(([ tableId, tableState]) => tableState.file === masterDataset.file)[0]
+           :
+           Object.keys(state.tables)[0]
+        );
+        return dispatch(
+          config({
+            editor: {
+              mode: "validation",
+              paneId,
+            },
+          })
+        );
+      }
+      for (const dataset of Object.values(state.datasets)) {
+        if (!dataset.idFieldName && (!dataset.masterFieldName || !dataset.linkFieldName)) {
+          return dispatch(
+            config({
+              editor: {
+                mode: "validation",
+                paneId: Object.entries(state.tables).find(([ tableId, tableState]) => tableState.file === dataset.file)[0],
+              },
+            })
+          );
+        }
+      }
+    }
+    //#endregion
+
+    //#region Check that all tree files are linked
+    for (const treeId of Object.keys(state.trees)) {
+      if (!isValidTreeSelector(state, treeId)) {
+        return dispatch(
+          config({
+            editor: {
+              mode: "validation",
+              paneId: treeId,
+            },
+          })
+        );
+      }
+    }
+    //#endregion
+
+    //#region Check that all network files are linked
+    for (const networkId of Object.keys(state.networks)) {
+      if (!isValidNetworkSelector(state, networkId)) {
+        return dispatch(
+          config({
+            editor: {
+              mode: "validation",
+              paneId: networkId,
+            },
+          })
+        );
+      }
+    }
+    //#endregion
+
+    dispatch(
+      config({
+        editor: null,
+      })
+    );
+  };
+}
+
+export function unload() {
+  return {
+    type: "MICROREACT VIEWER/UNLOAD",
+  };
+}

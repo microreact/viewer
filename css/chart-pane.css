@@ -1,0 +1,45 @@
+.mr-chart {
+  width: 100%;
+  height: 100%;
+  background-color: var(--background-main);
+}
+
+.mr-chart .vega-embed.has-actions {
+  padding-right: 0;
+}
+
+.mr-chart .vega-embed details {
+  display: none;
+}
+
+.mr-chart-spec-menu textarea {
+  width: 100%;
+  min-height: 240px;
+}
+
+.mr-chart .mr-error {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+}
+
+.mr-controls-menu.mr-chart-axis-menu {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  width: 320px;
+  min-height: 32px;
+}
+
+.mr-controls-menu.mr-chart-axis-menu .mr-ui-popover-click-trap {
+  display: flex;
+  flex-direction: column;
+}
+.mr-controls-menu.mr-chart-axis-menu .MuiFormControl-root + .MuiFormControl-root {
+  margin-top: 16px;
+}

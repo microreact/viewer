@@ -1,0 +1,97 @@
+/* eslint-disable no-restricted-globals */
+
+import { createKeyedStateSelector } from "../../utils/state";
+
+import dataColumnsByFieldMapSelector from "../datasets/data-columns-by-field-map";
+import rowsSelector from "../datasets/rows";
+
+const temporalDataSelector = createKeyedStateSelector(
+  (state) => rowsSelector(state),
+  (state) => dataColumnsByFieldMapSelector(state),
+  (state, timelineId) => state.timelines[timelineId].dataType,
+  (state, timelineId) => state.timelines[timelineId].yearField,
+  (state, timelineId) => state.timelines[timelineId].monthField,
+  (state, timelineId) => state.timelines[timelineId].dayField,
+  (state, timelineId) => state.timelines[timelineId].valueField,
+  (
+    rows,
+    fieldsMap,
+    timelineType,
+    yearFieldName,
+    monthFieldName,
+    dayFieldName,
+    valueFieldName,
+  ) => {
+    const temporalData = [];
+
+    if (timelineType === "year-month-day") {
+      const yearField = fieldsMap.get(yearFieldName);
+      if (yearField) {
+        const monthField = fieldsMap.get(monthFieldName);
+        const dayField = fieldsMap.get(dayFieldName);
+        const yearFieldIndex = yearField.name;
+        for (const row of rows) {
+          const yearValue = parseInt(row[yearFieldIndex], 10);
+          if (Number.isInteger(yearValue)) {
+            let month = 1;
+            let day = 1;
+            if (monthField) {
+              const monthValue = parseInt(row[monthField.name], 10);
+              if (Number.isInteger(monthValue)) {
+                month = monthValue;
+              }
+            }
+            if (dayField) {
+              const dayValue = parseInt(row[dayField.name], 10);
+              if (Number.isInteger(dayValue)) {
+                day = dayValue;
+              }
+            }
+            if (dayField && Number.isFinite(row[dayField.name])) {
+              day = parseInt(row[dayField.name], 10);
+            }
+            const dateInstance = new Date(
+              yearValue,
+              month - 1,
+              day,
+            );
+
+            temporalData.push([
+              dateInstance,
+              row,
+            ]);
+          }
+        }
+      }
+    }
+
+    else if (timelineType === "formatted-value") {
+      const valueDataColumn = fieldsMap.get(valueFieldName);
+      if (valueDataColumn) {
+        for (const row of rows) {
+          if (row[valueDataColumn.name] instanceof Date) {
+            // const dateInstance = (
+            //   (timelineFields.format && timelineFields.format !== valueDataColumn.format)
+            //     ?
+            //     Datetime.toDate(row[valueDataColumn.name], timelineFields.format)
+            //     :
+            //     row[valueDataColumn.name]
+            // );
+            temporalData.push([
+              row[valueDataColumn.name],
+              row,
+            ]);
+          }
+        }
+      }
+    }
+
+    else {
+      throw new Error(`Invalid timeline type ${timelineType}`);
+    }
+
+    return temporalData.sort((a, b) => a[0].valueOf() - b[0].valueOf());
+  },
+);
+
+export default temporalDataSelector;

@@ -1,0 +1,134 @@
+/*#region Collapsed legend styles */
+
+.mr-map-legend-button {
+  align-items: center;
+  background-color: hsla(0,0%,100%,.75);
+  border-radius: 12px;
+  bottom: 24px;
+  cursor: pointer;
+  display: flex;
+  height: 24px;
+  justify-content: center;
+  position: absolute;
+  right: 2px;
+  width: 24px;
+}
+.mr-map-legend-button svg {
+  height: 20px;
+  width: 20px;
+}
+
+/*#endregion*/
+
+/*#region Expanded legend */
+
+.mr-map-legend {
+  background-color: hsla(0,0%,100%,.75);
+  border-radius: 8px;
+  bottom: 24px;
+  max-height: calc(100% - 80px);
+  overflow-x: hidden;
+  overflow-y: hidden;
+  position: absolute;
+  right: 2px;
+  scrollbar-width: thin;
+}
+
+.mr-map-legend:hover {
+  overflow-y: auto;
+}
+
+.mr-map-legend > table {
+  margin: 0;
+  padding: 0;
+  padding-right: 6px;
+  height: 100%;
+}
+
+.mr-map-legend > svg {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  top: 2px;
+  right: 2px;
+  display: none;
+  background-color: hsla(0,0%,100%,.75);
+  cursor: pointer;
+}
+
+.mr-map-legend:hover > svg {
+  display: unset;
+}
+
+/*#endregion*/
+
+/*#region Header */
+
+
+/*#endregion*/
+
+/*#region Legend tables */
+
+.mr-map-legend .mr-legend-table {
+  margin: 0;
+  padding: 0 2px;
+  height: 100%;
+  min-height: 80px;
+}
+
+.mr-map-legend .mr-legend-table td {
+  padding: 0;
+  text-align: center;
+}
+
+.mr-map-legend .mr-legend-table thead {
+  height: 16px;
+}
+
+.mr-map-legend .mr-legend-table thead td {
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  line-height: 11px;
+  font-size: 11px;
+  padding-bottom: 4px;
+}
+
+.mr-map-legend .mr-legend-table tbody {
+  height: calc(100% - 16px);
+}
+
+.mr-map-legend .mr-legend-table tbody td {
+  line-height: 8px;
+  font-size: 11px;
+  padding: 1px 0;
+}
+
+.mr-map-legend td.mr-action-button {
+  cursor: pointer;
+  border-radius: 4px;
+}
+.mr-map-legend td.mr-action-button:hover {
+  background-color: var(--background-hover);
+}
+
+.mr-map-legend span {
+  margin-left: 8px;
+}
+
+/*#endregion*/
+
+.mr-map-legend table svg {
+  cursor: pointer;
+  display: inline;
+}
+
+.mr-map-legend table svg circle {
+  stroke: #333;
+  stroke-width: 1px;
+  fill: transparent;
+}
+
+.mr-map-legend table svg:hover circle {
+  stroke: #999;
+}

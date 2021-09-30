@@ -1,0 +1,49 @@
+/*#region Menu trigger button */
+
+.mr-table .mr-table-column-menu-trigger {
+  background-color: inherit;
+  border-radius: 2px;
+  display: none;
+  font-size: 1rem;
+  padding: 0;
+  position: absolute;
+  right: 2px;
+  top: 10px;
+}
+
+.mr-table .mr-table-column-menu-trigger.mr-has-filters,
+.mr-table .BaseTable__header-cell:hover .mr-table-column-menu-trigger {
+  display: unset;
+}
+
+.mr-table .mr-table-column-menu-trigger svg {
+  width: 16px;
+  height: 16px;
+}
+
+.mr-table .mr-table-column-menu-trigger.is-open,
+.mr-table .mr-table-column-menu-trigger:hover {
+  background-color: var(--primary-main);
+  color: var(--primary-contrast);
+  display: unset;
+}
+
+/*#endregion*/
+
+
+/*#region Menu popover  */
+
+.mr-table-column-menu.MuiPopover-paper {
+  color: rgba(0, 0, 0, 0.87);
+  cursor: default;
+  min-width: 240px;
+  margin-top: 8px;
+  max-height: calc(100% - 16px);
+  width: 320px;
+}
+
+.mr-table-column-menu .mr-header {
+  max-width: calc(100% - 32px - 32px - 32px - 16px); /* 3 buttons of 32px plys 8px margin on both sides */
+}
+
+/*#endregion*/

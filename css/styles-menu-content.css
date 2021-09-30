@@ -1,0 +1,31 @@
+/*#region  */
+
+.mr-styles-menu-content {
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+  width: 400px;
+}
+
+.mr-styles-menu-content hr {
+  margin: 16px -16px;
+}
+
+.mr-styles-menu-content > .MuiFormControl-root + .MuiFormControl-root {
+  margin-top: 16px;
+}
+
+/*#endregion*/
+
+
+/*#region Colour settings menu */
+
+.mr-styles-menu-content .mr-colour-settings-button {
+  width: 100%;
+}
+
+.mr-styles-menu-content .mr-colour-settings-button .MuiInputBase-root svg {
+  right: 9px;
+}
+
+/*#endregion*/
