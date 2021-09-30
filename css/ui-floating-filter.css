@@ -1,0 +1,51 @@
+.mr-floating-filter {
+  position: relative;
+}
+
+/* .mr-floating-filter .mr-filter-box {
+  display: inline-flex;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  right: 8px;
+  height: 24px;
+  margin: 4px 0;
+  border: 1px solid var(--primary-main);
+  border-radius: 4px;
+}
+
+.mr-floating-filter .mr-filter-box input {
+  outline: none;
+  border: none;
+  font-size: 14px;
+  opacity: 0;
+  margin-left: 0px;
+}
+.mr-floating-filter .mr-filter-box input:not(:placeholder-shown),
+.mr-floating-filter .mr-filter-box input:focus {
+  opacity: 1;
+} */
+
+
+.mr-floating-filter .mr-filter {
+  padding: 0;
+  width: 100%;
+}
+
+.mr-floating-filter .mr-filter .MuiInputBase-root {
+  padding: 0 4px;
+}
+
+.mr-floating-filter .mr-filter input {
+  padding: 6.5px 0;
+}
+.mr-floating-filter .mr-filter .MuiInputAdornment-root {
+  margin: 0;
+}
+
+.mr-floating-filter .mr-filter {
+  /* padding-right: 16px; */
+}
+.mr-ui-select-list .mr-select-all {
+  /* padding-right: 8px; */
+}

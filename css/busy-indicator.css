@@ -1,0 +1,12 @@
+.mr-busy-indicator {
+  position: fixed;
+  top: 48px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1301; /* to be on top of MuiDialog-root (1300) */
+  overflow: hidden;
+}

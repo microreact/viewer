@@ -1,0 +1,12 @@
+.mr-custom-colour-palette-editor .BaseTable {
+  box-shadow: none;
+}
+
+.mr-custom-colour-palette-editor .BaseTable__row-cell {
+  padding: 0 4px !important;
+}
+
+.mr-custom-colour-palette-editor .MuiInputBase-input {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}

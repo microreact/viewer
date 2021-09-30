@@ -1,0 +1,18 @@
+.mr-ui-dialog .MuiDialogTitle-root {
+  padding: 12px 24px;
+}
+
+.mr-ui-dialog .MuiDialogTitle-root .MuiIconButton-root.MuiIconButton-sizeSmall {
+  padding: 8px;
+}
+
+.mr-ui-dialog .mr-floating-action-buttons {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 4;
+}
+
+.mr-ui-dialog .MuiDialogActions-root hr {
+  border: none;
+}

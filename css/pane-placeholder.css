@@ -1,0 +1,17 @@
+.mr-pane-placeholder {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+}
+
+.mr-pane-placeholder figure {
+  margin: 0;
+}
+
+.mr-pane-placeholder figure > svg {
+  color: #c2c2c2;
+  height: 125px;
+  width: 100px;
+}

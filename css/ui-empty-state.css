@@ -1,0 +1,18 @@
+.mr-ui-empty-state {
+  text-align: center;
+}
+
+.mr-ui-empty-state .MuiTypography-subtitle1 {
+  line-height: 1;
+  margin: 16px;
+}
+
+.mr-ui-empty-state .icon {
+  color: #e4e4e4;
+}
+
+.mr-ui-empty-state .icon svg {
+  width: 120px;
+  height: 120px;
+  margin: 16px;
+}

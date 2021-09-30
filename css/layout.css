@@ -1,0 +1,140 @@
+@import './controls.css';
+
+.mr-layout {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.mr-layout-container {
+  position: absolute;
+  top: 60px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.mr-layout.has-side-pane .mr-layout-container {
+  width: calc(100% - 240px);
+}
+
+.mr-credits {
+  position: absolute;
+  top: 0;
+  right: 104px;
+  font-size: 12px;
+  color: #888;
+  display: none;
+}
+
+.mr-details-navigation {
+  position: absolute;
+  top: -24px;
+  height: 24px;
+  display: flex;
+}
+
+.mr-details-navigation .mdl-button {
+  background: #ececec;
+}
+
+.mr-layout.has-details-pane .mr-details-navigation {
+  top: -17px;
+  z-index: 3;
+  height: auto;
+}
+
+.mr-details-navigation button {
+  margin-left: 4px;
+}
+
+.mr-resizer {
+  box-sizing: border-box;
+  background: rgba(0, 0, 0, 0.24);
+  opacity: 1;
+  z-index: 2;
+  background-clip: padding-box;
+}
+
+.mr-resizer:hover {
+  transition: all .28s cubic-bezier(.4,0,.2,1);
+  background: #407A8C;
+}
+
+.mr-resizer.horizontal {
+  height: 7px;
+  margin: -3px 0;
+  border-top: 3px solid rgba(255, 255, 255, 0);
+  border-bottom: 3px solid rgba(255, 255, 255, 0);
+  cursor: row-resize;
+  width: 100%;
+}
+
+.mr-resizer.vertical {
+  width: 7px;
+  margin: 0 -3px;
+  border-left: 3px solid rgba(255, 255, 255, 0);
+  border-right: 3px solid rgba(255, 255, 255, 0);
+  cursor: col-resize;
+}
+
+.mr-layout:not(.has-details-pane) .mr-resizer.horizontal,
+.mr-layout:not(.has-east-pane) .mr-resizer.vertical,
+.mr-layout:not(.has-west-pane) .mr-resizer.vertical {
+  display: none;
+}
+
+.mr-layout:not(.has-details-pane) .Pane.horizontal.Pane1 {
+  height: 100% !important;
+}
+
+.mr-layout:not(.has-east-pane) .Pane.vertical.Pane1,
+.mr-layout:not(.has-west-pane) .Pane.vertical.Pane2 {
+  width: 100% !important;
+}
+
+.mr-layout:not(.has-east-pane) .Pane.vertical.Pane2,
+.mr-layout:not(.has-west-pane) .Pane.vertical.Pane1 {
+  width: 0% !important;
+}
+
+.mr-layout .SplitPane > .Pane > * {
+  /* absolute position hack as 100% height does not work on Safari  */
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.mr-export-wrapper .SplitPane > .Pane {
+  background: #fff;
+}
+
+.mr-export-wrapper .Pane.horizontal.Pane2,
+.mr-export-wrapper .Pane.vertical.Pane2,
+.mr-export-wrapper .mr-side-nav {
+  z-index: 100;
+}
+
+.Pane.vertical.Pane2 {
+  border-left: 1px solid #C2C2C2;
+}
+
+.Pane.horizontal.Pane2 {
+  border-top: 1px solid #C2C2C2;
+}
+
+.Pane .libmr-primary-controls {
+  max-width: calc(100% - 160px);
+}
+
+.mr-tree .mr-controls-alt {
+  max-width: calc(100% - 300px);
+}
+
+.Pane .libmr-ControlsMenu-button {
+  background: #ececec;
+  -webkit-box-shadow: 0px 1px 1.5px 0px rgba(0, 0, 0, .12), 0px 1px 1px 0px rgba(0, 0, 0, .24);
+  box-shadow: 0px 1px 1.5px 0px rgba(0, 0, 0, .12), 0px 1px 1px 0px rgba(0, 0, 0, .24);
+}

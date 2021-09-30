@@ -1,0 +1,24 @@
+.file-icon {
+  position: relative;
+}
+
+.file-icon svg {
+  width: 100px;
+  height: 125px;
+}
+
+.file-icon .diacritic {
+  position: absolute;
+  width: 50px;
+  height: 60px;
+  top: calc(50% - 20px);
+  left: calc(50% - 25px);
+}
+.file-icon .label {
+  bottom: 30px;
+  left: 8px;
+  right: auto;
+  top: auto;
+  transform: none;
+  display: none;
+}

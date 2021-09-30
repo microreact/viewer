@@ -1,0 +1,83 @@
+.mr-timeline-pane {
+  position: relative;
+}
+
+/*#region Range input form  */
+.mr-timeline-pane .mr-time-range {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  opacity: 0.72;
+  font-size: 13px;
+  z-index: 1;
+  height: 1px;
+  overflow: visible;
+}
+.mr-timeline-pane .mr-time-range:hover {
+  opacity: 1;
+}
+
+.mr-timeline-pane .mr-time-range .MuiPaper-root {
+  display: flex;
+  justify-content: center;
+  padding: 0 4px;
+  align-items: center;
+  height: 20px;
+}
+.mr-timeline-pane .mr-time-range .MuiDivider-root {
+  margin: 4px;
+}
+
+.mr-timeline-pane .mr-time-range .MuiInputBase-root {
+  font-size: unset;
+}
+
+.mr-timeline-pane .mr-time-range input {
+  height: 20px;
+  padding: 0;
+  cursor: pointer;
+  max-width: 120px;
+  width: auto;
+}
+
+/*#endregion*/
+
+
+/*#region Chart */
+
+.mr-timeline-full-range-chart.vega-embed {
+  padding: 0 16px;
+  position: absolute;
+  bottom: 8px;
+  height: 48px;
+  left: 0;
+}
+
+.mr-timeline-pane .vega-embed details {
+  display: none;
+}
+
+.vg-tooltip.timeline-theme table td.key {
+  text-transform: capitalize;
+}
+
+.vg-tooltip.timeline-theme table tr:nth-child(even) td.key {
+  visibility: hidden;
+}
+
+.vg-tooltip.timeline-theme table tr:nth-child(even) td.value::after {
+  content: " entries";
+}
+
+.vg-tooltip.timeline-theme#vg-tooltip-element table tr:nth-child(odd) td {
+  padding-top: 4px;
+  padding-bottom: 0;
+}
+.vg-tooltip.timeline-theme#vg-tooltip-element table tr:nth-child(even) td {
+  padding-top: 0;
+  padding-bottom: 4px;
+}
+/*#endregion*/

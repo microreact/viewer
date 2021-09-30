@@ -1,0 +1,10 @@
+.mr-default-colour-picker.mr-null-value input {
+  opacity: 0;
+}
+
+.mr-default-colour-picker.mr-null-value::before {
+  content: "(transparent)";
+  position: absolute;
+  top: 10px;
+  left: 16px;
+}

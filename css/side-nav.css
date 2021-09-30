@@ -1,0 +1,19 @@
+.mr-side-nav {
+  display: block;
+  position: absolute;
+  bottom: calc(50% - 128px);
+  width: 32px;
+  right: -8px;
+  padding: 8px 0;
+  text-align: left;
+  z-index: 2;
+}
+
+.has-side-pane .mr-side-nav {
+  right: -16px;
+}
+
+.mr-side-nav button {
+  margin-bottom: 4px;
+}
+

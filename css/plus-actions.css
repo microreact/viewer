@@ -1,0 +1,19 @@
+.mr-plus-actions {
+  height: 380;
+  transform: 'translateZ(0px)';
+  flex-grow: 1;
+}
+
+.mr-plus-actions .MuiSpeedDial-root {
+  right: 16px;
+  bottom: 16px;
+  position: absolute;
+}
+
+.mr-plus-actions .MuiSpeedDialAction-staticTooltipLabel {
+  white-space: nowrap;
+}
+
+.mr-plus-actions .MuiBackdrop-root {
+  z-index: 1;
+}

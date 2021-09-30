@@ -1,0 +1,46 @@
+/*#region  */
+
+.mr-header-bar.MuiAppBar-root
+{
+  z-index: 1201;
+  box-shadow: none;
+}
+
+/*#endregion*/
+
+
+/*#region  */
+
+.mr-header-bar .MuiToolbar-root
+{
+  padding: 0 12px;
+}
+
+.mr-header-bar .MuiToolbar-root h1,
+.mr-header-bar .MuiToolbar-root nav
+{
+  width: calc(50% - 200px);
+}
+
+.mr-header-bar .MuiToolbar-root nav
+{
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mr-header-bar .MuiToolbar-root nav button
+{
+  margin: 0 4px;
+}
+
+.mr-header-bar .MuiToolbar-root nav button.mr-selected::after {
+  content: " ";
+  position: absolute;
+  bottom: 0;
+  right: 3px;
+  left: 3px;
+  border-bottom: 2px solid var(--primary-contrast);
+}
+
+/*#endregion*/

@@ -1,0 +1,198 @@
+.mr-cheat-sheet-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 16;
+}
+
+.mr-close-overlay {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+.mr-cheat-sheet {
+  position: relative;
+  background-color: color(#3c7383 alpha(0.87));
+  color: #fff;
+  border-radius: 8px;
+  padding: 32px;
+  margin: 16px;
+  max-width: 1024px;
+  max-height: calc(100% - 128px);
+  overflow-y: auto;
+}
+
+.mr-cheat-sheet-obfuscator {
+  background-color: rgba(0,0,0,.5);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: auto;
+}
+
+.mr-cheat-sheet h2 {
+  font-family: 'Saira Semi Condensed', 'Roboto', 'Helvetica neue', Arial, sans-serif;
+  margin-top: 0;
+  line-height: 1.5;
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 0;
+}
+
+.mr-cheat-sheet-content {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.mr-cheat-sheet-content section {
+  box-sizing: border-box;
+  margin-top: 32px;
+  padding: 0 16px 0 16px;
+  width: 50%;
+}
+
+.mr-cheat-sheet-content section h3 {
+  font-family: 'Saira Semi Condensed', 'Roboto', 'Helvetica neue', Arial, sans-serif;
+  margin-top: 0;
+  line-height: 1.5;
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.mr-cheat-sheet-content dl {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  justify-content: center;
+}
+
+.mr-cheat-sheet-content dl > * {
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+}
+
+.mr-cheat-sheet-content dt {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  min-width: 100px;
+}
+
+.mr-cheat-sheet-content dd {
+  flex-wrap: wrap;
+  justify-content: start;
+  margin: 0;
+}
+
+.mr-cheat-sheet-content .material-icons {
+  margin: 0 4px;
+  font-size: 28px;
+  line-height: 28px;
+  height: 28px;
+  width: 28px;
+  padding: 2px;
+  vertical-align: middle !important;
+  background: #ececec;
+  border-radius: 16px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mr-cheat-sheet-content svg path {
+  fill: #222;
+  stroke: none;
+  image-rendering: auto;
+}
+
+.mr-cheat-sheet-content kbd {
+  display: inline-block;
+  padding: 0px 5px;
+  border-radius: 3px;
+  background: rgb(243, 243, 243);
+  box-shadow: .5px .5px 0 rgba(0,0,0,.2);
+  border: 1px solid #ccc;
+  margin: 6px 4px;
+  color: #242729;
+  font-size: 12px;
+  line-height: 24px;
+}
+
+.mr-cheat-sheet-content .mouse-holder {
+  position: relative;
+  margin: 0 4px;
+  height: 32px;
+  width: 22px;
+}
+
+.mr-cheat-sheet-content .mouse {
+  width: 17px;
+  height: 28px;
+  border-radius: 15px;
+  border: 2px solid #fff;
+}
+
+.mr-cheat-sheet-content .scroll {
+  display: block;
+  width: 3px;
+  height: 3px;
+  margin: 3px auto;
+  border-radius: 4px;
+  background: #fff;
+  -webkit-animation: finger 1s infinite;
+          animation: finger 1s infinite;
+}
+
+@keyframes finger {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+section.mr-cheat-sheet-tree {
+  width: 100%;
+  padding: 0;
+}
+
+section.mr-cheat-sheet-tree dl {
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+section.mr-cheat-sheet-tree dl > * {
+  box-sizing: border-box;
+  width: 50%;
+  padding: 0 16px;
+}
+
+section.mr-cheat-sheet-tree dl > :last-child {
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .mr-cheat-sheet-content section {
+    width: 33.333%;
+  }
+
+  section.mr-cheat-sheet-tree {
+    width: 66.666%;
+    border: none;
+  }
+}

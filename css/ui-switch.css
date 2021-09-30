@@ -1,0 +1,20 @@
+.mr-ui-switch .MuiSwitch-root {
+  margin: -3px -4px;
+}
+
+.mr-ui-switch.MuiFormControlLabel-root
+{
+  margin: 0;
+  width: 100%;
+  flex-direction: row-reverse;
+}
+
+.mr-ui-switch .MuiFormControlLabel-label
+{
+  margin-right: auto;
+  font-size: inherit;
+  line-height: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+}

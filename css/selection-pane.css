@@ -1,0 +1,26 @@
+.mr-selection-pane .mr-selection-content {
+  padding: 8px 16px;
+}
+
+.mr-selection-pane .mr-piechart circle.border {
+  fill: var(--text-secondary);
+  stroke: transparent;
+}
+.mr-selection-pane .mr-piechart circle.donut {
+  fill: var(--background-main);
+  stroke: var(--text-secondary);
+  stroke-width: 0.5;
+}
+
+.mr-selection-pane .mr-piechart path[fill="transparent"] {
+  fill: var(--background-main);
+}
+
+.mr-selection-pane .mr-piechart > text {
+  fill: var(--text-primary);
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-size: 9px;
+  font-weight: 500;
+}
+

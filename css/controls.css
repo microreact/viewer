@@ -1,0 +1,73 @@
+/*#region Main controls (top-right) */
+
+.mr-main-controls {
+  display: flex;
+  flex-direction: row-reverse;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  user-select: none;
+  z-index: 4;
+
+  flex-wrap: wrap;
+  height: 0px;
+  /* height: auto; */
+}
+
+.mr-main-controls > .MuiButtonBase-root,
+.mr-main-controls > .mr-controls-button {
+  margin-bottom: 4px;
+  margin-left: 4px;
+}
+
+.mr-main-controls > hr {
+  border: none;
+  margin: 0 4px 0 0;
+}
+
+/*#endregion*/
+
+
+/*#region Menu controls (top-left) */
+
+.mr-menu-controls {
+  display: flex;
+  flex-wrap: wrap;
+  height: 0px;
+  left: 8px;
+  position: absolute;
+  top: 24px;
+  user-select: none;
+  z-index: 4;
+}
+
+.mr-menu-controls .mr-controls-menu-trigger.MuiButtonBase-root {
+  float: left;
+  margin-bottom: 4px;
+  margin-right: 4px;
+}
+
+/*#endregion*/
+
+
+/*#region Control button */
+
+.mr-controls-button {
+  width: 24px;
+}
+
+.mr-controls-button.MuiButtonBase-root {
+  border-radius: 50%;
+  box-shadow: 0 1px 1.5px 0 rgba(0,0,0,.12),0 1px 1px 0 rgba(0,0,0,.24);
+  height: 24px;
+  min-height: 24px;
+  min-width: 24px;
+  padding: 0;
+  width: 24px;
+}
+
+.mr-controls-button.MuiButtonBase-root .MuiSvgIcon-root{
+  font-size: 20px;
+}
+
+/*#endregion*/

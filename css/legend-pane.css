@@ -1,0 +1,99 @@
+.mr-legend-pane {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-bottom: 16px;
+}
+
+.mr-legend-pane .MuiListSubheader-root {
+  background-color: var(--background-main);
+}
+
+
+/*#region Stacks  */
+
+.mr-legends {
+  display: flex;
+}
+.mr-legends.mr-stack-horizontally {
+  flex-direction: column;
+}
+.mr-legends.mr-stack-vertically {
+  flex-direction: row;
+}
+
+.mr-legends .MuiListSubheader-root {
+  line-height: 16px;
+  padding-top: 16px;
+  padding-bottom: 8px;
+}
+
+/*#endregion*/
+
+
+/*#region Entries  */
+
+.mr-legend-entries {
+  padding: 0 8px;
+  display: inline-flex;
+  flex-direction: column;
+}
+
+/*#endregion*/
+
+
+/*#region Buttons */
+
+.mr-legend-entries button {
+  position: relative;
+  display: block;
+  height: auto;
+  width: auto;
+  padding: 4px 8px 4px 32px;
+  margin: 0px;
+  cursor: pointer;
+  background: var(--background-main);
+  border: 0;
+  text-align: left;
+  line-height: 16px;
+  /* min-height: 16px; */
+  min-height: 32px;
+  font-weight: 700;
+}
+
+.mr-legend-entries button:hover,
+.mr-legend-entries button.highlighted {
+  background-color: #ECECEC;
+}
+
+.mr-legend-entries button img,
+.mr-legend-entries button code {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+
+/*#endregion*/
+
+/*#region Discrete legends */
+
+.mr-legend-entries button code {
+  width: 20px;
+  height: 20px;
+  margin: 6px 4px;
+}
+
+/*#endregion*/
+
+
+/*#region Continuous legends */
+
+.mr-legend-entries .mr-legend-table {
+  height: 120px;
+}
+.mr-legend-entries .mr-legend-table td {
+  padding: 0;
+}
+
+/*#endregion*/

@@ -1,0 +1,22 @@
+
+.mr-fade-animation-enter,
+.mr-fade-animation-leave {
+  transition: 0.28s cubic-bezier(.4,0,.2,1) !important;
+  transition-property: opacity !important;
+}
+
+.mr-fade-animation-enter {
+  opacity: 0 !important;
+}
+
+.mr-fade-animation-enter-active {
+  opacity: 1 !important;
+}
+
+.mr-fade-animation-leave {
+  opacity: 1 !important;
+}
+
+.mr-fade-animation-leave-active {
+  opacity: 0 !important;
+}

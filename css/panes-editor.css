@@ -1,0 +1,78 @@
+/*#region Dialog */
+
+.mr-panes-editor .MuiDialog-paper {
+  height: 600px;
+}
+
+.mr-panes-editor .MuiDialogContent-root {
+  margin-top: -8px;
+}
+
+.mr-panes-editor .MuiDialogActions-root {
+  padding-right: 24px;
+  padding-left: 24px;
+  padding-top: 0;
+}
+
+/*#endregion*/
+
+
+/*#region Nav List */
+
+.mr-panes-editor .mr-panes-list {
+  overflow: hidden auto;
+  min-width: 160px;
+  padding: 4px 0;
+  margin-right: 16px;
+}
+
+.mr-panes-editor .mr-panes-list .MuiListItem-root {
+  padding: 0 8px;
+}
+
+.mr-panes-editor .mr-panes-list .MuiListItemText-multiline {
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+
+.mr-panes-editor .mr-remove-pane {
+  margin-right: auto;
+}
+
+/*#endregion*/
+
+
+/*#region Pane Options */
+
+.mr-panes-editor .mr-pane-options {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  margin-left: 0;
+  margin-top: -8px;
+  padding-top: 8px;
+  overflow: hidden auto;
+}
+
+.mr-panes-editor .mr-pane-options > div:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+
+/*#endregion*/
+
+
+/*#region Mini tables */
+
+.mr-panes-editor .mr-mini-table .BaseTable__header-cell.active {
+  cursor: pointer;
+}
+.mr-panes-editor .mr-mini-table .BaseTable__header-cell.inactive {
+  cursor: not-allowed;
+  color: var(--background-disabled);
+}
+.mr-panes-editor .mr-mini-table .BaseTable__row-cell.inactive {
+  color: var(--background-disabled);
+}
+
+/*#endregion*/

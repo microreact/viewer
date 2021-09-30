@@ -1,0 +1,66 @@
+.mr-zoom-controls {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  -moz-user-select: none;
+  box-shadow: 0px 1px 4px -1px rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
+  cursor: pointer;
+  background-color: rgb(255, 255, 255);
+  width: 28px;
+  /* height: 55px; */
+  transition-property: opacity;
+  transition: 0.28s cubic-bezier(.4,0,.2,1);
+  visibility: hidden;
+  opacity: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+}
+
+.mr-zoom-controls.visible {
+  visibility: visible;
+  opacity: 1;
+}
+
+.mr-zoom-controls .mr-button {
+  align-items: center;
+  color: var(--text-secondary);
+  display: flex;
+  height: 28px;
+  justify-content: center;
+  /* left: 0px; */
+  padding: 3px;
+  /* top: 0px; */
+  width: 28px;
+}
+.mr-zoom-controls .mr-button:hover {
+  color: var(--primary-main);
+}
+
+.mr-zoom-controls .mr-button svg {
+  width: 22px;
+  height: 22px;
+}
+
+.mr-zoom-controls .mr-divider {
+  position: relative;
+  overflow: hidden;
+  width: 67%;
+  height: 1px;
+  left: 16%;
+  background-color: rgb(230, 230, 230);
+  top: 0px;
+}
+
+/* .mr-zoom-controls .mr-icon {
+  overflow: hidden;
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  color: #666666;
+} */
+
+.mr-zoom-controls .mr-button:hover .mr-zoom-controls .mr-icon {
+  color: #3C7383;
+}

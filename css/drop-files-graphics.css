@@ -1,0 +1,137 @@
+.drop-files-graphics  {
+  /* background-color: #f9f9fa; */
+  background-color: rgba(0,0,0,.04);
+  border-radius: 50%;
+  cursor: pointer;
+  height: 430px;
+  left: 0;
+  position: relative;
+  top: 0;
+  width: 430px;
+}
+
+/* .microreact-viewer.mr-not-empty .drop-files-graphics  {
+  background-color: rgba(255, 255, 255, 0.84);
+  box-shadow: 0 12px 18px 2px rgba(34,0,51,.04),0 6px 22px 4px rgba(7,48,114,.12),0 6px 10px -4px rgba(14,13,26,.12);
+  z-index: 1300;
+} */
+
+
+/*#region Header */
+
+.drop-files-graphics header {
+  color: #909090;
+  font-size: 13px;
+  height: 54px;
+  margin-bottom: auto;
+  margin-top: auto;
+  position: absolute;
+  text-align: center;
+  top: 80px;
+  width: 100%;
+}
+
+.drop-files-graphics header strong {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+/*#endregion*/
+
+
+/*#region Icons */
+
+.drop-files-graphics figure {
+  height: 125px;
+  left: calc(160px);
+  position: absolute;
+  top: 136px;
+  width: 100px;
+  margin: 0;
+}
+
+.drop-files-graphics .file-icon {
+  position: absolute;
+  top: 0;
+}
+.drop-files-graphics:hover .file-icon svg:nth-child(1) path:nth-child(2),
+  .drop-files-graphics:hover .file-icon svg:nth-child(2) {
+  color: var(--primary-main);
+}
+
+.drop-files-graphics .file-icon:nth-child(2) {
+  left: 80px;
+  top: 16px;
+  transform: rotate(20deg);
+}
+.drop-files-graphics .file-icon:nth-child(3) {
+  left: -80px;
+  top: 16px;
+  transform: rotate(-20deg);
+}
+
+/*#endregion*/
+
+
+/*#region Footer */
+
+.drop-files-graphics footer {
+  align-items: center;
+  bottom: 80px;
+  color: #909090;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+  height: 54px;
+  margin-bottom: auto;
+  margin-top: auto;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.drop-files-graphics footer p {
+  margin: 8px 0 0 0;
+  max-width: 228px;
+}
+
+.drop-files-graphics footer code { 
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+/*#endregion*/
+
+
+/*#region Inline style overrides */
+.mr-placeholder .drop-files-graphics {
+  width: 100%;
+  height: 100%;
+  background-color: unset;
+}
+.mr-placeholder .drop-files-graphics header {
+  top: 0;
+  background-color: rgba(250, 250, 250, 0.72);
+  z-index: 1;
+}
+.mr-placeholder .drop-files-graphics footer {
+  bottom: 0;
+  background-color: rgba(250, 250, 250, 0.72);
+  z-index: 1;
+}
+.mr-placeholder .drop-files-graphics footer p {
+  max-width: unset;
+}
+.mr-placeholder .drop-files-graphics figure {
+  left: calc(50% - 50px);
+  top: calc(50% - 62.5px);;
+}
+
+/*#endregion*/
+
+
+.drop-files-graphics a {
+  color: var(--primary-main);
+}

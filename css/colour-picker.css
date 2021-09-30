@@ -1,0 +1,37 @@
+.mr-colour-picker-dialog.mr-ui-popover-menu.MuiPopover-paper {
+  padding: 0;
+}
+
+.mr-colour-picker {
+  /* display: inline-flex; */
+  position: relative;
+}
+
+.mr-colour-picker .mr-swatch {
+  padding: 4px;
+  background: rgb(255, 255, 255);
+  border-radius: 1px;
+  display: inline-block;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.mr-colour-picker .mr-colour {
+  width: 36px;
+  height: 14px;
+  border-radius: 2px;
+  margin-right: 4px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.1);
+}
+
+.mr-colour-picker .mr-label {
+  font-family: monospace, monospace;
+  font-size: 11px;
+}
+
+.mr-colour-picker .mr-popover {
+  position: absolute;
+  top: 100%;
+  z-index: 100;
+}

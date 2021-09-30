@@ -1,0 +1,62 @@
+.microreact-viewer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  /* display: flex; */
+  background-color: var(--background-main);
+}
+
+.microreact-viewer .mr-viewer-main {
+  width: 100%;
+  height: calc(100% - 48px);
+  display: flex;
+  align-items: center;
+  position: relative;
+  /* background-color: transparent; */
+  background-color: var(--background-main);
+}
+
+.microreact-viewer .mr-floating-action-buttons {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 4;
+}
+
+.microreact-viewer .mr-spinner {
+  position: fixed;
+  /* top: calc(50vh - 128px);
+  left: calc(50vw - 128px); */
+  top: 0;
+  right: 0;
+  /* display: none; */
+  transition: opacity 1s;
+  opacity: 0;
+  pointer-events: none;
+  background-color: var(--primary-main);
+}
+
+/*#region Global */
+
+body.mr-has-loading-spinner .mr-spinner {
+  display: unset;
+  opacity: 1;
+  z-index: 1111;
+}
+
+/*#endregion*/
+
+.mr-process-files-spinner {
+  position: fixed;
+  top: 48px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1301; /* to be on top of MuiDialog-root (1300) */
+  overflow: hidden;
+}

@@ -1,0 +1,32 @@
+.mr-side-pane {
+  position: absolute;
+  top: 60px;
+  right: 0px;
+  bottom: 0px;
+  width: 240px;
+  z-index: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #d8e3e6;
+}
+
+.mr-side-pane-contents {
+  padding: 12px 20px;
+}
+
+.mr-side-pane-contents h5 {
+  letter-spacing: 0;
+  margin: 0 0 16px 0;
+}
+
+.mr-side-pane .mdl-button--icon {
+  box-shadow: none;
+}
+
+.mr-side-pane-close {
+  position: absolute;
+  top: 6px; /* needed 2px more on top to line up with heading */
+  right: 4px;
+  color: rgba(0, 0, 0, 0.54);
+  display: none;
+}

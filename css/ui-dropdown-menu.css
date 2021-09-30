@@ -1,0 +1,15 @@
+.mr-ui-popover-menu.mr-ui-dropdown-menu.MuiPopover-paper {
+  min-height: unset;
+}
+
+.mr-ui-dropdown-menu.MuiList-root {
+  margin: -8px -16px;
+}
+
+.mr-ui-dropdown-menu hr {
+  margin: 4px -16px;
+}
+
+.mr-ui-dialog  .MuiDialogActions-root .MuiButton-label {
+  line-height: 24px;
+}

@@ -1,0 +1,107 @@
+.mr-map-summary {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  bottom: 0px;
+  width: 200px;
+  box-sizing: border-box;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  background: #fff;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+}
+
+.mr-map-summary button.mr-close {
+  position: absolute;
+  z-index: 0;
+  top: 8px;
+  left: calc(100% + 0px);
+
+  width: 23px;
+  height: 48px;
+  cursor: pointer;
+  border: 0;
+  border-left: 1px solid #D4D4D4;
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0;
+}
+
+.mr-map-summary button.mr-close .material-icons {
+  margin-left: -1px;
+  transform: rotate(90deg);
+}
+
+.mr-map-summary .mr-chart {
+  z-index: 1;
+  background:#fff;
+  padding: 16px;
+}
+
+.mr-map-summary .mr-header {
+  color: rgba(0, 0, 0, 0.54);
+  padding: 0 16px 4px;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.mr-map-summary ul {
+  flex-grow: 1;
+  margin: 0;
+  overflow: hidden;
+  overflow-y: auto;
+  list-style: none;
+  padding: 8px 16px;
+}
+
+.mr-map-summary li:last-child {
+  margin-bottom: 16px;
+}
+
+.mr-map-summary ul li button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  color: #3C7383;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.mr-map-summary ul li button:hover {
+  text-decoration: underline;
+}
+
+.mr-map-summary ul li button canvas {
+  margin-right: 4px;
+}
+
+.mr-map-summary svg > circle {
+  fill: #fff;
+}
+
+.mr-map-summary svg > g > path,
+.mr-map-summary svg > g > circle {
+  cursor: pointer;
+}
+
+.mr-map-summary svg:hover > g > path {
+  opacity: 0.54;
+}
+
+.mr-map-summary svg > g > path:hover {
+  opacity: 1;
+}
+
+.mr-map-summary svg > text {
+  fill: rgba(0, 0, 0, 0.54);
+  text-anchor: middle;
+  dominant-baseline: middle;
+  font-size: 9px;
+  font-weight: 500;
+}

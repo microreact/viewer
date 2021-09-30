@@ -1,0 +1,31 @@
+.mr-ui-select-list {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.mr-ui-select-list .mr-select-only {
+  min-width: 48px;
+  /* position: absolute; */
+  /* right: 0; */
+  text-transform: none;
+  display: none;
+}
+
+.mr-ui-select-list .MuiListItem-root:hover .mr-select-only {
+  display: unset;
+}
+
+
+.mr-ui-select-list .mr-select-all {
+  margin: 0;
+}
+
+.mr-ui-select-list .mr-select-all .MuiFormControlLabel-label {
+  margin-right: auto;
+}
+
+.mr-ui-select-list .MuiListItemIcon-root {
+  min-width: unset;
+}
+

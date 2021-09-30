@@ -1,0 +1,33 @@
+.mr-data-columns-editor .BaseTable__table-main .BaseTable__row-cell:first-child {
+  padding-left: 8px;
+}
+
+.mr-data-columns-editor .BaseTable__header-cell {
+  padding: 0 8px !important;
+}
+.mr-data-columns-editor .BaseTable__row-cell {
+  padding: 0 8px;
+  font-size: 16px;
+}
+.mr-data-columns-editor .BaseTable__row-cell.mr-colour-settings {
+  padding: 0;
+}
+
+.mr-data-columns-editor .BaseTable__row:not(:hover) .BaseTable__row-cell .mr-colour-settings-button:not(.is-open) fieldset {
+  border-color: transparent;
+}
+.mr-data-columns-editor .BaseTable__row:not(:hover) .BaseTable__row-cell .mr-colour-settings-button:not(.is-open) .MuiSelect-icon {
+  visibility: hidden;
+}
+.mr-data-columns-editor .BaseTable__row:not(:hover) .BaseTable__row-cell .mr-colour-settings-button.is-open fieldset {
+  border-color: var(--text-primary);
+}
+
+.mr-data-columns-editor .BaseTable__row-cell .MuiFormControl-root {
+  width: 100%;
+}
+
+.mr-data-columns-editor .BaseTable__row-cell .MuiSelect-select {
+  padding-left: 8px;
+  padding-right: 8px;
+}
