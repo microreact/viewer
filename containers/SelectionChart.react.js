@@ -9,7 +9,7 @@ const onParseError = (err) => console.error("SelectionChart", err);
 
 const mapStateToProps = (state) => {
   return {
-    className: "mr-timeline-filtered-range-chart",
+    // className: "mr-timeline-filtered-range-chart",
     data: selectionChartDataSelector(state),
     onError,
     onParseError,
