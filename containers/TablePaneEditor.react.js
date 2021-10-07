@@ -1,6 +1,6 @@
 import { connectToPresentState } from "../utils/state";
 import { update as updateTable } from "../actions/tables";
-import { updateDataset, updateDatasetColumn } from "../actions/datasets";
+import { updateDataset } from "../actions/datasets";
 import Component from "../components/TablePaneEditor.react";
 import dataColumnsSelector from "../selectors/datasets/data-columns";
 import mainDatasetConfigSelector from "../selectors/datasets/main-dataset-config";
