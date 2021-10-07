@@ -5,8 +5,6 @@ import "../css/legend-pane.css";
 
 import LinearGradientSvgImage from "./LinearGradientSvgImage.react";
 
-import { DataColumn } from "../utils/prop-types";
-
 class ColoursLegend extends React.PureComponent {
 
   render() {
