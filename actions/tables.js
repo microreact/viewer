@@ -6,14 +6,14 @@ import { getPresentState } from "../utils/state";
 
 import { measureWidth } from "../utils/text";
 
-export function addTable(paneId, title, file, columns) {
+export function addTable(paneId, title, fileId, columns) {
   return {
     type: "MICROREACT VIEWER/ADD TABLE",
     payload: {
       paneId,
       title: title || "Table",
       columns,
-      file,
+      file: fileId,
     },
   };
 }
