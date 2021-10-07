@@ -11,8 +11,7 @@ import UiDropdownMenu from "./UiDropdownMenu.react";
 import UiIconButton from "./UiIconButton.react";
 
 import { icons } from "../constants";
-import ShapesLegend from "../containers/ShapesLegend.react";
-import ColoursLegend from "../containers/ColoursLegend.react";
+import LegendsList from "./LegendsList.react";
 import { exportHtmlElementAsDataUrl } from "../utils/html";
 import { downloadDataUrl } from "../utils/downloads";
 import UiSidePaneHeader from "./UiSidePaneHeader.react";
@@ -129,41 +128,9 @@ class LegendPane extends React.PureComponent {
           }
           ref={this.elRef}
         >
-          {
-            props.legends.map(
-              (item) => {
-                if (item.type === "colours") {
-                  return (
-                    <div key={item.id}>
-                      <ListSubheader component="div">
-                        { item.title }
-                      </ListSubheader>
-                      <ColoursLegend
-                        id={item.id}
-                        field={item.field}
-                      />
-                    </div>
-                  );
-                }
-                else if (item.type === "shapes") {
-                  return (
-                    <div key={item.id}>
-                      <ListSubheader component="div">
-                        { item.title }
-                      </ListSubheader>
-                      <ShapesLegend
-                        id={item.id}
-                        field={item.field}
-                      />
-                    </div>
-                  );
-                }
-                else {
-                  return null;
-                }
-              }
-            )
-          }
+          <LegendsList
+            legends={props.legends}
+          />
         </div>
       </div>
     );

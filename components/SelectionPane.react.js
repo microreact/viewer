@@ -15,6 +15,7 @@ import UiEmptyState from "./UiEmptyState.react";
 import UiSidePaneHeader from "./UiSidePaneHeader.react";
 import SelectionChart from "../containers/SelectionChart.react";
 import UiCombobox from "./UiCombobox.react";
+import LegendsList from "./LegendsList.react";
 
 class SelectionPane extends React.PureComponent {
 
@@ -47,6 +48,46 @@ class SelectionPane extends React.PureComponent {
               count: 1,
               colour: row["--microreact-colour"],
               label: row["--microreact-colour-label"],
+              value: row[0],
+            };
+          }
+        }
+      }
+
+      const items = Object.values(unique);
+
+      for (const item of items) {
+        item.label = `${item.label} (${item.count})`;
+      }
+
+      return items;
+    },
+  );
+
+  breakdownColoursLegendEntriesSelector = createSelector(
+    (props) => props.selectedRows,
+    (_, state) => state.selectedColour,
+    (props) => props.breakdownField,
+    (props) => props.breakdownFieldColourMap,
+    (
+      rows,
+      selectedColour,
+      breakdownField,
+      breakdownFieldColourMap,
+    ) => {
+      const unique = {};
+
+      for (const row of rows) {
+        if (!selectedColour || row["--microreact-colour"] === selectedColour) {
+          const key = breakdownFieldColourMap.get(row[breakdownField]);
+          if (key in unique) {
+            unique[key].count += 1;
+          }
+          else {
+            unique[key] = {
+              count: 1,
+              colour: key,
+              label: row[breakdownField],
               value: row[0],
             };
           }
@@ -120,12 +161,12 @@ class SelectionPane extends React.PureComponent {
 
     return (
       <React.Fragment>
-        {/* <UiCombobox
-          label="Summary Breakdown Column"
-          onChange={(item) => props.onSelectionBreakdownFieldChange(item.name)}
+        <UiCombobox
+          label="Details Column"
+          onChange={(item) => props.onBreakdownFieldChange(item.name)}
           options={props.fullDatasetColumns}
-          value={props.selectionBreakdownField}
-        /> */}
+          value={props.breakdownField}
+        />
         <SelectionChart
           signalListeners={this.signalListeners}
         />
@@ -172,17 +213,37 @@ class SelectionPane extends React.PureComponent {
           Colours Legend
         </ListSubheader>
         <ColoursLegend
-          entries={this.shapesLegendEntriesSelector(props, state)}
+          entries={this.coloursLegendEntriesSelector(props, state)}
           id="selection-colours-legend"
           scale="discrete"
         />
-        <ListSubheader component="div">
-          Shapes Legend
-        </ListSubheader>
-        <ShapesLegend
-          id="selection-shapes-legend"
-          entries={this.shapesLegendEntriesSelector(props, state)}
-        />
+        {
+          (props.breakdownField) && (
+            <React.Fragment>
+              <ListSubheader component="div">
+                Colours Legend
+              </ListSubheader>
+              <ColoursLegend
+                entries={this.breakdownColoursLegendEntriesSelector(props, state)}
+                id="selection-breakdown-colours-legend"
+                scale="discrete"
+              />
+            </React.Fragment>
+          )
+        }
+        {
+          (props.shapesDataColum) && (
+            <React.Fragment>
+              <ListSubheader component="div">
+                Shapes Legend
+              </ListSubheader>
+              <ShapesLegend
+                id="selection-shapes-legend"
+                entries={this.shapesLegendEntriesSelector(props, state)}
+              />
+            </React.Fragment>
+          )
+        }
       </React.Fragment>
     );
   }
@@ -199,7 +260,7 @@ class SelectionPane extends React.PureComponent {
 
         <div className="mr-selection-content">
           { this.renderSelectionChart() }
-          {/* { this.renderSelectionLegends() } */}
+          { this.renderSelectionLegends() }
         </div>
 
       </div>
