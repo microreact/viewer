@@ -24,12 +24,13 @@ class TablePaneEditor extends React.PureComponent {
           const values = new Set();
           let isUnique = true;
           for (const row of rows) {
-            if (values.has(row[dataColumn.name])) {
+            const value = row[dataColumn.name];
+            if (value === undefined || value === null || values.has(value)) {
               isUnique = false;
               break;
             }
             else {
-              values.add(row[dataColumn.name]);
+              values.add(value);
             }
           }
           if (isUnique) {
