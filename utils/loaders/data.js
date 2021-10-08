@@ -29,7 +29,7 @@ export async function loadCsvFile(fileBlobOrUrl, settings, onProgress) {
       header: true, // If true, the first row of parsed data will be interpreted as field names
       rowFormat: "object",
       skipEmptyLines: true,
-      transform: cleanUpFalsyCsvValue,
+      // transform: cleanUpFalsyCsvValue,
       transformHeader(x) {
         return x.trim ? x.trim() : x;
       },
@@ -43,6 +43,9 @@ export async function loadCsvFile(fileBlobOrUrl, settings, onProgress) {
     let index = 1;
     for await (const batch of await loadInBatches(fileBlobOrUrl, CSVLoader, loaderOptions)) {
       for (const row of batch.data) {
+        for (const key of Object.keys(row)) {
+          row[key] = cleanUpFalsyCsvValue(row[key]);
+        }
         const keys = [];
         for (const field of settings.aggregate) {
           keys.push(row[field]);
@@ -71,6 +74,9 @@ export async function loadCsvFile(fileBlobOrUrl, settings, onProgress) {
       onProgress && onProgress(batch.bytesUsed);
       for (const row of batch.data) {
         row["--mr-index"] = (index).toString();
+        for (const key of Object.keys(row)) {
+          row[key] = cleanUpFalsyCsvValue(row[key]);
+        }
         rows.push(row);
         index += 1;
       }
