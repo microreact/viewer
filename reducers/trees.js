@@ -14,7 +14,7 @@ const initialState = {
   subtreeIds: null,
   alignLabels: true,
   blockHeaderFontSize: 13,
-  blockLength: 14,
+  blockSize: 14,
   blockPadding: 0,
   blocks: [],
   fontSize: 16,
@@ -37,10 +37,10 @@ const initialState = {
 
 const queryPropMap = {
   controls: { key: "tc", type: Boolean },
-  blockLength: { key: "tbl", type: Number },
+  blockSize: { key: "tbl", type: Number },
   fontSize: { key: "tts", type: Number },
-  minBlockLength: { key: "tnbl", type: Number },
-  maxBlockLength: { key: "txbl", type: Number },
+  minBlockSize: { key: "tnbl", type: Number },
+  maxBlockSize: { key: "txbl", type: Number },
   minFontSize: { key: "tnts", type: Number },
   maxFontSize: { key: "txts", type: Number },
   minNodeSize: { key: "tmns", type: Number },
