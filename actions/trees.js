@@ -79,7 +79,7 @@ export function update(treeId, key, value) {
     label:
       (key === "alignLabels") ? "Tree: Toggle align labels" :
       (key === "blockHeaderFontSize") ? `Tree: Set metadata header font size to ${value}` :
-      (key === "blockLength") ? `Tree: Set metadata block size to ${value}` :
+      (key === "blockSize") ? `Tree: Set metadata block size to ${value}` :
       (key === "blockPadding") ? `Tree: Set metadata block gap to ${value}` :
       (key === "blocks") ? `Tree: Set metadata columns to ${Arrays.summarise(value)}` :
       (key === "fontSize") ? `Tree: Set font size to ${value}` :

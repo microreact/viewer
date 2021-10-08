@@ -39,12 +39,12 @@ const TreeMetadataMenu = React.memo(
           }
 
           <UiSlider
-            label="Block Length"
-            max={props.maxBlockLength}
-            min={props.minBlockLength}
-            onChange={props.onBlockLengthChange}
+            label="Block Size"
+            max={props.maxBlockSize}
+            min={props.minBlockSize}
+            onChange={props.onBlockSizeChange}
             unit="px"
-            value={props.blockLength}
+            value={props.blockSize}
           />
 
           <UiToggleSlider
@@ -110,19 +110,19 @@ TreeMetadataMenu.displayName = "TreeMetadataMenu";
 
 TreeMetadataMenu.propTypes = {
   blockHeaderFontSize: PropTypes.number.isRequired,
-  blockLength: PropTypes.number.isRequired,
+  blockSize: PropTypes.number.isRequired,
   blockPadding: PropTypes.number.isRequired,
   blocks: PropTypes.arrayOf(PropTypes.string.isRequired),
   className: PropTypes.string,
   colourFields: PropTypes.arrayOf(DataColumn).isRequired,
-  maxBlockLength: PropTypes.number.isRequired,
+  maxBlockSize: PropTypes.number.isRequired,
   maxBlockPadding: PropTypes.number.isRequired,
   maxFontSize: PropTypes.number.isRequired,
-  minBlockLength: PropTypes.number.isRequired,
+  minBlockSize: PropTypes.number.isRequired,
   minBlockPadding: PropTypes.number.isRequired,
   minFontSize: PropTypes.number.isRequired,
   onBlockHeaderFontSizeChange: PropTypes.func.isRequired,
-  onBlockLengthChange: PropTypes.func.isRequired,
+  onBlockSizeChange: PropTypes.func.isRequired,
   onBlockPaddingChange: PropTypes.func.isRequired,
   onBlocksChange: PropTypes.func,
   onMetadataLabelsChange: PropTypes.func,
