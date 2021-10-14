@@ -39,8 +39,8 @@ export default function (treePane) {
             let ids = null;
             if (path) {
               ids = [];
-              const nodes = tree.getNodes();
-              for (const leaf of nodes.leaves) {
+              const graph = tree.getGraphAfterLayout();
+              for (const leaf of graph.leaves) {
                 if (tree.lasso.isPointInside(leaf, path)) {
                   ids.push(leaf.id);
                 }
