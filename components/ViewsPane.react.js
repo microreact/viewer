@@ -131,6 +131,7 @@ const SortableList = sortableContainer(
                 onRenameView={props.onRenameView}
                 onResaveView={props.onResaveView}
                 onDownloadView={props.onDownloadView}
+                onDeleteView={props.onDeleteView}
                 onLoadView={props.onLoadView}
               />
             );
@@ -195,6 +196,7 @@ class ViewsPane extends React.PureComponent {
           items={props.entries}
           // onDownloadView={props.onDownloadView}
           onLoadView={props.onLoadView}
+          onDeleteView={props.onDeleteView}
           onRenameView={this.handleRenameView}
           onResaveView={props.onResaveView}
           onSortEnd={this.handleSortEnd}
