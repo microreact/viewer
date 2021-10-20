@@ -14,11 +14,11 @@ export const keyMap = {
   undo: {
     name: "Undo",
     sequence: "meta+z",
-    description: `${CommandKey} + Z`,
+    description: isMac() ? "Cmd+Z" : "Ctrl+Z",
   },
   redo: {
     name: "Redo",
     sequences: isMac() ? "meta+shift+z" : [ "ctrl+shift+z", "ctrl+y" ],
-    description: isMac() ? `${CommandKey} + Shift + Z` : `${CommandKey} + Shift + Z or ${CommandKey} + Y`,
+    description: isMac() ? "Cmd + Shift + Z" : "Ctrl + Shift + Z or Ctrl + Y",
   },
 };
