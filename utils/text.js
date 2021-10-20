@@ -36,9 +36,12 @@ export function entriesLabel(number) {
 }
 
 export function toText(dataType, value, convertBlanks = false) {
-  if (convertBlanks) {
-    if (value === null || value === undefined) {
+  if (value === null || value === undefined) {
+    if (convertBlanks) {
       return "(blank)";
+    }
+    else {
+      return "";
     }
   }
 
