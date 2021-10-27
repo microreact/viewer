@@ -18,7 +18,7 @@ const shapesLegendEntriesSelector = createSelector(
       entries.push({
         shape,
         value,
-        label: toText(dataColumn.type, value),
+        label: toText(dataColumn.dataType, value),
       });
     }
 
