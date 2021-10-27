@@ -65,7 +65,7 @@ const filterableValuesSelector = createKeyedStateSelector(
       items.push({
         name: value,
         label: toText(
-          dataColumn.type,
+          dataColumn.dataType,
           value,
           true /* convertBlanks */,
         ),

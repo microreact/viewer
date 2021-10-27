@@ -18,7 +18,7 @@ const coloursLegendEntriesSelector = createSelector(
         entries.push({
           colour,
           value,
-          label: toText(dataColumn.type, value),
+          label: toText(dataColumn.dataType, value),
         });
       }
 
@@ -41,7 +41,7 @@ const coloursLegendEntriesSelector = createSelector(
         entries.push({
           colour: colourMap.colourGetter(index),
           value: [ start, end ],
-          label: `${toText(dataColumn.type, start.toFixed(2))} - ${toText(dataColumn.type, end.toFixed(2))}`,
+          label: `${toText(dataColumn.dataType, start.toFixed(2))} - ${toText(dataColumn.dataType, end.toFixed(2))}`,
         });
       }
     }
@@ -50,12 +50,12 @@ const coloursLegendEntriesSelector = createSelector(
       entries.push({
         colour: colourMap.range[0],
         value: colourMap.domain[0],
-        label: toText(dataColumn.type, colourMap.domain[0]),
+        label: toText(dataColumn.dataType, colourMap.domain[0]),
       });
       entries.push({
         colour: colourMap.range[1],
         value: colourMap.domain[1],
-        label: toText(dataColumn.type, colourMap.domain[1]),
+        label: toText(dataColumn.dataType, colourMap.domain[1]),
       });
     }
 
