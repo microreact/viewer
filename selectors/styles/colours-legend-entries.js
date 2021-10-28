@@ -18,7 +18,10 @@ const coloursLegendEntriesSelector = createSelector(
         entries.push({
           colour,
           value,
-          label: toText(dataColumn.dataType, value),
+          label: toText(
+            dataColumn.dataType,
+            value,
+          ),
         });
       }
 

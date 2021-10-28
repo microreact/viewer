@@ -38,7 +38,6 @@ class SlicerPaneEditor extends React.PureComponent {
           label: toText(
             dataColumn.dataType,
             value,
-            true /* convertBlanks */,
           ),
         });
       }

@@ -35,8 +35,8 @@ export function entriesLabel(number) {
   return number === 1 ? "entry" : "entries";
 }
 
-export function toText(dataType, value, convertBlanks = false) {
-  if (value === null || value === undefined) {
+export function toText(dataType, value, convertBlanks = true) {
+  if (value === null || value === undefined || value === "") {
     if (convertBlanks) {
       return "(blank)";
     }

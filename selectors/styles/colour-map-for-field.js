@@ -13,7 +13,7 @@ const discreteValueToColourMapSelector = createKeyedStateSelector(
   (state, field) => ((colourPaletteForFieldSelector(state, field)?.type !== "custom") ? uniqueValuesSelector(state, field) : undefined),
   (
     palette,
-    colourFieldValues,
+    uniqueFieldValues,
   ) => {
     const colourMap = new Map();
 
@@ -26,17 +26,26 @@ const discreteValueToColourMapSelector = createKeyedStateSelector(
       }
     }
     else {
-      for (let index = 0; index < colourFieldValues.length; index++) {
-        if (index <= palette.entries.length) {
-          colourMap.set(
-            colourFieldValues[index],
-            palette.entries[index],
+      let index = 0;
+      for (const value of uniqueFieldValues) {
+        if ((value ?? undefined) !== undefined) {
+          const colour = (
+            (index <= palette.entries.length)
+              ?
+              palette.entries[index]
+              :
+              palette.entries[index % palette.entries.length]
           );
+          colourMap.set(
+            value,
+            colour,
+          );
+          index += 1;
         }
         else {
           colourMap.set(
-            colourFieldValues[index],
-            palette.entries[index % palette.entries.length],
+            value,
+            "transparent",
           );
         }
       }
