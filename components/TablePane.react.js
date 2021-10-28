@@ -28,6 +28,7 @@ const dataGetter = (args) => {
   return TextUtils.toText(
     args.column.dataType,
     args.rowData[args.column.field],
+    false /* convertBlanks */,
   );
   // const value = args.rowData[args.column.field];
   // if (args.column.dataType === "date") {

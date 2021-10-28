@@ -67,7 +67,6 @@ const filterableValuesSelector = createKeyedStateSelector(
         label: toText(
           dataColumn.dataType,
           value,
-          true /* convertBlanks */,
         ),
       });
     }
