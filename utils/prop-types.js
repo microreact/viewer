@@ -108,6 +108,11 @@ export const MapMarker = PropTypes.shape({
   slices: PropTypes.arrayOf(PropTypes.array),
 });
 
+export const MapboxStyle = PropTypes.oneOfType([
+  PropTypes.string.isRequired,
+  PropTypes.object.isRequired,
+]);
+
 export const ReactRef = PropTypes.shape({ current: PropTypes.object });
 
 export const StylePalette = PropTypes.shape({

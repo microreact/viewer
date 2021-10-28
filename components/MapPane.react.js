@@ -17,7 +17,7 @@ import MapLegend from "../containers/MapLegend.react";
 import MapTooltip from "../containers/MapTooltip.react";
 
 import { downloadDataUrl } from "../utils/downloads";
-import { MapMarker, ReactRef } from "../utils/prop-types";
+import { MapboxStyle, MapMarker, ReactRef } from "../utils/prop-types";
 import * as HtmlUtils from "../utils/html";
 import { subscribe } from "../utils/events";
 
@@ -65,7 +65,7 @@ InteractiveMap.displayName = "InteractiveMap";
 InteractiveMap.propTypes = {
   height: PropTypes.number.isRequired,
   mapboxApiAccessToken: PropTypes.string.isRequired,
-  mapboxStyle: PropTypes.string.isRequired,
+  mapboxStyle: MapboxStyle.isRequired,
   mapId: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   onHover: PropTypes.func.isRequired,
@@ -367,7 +367,7 @@ MapPane.propTypes = {
   hasLegend: PropTypes.bool.isRequired,
   height: PropTypes.number.isRequired,
   mapboxApiAccessToken: PropTypes.string.isRequired,
-  mapboxStyle: PropTypes.string.isRequired,
+  mapboxStyle: MapboxStyle.isRequired,
   mapId: PropTypes.string.isRequired,
   markers: PropTypes.arrayOf(MapMarker).isRequired,
   onPathChange: PropTypes.func.isRequired,
