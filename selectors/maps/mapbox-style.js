@@ -1,4 +1,5 @@
 import { createKeyedStateSelector } from "../../utils/state";
+import configSelector from "../config";
 
 // const categories = [ "labels", "roads", "buildings", "parks", "water", "background" ];
 // const layerSelector = {
@@ -11,7 +12,7 @@ import { createKeyedStateSelector } from "../../utils/state";
 // };
 
 const mapboxStyleSelector = createKeyedStateSelector(
-  (state, mapId) => state.maps[mapId].style,
+  (state, mapId) => state.maps[mapId].style || configSelector(state)?.maps?.style,
   (
     style,
   ) => {
@@ -202,7 +203,7 @@ const mapboxStyleSelector = createKeyedStateSelector(
       // return mapboxStyle;
     }
     else {
-      return `mapbox://styles/mapbox/${style}-v9`;
+      return `mapbox://styles/mapbox/${style || "light"}-v9`;
     }
   },
 );
