@@ -8,6 +8,10 @@ export default {
     width: 4,
   },
 
+  maps: {
+    style: "light",
+  },
+
   shape: "circle",
 
   stroke: {

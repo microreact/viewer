@@ -29,7 +29,7 @@ const initialState = {
   showRegionOutlines: true,
   showRegions: true,
   source: undefined,
-  style: "light",
+  style: "",
   tileLayerDialog: false,
   tileLayerOpts: null,
   tileLayerUrl: null,
