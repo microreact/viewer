@@ -89,9 +89,9 @@ export function setLasso(mapId, isLassoActive) {
     delay: true,
     group: `${mapId}/lasso`,
     label: "Map: Toggle lasso",
-    type: "MICROREACT VIEWER/SET MAP LASSO",
     mapId,
     payload: isLassoActive,
+    type: "MICROREACT VIEWER/SET MAP LASSO",
   };
 }
 
