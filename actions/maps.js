@@ -7,7 +7,6 @@ export function addGeoData(mapId, fileId, options = {}) {
   return {
     delay: true,
     label: "Map: Add geographical features",
-    type: "MICROREACT VIEWER/ADD GEO DATA",
     mapId,
     payload: {
       file: fileId,
@@ -15,6 +14,7 @@ export function addGeoData(mapId, fileId, options = {}) {
       linkFieldName: options.linkFieldName,
       linkPropertyName: options.linkPropertyName,
     },
+    type: "MICROREACT VIEWER/ADD GEO DATA",
   };
 }
 
