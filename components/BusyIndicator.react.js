@@ -6,7 +6,7 @@ import "../css/busy-indicator.css";
 
 const BusyIndicator = React.memo(
   (props) => {
-    if (props.isLoading) {
+    if (props.isBuzy) {
       return (
         <div className="mr-busy-indicator">
           <CircularProgress
@@ -25,7 +25,7 @@ const BusyIndicator = React.memo(
 BusyIndicator.displayName = "BusyIndicator";
 
 BusyIndicator.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
+  isBuzy: PropTypes.bool.isRequired,
 };
 
 export default BusyIndicator;

@@ -3,7 +3,7 @@ import defaults from "../defaults";
 
 const initialState = {
   editor: null,
-  loading: false,
+  isBuzy: false,
   mapboxApiAccessToken: null,
   pending: null,
   readOnly: false,
@@ -17,7 +17,7 @@ export default (state = initialState, action) => {
       const nextState = {
         ...state,
         ...(action.payload.config || emptyObject),
-        loading: false,
+        isBuzy: false,
       };
       if (action.payload?.query?.ui === "edit") {
         nextState.editor = { mode: "edit" };

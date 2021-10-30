@@ -55,7 +55,7 @@ function createLabelFromFileName(file, allFiles) {
 
 export function addFiles(rawFiles, paneId) {
   return async (dispatch, getState) => {
-    dispatch(config({ loading: true }));
+    dispatch(config({ isBuzy: true }));
 
     const fileDescriptors = await loadFiles(rawFiles);
     if (paneId) {
@@ -91,7 +91,7 @@ export function addFiles(rawFiles, paneId) {
       }
       dispatch(
         config({
-          loading: false,
+          isBuzy: false,
           pending: nextPendingFiles,
         })
       );
@@ -245,7 +245,7 @@ export function commitFiles(fileDescriptors) {
 
     actions.push(
       config({
-        loading: false,
+        isBuzy: false,
         pending: undefined,
       })
     );
@@ -282,14 +282,14 @@ export function closePaneEditor(paneId) {
 
 export function fetchFile(fileId, rawFile) {
   return async (dispatch) => {
-    dispatch(config({ loading: true }));
+    dispatch(config({ isBuzy: true }));
     try {
       rawFile.id = fileId;
       const processedFile = await loadFile(rawFile);
       return dispatch(
         batch([
           updateFile(processedFile),
-          config({ loading: false }),
+          config({ isBuzy: false }),
         ])
       );
     }
@@ -347,7 +347,6 @@ export function load(payload) {
 export function loadDocument(payload) {
   return (dispatch) => {
     // TODO: no need to show a loader as files are not fetched here
-    // dispatch(update({ isLoading: true }));
     const doc = updateSchema(payload);
     return dispatch({
       label: doc.schema ? "Project: Load project" : "Project: Load view",

@@ -12,7 +12,6 @@ function mapStateToProps(state) {
   const defaults = configSelector(state);
   return {
     validFileExtensions: defaults.validFileExtensions || emptyArray,
-    isLoading: state.config.loading,
     pendingFiles: state.config.pending || emptyArray,
   };
 }
