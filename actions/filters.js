@@ -86,11 +86,11 @@ export const setSearchOperator = (operator) => ({
 });
 
 export const setSearchValue = (value) => ({
-  type: "MICROREACT VIEWER/SET SEARCH VALUE",
   payload: value,
   label: "Filters: Change search filter",
   group: "Filters/search",
   delay: true,
+  type: "MICROREACT VIEWER/SET SEARCH VALUE",
 });
 
 export const resetAllFilters = () => ({
