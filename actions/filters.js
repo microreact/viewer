@@ -65,13 +65,13 @@ export function setSelectionBreakdownField(field) {
 export function setFieldFilter(field, operator, value) {
   return {
     delay: true,
+    label: `Filters: Change column ${field} filter`,
     type: "MICROREACT VIEWER/SET FIELD FILTER",
     payload: {
       field,
       operator,
       value,
     },
-    label: `Filters: Change column ${field} filter`,
     group: `Filters/field ${field}`,
   };
 }
