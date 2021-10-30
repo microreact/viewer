@@ -14,13 +14,13 @@ export const selectRows = (ids = emptyArray, merge = false) => (
     }
 
     dispatch({
+      delay: true,
       type: "MICROREACT VIEWER/SELECT ROWS",
       payload: {
         ids,
         merge,
       },
       label: "Filters: Select rows",
-      delay: true,
     });
   }
 );
