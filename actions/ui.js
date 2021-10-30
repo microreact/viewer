@@ -103,6 +103,7 @@ export function addHistoryEntry(source, label) {
   return {
     label: `${source}: ${label}`,
     payload: undefined,
+    savable: false,
     type: "MICROREACT VIEWER/ADD HISTORY ENTRY",
   };
 }
@@ -110,6 +111,7 @@ export function addHistoryEntry(source, label) {
 export function batch(actions) {
   return {
     payload: actions,
+    savable: false,
     type: "MICROREACT VIEWER/BATCH",
   };
 }
@@ -350,6 +352,7 @@ export function loadDocument(payload) {
     return dispatch({
       label: doc.schema ? "Project: Load project" : "Project: Load view",
       payload: doc,
+      savable: false,
       type: "MICROREACT VIEWER/LOAD",
     });
   };
@@ -377,6 +380,7 @@ export function loadView(viewDocument) {
 export function reset() {
   return {
     payload: updateSchema(),
+    savable: false,
     type: "MICROREACT VIEWER/LOAD",
   };
 }
@@ -432,6 +436,7 @@ export function query(updater) {
   return {
     delay: true,
     payload: updater,
+    savable: false,
     type: "MICROREACT VIEWER/QUERY",
   };
 }
@@ -518,6 +523,7 @@ export function verify() {
 
 export function unload() {
   return {
+    savable: false,
     type: "MICROREACT VIEWER/UNLOAD",
   };
 }

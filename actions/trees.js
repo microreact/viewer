@@ -68,6 +68,7 @@ export function setPhylocanvasProps(treeId, updater, origin) {
         undefined,
     payload: updater,
     treeId,
+    savable: (origin !== "viewport" || origin !== "hover"),
     type: "MICROREACT VIEWER/SET PHYLOCANVAS PROPS",
   };
 }

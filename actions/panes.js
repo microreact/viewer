@@ -125,6 +125,7 @@ export function setLayoutModel(model) {
     group: "layout model",
     label: model.actionLabel ? `Layout: ${model.actionLabel}` : undefined,
     payload: model.toJson(),
+    savable: false,
     type: "MICROREACT VIEWER/SET LAYOUT MODEL",
   };
 }
