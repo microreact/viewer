@@ -57,12 +57,14 @@ export function setSelectionBreakdownField(field) {
     group: "Filters/selection breakdown field",
     label: `Filters: Set selection breakdown column to ${field}`,
     payload: field,
+    savable: false,
     type: "MICROREACT VIEWER/SET SELECTION BREAKDOWN FIELD",
   };
 }
 
 export function setFieldFilter(field, operator, value) {
   return {
+    delay: true,
     type: "MICROREACT VIEWER/SET FIELD FILTER",
     payload: {
       field,
@@ -71,7 +73,6 @@ export function setFieldFilter(field, operator, value) {
     },
     label: `Filters: Change column ${field} filter`,
     group: `Filters/field ${field}`,
-    delay: true,
   };
 }
 
