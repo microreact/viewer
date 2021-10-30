@@ -20,6 +20,7 @@ export function addGeoData(mapId, fileId, options = {}) {
 
 export function addGeographicCoordinatesMap(title, latitudeField, longitudeField, unit) {
   return {
+    delay: true,
     type: "MICROREACT VIEWER/ADD MAP",
     payload: {
       title,
@@ -29,7 +30,6 @@ export function addGeographicCoordinatesMap(title, latitudeField, longitudeField
       longitudeField,
     },
     label: "Map: Add geographical map",
-    delay: true,
   };
 }
 
