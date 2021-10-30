@@ -118,8 +118,8 @@ export const resetNetworkFilters = () => ({
 });
 
 export const resetTableFilters = () => ({
-  group: "Filters/reset",
   delay: true,
+  group: "Filters/reset",
   label: "Filters: Reset table filters",
   payload: null,
   type: "MICROREACT VIEWER/RESET TABLE FILTERS",
