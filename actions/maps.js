@@ -108,11 +108,11 @@ export function setTrackViewport(mapId, isActive) {
 
 export function setViewport(mapId, viewport) {
   return {
-    type: "MICROREACT VIEWER/SET MAP VIEWPORT",
     label: "Map: Pan/zoom map",
     group: `${mapId}/viewport`,
     mapId,
     payload: viewport,
+    type: "MICROREACT VIEWER/SET MAP VIEWPORT",
   };
 }
 
