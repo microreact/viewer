@@ -67,12 +67,12 @@ export function setFieldFilter(field, operator, value) {
     delay: true,
     label: `Filters: Change column ${field} filter`,
     group: `Filters/field ${field}`,
-    type: "MICROREACT VIEWER/SET FIELD FILTER",
     payload: {
       field,
       operator,
       value,
     },
+    type: "MICROREACT VIEWER/SET FIELD FILTER",
   };
 }
 
