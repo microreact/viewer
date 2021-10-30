@@ -5,6 +5,7 @@ import { selectRows } from "./filters";
 
 export function addGeoData(mapId, fileId, options = {}) {
   return {
+    delay: true,
     type: "MICROREACT VIEWER/ADD GEO DATA",
     mapId,
     payload: {
@@ -14,7 +15,6 @@ export function addGeoData(mapId, fileId, options = {}) {
       linkPropertyName: options.linkPropertyName,
     },
     label: "Map: Add geographical features",
-    delay: true,
   };
 }
 
