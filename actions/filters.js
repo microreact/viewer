@@ -102,11 +102,11 @@ export const resetAllFilters = () => ({
 });
 
 export const resetMapFilters = () => ({
-  type: "MICROREACT VIEWER/RESET MAP FILTERS",
   payload: null,
   label: "Filters: Reset map filters",
   group: "Filters/reset",
   delay: true,
+  type: "MICROREACT VIEWER/RESET MAP FILTERS",
 });
 
 export const resetNetworkFilters = () => ({
