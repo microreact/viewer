@@ -72,6 +72,7 @@ export function setFieldFilter(field, operator, value) {
       operator,
       value,
     },
+    savable: false,
     type: "MICROREACT VIEWER/SET FIELD FILTER",
   };
 }
