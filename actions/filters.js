@@ -94,8 +94,8 @@ export const setSearchValue = (value) => ({
 });
 
 export const resetAllFilters = () => ({
-  group: "Filters/reset",
   delay: true,
+  group: "Filters/reset",
   label: "Filters: Reset all filters",
   payload: null,
   type: "MICROREACT VIEWER/RESET ALL FILTERS",
