@@ -77,11 +77,11 @@ export function setFieldFilter(field, operator, value) {
 }
 
 export const setSearchOperator = (operator) => ({
-  type: "MICROREACT VIEWER/SET SEARCH OPERATOR",
   payload: operator,
   label: "Filters: Change search filter",
   group: "Filters/search",
   delay: true,
+  type: "MICROREACT VIEWER/SET SEARCH OPERATOR",
 });
 
 export const setSearchValue = (value) => ({
