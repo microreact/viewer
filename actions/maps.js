@@ -112,6 +112,7 @@ export function setViewport(mapId, viewport) {
     label: "Map: Pan/zoom map",
     mapId,
     payload: viewport,
+    savable: false,
     type: "MICROREACT VIEWER/SET MAP VIEWPORT",
   };
 }
