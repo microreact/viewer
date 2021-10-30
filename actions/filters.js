@@ -20,6 +20,7 @@ export const selectRows = (ids = emptyArray, merge = false) => (
         ids,
         merge,
       },
+      savable: false,
       type: "MICROREACT VIEWER/SELECT ROWS",
     });
   }
