@@ -100,9 +100,9 @@ export function setTrackViewport(mapId, isActive) {
     delay: true,
     group: `${mapId}/trackViewport`,
     label: "Map: Toggle filter on current viewport",
-    type: "MICROREACT VIEWER/SET MAP TRACK VIEWPORT",
     mapId,
     payload: isActive,
+    type: "MICROREACT VIEWER/SET MAP TRACK VIEWPORT",
   };
 }
 
