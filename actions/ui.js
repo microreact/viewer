@@ -101,9 +101,9 @@ export function addFiles(rawFiles, paneId) {
 
 export function addHistoryEntry(source, label) {
   return {
-    type: "MICROREACT VIEWER/ADD HISTORY ENTRY",
     label: `${source}: ${label}`,
     payload: undefined,
+    type: "MICROREACT VIEWER/ADD HISTORY ENTRY",
   };
 }
 
