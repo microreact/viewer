@@ -79,6 +79,7 @@ export const selectItem = (chartId, item, merge) => (
 
 export const update = (chartId, key, value) => ({
   type: "MICROREACT VIEWER/UPDATE CHART",
+  delay: true,
   chartId,
   label:
     (key === "type") ? `Chart: Set chart type to ${value}` :
@@ -88,7 +89,6 @@ export const update = (chartId, key, value) => ({
             (key === "seriesStacking") ? `Chart: Set series stacking to ${value}` :
               (key === "interpolate") ? `Chart: Set interpolate to ${value}` :
                 undefined,
-  delay: true,
   payload: { [key]: value },
 });
 
