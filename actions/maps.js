@@ -35,11 +35,11 @@ export function addGeographicCoordinatesMap(title, latitudeField, longitudeField
 
 export function addMap(paneId, title) {
   return {
-    type: "MICROREACT VIEWER/ADD MAP",
     payload: {
       paneId,
       title: title || "Map",
     },
+    type: "MICROREACT VIEWER/ADD MAP",
   };
 }
 
