@@ -376,8 +376,8 @@ export function loadView(viewDocument) {
 
 export function reset() {
   return {
-    type: "MICROREACT VIEWER/LOAD",
     payload: updateSchema(),
+    type: "MICROREACT VIEWER/LOAD",
   };
 }
 
