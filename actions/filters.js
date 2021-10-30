@@ -134,8 +134,8 @@ export const resetTimelineFilters = () => ({
 });
 
 export const resetTreeFilters = () => ({
-  group: "Filters/reset",
   delay: true,
+  group: "Filters/reset",
   label: "Filters: Reset tree filters",
   payload: null,
   type: "MICROREACT VIEWER/RESET TREE FILTERS",
