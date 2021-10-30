@@ -4,7 +4,7 @@ import { connectToPresentState } from "../utils/state";
 
 function mapStateToProps(state) {
   return {
-    isLoading: state.config.loading,
+    isBuzy: state.config.isBuzy,
   };
 }
 
