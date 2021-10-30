@@ -72,7 +72,6 @@ export function setFieldFilter(field, operator, value) {
       operator,
       value,
     },
-    savable: false,
     type: "MICROREACT VIEWER/SET FIELD FILTER",
   };
 }
@@ -82,7 +81,6 @@ export const setSearchOperator = (operator) => ({
   group: "Filters/search",
   label: "Filters: Change search filter",
   payload: operator,
-  savable: false,
   type: "MICROREACT VIEWER/SET SEARCH OPERATOR",
 });
 
@@ -91,7 +89,6 @@ export const setSearchValue = (value) => ({
   group: "Filters/search",
   label: "Filters: Change search filter",
   payload: value,
-  savable: false,
   type: "MICROREACT VIEWER/SET SEARCH VALUE",
 });
 
@@ -100,7 +97,6 @@ export const resetAllFilters = () => ({
   group: "Filters/reset",
   label: "Filters: Reset all filters",
   payload: null,
-  savable: false,
   type: "MICROREACT VIEWER/RESET ALL FILTERS",
 });
 
@@ -109,7 +105,6 @@ export const resetMapFilters = () => ({
   group: "Filters/reset",
   label: "Filters: Reset map filters",
   payload: null,
-  savable: false,
   type: "MICROREACT VIEWER/RESET MAP FILTERS",
 });
 
@@ -118,7 +113,6 @@ export const resetNetworkFilters = () => ({
   group: "Filters/reset",
   label: "Filters: Reset network filters",
   payload: null,
-  savable: false,
   type: "MICROREACT VIEWER/RESET NETWORK FILTERS",
 });
 
@@ -127,7 +121,6 @@ export const resetTableFilters = () => ({
   group: "Filters/reset",
   label: "Filters: Reset table filters",
   payload: null,
-  savable: false,
   type: "MICROREACT VIEWER/RESET TABLE FILTERS",
 });
 
@@ -136,7 +129,6 @@ export const resetTimelineFilters = () => ({
   group: "Filters/reset",
   label: "Filters: Reset timeline filters",
   payload: null,
-  savable: false,
   type: "MICROREACT VIEWER/RESET TIMELINE FILTERS",
 });
 
@@ -145,6 +137,5 @@ export const resetTreeFilters = () => ({
   group: "Filters/reset",
   label: "Filters: Reset tree filters",
   payload: null,
-  savable: false,
   type: "MICROREACT VIEWER/RESET TREE FILTERS",
 });
