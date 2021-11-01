@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch, { treeId }) => ({
   onAddHistoryEntry: (label) => dispatch(addHistoryEntry("Tree", label)),
   onAlignLabelsChange: (value) => dispatch(update(treeId, "alignLabels", value)),
   onFilterChange: (ids, path) => dispatch(setTreeFilter(treeId, ids, path)),
-  onPhylocanvasStateChange: (updater, event) => dispatch(setPhylocanvasProps(treeId, updater, event)),
+  onPhylocanvasPropsChange: (updater, event) => dispatch(setPhylocanvasProps(treeId, updater, event)),
   onSelectRows: (ids, merge) => dispatch(selectRows(ids, merge)),
   onShowLeafLabelsChange: (value) => dispatch(update(treeId, "showLeafLabels", value)),
 });
