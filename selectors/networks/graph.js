@@ -35,29 +35,35 @@ const graphSelector = createKeyedStateSelector(
       const i = parsedData.nodes.indexOf(node);
 
       const nodeRows = rowsByNodeId.get(node.id);
-      const nodeStyle = rowStyles[nodeRows[0][0]];
-      const isActive = (!filteredIds || nodeRows.some((row) => filteredIds.has(row[0])));
-      nodes.push({
-        id: node.id,
-        isActive,
-        isHighlighted: highlightedIds.has(node.id),
-        label: isActive ? nodeStyle.label : "",
-        size: 1,
-        style: nodeStyle,
-        weight: 1,
-        x: (layout ? layout[node.id].x : Math.cos(i * step)) * scale,
-        y: (layout ? layout[node.id].y : Math.sin(i * step)) * scale,
-      });
+      if (nodeRows) {
+        const nodeStyle = rowStyles[nodeRows[0][0]];
+        const isActive = (!filteredIds || nodeRows.some((row) => filteredIds.has(row[0])));
+        nodes.push({
+          id: node.id,
+          isActive,
+          isHighlighted: highlightedIds.has(node.id),
+          label: isActive ? nodeStyle.label : "",
+          size: 1,
+          style: nodeStyle,
+          weight: 1,
+          x: (layout ? layout[node.id].x : Math.cos(i * step)) * scale,
+          y: (layout ? layout[node.id].y : Math.sin(i * step)) * scale,
+        });
+      }
     }
 
     const edges = [];
     for (const edge of parsedData.edges) {
-      edges.push({
-        id: edge.id,
-        source: edge.from,
-        target: edge.to,
-        style: edgeStyles[edge.id],
-      });
+      const fromNodeRows = rowsByNodeId.get(edge.from);
+      const toNodeRows = rowsByNodeId.get(edge.to);
+      if (fromNodeRows && toNodeRows) {
+        edges.push({
+          id: edge.id,
+          source: edge.from,
+          target: edge.to,
+          style: edgeStyles[edge.id],
+        });
+      }
     }
 
     return { nodes, edges };
