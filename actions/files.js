@@ -16,6 +16,7 @@ export const addFile = (fileDescriptor) => ({
 export function setFileContent(file) {
   return {
     payload: file,
+    savable: false,
     type: "MICROREACT VIEWER/UPDATE FILE",
   };
 }

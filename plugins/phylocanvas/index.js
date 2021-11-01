@@ -215,7 +215,7 @@ export default function (treePane) {
     // Moved to componentDidMount to avoid updating the store when tree loads
     // tree.setProps = (updater) => {
     //   // console.debug('setState', Object.keys(updater));
-    //   component.props.onPhylocanvasStateChange(updater);
+    //   component.props.onPhylocanvasPropsChange(updater);
     // };
   };
 }

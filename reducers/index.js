@@ -38,12 +38,9 @@ const combinedReducer = combineReducers({
 });
 
 function rootReducer(state = {}, action) {
-  // console.debug("action", action.type);
   let nextState = state;
   if (action.type === "MICROREACT VIEWER/BATCH") {
-    // console.time("batch")
     nextState = action.payload.reduce(combinedReducer, state);
-    // console.timeEnd("batch")
   }
   else {
     nextState = combinedReducer(state, action);
@@ -53,6 +50,12 @@ function rootReducer(state = {}, action) {
   if (label !== nextState.config.label) {
     nextState.config = { ...nextState.config };
     nextState.config.label = label;
+  }
+
+  if (action.type.startsWith("MICROREACT VIEWER/") && action.savable !== false && !nextState.config.isDirty) {
+    console.log({action})
+    nextState.config = { ...nextState.config };
+    nextState.config.isDirty = true;
   }
 
   return nextState;

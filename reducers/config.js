@@ -4,6 +4,7 @@ import defaults from "../defaults";
 const initialState = {
   editor: null,
   isBuzy: false,
+  isDirty: false,
   mapboxApiAccessToken: null,
   pending: null,
   readOnly: false,
@@ -19,6 +20,7 @@ export default (state = initialState, action) => {
         ...(action.payload.config || emptyObject),
         editor: initialState.editor,
         isBuzy: initialState.isBuzy,
+        isDirty: initialState.isDirty,
       };
       if (action.payload?.query?.ui === "edit") {
         nextState.editor = { mode: "edit" };
