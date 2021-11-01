@@ -29,7 +29,7 @@ class TreePane extends React.PureComponent {
     onAlignLabelsChange: PropTypes.func.isRequired,
     onFilterChange: PropTypes.func.isRequired,
     // onPhylocanvasInitialise: PropTypes.func.isRequired,
-    onPhylocanvasStateChange: PropTypes.func.isRequired,
+    onPhylocanvasPropsChange: PropTypes.func.isRequired,
     onSelectRows: PropTypes.func.isRequired,
     onShowLeafLabelsChange: PropTypes.func.isRequired,
     phylocanvasProps: PropTypes.object,
@@ -50,7 +50,7 @@ class TreePane extends React.PureComponent {
 
     this.tree.renderLasso();
 
-    this.tree.setProps = this.props.onPhylocanvasStateChange;
+    this.tree.setProps = this.props.onPhylocanvasPropsChange;
 
     if (this.props.phylocanvasProps.scale && !this.props.phylocanvasProps.transform) {
       this.tree.view.style.visibility = "hidden";
