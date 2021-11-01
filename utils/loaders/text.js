@@ -44,5 +44,5 @@ export async function loadTextFile(fileBlobOrUrl, settings, onProgress) {
     onProgress && onProgress(bytesUsed);
   }
 
-  return data.join();
+  return data.join("");
 }
