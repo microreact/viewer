@@ -17,6 +17,7 @@ export default (state = initialState, action) => {
       const nextState = {
         ...state,
         ...(action.payload.config || emptyObject),
+        editor: initialState.editor,
         isBuzy: initialState.isBuzy,
       };
       if (action.payload?.query?.ui === "edit") {
