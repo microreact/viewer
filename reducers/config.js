@@ -17,7 +17,7 @@ export default (state = initialState, action) => {
       const nextState = {
         ...state,
         ...(action.payload.config || emptyObject),
-        isBuzy: false,
+        isBuzy: initialState.isBuzy,
       };
       if (action.payload?.query?.ui === "edit") {
         nextState.editor = { mode: "edit" };
