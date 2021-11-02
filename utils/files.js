@@ -29,7 +29,7 @@ export const FileKinds = [
     nameValidator: /\.(csv|tsv)$/i,
     format: "text/csv",
     type: "data",
-    name: "Data (CSV)",
+    name: "Data (CSV or TSV)",
     linkable: true,
   },
   {
