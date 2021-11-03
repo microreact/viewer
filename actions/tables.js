@@ -1,10 +1,15 @@
 /* eslint-disable no-use-before-define */
+import Papaparse from "papaparse";
 
 import fullDatasetSelector from "../selectors/datasets/full-dataset";
 import tableStateSelector from "../selectors/tables/table-state";
+import paneNameSelector from "../selectors/panes/pane-name";
 import { getPresentState } from "../utils/state";
 
 import { measureWidth } from "../utils/text";
+import { normaliseFilename } from "../utils/files";
+import { downloadDataUrl } from "../utils/downloads";
+import tableDataSelector from "../selectors/tables/table-data";
 
 export function addTable(paneId, title, fileId, columns) {
   return {
@@ -15,6 +20,27 @@ export function addTable(paneId, title, fileId, columns) {
       columns,
       file: fileId,
     },
+  };
+}
+
+export function downloadAsCsv(tableId) {
+  return (dispatch, getState) => {
+    const state = getPresentState(getState());
+    const [rows] = tableDataSelector(state, tableId);
+    const name = paneNameSelector(state, tableId);
+    const tableColumns = state.tables[tableId].columns.map((x) => x.field);
+    const csv = Papaparse.unparse(
+      rows,
+      {
+        quotes: true,
+        columns: tableColumns,
+      }
+    );
+    downloadDataUrl(
+      csv,
+      `${normaliseFilename(name)}.csv`,
+      "text/csv",
+    );
   };
 }
 

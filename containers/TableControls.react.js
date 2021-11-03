@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 
-import { update, setVisibleColumns } from "../actions/tables";
+import { update, setVisibleColumns, downloadAsCsv } from "../actions/tables";
+import { openPaneEditor } from "../actions/ui";
 
 import TableControls from "../components/TableControls.react";
 import dataColumnsSelector from "../selectors/datasets/data-columns";
@@ -20,6 +21,8 @@ const mapStateToProps = (state, { tableId }) => {
 const mapDispatchToProps = (dispatch, { tableId }) => ({
   onControlsChange: (value) => dispatch(update(tableId, "controls", value)),
   onDisplayModeChange: (value) => dispatch(update(tableId, "displayMode", value)),
+  onDownloadCsv: () => dispatch(downloadAsCsv(tableId)),
+  onEditPane: () => dispatch(openPaneEditor(tableId)),
   onShowSelecttionChange: (value) => dispatch(update(tableId, "showSelection", value)),
   onVisibleFieldsChange: (fields) => dispatch(setVisibleColumns(tableId, fields)),
 });
