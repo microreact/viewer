@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import React from "react";
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+// import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 
 import "../css/ui-side-pane-header.css";
 
-import UiIconButton from "./UiIconButton.react";
+// import UiIconButton from "./UiIconButton.react";
 
 const UiSidePaneHeader = React.memo(
   (props) => {
@@ -17,11 +17,13 @@ const UiSidePaneHeader = React.memo(
         { props.title }
         <div className="mr-actions">
           { props.children }
+          {/*
           <UiIconButton
             onClick={props.onClose}
           >
             <CloseRoundedIcon />
           </UiIconButton>
+          */}
         </div>
       </ListSubheader>
     );
