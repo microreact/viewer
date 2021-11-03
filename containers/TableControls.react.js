@@ -20,8 +20,8 @@ const mapStateToProps = (state, { tableId }) => {
 const mapDispatchToProps = (dispatch, { tableId }) => ({
   onControlsChange: (value) => dispatch(update(tableId, "controls", value)),
   onDisplayModeChange: (value) => dispatch(update(tableId, "displayMode", value)),
-  onVisibleFieldsChange: (fields) => dispatch(setVisibleColumns(tableId, fields)),
   onShowSelecttionChange: (value) => dispatch(update(tableId, "showSelection", value)),
+  onVisibleFieldsChange: (fields) => dispatch(setVisibleColumns(tableId, fields)),
 });
 
 export default connect((state, props) => mapStateToProps(state.present, props), mapDispatchToProps)(TableControls);
