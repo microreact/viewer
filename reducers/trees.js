@@ -33,6 +33,7 @@ const initialState = {
   styleLeafLabels: false,
   styleNodeEdges: false,
   type: "rc",
+  hideOrphanDataRows: false,
 };
 
 const queryPropMap = {

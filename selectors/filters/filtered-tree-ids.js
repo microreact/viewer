@@ -1,7 +1,9 @@
 import { createCombinedStateSelector, createKeyedStateSelector } from "../../utils/state";
 import { intersect } from "../../utils/sets";
+import { newickLabels } from "../../utils/trees";
 
 import rowsByLabelSelector from "../trees/rows-by-label";
+import phylocanvasSourceSelector from "../trees/phylocanvas-source";
 
 function labelsToRowIds(labels, rowsByLabel) {
   const ids = new Set();
@@ -45,24 +47,40 @@ const subtreeIdsSelector = createKeyedStateSelector(
   },
 );
 
-const treeActiveIdsSelector = createKeyedStateSelector(
-  (state, treeId) => treeIdsSelector(state, treeId),
-  (state, treeId) => subtreeIdsSelector(state, treeId),
+const allLeafIdsSelector = createKeyedStateSelector(
+  (state, treeId) => phylocanvasSourceSelector(state, treeId),
+  (state, treeId) => rowsByLabelSelector(state, treeId),
   (
-    ids,
-    subtreeIds,
+    treeFileContent,
+    rowsByLabel,
   ) => {
-    if (ids) {
-      return ids;
+    if (treeFileContent && rowsByLabel) {
+      const labels = newickLabels(treeFileContent);
+      return labelsToRowIds(labels, rowsByLabel);
     }
-
-    if (subtreeIds) {
-      return subtreeIds;
+    else {
+      return undefined;
     }
-
-    return undefined;
-  }
+  },
 );
+
+const treeActiveIdsSelector = (state, treeId) => {
+  const ids = treeIdsSelector(state, treeId);
+  if (ids) {
+    return ids;
+  }
+
+  const subtreeIds = subtreeIdsSelector(state, treeId);
+  if (subtreeIds) {
+    return subtreeIds;
+  }
+
+  if (state.trees[treeId].hideOrphanDataRows) {
+    return allLeafIdsSelector(state, treeId);
+  }
+
+  return undefined;
+};
 
 const filteredTreeIdsSelector = createCombinedStateSelector(
   (state) => state.trees,
