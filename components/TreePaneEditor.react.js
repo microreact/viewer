@@ -9,19 +9,32 @@ import { newickLabels } from "../utils/trees";
 import FileEditor from "../containers/FileEditor.react";
 import MiniTable from "./MiniTable.react";
 import UiCombobox from "./UiCombobox.react";
+import UiToggleSwitch from "./UiToggleSwitch.react";
 
 class TreePaneEditor extends React.PureComponent {
 
-  allowedFieldsSelector = createSelector(
-    (props) => props.mergedDataset,
+  leafLabelsSelector = createSelector(
     (props) => props.treeFile?._content,
     (
-      dataFile,
       treeFileContent,
     ) => {
-      const allowedFields = [];
       if (treeFileContent) {
         const treeLabels = new Set(newickLabels(treeFileContent));
+        return treeLabels;
+      }
+      return undefined;
+    },
+  )
+
+  allowedFieldsSelector = createSelector(
+    (props) => props.mergedDataset,
+    this.leafLabelsSelector,
+    (
+      dataFile,
+      treeLabels,
+    ) => {
+      const allowedFields = [];
+      if (treeLabels) {
         for (const field of dataFile.columns) {
           for (const row of dataFile.rows) {
             if (treeLabels.has(row[field.name]?.toString())) {
@@ -34,6 +47,15 @@ class TreePaneEditor extends React.PureComponent {
       return allowedFields;
     },
   )
+
+  numberOfOrphanDataRows = () => {
+    const mergedDataset = this.props.mergedDataset;
+    const treeLabels = this.leafLabelsSelector(this.props);
+    if (treeLabels) {
+      return mergedDataset.rows.length - treeLabels.size;
+    }
+    return 0;
+  }
 
   defaultLabelField = () => {
     const { props } = this;
@@ -56,6 +78,7 @@ class TreePaneEditor extends React.PureComponent {
   render() {
     const { props } = this;
     const { treeState } = props;
+    const numberOfOrphanDataRows = this.numberOfOrphanDataRows();
 
     return (
       <React.Fragment>
@@ -93,6 +116,20 @@ class TreePaneEditor extends React.PureComponent {
                   onHeaderClick={(header) => props.onTreePropChange("labelField", header.name)}
                 />
             </Paper>
+          )
+        }
+
+        {
+          (numberOfOrphanDataRows > 0) && (
+            <UiToggleSwitch
+              label={
+                <React.Fragment>
+                  Hide <strong>{numberOfOrphanDataRows}</strong> data {numberOfOrphanDataRows === 1 ? "entry" : "entries"} without matching tree leaves
+                </React.Fragment>
+              }
+              onChange={(value) => props.onTreePropChange("hideOrphanDataRows", value)}
+              value={treeState.hideOrphanDataRows}
+            />
           )
         }
 
