@@ -30,7 +30,7 @@ const dataColumnsSelector = createSelector(
           ),
           name: item.name,
           format: item.format,
-          normalised: item.name.toLowerCase(),
+          normalised: item.name.trim().toLowerCase(),
           dataType,
           rawDataType,
           isNumeric: (dataType === "number"),
