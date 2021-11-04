@@ -10,7 +10,7 @@ import AddPaneMenu from "../containers/AddPaneMenu.react";
 import DownloadFilesMenuButton from "./DownloadFilesMenuButton.react";
 import InfoMenu from "../containers/InfoMenu.react";
 import SearchBox from "../containers/SearchBox.react";
-import StylesMenu from "./StylesMenu.react";
+import StylesMenuTrigger from "./StylesMenuTrigger.react";
 
 class HeaderBar extends React.PureComponent {
 
@@ -41,7 +41,7 @@ class HeaderBar extends React.PureComponent {
               (!props.readOnly) && <AddPaneMenu />
             }
 
-            <StylesMenu />
+            <StylesMenuTrigger />
 
             &nbsp;
 
