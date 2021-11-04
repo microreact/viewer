@@ -19,6 +19,7 @@ const dataColumnsByFieldMapSelector = createSelector(
 
     for (const item of columns) {
       map.set(item.name, item);
+      map.set(item.normalised, item);
     }
 
     return map;

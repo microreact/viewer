@@ -24,7 +24,7 @@ const defaultViewportSelector = createKeyedStateSelector(
       altitude: 1.5,
     });
 
-    if (markers.length) {
+    if (markers?.length) {
       //#region Find a bounding box which fits all markers
       let north = markers[0];
       let south = markers[0];
