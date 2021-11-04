@@ -111,6 +111,21 @@ export function summarise(array) {
   }
 }
 
+export function sortComparator(property) {
+  return (a, b) => {
+    return a?.[property]?.toLowerCase()?.localeCompare(
+      b?.[property]?.toLowerCase()
+    );
+    // if (a[property] > b[property]) {
+    //   return 1;
+    // }
+    // if (a[property] < b[property]) {
+    //   return -1;
+    // }
+    // return 0;
+  };
+}
+
 export function swap(array, oldInex, newIndex) {
   const copy = array.slice();
   copy[newIndex] = array[oldInex];

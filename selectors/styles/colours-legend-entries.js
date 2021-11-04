@@ -1,4 +1,5 @@
 import { createSelector } from "reselect";
+import { sortComparator } from "../../utils/arrays";
 import { toText } from "../../utils/text";
 
 import dataColumnByFieldSelector from "../datasets/data-column-by-field";
@@ -26,15 +27,7 @@ const coloursLegendEntriesSelector = createSelector(
       }
 
       // order the list of groups by label
-      entries.sort((a, b) => {
-        if (a.label > b.label) {
-          return 1;
-        }
-        if (a.label < b.label) {
-          return -1;
-        }
-        return 0;
-      });
+      entries.sort(sortComparator("label"));
     }
 
     else if (colourMap.scale === "binned") {

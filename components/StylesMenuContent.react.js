@@ -30,6 +30,7 @@ class StylesMenuContent extends React.PureComponent {
           label="Colour Column"
           options={props.colourableFields}
           onChange={(item) => props.onColourByFieldChange(item.name)}
+          groupBy={(x) => ((x.isAutocoloured) ? "Autocolour" : "User Defined")}
           value={props.colourByDataField}
         />
 
