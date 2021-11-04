@@ -5,6 +5,7 @@ import {
   setDefaultColour,
 } from "../actions/styles";
 
+import colourableDataFieldsSelector from "../selectors/styles/colourable-data-fields";
 import coloursDataColumnSelector from "../selectors/styles/colours-data-column";
 import dataColumnsSelector from "../selectors/datasets/data-columns";
 import labelsDataColumnSelector from "../selectors/styles/labels-data-column";
@@ -18,7 +19,7 @@ const mapStateToProps = (state) => {
   const colourByDataField = coloursDataColumnSelector(state);
 
   return {
-    colourableFields: dataColumnsSelector(state),
+    colourableFields: colourableDataFieldsSelector(state),
     colourByDataField,
     defaultColour: state.styles.defaultColour,
     labelByDataField: labelsDataColumnSelector(state),
