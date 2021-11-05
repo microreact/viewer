@@ -8,6 +8,7 @@ import React from "react";
 import "../css/ui-popover-menu.css";
 import { getContainerElement } from "../utils/html";
 import { emptyObject } from "../constants";
+import { nextTick } from "../utils/browser";
 
 class UiPopoverMenu extends React.PureComponent {
 
@@ -100,7 +101,7 @@ class UiPopoverMenu extends React.PureComponent {
 
           <div
             className="mr-ui-popover-click-trap"
-            onClick={props.hideOnClick ? this.close : undefined}
+            onClick={props.hideOnClick ? () => nextTick(this.close) : undefined}
           >
             { (this.state.isOpen) ? props.children : null }
             { (this.state.isOpen && props.content) ? React.createElement(props.content) : null }
