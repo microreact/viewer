@@ -47,13 +47,15 @@ const metadataValuesSelector = createSelector(
         const row = labelRows[0];
         for (const colourFieldName of Object.keys(colourMapsByField)) {
           const dataColumn = dataColumnsByFieldMap.get(colourFieldName);
-          const dataColumnLabel = dataColumn.label || dataColumn.name;
-          const colourMap = colourMapsByField[colourFieldName];
+          if (dataColumn) {
+            const dataColumnLabel = dataColumn.label || dataColumn.name;
+            const colourMap = colourMapsByField[colourFieldName];
 
-          metadata[label][dataColumnLabel] = {
-            colour: (colourMap.get && colourMap.get(row[colourFieldName])) || "transparent",
-            label: row[colourFieldName],
-          };
+            metadata[label][dataColumnLabel] = {
+              colour: (colourMap.get && colourMap.get(row[colourFieldName])) || "transparent",
+              label: row[colourFieldName],
+            };
+          }
         }
       }
     }
