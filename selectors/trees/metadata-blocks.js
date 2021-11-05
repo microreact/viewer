@@ -16,7 +16,9 @@ const metadataBlocksSelector = createSelector(
 
     for (const field of blocks) {
       const dataColumn = dataColumnsByFieldMap.get(field);
-      labels.push(dataColumn.label || dataColumn.name);
+      if (dataColumn) {
+        labels.push(dataColumn.label || dataColumn.name);
+      }
     }
 
     return labels;

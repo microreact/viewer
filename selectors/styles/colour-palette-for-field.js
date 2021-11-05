@@ -27,7 +27,7 @@ const colourPaletteForFieldSelector = (
 
   const sourceDataColumn = dataColumnByFieldSelector(state, sourceFieldName);
 
-  if (sourceDataColumn.colourPalette) {
+  if (sourceDataColumn?.colourPalette) {
     const palette = colourPalettes.find((x) => x.name === sourceDataColumn.colourPalette);
     if (palette) {
       return palette;
