@@ -1,6 +1,6 @@
 {
   "name": "microreact-viewer",
-  "version": "5.42.0",
+  "version": "6.0.0",
   "description": "Microreact Viewer allows you to visualise and explore your data using trees, maps and timelines.",
   "main": "index.js",
   "scripts": {},
