@@ -21,36 +21,12 @@ class AddFilesStep extends React.PureComponent {
 
   static displayName = "AddFilesStep"
 
-  static propTypes = {
-    data: PropTypes.object,
-  }
-
-  state = {
-    data: {},
-  }
-
-  getDerivedData = () => {
-    return {
-      files: this.props.pendingFiles,
-      ...this.state.data,
-    };
-  }
-
-  setData = (updater) => {
-    this.setState({
-      data: {
-        ...this.state.data,
-        ...updater,
-      },
-    });
-  }
-
   handleContinue = () => {
     const { props } = this;
 
-    const data = this.getDerivedData();
+    const files = props.pendingFiles;
 
-    for (const file of data.files) {
+    for (const file of files) {
       if (
         typeof file.url === "string"
         &&
@@ -70,13 +46,13 @@ class AddFilesStep extends React.PureComponent {
       }
     }
 
-    return props.onAddFiles(data.files.filter((x) => x.url !== ""));
+    return props.onAddFiles(files.filter((x) => x.url !== ""));
   }
 
   filesSelector = createSelector(
-    (data) => data.files,
-    (dataFiles) => {
-      const files = [ ...dataFiles ];
+    (props) => props.pendingFiles,
+    (pendingFiles) => {
+      const files = [ ...pendingFiles ];
 
       if (files.length === 0 || files[files.length - 1].url !== "") {
         files.push({
@@ -90,15 +66,23 @@ class AddFilesStep extends React.PureComponent {
   )
 
   handleFileChange = (file, key, value) => {
-    const data = this.getDerivedData();
-    const files = this.filesSelector(data);
-    files[files.indexOf(file)] = {
-      ...files[files.indexOf(file)],
-      [key]: value,
-    };
-    this.setData({
-      files,
-    });
+    const files = [ ...this.props.pendingFiles ];
+
+    const fileIndex = files.indexOf(file);
+    if (fileIndex >= 0) {
+      files[fileIndex] = {
+        ...files[fileIndex],
+        [key]: value,
+      };
+    }
+    else {
+      files.push({
+        ...file,
+        [key]: value,
+      });
+    }
+
+    this.props.onPendingFileChange(files);
   };
 
   renderFileError(fileId) {
@@ -117,8 +101,7 @@ class AddFilesStep extends React.PureComponent {
 
   render() {
     const { props } = this;
-    const data = this.getDerivedData();
-    const files = this.filesSelector(data);
+    const files = this.filesSelector(props);
 
     return (
       <UiDialog

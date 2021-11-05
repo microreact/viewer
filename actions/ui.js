@@ -55,9 +55,17 @@ function createLabelFromFileName(file, allFiles) {
 
 export function addFiles(rawFiles, paneId) {
   return async (dispatch, getState) => {
+    const state = getPresentState(getState());
     dispatch(config({ isBuzy: true }));
 
-    const fileDescriptors = await loadFiles(rawFiles);
+    const filesToLoad = [ ...rawFiles ];
+    for (const pendindFile of (state.config.pendingFiles || emptyArray)) {
+      if (!filesToLoad.find((x) => x.id === pendindFile.id)) {
+        filesToLoad.push(pendindFile);
+      }
+    }
+
+    const fileDescriptors = await loadFiles(filesToLoad);
     if (paneId) {
       for (const file of fileDescriptors) {
         file.paneId = paneId;
@@ -75,8 +83,7 @@ export function addFiles(rawFiles, paneId) {
       }
     }
     else {
-      const state = getPresentState(getState());
-      const nextPendingFiles = [ ...(state.config.pending || emptyArray) ];
+      const nextPendingFiles = [ ...(state.config.pendingFiles || emptyArray) ];
       for (const processedFile of fileDescriptors) {
         const pendingFileIndex = nextPendingFiles.findIndex((x) => x.id === processedFile.id);
         if (pendingFileIndex >= 0) {
@@ -92,7 +99,7 @@ export function addFiles(rawFiles, paneId) {
       dispatch(
         config({
           isBuzy: false,
-          pending: nextPendingFiles,
+          pendingFiles: nextPendingFiles,
         })
       );
     }
@@ -246,7 +253,7 @@ export function commitFiles(fileDescriptors) {
     actions.push(
       config({
         isBuzy: false,
-        pending: undefined,
+        pendingFiles: undefined,
       })
     );
 
@@ -382,6 +389,12 @@ export function reset() {
     savable: false,
     type: "MICROREACT VIEWER/LOAD",
   };
+}
+
+export function setPendingFiles(nextPendingFiles) {
+  return config({
+    pendingFiles: nextPendingFiles,
+  });
 }
 
 export function save() {

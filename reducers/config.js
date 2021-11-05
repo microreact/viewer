@@ -6,7 +6,7 @@ const initialState = {
   isBuzy: false,
   isDirty: false,
   mapboxApiAccessToken: null,
-  pending: null,
+  pendingFiles: null,
   readOnly: false,
   theme: null,
   ...defaults,
