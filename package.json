@@ -27,7 +27,7 @@
     "d3-scale": "^3.2.1",
     "date-fns": "^2.16.1",
     "dayjs": "^1.8.35",
-    "deck.gl": "^8.4.20",
+    "deck.gl": "8.4.20",
     "downloadjs": "^1.4.7",
     "emoji-regex": "^9.0.0",
     "escape-string-regexp": "^1.0.5",
