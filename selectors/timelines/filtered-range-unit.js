@@ -1,10 +1,10 @@
 import { unitFromRange } from "../../utils/datetime";
 import { createKeyedStateSelector } from "../../utils/state";
 import paneSizeSelector from "../panes/pane-size";
-import filteredRangeExtentSelector from "./filtered-range-extent";
+import dataExtentSelector from "./data-extent";
 
 const autoUnitSelector = createKeyedStateSelector(
-  (state, timelineId) => filteredRangeExtentSelector(state, timelineId),
+  (state, timelineId) => dataExtentSelector(state, timelineId),
   (state, timelineId) => paneSizeSelector(state, timelineId),
   (
     filterExtent,
