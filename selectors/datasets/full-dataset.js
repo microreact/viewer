@@ -5,10 +5,35 @@ import mainDatasetConfigSelector from "./main-dataset-config";
 
 import { createFullDataset, mergeBasicDatasets } from "../../utils/datasets";
 import { emptyObject } from "../../constants";
+import { createCombinedStateSelector } from "../../utils/state";
+
+const dataFilesKeysSelector = (state) => {
+  const keys = [];
+  for (const [ key, file ] of Object.entries(state.files)) {
+    if (file.type === "data") {
+      keys.push(key);
+    }
+  }
+  return keys;
+};
+
+const fileSelector = (state, fileId) => state.files[fileId];
+
+const dataFilesSelector = createCombinedStateSelector(
+  dataFilesKeysSelector,
+  fileSelector,
+  (files, keys) => {
+    const filesById = {};
+    for (let index = 0; index < keys.length; index++) {
+      filesById[keys[index]] = files[index];
+    }
+    return filesById;
+  },
+);
 
 const fullDatasetSelector = createSelector(
   (state) => state.datasets,
-  (state) => state.files,
+  dataFilesSelector,
   (state) => mainDatasetConfigSelector(state),
   (state) => idFieldNameSelector(state),
   (
