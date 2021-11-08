@@ -9,6 +9,7 @@ import SkipPreviousRoundedIcon from "@material-ui/icons/SkipPreviousRounded";
 import Slider from "@material-ui/core/Slider";
 import MenuIcon from "@material-ui/icons/Menu";
 import Divider from "@material-ui/core/Divider";
+import { createSelector } from "reselect";
 
 import { timeUnits, timeSpeeds } from "../constants";
 import { DataColumn } from "../utils/prop-types";
@@ -57,18 +58,39 @@ export default class TimelineControls extends React.PureComponent {
     this.stopTimelinePlay();
   }
 
+  marksSelector = createSelector(
+    (props) => props.fullRangeChartData,
+    (
+      { dataset },
+    ) => {
+      const marks = [];
+
+      if (dataset && dataset.length) {
+        for (const binData of dataset) {
+          marks.push(binData.unitStartDate.valueOf());
+        }
+
+        marks.push(dataset[dataset.length - 1].unitEndDate.valueOf());
+      }
+
+      return marks;
+    },
+  )
+
   boundsIndecies = () => {
     const { props } = this;
     const [ lowerTimestamp, upperTimestamp ] = props.silderTemporalRange;
 
+    const marks = this.marksSelector(props);
+
     let lowerIndex;
     let upperIndex;
-    for (const mark of props.timeMarks) {
+    for (const mark of marks) {
       if (lowerIndex === undefined && mark >= lowerTimestamp) {
-        lowerIndex = props.timeMarks.indexOf(mark);
+        lowerIndex = marks.indexOf(mark);
       }
       if (mark <= upperTimestamp) {
-        upperIndex = props.timeMarks.indexOf(mark);
+        upperIndex = marks.indexOf(mark);
       }
     }
 
@@ -85,14 +107,16 @@ export default class TimelineControls extends React.PureComponent {
     const minIndex = lowerIndex + startDelta;
     const maxIndex = upperIndex + endDelta;
 
-    if (minIndex >= 0 && maxIndex <= props.timeMarks.length - 1) {
+    const marks = this.marksSelector(props);
+
+    if (minIndex >= 0 && maxIndex <= marks.length - 1) {
       props.onBoundsChange([
-        props.timeMarks[minIndex],
-        props.timeMarks[maxIndex],
+        marks[minIndex],
+        marks[maxIndex],
       ]);
     }
 
-    return maxIndex >= props.timeMarks.length - 1;
+    return maxIndex >= marks.length - 1;
   }
 
   playTimeline(event) {
@@ -178,7 +202,8 @@ export default class TimelineControls extends React.PureComponent {
               onClick={
                 () => {
                   const [ , upperIndex ] = this.boundsIndecies();
-                  const delta = (props.timeMarks.length - 1) - upperIndex;
+                  const marks = this.marksSelector(props);
+                  const delta = (marks.length - 1) - upperIndex;
                   if (delta > 0) {
                     this.moveBounds(delta, delta);
                   }
@@ -322,6 +347,5 @@ TimelineControls.propTypes = {
   silderTemporalRange: PropTypes.array.isRequired,
   speed: PropTypes.number.isRequired,
   style: PropTypes.string.isRequired,
-  timeMarks: PropTypes.arrayOf(PropTypes.number.isRequired).isRequired,
   unit: PropTypes.string,
 };

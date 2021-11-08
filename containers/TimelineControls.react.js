@@ -2,7 +2,7 @@ import { update, setFilter } from "../actions/timelines";
 import { openPaneEditor } from "../actions/ui";
 
 import dataColumnsSelector from "../selectors/datasets/data-columns";
-import marksSelector from "../selectors/timelines/marks";
+import fullRangeChartDataSelector from "../selectors/timelines/full-range-chart-data";
 import filteredRangeExtentSelector from "../selectors/timelines/filtered-range-extent";
 import filteredRangeUnitSelector from "../selectors/timelines/filtered-range-unit";
 
@@ -21,7 +21,7 @@ const mapStateToProps = (state, { timelineId }) => {
     style: timelineState.style,
     laneField: timelineState.laneField,
     silderTemporalRange: filteredRangeExtentSelector(state, timelineId),
-    timeMarks: marksSelector(state, timelineId),
+    fullRangeChartData: fullRangeChartDataSelector(state, timelineId),
     unit: timelineState.unit,
     dataFields: dataColumnsSelector(state),
     chartUnit: filteredRangeUnitSelector(state, timelineId),
