@@ -37,7 +37,8 @@ const legendsSelector = createSelector(
     }
 
     for (const field of treesMetadataFields) {
-      if (field !== colourColumn?.name) {
+      const dataColumn = columnsByFieldMapSelector.get(field);
+      if (dataColumn && field !== colourColumn?.name) {
         legends.push({
           field,
           type: "colours",
