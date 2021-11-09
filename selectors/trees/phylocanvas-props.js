@@ -71,20 +71,21 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
   ) => {
     return {
       ...phylocanvasProps,
+      blocks: metadataBlocks,
       fontFamily: defaults.fontFamily,
       id: treeId,
       interactive: true,
       labelField: (labelsDataColumn) ? labelsDataColumn.label : null,
-      blocks: metadataBlocks,
       metadata: metadataValues,
+      nodeShape: false,
       padding: 32,
+      scalebar: false,
       selectedIds,
+      shapeBorderAlpha: 0.56,
       size,
       source: phylocanvasSource,
       strokeColour: "#222",
       styles,
-      nodeShape: false,
-      shapeBorderAlpha: 0.56,
     };
   },
 );
