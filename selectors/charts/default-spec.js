@@ -205,7 +205,7 @@ const defaultSpecSelector = createKeyedStateSelector(
             value: 0,
           },
         },
-        stack: false,
+        // stack: false,
       };
     }
     else if (secondaryAxis.mode === "cumulative-frequency") {
@@ -218,6 +218,14 @@ const defaultSpecSelector = createKeyedStateSelector(
       vlSpec.encoding[secondaryAxis.encoding] = {
         field: "--mr-cumulative-frequency",
         type: "quantitative",
+        axis: {
+          tickMinStep: 1,
+          title: "Cumulative number of entries",
+          gridWidth: {
+            condition: { test: "floor(datum.value) === datum.value", value: 1 },
+            value: 0,
+          },
+        },
       };
     }
     else if (secondaryAxis.mode === "sum-of" && secondaryAxis.dataColumn) {
@@ -225,6 +233,14 @@ const defaultSpecSelector = createKeyedStateSelector(
       vlSpec.encoding[secondaryAxis.encoding] = {
         field: "--mr-sum",
         type: "quantitative",
+        axis: {
+          tickMinStep: 1,
+          title: `Sum of ${secondaryAxis.dataColumn.label}`,
+          gridWidth: {
+            condition: { test: "floor(datum.value) === datum.value", value: 1 },
+            value: 0,
+          },
+        },
       };
     }
     else if (secondaryAxis.mode === "cumulative-sum-of" && secondaryAxis.dataColumn) {
@@ -237,6 +253,14 @@ const defaultSpecSelector = createKeyedStateSelector(
       vlSpec.encoding[secondaryAxis.encoding] = {
         field: "--mr-cumulative-sum",
         type: "quantitative",
+        axis: {
+          tickMinStep: 1,
+          title: `Cumulative sum of ${secondaryAxis.dataColumn.label}`,
+          gridWidth: {
+            condition: { test: "floor(datum.value) === datum.value", value: 1 },
+            value: 0,
+          },
+        },
       };
     }
     else if (secondaryAxis.mode === "average-of" && secondaryAxis.dataColumn) {
@@ -244,6 +268,14 @@ const defaultSpecSelector = createKeyedStateSelector(
       vlSpec.encoding[secondaryAxis.encoding] = {
         field: "--mr-average",
         type: "quantitative",
+        axis: {
+          tickMinStep: 1,
+          title: `Average of ${secondaryAxis.dataColumn.label}`,
+          gridWidth: {
+            condition: { test: "floor(datum.value) === datum.value", value: 1 },
+            value: 0,
+          },
+        },
       };
     }
 
