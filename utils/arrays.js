@@ -113,8 +113,8 @@ export function summarise(array) {
 
 export function sortComparator(property) {
   return (a, b) => {
-    return a?.[property]?.toLowerCase()?.localeCompare(
-      b?.[property]?.toLowerCase()
+    return a?.[property]?.toString()?.toLowerCase()?.localeCompare(
+      b?.[property]?.toString()?.toLowerCase()
     );
     // if (a[property] > b[property]) {
     //   return 1;
