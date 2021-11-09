@@ -3,14 +3,26 @@ import { sortComparator } from "../../utils/arrays";
 import { toText } from "../../utils/text";
 
 import dataColumnByFieldSelector from "../datasets/data-column-by-field";
+import selectedRowsSelector from "../filters/selected-rows";
 import colourMapForFieldSelector from "./colour-map-for-field";
+
+function isSelected(rows, field, value) {
+  for (const row of rows) {
+    if (row[field] === value) {
+      return true;
+    }
+  }
+  return false;
+}
 
 const coloursLegendEntriesSelector = createSelector(
   (state, field) => dataColumnByFieldSelector(state, field),
   (state, field) => colourMapForFieldSelector(state, field),
+  (state) => selectedRowsSelector(state),
   (
     dataColumn,
     colourMap,
+    selectedRows,
   ) => {
     const entries = [];
 
@@ -23,6 +35,7 @@ const coloursLegendEntriesSelector = createSelector(
             dataColumn.dataType,
             value,
           ),
+          isSelected: (selectedRows) && isSelected(selectedRows, dataColumn.name, value),
         });
       }
 

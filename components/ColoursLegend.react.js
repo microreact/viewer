@@ -32,6 +32,7 @@ class ColoursLegend extends React.PureComponent {
                         :
                         undefined
                     }
+                    className={item.isSelected ? "mr-selected" : null}
                   >
                     <code
                       style={
