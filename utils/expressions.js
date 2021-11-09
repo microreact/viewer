@@ -48,34 +48,34 @@ export function makePredicate(operator, expression) {
 
     case "greater-than": {
       const filterValue = Number(expression[0]);
-      return (x) => (x.valueOf() > filterValue);
+      return (x) => (x?.valueOf() > filterValue);
     }
 
     case "greater-than-or-equal": {
       const filterValue = Number(expression[0]);
-      return (x) => (x.valueOf() >= filterValue);
+      return (x) => (x?.valueOf() >= filterValue);
     }
 
     case "less-than": {
       const filterValue = Number(expression[0]);
-      return (x) => (x.valueOf() < filterValue);
+      return (x) => (x?.valueOf() < filterValue);
     }
 
     case "less-than-or-equal": {
       const filterValue = Number(expression[0]);
-      return (x) => (x.valueOf() <= filterValue);
+      return (x) => (x?.valueOf() <= filterValue);
     }
 
     case "between": {
       const minValue = Number(expression[0]);
       const maxValue = Number(expression[1]);
-      return (x) => (x.valueOf() >= minValue && x.valueOf() <= maxValue);
+      return (x) => (x?.valueOf() >= minValue && x?.valueOf() <= maxValue);
     }
 
     case "not-between": {
       const minValue = Number(expression[0]);
       const maxValue = Number(expression[1]);
-      return (x) => (x.valueOf() < minValue || x.valueOf() > maxValue);
+      return (x) => (x?.valueOf() < minValue || x?.valueOf() > maxValue);
     }
 
     case "regex": {
