@@ -1,4 +1,4 @@
-import { makePredicate } from "../../utils/search";
+import { makePredicate } from "../../utils/expressions";
 import { createKeyedStateSelector } from "../../utils/state";
 
 import rowsSelector from "../datasets/rows";

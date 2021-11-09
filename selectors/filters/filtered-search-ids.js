@@ -1,6 +1,6 @@
 import { createSelector } from "reselect";
 
-import { makePredicate } from "../../utils/search";
+import { makePredicate } from "../../utils/expressions";
 
 import dataColumnsSelector from "../datasets/data-columns";
 import rowsSelector from "../datasets/rows";
