@@ -61,6 +61,17 @@
   font-weight: 700;
 }
 
+.mr-legend-entries button.mr-selected::after {
+  content: " ";
+  position: absolute;
+  top: 0px;
+  left: -2px;
+  border: 4px #3c7383 solid;
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+}
+
 .mr-legend-entries button:hover,
 .mr-legend-entries button.highlighted {
   background-color: #ECECEC;

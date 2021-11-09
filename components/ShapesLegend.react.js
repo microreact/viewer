@@ -31,6 +31,7 @@ class ShapesLegend extends React.PureComponent {
                       :
                       undefined
                   }
+                  className={item.isSelected ? "mr-selected" : null}
                 >
                   <ShapeSvgImage
                     shape={item.shape}
