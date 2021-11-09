@@ -54,6 +54,7 @@ const chartSpecSelector = createKeyedStateSelector(
           type: "temporal",
           axis: {
             title: null,
+            grid: false,
           },
         },
 
@@ -61,13 +62,16 @@ const chartSpecSelector = createKeyedStateSelector(
           field: "unitEndDate",
           type: "temporal",
           axis: null,
+          grid: false,
         },
 
         y: {
           // aggregate: "sum",
           field: "groupCount",
           type: "quantitative",
-          axis: null,
+          axis: {
+            title: null,
+          },
         },
 
         color: {
