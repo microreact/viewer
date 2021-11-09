@@ -146,11 +146,16 @@ class TreePane extends React.PureComponent {
   }
 
   handleDownloadPNG = () => {
+    const props = this.tree.props;
+    this.tree.props = { ...props, scalebar: true };
+    this.tree.render();
     downloadDataUrl(
       this.tree.exportPNG(),
       "tree.png",
       "image/png",
     );
+    this.tree.props = props;
+    this.tree.render();
   }
 
   handleDownloadSVG = () => {

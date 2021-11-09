@@ -1,4 +1,4 @@
-import PhylocanvasGL, { TreeTypes } from "@phylocanvas/phylocanvas.gl";
+import PhylocanvasGL, { TreeTypes, plugins } from "@phylocanvas/phylocanvas.gl";
 
 import createCanvasLasso from "../canvas-lasso";
 import convertState from "./convert-state";
@@ -23,7 +23,13 @@ const treeTypeLabels = Object.entries(TreeTypes).reduce(
 export default function (treePane) {
   return class Phylocanvas extends PhylocanvasGL {
     constructor(view, props) {
-      super(view, props);
+      super(
+        view,
+        props,
+        [
+          plugins.scalebar,
+        ]
+      );
       const tree = this;
       tree.lasso = createCanvasLasso(
         tree.view,
@@ -144,7 +150,7 @@ export default function (treePane) {
     renderScalebar() {
       const tree = this;
       if (treePane?.scalebarRef?.current) {
-        const scaleValue = 80 / tree.getBranchScale() / tree.getScale();
+        const scaleValue = 88 / tree.getBranchScale() / tree.getScale();
         const minDigitis = parseInt(Math.abs(Math.log(scaleValue) / Math.log(10)), 10);
         treePane.scalebarRef.current.innerHTML = scaleValue.toFixed(minDigitis + 2);
       }
