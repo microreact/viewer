@@ -45,11 +45,13 @@ const SortableItem = sortableElement(
           >
             Delete View
           </UiDropdownMenu.Item>
-          {/* <UiDropdownMenu.Item
+          {/*
+          <UiDropdownMenu.Item
             onClick={() => props.onDownloadView(item)}
           >
             Download as <code>.microreact</code>
-          </UiDropdownMenu.Item> */}
+          </UiDropdownMenu.Item>
+          */}
         </UiDropdownMenu>
         <button
           className="mr-view-button"
@@ -71,7 +73,7 @@ SortableItem.propTypes = {
   item: PropTypes.object.isRequired,
   onRenameView: PropTypes.func.isRequired,
   onResaveView: PropTypes.func.isRequired,
-  onDownloadView: PropTypes.func.isRequired,
+  // onDownloadView: PropTypes.func.isRequired,
 };
 
 // const SortableItem = SortableElement(
@@ -130,7 +132,7 @@ const SortableList = sortableContainer(
                 currentViewId={props.currentViewId}
                 onRenameView={props.onRenameView}
                 onResaveView={props.onResaveView}
-                onDownloadView={props.onDownloadView}
+                // onDownloadView={props.onDownloadView}
                 onDeleteView={props.onDeleteView}
                 onLoadView={props.onLoadView}
               />
