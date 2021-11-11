@@ -1,9 +1,10 @@
-export function addNote(paneId, title) {
+export function addNote(paneId, title, source) {
   return {
     type: "MICROREACT VIEWER/ADD NOTE",
     payload: {
       paneId,
       title: title || "Note",
+      source,
     },
   };
 }
