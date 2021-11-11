@@ -35,11 +35,13 @@ const seriesScaleSelector = createKeyedStateSelector(
   (state) => rowsSelector(state),
   (state) => filteredIdsSelector(state),
   (state, chartId) => seriesValueToColourMapSelector(state, chartId),
+  (state) => state.styles.defaultColour,
   (
     seriesDataColumn,
     rows,
     filteredIds,
     seriesValueToColourMap,
+    defaultColour,
   ) => {
     if (!seriesDataColumn) {
       return null;
@@ -58,9 +60,10 @@ const seriesScaleSelector = createKeyedStateSelector(
     if (seriesValueToColourMap) {
       colours = [];
       for (const value of uniqueSeriesValues) {
-        colours.push(seriesValueToColourMap.get(value));
+        colours.push(seriesValueToColourMap.get(value) ?? defaultColour);
       }
       colours = Array.from(colours);
+
     }
 
     return {
