@@ -13,6 +13,7 @@ const FileTypes = [
   "tree",
   "network",
   "geo",
+  "markdown",
   "unknown",
 ];
 
@@ -62,6 +63,14 @@ export const FileKinds = [
     format: "application/geo+json",
     type: "geo",
     name: "Geographical features (GeoJSON)",
+    linkable: true,
+  },
+  {
+    extensions: [ "markdown" ],
+    nameValidator: /\.md$/i,
+    format: "text/markdown",
+    type: "markdown",
+    name: "Markdown formatted text",
     linkable: true,
   },
 ];
@@ -115,6 +124,9 @@ function guessFileFormat(fileName) {
   else if (/\.(geojson|geo\.json)$/i.test(fileName)) {
     return "application/geo+json";
   }
+  else if (/\.(md)$/i.test(fileName)) {
+    return "text/markdown";
+  }
   return undefined;
 }
 
@@ -155,6 +167,10 @@ export async function loadFile(input, onProgress) {
   else if (loadedFile.format === "application/geo+json") {
     loadedFile.type = "geo";
     loader = loadGeoJsonFile;
+  }
+  else if (loadedFile.format === "text/markdown") {
+    loadedFile.type = "markdown";
+    loader = loadTextFile;
   }
   else {
     loadedFile.type = "unknown";

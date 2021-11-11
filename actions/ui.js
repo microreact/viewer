@@ -9,6 +9,7 @@ import { addGeographicCoordinatesMap, addGeoData } from "./maps";
 import { addNetwork } from "./networks";
 import { addTable } from "./tables";
 import { addTree } from "./trees";
+import { addNote } from "./notes";
 import { addYearMonthDayTimeline } from "./timelines";
 
 import mainDatasetConfigSelector from "../selectors/datasets/main-dataset-config";
@@ -48,6 +49,7 @@ function createLabelFromFileName(file, allFiles) {
       tree: "Tree",
       network: "Network",
       geo: "Regions",
+      markdown: "Note",
     };
     return fileNamesByType[file.type] || file.id;
   }
@@ -232,6 +234,24 @@ export function commitFiles(fileDescriptors) {
             paneId,
             label,
             component: "Network",
+          });
+        }
+      }
+      else if (file.type === "markdown") {
+        const paneId = file.paneId || newId(state.notes, "note");
+        const label = createLabelFromFileName(file, fileDescriptors);
+        actions.push(
+          addNote(
+            paneId,
+            label,
+            file._content,
+          )
+        );
+        if (!file.paneId) {
+          orphanPanes.push({
+            paneId,
+            label,
+            component: "Note",
           });
         }
       }
