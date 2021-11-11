@@ -11,9 +11,11 @@ import colourModeForFieldSelector from "./colour-mode-for-field";
 const discreteValueToColourMapSelector = createKeyedStateSelector(
   (state, field) => colourPaletteForFieldSelector(state, field),
   (state, field) => ((colourPaletteForFieldSelector(state, field)?.type !== "custom") ? uniqueValuesSelector(state, field) : undefined),
+  (state) => state.styles.defaultColour,
   (
     palette,
     uniqueFieldValues,
+    defaultColour,
   ) => {
     const colourMap = new Map();
 
@@ -45,7 +47,7 @@ const discreteValueToColourMapSelector = createKeyedStateSelector(
         else {
           colourMap.set(
             value,
-            "transparent",
+            defaultColour,
           );
         }
       }

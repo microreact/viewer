@@ -5,6 +5,7 @@ import Divider from "@material-ui/core/Divider";
 import "../css/styles-menu-content.css";
 
 import UiCombobox from "./UiCombobox.react";
+import DefaultColourPicker from "./DefaultColourPicker.react";
 
 import { DataColumn } from "../utils/prop-types";
 import DataColumnColourSettingsMenu from "../containers/ColourSettingsMenu.react";
@@ -39,10 +40,10 @@ class StylesMenuContent extends React.PureComponent {
           field={props.colourByDataField.name}
         />
 
-        {/* <DefaultColourPicker
+        <DefaultColourPicker
           onDefaultColourChange={props.onDefaultColourChange}
           defaultColour={props.defaultColour}
-        > */}
+        />
 
         {
           (props.shapableDataFields.length > 0) && (
