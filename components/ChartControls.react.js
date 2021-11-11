@@ -125,7 +125,7 @@ MainAxisMenu.propTypes = {
   fullDatasetColumns: PropTypes.arrayOf(DataColumn).isRequired,
   onAxisFieldChange: PropTypes.func.isRequired,
   onAxisOrderChange: PropTypes.func.isRequired,
-  onAxisReset: PropTypes.func.isRequired,
+  onAxisReset: PropTypes.func,
   onAxisTypeChange: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };
