@@ -30,12 +30,14 @@ const metadataValuesSelector = createSelector(
   (state, treeId) => rowsByLabelSelector(state, treeId),
   (state, treeId) => colourMapsByFieldSelector(state, treeId),
   (state, treeId) => dataColumnsByFieldMapSelector(state, treeId),
+  (state) => state.styles.defaultColour,
   (state) => configSelector(state),
   (
     labels,
     rowsByLabel,
     colourMapsByField,
     dataColumnsByFieldMap,
+    defaultColour,
     mrConfig,
   ) => {
     const metadata = {};
@@ -54,7 +56,7 @@ const metadataValuesSelector = createSelector(
             const dataColumnLabel = dataColumn.label || dataColumn.name;
             const colourMap = colourMapsByField[colourFieldName];
 
-            const colour = (colourMap.get && colourMap.get(row[colourFieldName])) || "transparent";
+            const colour = (colourMap.get && colourMap.get(row[colourFieldName])) || defaultColour;
             metadata[label][dataColumnLabel] = {
               colour: (colour === "transparent") ? mrConfig.theme.background.main : colour,
               label: row[colourFieldName],
