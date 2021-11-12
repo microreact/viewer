@@ -52,11 +52,10 @@ function rootReducer(state = {}, action) {
     nextState.config.label = label;
   }
 
-  if (action.type.startsWith("MICROREACT VIEWER/") && action.savable !== false && !nextState.config.isDirty) {
-    console.log({action})
-    nextState.config = { ...nextState.config };
-    nextState.config.isDirty = true;
-  }
+  // if (action.type.startsWith("MICROREACT VIEWER/") && action.savable !== false && !nextState.config.isDirty) {
+  //   nextState.config = { ...nextState.config };
+  //   nextState.config.isDirty = true;
+  // }
 
   return nextState;
 }
