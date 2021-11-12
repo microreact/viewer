@@ -166,6 +166,7 @@ class SelectionPane extends React.PureComponent {
           onChange={(item) => props.onBreakdownFieldChange(item.name)}
           options={props.fullDatasetColumns}
           value={props.breakdownField}
+          clearable
         />
         <SelectionChart
           signalListeners={this.signalListeners}
