@@ -12,6 +12,7 @@ const mapStateToProps = (state, { tableId }) => {
     controls: !!tableState.controls,
     dataFields: dataColumnsSelector(state),
     displayMode: tableState.displayMode,
+    hideUnselected: tableState.hideUnselected,
     showSelection: tableState.showSelection,
     visibleFields: visibleFieldsSelector(state, tableId),
   };
@@ -22,6 +23,7 @@ const mapDispatchToProps = (dispatch, { tableId }) => ({
   onDisplayModeChange: (value) => dispatch(update(tableId, "displayMode", value)),
   onDownloadCsv: () => dispatch(downloadAsCsv(tableId)),
   onEditPane: () => dispatch(openPaneEditor(tableId)),
+  onHideUnselectedChange: (value) => dispatch(update(tableId, "hideUnselected", value)),
   onShowSelecttionChange: (value) => dispatch(update(tableId, "showSelection", value)),
   onVisibleFieldsChange: (fields) => dispatch(setVisibleColumns(tableId, fields)),
 });

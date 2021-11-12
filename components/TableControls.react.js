@@ -36,6 +36,14 @@ const TableColumns = React.memo(
         <Divider />
 
         <UiDropdownMenu.Item
+          onClick={() => props.onHideUnselectedChange(!props.hideUnselected)}
+        >
+          { props.hideUnselected ? "Show" : "Hide" } unselected entries
+        </UiDropdownMenu.Item>
+
+        <Divider />
+
+        <UiDropdownMenu.Item
           onClick={props.onDownloadCsv}
         >
           Download as CSV

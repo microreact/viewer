@@ -152,7 +152,8 @@ export function update(tableId, key, value) {
     group: `${tableId}/${key}`,
     label:
       (key === "displayMode") ? `Table: Set display mode to ${value}` :
-        undefined,
+        (key === "hideUnselected") ? "Table: Toogle show/hide unselected entries" :
+          undefined,
     payload: { [key]: value },
     tableId,
     type: "MICROREACT VIEWER/UPDATE TABLE",

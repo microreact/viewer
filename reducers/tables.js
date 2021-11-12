@@ -10,6 +10,7 @@ import {
 
 const initialState = {
   displayMode: "cosy",
+  hideUnselected: false,
 };
 
 const queryPropMap = {
