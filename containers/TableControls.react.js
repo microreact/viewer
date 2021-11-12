@@ -1,11 +1,10 @@
-import { connect } from "react-redux";
-
 import { update, setVisibleColumns, downloadAsCsv } from "../actions/tables";
 import { openPaneEditor } from "../actions/ui";
 
 import TableControls from "../components/TableControls.react";
 import dataColumnsSelector from "../selectors/datasets/data-columns";
 import visibleFieldsSelector from "../selectors/tables/visible-fields";
+import { connectToPresentState } from "../utils/state";
 
 const mapStateToProps = (state, { tableId }) => {
   const tableState = state.tables[tableId];
@@ -27,4 +26,4 @@ const mapDispatchToProps = (dispatch, { tableId }) => ({
   onVisibleFieldsChange: (fields) => dispatch(setVisibleColumns(tableId, fields)),
 });
 
-export default connect((state, props) => mapStateToProps(state.present, props), mapDispatchToProps)(TableControls);
+export default connectToPresentState(TableControls, mapStateToProps, mapDispatchToProps);
