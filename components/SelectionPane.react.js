@@ -163,7 +163,7 @@ class SelectionPane extends React.PureComponent {
       <React.Fragment>
         <UiCombobox
           label="Details Column"
-          onChange={(item) => props.onBreakdownFieldChange(item.name)}
+          onChange={(item) => props.onBreakdownFieldChange(item?.name)}
           options={props.fullDatasetColumns}
           value={props.breakdownField}
           clearable
