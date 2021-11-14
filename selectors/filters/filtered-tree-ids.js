@@ -3,7 +3,7 @@ import { intersect } from "../../utils/sets";
 import { newickLabels } from "../../utils/trees";
 
 import rowsByLabelSelector from "../trees/rows-by-label";
-import phylocanvasSourceSelector from "../trees/phylocanvas-source";
+import treeFileSelector from "../trees/tree-file";
 
 function labelsToRowIds(labels, rowsByLabel) {
   const ids = new Set();
@@ -48,7 +48,7 @@ const subtreeIdsSelector = createKeyedStateSelector(
 );
 
 const allLeafIdsSelector = createKeyedStateSelector(
-  (state, treeId) => phylocanvasSourceSelector(state, treeId),
+  (state, treeId) => treeFileSelector(state, treeId)?._content,
   (state, treeId) => rowsByLabelSelector(state, treeId),
   (
     treeFileContent,
