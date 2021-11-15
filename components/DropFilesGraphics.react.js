@@ -17,7 +17,7 @@ const DropFilesGraphics = (props) => {
         <strong>Drop files here</strong>
         <br />
         <b
-          onClick={props.onAddFiles}
+          onClick={props.onBrowseFiles}
         >
           browse your files
         </b>
@@ -30,7 +30,7 @@ const DropFilesGraphics = (props) => {
       </header>
 
       <figure
-        onClick={props.onAddFiles}
+        onClick={props.onBrowseFiles}
       >
         { (!props.fileKind || props.fileKind === "data") && <FileIcon label="data" icon={GridOnIcon} /> }
         { (!props.fileKind || props.fileKind === "network") && <FileIcon label="network" icon={ShareTwoToneIcon} /> }
@@ -73,7 +73,8 @@ DropFilesGraphics.displayName = "DropFilesGraphics";
 
 DropFilesGraphics.propTypes = {
   fileKind: FileKind,
-  onAddFiles: PropTypes.func.isRequired,
+  onAddUrls: PropTypes.func.isRequired,
+  onBrowseFiles: PropTypes.func.isRequired,
   validFileExtensions: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
 

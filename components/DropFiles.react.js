@@ -47,7 +47,7 @@ class DropFiles extends React.PureComponent {
     ),
   };
 
-  handleAddFiles = () => {
+  handleBrowseFiles = () => {
     this._fileInput.current.value = null;
     this._fileInput.current.click();
   };
@@ -101,7 +101,7 @@ class DropFiles extends React.PureComponent {
       nextState,
       () => {
         if (nextState.files.length) {
-          this.props.onFileUpload(nextState.files, this.props.paneId);
+          this.props.onAddFiles(nextState.files, this.props.paneId);
         }
       }
     );
@@ -154,16 +154,6 @@ class DropFiles extends React.PureComponent {
         onDragLeave={() => this.setState({ dragOver: false })}
         onDrop={this._handleFileInput}
       >
-        {/*
-        {
-          (this.props.content) && (
-            <div onClick={this.handleAddFiles}>
-              { this.props.content }
-            </div>
-          )
-        }
-        */}
-
         {
           (this.props.children)
             ?
@@ -176,29 +166,18 @@ class DropFiles extends React.PureComponent {
                 >
                   <DropFilesGraphics
                     fileKind={props.fileKind}
-                    onAddFiles={this.handleAddFiles}
                     onAddUrls={this.handleAddUrls}
+                    onBrowseFiles={this.handleBrowseFiles}
                     validFileExtensions={this.state.validFileExtensions}
                   />
                 </div>
                 <PlusFloatingActingButton
                   onAddUrls={this.handleAddUrls}
-                  onLoadFiles={this.handleAddFiles}
+                  onBrowseFiles={this.handleBrowseFiles}
                 />
               </React.Fragment>
             )
         }
-        {/*
-        <React.Fragment>
-          Drag file here or&nbsp;
-          <span onClick={this.handleAddFiles}>
-            browse your files
-          </span>
-          <div>
-            { this.renderMessage() }
-          </div>
-        </React.Fragment>
-        */}
 
         <input
           multiple
@@ -208,31 +187,14 @@ class DropFiles extends React.PureComponent {
           type="file"
         />
 
-        {/* {
-          props.plusButton && (
-            <PlusFloatingActingButton
-              onAddUrls={this.handleAddUrls}
-              onLoadFiles={this.handleAddFiles}
-            />
-            // <Fab
-            //   aria-label="add"
-            //   color="primary"
-            //   onClick={() => this.handleAddFiles()}
-            //   className="mr fab add files button"
-            // >
-            //   <AddIcon />
-            // </Fab>
-          )
-        } */}
-
         {
           (this.state.showFilesDialog || hasFiles) && (
             <FilesQueue
-              onLoadFiles={this.handleAddFiles}
-              pendingFiles={props.pendingFiles}
+              onBrowseFiles={this.handleBrowseFiles}
               onClose={this.handleCloseUrls}
-              onAddFiles={this.props.onFileUpload}
+              onCommitFiles={this.props.onCommitFiles}
               onPendingFileChange={this.props.onPendingFileChange}
+              pendingFiles={props.pendingFiles}
             />
           )
         }
@@ -248,7 +210,8 @@ DropFiles.propTypes = {
   children: PropTypes.node,
   fileKind: FileKind,
   fileLoading: PropTypes.bool,
-  onFileUpload: PropTypes.func.isRequired,
+  onAddFiles: PropTypes.func.isRequired,
+  onCommitFiles: PropTypes.func.isRequired,
   onPendingFileChange: PropTypes.func.isRequired,
   paneId: PropTypes.string,
   pendingFiles: PropTypes.arrayOf(FileDescriptor),
