@@ -18,7 +18,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onAddFiles: (files, paneId) => dispatch(addFiles(files, paneId)),
+    onAddFiles: (files, paneId) => dispatch(addFiles(files, paneId, false)),
     onCommitFiles: (files) => dispatch(addFiles(files, undefined, true)),
     onPendingFileChange: (files) => dispatch(setPendingFiles(files)),
   };

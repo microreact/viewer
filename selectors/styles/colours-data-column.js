@@ -28,6 +28,8 @@ const coloursDataColumnSelector = createSelector(
       allFields.find((x) => (/__autocolou?r$/i).test(x.name))
       ||
       allFields.find((x) => x.name !== idField?.name)
+      ||
+      allFields[0]
     );
   },
 );
