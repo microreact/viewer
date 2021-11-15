@@ -19,6 +19,7 @@ import { exportHtmlElementAsDataUrl, getContainerElement } from "../utils/html";
 import { getPresentState, newId } from "../utils/state";
 import { longestCommonStartingSubstring } from "../utils/text";
 import { publish } from "../utils/events";
+import { generateHashId } from "../utils/hash";
 
 import updateSchema, { version } from "../schema";
 import isValidTreeSelector from "../selectors/trees/is-valid-tree";
@@ -55,7 +56,7 @@ function createLabelFromFileName(file, allFiles) {
   }
 }
 
-export function addFiles(rawFiles, paneId) {
+export function addFiles(rawFiles, paneId, commit) {
   return async (dispatch, getState) => {
     const state = getPresentState(getState());
     dispatch(config({ isBuzy: true }));
@@ -80,8 +81,8 @@ export function addFiles(rawFiles, paneId) {
       if (fileDescriptors.length === 1 && fileDescriptors[0].type === "microreact") {
         return dispatch(load(fileDescriptors[0]._content));
       }
-      else {
-        // dispatch(commitFiles(fileDescriptors));
+      else if (commit) {
+        return dispatch(commitFiles(fileDescriptors));
       }
     }
 
@@ -274,7 +275,7 @@ export function commitFiles(fileDescriptors) {
     actions.push(
       config({
         isBuzy: false,
-        pendingFiles: undefined,
+        pendingFiles: null,
       })
     );
 

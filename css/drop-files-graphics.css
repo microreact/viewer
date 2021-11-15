@@ -36,6 +36,10 @@
   margin-bottom: 8px;
 }
 
+.drop-files-graphics header b:hover {
+  color: var(--primary-main);
+}
+
 /*#endregion*/
 
 

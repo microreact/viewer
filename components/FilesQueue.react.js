@@ -21,6 +21,9 @@ import UiDialog from "./UiDialog.react";
 import UiTextfield from "./UiTextfield.react";
 import { FileDescriptor } from "../utils/prop-types";
 
+const fileNameCellStyle = { maxWidth: "680px" };
+const fileKindCellStyle = { width: "240px", minWidth: "240px", maxWidth: "240px" };
+
 class FilesQueue extends React.PureComponent {
 
   handleContinue = () => {
@@ -48,7 +51,7 @@ class FilesQueue extends React.PureComponent {
       }
     }
 
-    return props.onAddFiles(files);
+    return props.onCommitFiles(files);
   }
 
   filesSelector = createSelector(
@@ -56,12 +59,12 @@ class FilesQueue extends React.PureComponent {
     (pendingFiles) => {
       const files = [ ...pendingFiles ];
 
-      if (files.length === 0 || files[files.length - 1].url !== "") {
-        files.push({
-          url: "",
-          id: generateHashId(),
-        });
-      }
+      // if (files.length === 0 || files[files.length - 1].url !== "") {
+      //   files.push({
+      //     url: "",
+      //     id: generateHashId(),
+      //   });
+      // }
 
       return files;
     },
@@ -84,7 +87,7 @@ class FilesQueue extends React.PureComponent {
     }
     else {
       files.push({
-        ...file,
+        ...(file || {}),
         [key]: value,
       });
     }
@@ -109,7 +112,7 @@ class FilesQueue extends React.PureComponent {
   render() {
     const { props } = this;
     const files = this.filesSelector(props);
-
+    const newFileId = generateHashId();
     return (
       <UiDialog
         className="mr-files-queue"
@@ -138,42 +141,19 @@ class FilesQueue extends React.PureComponent {
         onClose={props.onClose}
         title="Add Files or URLs"
       >
-        <Box style={{ width: "100%", height: "100%", margin: "-8px" }}>
           <TableContainer>
             <Table size="small">
               <TableHead>
                 <TableRow>
                   <TableCell>File</TableCell>
-                  <TableCell>File kind</TableCell>
+                  <TableCell style={fileKindCellStyle}>File kind</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {
                   files.map(
-                    (row, index) => {
+                    (row) => {
                       let fileNameCell;
-                      let fileKindCell = (
-                        <TextField
-                          select
-                          label="File kind"
-                          value={row.format ?? ""}
-                          onChange={(event) => this.handleFileChange(row, "format", event.target.value)}
-                          variant="outlined"
-                          size="small"
-                          style={{ width: "100%" }}
-                          required
-                        >
-                          {
-                            FileKinds.filter((x) => x.linkable).map(
-                              (option) => (
-                                <MenuItem key={option.format} value={option.format}>
-                                  { option.name }
-                                </MenuItem>
-                              )
-                            )
-                          }
-                        </TextField>
-                      );
 
                       if (typeof row.url === "string") {
                         fileNameCell = (
@@ -187,51 +167,79 @@ class FilesQueue extends React.PureComponent {
                             variant="outlined"
                           />
                         );
-                        if (!row.url && (index === files.length - 1)) {
-                          fileKindCell = (
-                            <Box display="flex">
-                              <Button
-                                onClick={props.onLoadFiles}
-                                startIcon={<AddCircleOutlineRoundedIcon />}
-                              >
-                                add more files
-                              </Button>
-                            </Box>
-                          );
-                        }
                       }
                       else {
                         fileNameCell = (
                           <UiTextfield
                             clearable
+                            onChange={(value) => this.handleFileChange(row, "blob", undefined)}
                             readOnly
                             size="small"
                             style={{ width: "100%" }}
                             value={row.name}
                             variant="outlined"
-                            onChange={(value) => this.handleFileChange(row, "blob", undefined)}
                           />
                         );
                       }
 
                       return (
                         <TableRow key={row.id}>
-                          <TableCell>
+                          <TableCell style={fileNameCellStyle}>
                             { fileNameCell }
                             { this.renderFileError(row.id) }
                           </TableCell>
-                          <TableCell style={{ maxWidth: "160px" }}>
-                            { fileKindCell }
+                          <TableCell style={fileKindCellStyle}>
+                            <TextField
+                              select
+                              label="File kind"
+                              value={row.format ?? ""}
+                              onChange={(event) => this.handleFileChange(row, "format", event.target.value)}
+                              variant="outlined"
+                              size="small"
+                              style={{ width: "100%" }}
+                              required
+                            >
+                              {
+                                FileKinds.filter((x) => x.linkable).map(
+                                  (option) => (
+                                    <MenuItem key={option.format} value={option.format}>
+                                      { option.name }
+                                    </MenuItem>
+                                  )
+                                )
+                              }
+                            </TextField>
                           </TableCell>
                         </TableRow>
                       );
                     }
                   )
                 }
+                <TableRow key={newFileId}>
+                  <TableCell>
+                    <UiTextfield
+                      label="Enter URL"
+                      onChange={(value) => this.handleFileChange({ id: newFileId }, "url", value)}
+                      size="small"
+                      style={{ width: "100%" }}
+                      value={""}
+                      variant="outlined"
+                    />
+                  </TableCell>
+                  <TableCell style={fileKindCellStyle}>
+                    <Box display="flex">
+                      <Button
+                        onClick={props.onBrowseFiles}
+                        startIcon={<AddCircleOutlineRoundedIcon />}
+                      >
+                        add more files
+                      </Button>
+                    </Box>
+                  </TableCell>
+                </TableRow>
               </TableBody>
             </Table>
           </TableContainer>
-        </Box>
       </UiDialog>
     );
   }
@@ -241,8 +249,9 @@ class FilesQueue extends React.PureComponent {
 FilesQueue.displayName = "AddFilesStep";
 
 FilesQueue.propTypes = {
+  onBrowseFiles: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
-  onLoadFiles: PropTypes.func.isRequired,
+  onCommitFiles: PropTypes.func.isRequired,
   onPendingFileChange: PropTypes.func.isRequired,
   pendingFiles: PropTypes.arrayOf(FileDescriptor),
 };

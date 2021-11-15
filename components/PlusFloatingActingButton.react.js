@@ -46,7 +46,7 @@ class PlusFloatingActingButton extends React.PureComponent {
             icon={<InsertDriveFileIcon />}
             tooltipTitle="Browse Files"
             tooltipOpen
-            onClick={this.props.onLoadFiles}
+            onClick={this.props.onBrowseFiles}
           />
           <SpeedDialAction
             icon={<MdiIcon>{ mdiLinkVariantPlus }</MdiIcon>}
@@ -63,7 +63,7 @@ class PlusFloatingActingButton extends React.PureComponent {
 
 PlusFloatingActingButton.propTypes = {
   onAddUrls: PropTypes.func.isRequired,
-  onLoadFiles: PropTypes.func.isRequired,
+  onBrowseFiles: PropTypes.func.isRequired,
 };
 
 export default PlusFloatingActingButton;

@@ -1,5 +1,6 @@
 .mr-files-queue .MuiDialogContent-root {
   min-height: 240px;
+  padding: 8px 16px;
 }
 
 .mr-files-queue .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root {
@@ -8,6 +9,8 @@
 
 .mr-files-queue .MuiTableCell-sizeSmall {
   padding: 8px 4px;
+  vertical-align: top;
+  overflow: hidden;
 }
 .mr-files-queue .MuiTableCell-sizeSmall:first-child {
   padding-left: 0;
