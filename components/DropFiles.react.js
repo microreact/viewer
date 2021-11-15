@@ -7,7 +7,7 @@ import "../css/drop-files.css";
 
 import { FileExtension, FileKind } from "../utils/prop-types";
 
-import AddFilesStep from "./AddFilesStep.react";
+import FilesQueue from "./FilesQueue.react";
 import DropFilesGraphics from "./DropFilesGraphics.react";
 import PlusFloatingActingButton from "./PlusFloatingActingButton.react";
 
@@ -149,7 +149,7 @@ class DropFiles extends React.PureComponent {
   render() {
     const { props } = this;
 
-    const hasFileErrors = props.pendingFiles.some((x) => !!x.error);
+    const hasFiles = props.pendingFiles?.length > 0;
 
     return (
       <FileDrop
@@ -237,8 +237,8 @@ class DropFiles extends React.PureComponent {
         } */}
 
         {
-          (this.state.showFilesDialog || hasFileErrors) && (
-            <AddFilesStep
+          (this.state.showFilesDialog || hasFiles) && (
+            <FilesQueue
               onLoadFiles={this.handleAddFiles}
               pendingFiles={props.pendingFiles}
               onClose={this.handleCloseUrls}

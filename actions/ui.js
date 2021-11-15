@@ -78,33 +78,34 @@ export function addFiles(rawFiles, paneId) {
 
     if (failedFiles.length === 0) {
       if (fileDescriptors.length === 1 && fileDescriptors[0].type === "microreact") {
-        dispatch(load(fileDescriptors[0]._content));
+        return dispatch(load(fileDescriptors[0]._content));
       }
       else {
-        dispatch(commitFiles(fileDescriptors));
+        // dispatch(commitFiles(fileDescriptors));
       }
     }
-    else {
-      const nextPendingFiles = [ ...(state.config.pendingFiles || emptyArray) ];
-      for (const processedFile of fileDescriptors) {
-        const pendingFileIndex = nextPendingFiles.findIndex((x) => x.id === processedFile.id);
-        if (pendingFileIndex >= 0) {
-          nextPendingFiles[pendingFileIndex] = {
-            ...nextPendingFiles[pendingFileIndex],
-            ...processedFile,
-          };
-        }
-        else {
-          nextPendingFiles.push(processedFile);
-        }
+
+    const nextPendingFiles = [ ...(state.config.pendingFiles || emptyArray) ];
+
+    for (const processedFile of fileDescriptors) {
+      const pendingFileIndex = nextPendingFiles.findIndex((x) => x.id === processedFile.id);
+      if (pendingFileIndex >= 0) {
+        nextPendingFiles[pendingFileIndex] = {
+          ...nextPendingFiles[pendingFileIndex],
+          ...processedFile,
+        };
       }
-      dispatch(
-        config({
-          isBuzy: false,
-          pendingFiles: nextPendingFiles,
-        })
-      );
+      else {
+        nextPendingFiles.push(processedFile);
+      }
     }
+
+    dispatch(
+      config({
+        isBuzy: false,
+        pendingFiles: nextPendingFiles,
+      })
+    );
   };
 }
 
