@@ -15,18 +15,22 @@ const UiTextfield = React.memo(
         className={props.className}
         disabled={props.disabled}
         InputProps={
-          props.clearable && {
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={() => props.onChange(props.nullValue)}
-                  edge="end"
-                >
-                  <ClearRoundedIcon />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }
+          props.clearable
+            ?
+            {
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => props.onChange(props.nullValue)}
+                    edge="end"
+                  >
+                    <ClearRoundedIcon />
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }
+            :
+            undefined
         }
         helperText={props.helperText}
         label={props.label}

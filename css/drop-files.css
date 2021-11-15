@@ -54,8 +54,3 @@
   bottom: 16px;
   right: 16px;
 }
-
-
-.mr-add-files-dialog .MuiTableRow-root:last-child .MuiTableCell-root {
-  border: none;
-}

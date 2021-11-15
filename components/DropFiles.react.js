@@ -5,29 +5,13 @@ import React from "react";
 
 import "../css/drop-files.css";
 
-import { FileExtension, FileKind } from "../utils/prop-types";
+import { FileDescriptor, FileExtension, FileKind } from "../utils/prop-types";
 
 import FilesQueue from "./FilesQueue.react";
 import DropFilesGraphics from "./DropFilesGraphics.react";
 import PlusFloatingActingButton from "./PlusFloatingActingButton.react";
 
 class DropFiles extends React.PureComponent {
-
-  static displayName = "DropFiles";
-
-  static propTypes = {
-    children: PropTypes.node,
-    fileKind: FileKind,
-    fileLoading: PropTypes.bool,
-    onFileUpload: PropTypes.func.isRequired,
-    paneId: PropTypes.string,
-    plusButton: PropTypes.bool,
-    validFileExtensions: PropTypes.arrayOf(FileExtension.isRequired).isRequired,
-  };
-
-  static defaultProps = {
-    plusButton: true,
-  };
 
   constructor(props) {
     super(props);
@@ -73,7 +57,12 @@ class DropFiles extends React.PureComponent {
   };
 
   handleCloseUrls = () => {
-    this.setState({ showFilesDialog: false });
+    if (this.state.showFilesDialog) {
+      this.setState({ showFilesDialog: false });
+    }
+    if (this.props.pendingFiles?.length) {
+      this.props.onPendingFileChange([]);
+    }
   };
 
   _onChange = ({ target: { files } }) => {
@@ -252,5 +241,23 @@ class DropFiles extends React.PureComponent {
   }
 
 }
+
+DropFiles.displayName = "DropFiles";
+
+DropFiles.propTypes = {
+  children: PropTypes.node,
+  fileKind: FileKind,
+  fileLoading: PropTypes.bool,
+  onFileUpload: PropTypes.func.isRequired,
+  onPendingFileChange: PropTypes.func.isRequired,
+  paneId: PropTypes.string,
+  pendingFiles: PropTypes.arrayOf(FileDescriptor),
+  plusButton: PropTypes.bool,
+  validFileExtensions: PropTypes.arrayOf(FileExtension.isRequired).isRequired,
+};
+
+DropFiles.defaultProps = {
+  plusButton: true,
+};
 
 export default DropFiles;
