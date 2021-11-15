@@ -1,0 +1,20 @@
+.mr-files-queue .MuiDialogContent-root {
+  min-height: 240px;
+}
+
+.mr-files-queue .MuiTableBody-root .MuiTableRow-root .MuiTableCell-root {
+  border: none;
+}
+
+.mr-files-queue .MuiTableCell-sizeSmall {
+  padding: 8px 4px;
+}
+.mr-files-queue .MuiTableCell-sizeSmall:first-child {
+  padding-left: 0;
+}
+.mr-files-queue .MuiTableCell-sizeSmall:last-child {
+  padding-right: 0;
+}
+.mr-files-queue .MuiTableRow-root:last-child .MuiTableCell-sizeSmall {
+  padding-bottom: 0;
+}

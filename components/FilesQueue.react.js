@@ -13,13 +13,15 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import AddCircleOutlineRoundedIcon from "@material-ui/icons/AddCircleOutlineRounded";
 
+import "../css/files-queue.css";
+
 import { FileKinds } from "../utils/files";
 import { generateHashId } from "../utils/hash";
 import UiDialog from "./UiDialog.react";
+import UiTextfield from "./UiTextfield.react";
+import { FileDescriptor } from "../utils/prop-types";
 
 class FilesQueue extends React.PureComponent {
-
-  static displayName = "AddFilesStep"
 
   handleContinue = () => {
     const { props } = this;
@@ -46,7 +48,7 @@ class FilesQueue extends React.PureComponent {
       }
     }
 
-    return props.onAddFiles(files.filter((x) => x.url !== ""));
+    return props.onAddFiles(files);
   }
 
   filesSelector = createSelector(
@@ -70,10 +72,15 @@ class FilesQueue extends React.PureComponent {
 
     const fileIndex = files.indexOf(file);
     if (fileIndex >= 0) {
-      files[fileIndex] = {
-        ...files[fileIndex],
-        [key]: value,
-      };
+      if (value === undefined) {
+        files.splice(fileIndex, 1);
+      }
+      else {
+        files[fileIndex] = {
+          ...files[fileIndex],
+          [key]: value,
+        };
+      }
     }
     else {
       files.push({
@@ -105,6 +112,7 @@ class FilesQueue extends React.PureComponent {
 
     return (
       <UiDialog
+        className="mr-files-queue"
         actions={
           <React.Fragment>
             <Button
@@ -112,19 +120,19 @@ class FilesQueue extends React.PureComponent {
               disableElevation
               onClick={props.onClose}
             >
-              Close
+              Cancel
             </Button>
             <Button
               color="primary"
               variant="contained"
               disableElevation
               onClick={this.handleContinue}
+              disabled={this.props.pendingFiles?.length === 0}
             >
               Continue
             </Button>
           </React.Fragment>
         }
-        className="mr-add-files-dialog"
         isOpen
         maxWidth="md"
         onClose={props.onClose}
@@ -136,7 +144,6 @@ class FilesQueue extends React.PureComponent {
               <TableHead>
                 <TableRow>
                   <TableCell>File</TableCell>
-                  {/* <TableCell align="right"></TableCell> */}
                   <TableCell>File kind</TableCell>
                 </TableRow>
               </TableHead>
@@ -170,13 +177,14 @@ class FilesQueue extends React.PureComponent {
 
                       if (typeof row.url === "string") {
                         fileNameCell = (
-                          <TextField
+                          <UiTextfield
+                            clearable={!!row.url}
                             label="Enter URL"
-                            value={row.url ?? ""}
-                            onChange={(event) => this.handleFileChange(row, "url", event.target.value)}
-                            variant="outlined"
+                            onChange={(value) => this.handleFileChange(row, "url", value)}
                             size="small"
                             style={{ width: "100%" }}
+                            value={row.url ?? ""}
+                            variant="outlined"
                           />
                         );
                         if (!row.url && (index === files.length - 1)) {
@@ -194,12 +202,14 @@ class FilesQueue extends React.PureComponent {
                       }
                       else {
                         fileNameCell = (
-                          <TextField
-                            value={row.name}
-                            disabled
-                            variant="outlined"
+                          <UiTextfield
+                            clearable
+                            readOnly
                             size="small"
                             style={{ width: "100%" }}
+                            value={row.name}
+                            variant="outlined"
+                            onChange={(value) => this.handleFileChange(row, "blob", undefined)}
                           />
                         );
                       }
@@ -227,5 +237,14 @@ class FilesQueue extends React.PureComponent {
   }
 
 }
+
+FilesQueue.displayName = "AddFilesStep";
+
+FilesQueue.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  onLoadFiles: PropTypes.func.isRequired,
+  onPendingFileChange: PropTypes.func.isRequired,
+  pendingFiles: PropTypes.arrayOf(FileDescriptor),
+};
 
 export default FilesQueue;
