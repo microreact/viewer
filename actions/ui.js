@@ -14,12 +14,13 @@ import { addYearMonthDayTimeline } from "./timelines";
 
 import mainDatasetConfigSelector from "../selectors/datasets/main-dataset-config";
 
-import { detectAnnotationFields } from "../utils/datasets";
+import { detectAnnotationFields, createBasicDataset } from "../utils/datasets";
 import { exportHtmlElementAsDataUrl, getContainerElement } from "../utils/html";
 import { getPresentState, newId } from "../utils/state";
 import { longestCommonStartingSubstring } from "../utils/text";
 import { publish } from "../utils/events";
 import { generateHashId } from "../utils/hash";
+import { newickLabels } from "../utils/trees";
 
 import updateSchema, { version } from "../schema";
 import isValidTreeSelector from "../selectors/trees/is-valid-tree";
@@ -29,6 +30,7 @@ import { getPageHash, setPageHash } from "../utils/browser";
 import { addMissingPaneTabs } from "../utils/panes";
 import layoutModelSelector from "../selectors/panes/layout-model";
 import { setLayoutModel } from "./panes";
+import fullDatasetSelector from "../selectors/datasets/full-dataset";
 
 function createLabelFromFileName(file, allFiles) {
   const hasMoreThanOfTheSameType = allFiles.filter((x) => x.type === file.type).length > 1;
@@ -56,7 +58,7 @@ function createLabelFromFileName(file, allFiles) {
   }
 }
 
-export function addFiles(rawFiles, paneId, commit) {
+export function addFiles(rawFiles, paneId, commit = true) {
   return async (dispatch, getState) => {
     const state = getPresentState(getState());
     dispatch(config({ isBuzy: true }));
@@ -130,15 +132,19 @@ export function batch(actions) {
 export function commitFiles(fileDescriptors) {
   return (dispatch, getState) => {
     const state = getPresentState(getState());
-    // const fileDescriptors = [ ...fileDescriptors ];
+    const isEmpty = !fullDatasetSelector(state);
     const actions = [];
     const orphanPanes = [];
+
+    let hasDataFiles = !isEmpty;
 
     for (const file of fileDescriptors) {
       actions.push(
         addFile(file)
       );
       if (file.type === "data") {
+        hasDataFiles = true;
+
         const dataset = file._content;
         actions.push(
           addDataset(
@@ -202,6 +208,38 @@ export function commitFiles(fileDescriptors) {
         //#endregion
       }
       else if (file.type === "tree") {
+        if (!hasDataFiles) {
+          const leafLabels = newickLabels(file._content);
+          const dataFile = {
+            id: generateHashId(),
+            name: "metadata",
+            format: "text/csv",
+            blob: `id\n${leafLabels.join("\n")}`,
+            type: "data",
+            _content: createBasicDataset(leafLabels.map((id) => ({ id }))),
+          };
+          actions.push(
+            addFile(dataFile)
+          );
+          actions.push(
+            addDataset(
+              dataFile.id,
+              { idFieldName: "id" }
+            )
+          );
+          const label = createLabelFromFileName(dataFile, fileDescriptors);
+          actions.push(
+            addTable(
+              null,
+              label,
+              dataFile.id,
+              [
+                { field: "id" },
+              ],
+            )
+          );
+          file.labelFieldName = "id";
+        }
         const paneId = file.paneId || newId(state.trees, "tree");
         const label = createLabelFromFileName(file, fileDescriptors);
         actions.push(
