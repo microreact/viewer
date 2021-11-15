@@ -17,7 +17,7 @@ import { FileKinds } from "../utils/files";
 import { generateHashId } from "../utils/hash";
 import UiDialog from "./UiDialog.react";
 
-class AddFilesStep extends React.PureComponent {
+class FilesQueue extends React.PureComponent {
 
   static displayName = "AddFilesStep"
 
@@ -132,7 +132,7 @@ class AddFilesStep extends React.PureComponent {
       >
         <Box style={{ width: "100%", height: "100%", margin: "-8px" }}>
           <TableContainer>
-            <Table size="medium">
+            <Table size="small">
               <TableHead>
                 <TableRow>
                   <TableCell>File</TableCell>
@@ -167,6 +167,7 @@ class AddFilesStep extends React.PureComponent {
                           }
                         </TextField>
                       );
+
                       if (typeof row.url === "string") {
                         fileNameCell = (
                           <TextField
@@ -192,7 +193,15 @@ class AddFilesStep extends React.PureComponent {
                         }
                       }
                       else {
-                        fileNameCell = row.name;
+                        fileNameCell = (
+                          <TextField
+                            value={row.name}
+                            disabled
+                            variant="outlined"
+                            size="small"
+                            style={{ width: "100%" }}
+                          />
+                        );
                       }
 
                       return (
@@ -219,4 +228,4 @@ class AddFilesStep extends React.PureComponent {
 
 }
 
-export default AddFilesStep;
+export default FilesQueue;
