@@ -134,6 +134,7 @@ export function commitFiles(fileDescriptors) {
     const state = getPresentState(getState());
     const isEmpty = !fullDatasetSelector(state);
     const actions = [];
+    const paneIds = [];
     const orphanPanes = [];
 
     let hasDataFiles = !isEmpty;
@@ -152,7 +153,8 @@ export function commitFiles(fileDescriptors) {
           )
         );
         const { dataFields } = detectAnnotationFields(dataset.columns);
-        const paneId = file.paneId || newId(state.tables, "table");
+        const paneId = file.paneId || newId(state.tables, "table", paneIds);
+        paneIds.push(paneId);
         const label = createLabelFromFileName(file, fileDescriptors);
 
         actions.push(
@@ -240,7 +242,8 @@ export function commitFiles(fileDescriptors) {
           );
           file.labelFieldName = "id";
         }
-        const paneId = file.paneId || newId(state.trees, "tree");
+        const paneId = file.paneId || newId(state.trees, "tree", paneIds);
+        paneIds.push(paneId);
         const label = createLabelFromFileName(file, fileDescriptors);
         actions.push(
           addTree(
@@ -259,7 +262,8 @@ export function commitFiles(fileDescriptors) {
         }
       }
       else if (file.type === "network") {
-        const paneId = file.paneId || newId(state.networks, "network");
+        const paneId = file.paneId || newId(state.networks, "network", paneIds);
+        paneIds.push(paneId);
         const label = createLabelFromFileName(file, fileDescriptors);
         actions.push(
           addNetwork(
@@ -278,7 +282,8 @@ export function commitFiles(fileDescriptors) {
         }
       }
       else if (file.type === "markdown") {
-        const paneId = file.paneId || newId(state.notes, "note");
+        const paneId = file.paneId || newId(state.notes, "note", paneIds);
+        paneIds.push(paneId);
         const label = createLabelFromFileName(file, fileDescriptors);
         actions.push(
           addNote(

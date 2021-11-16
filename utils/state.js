@@ -70,10 +70,15 @@ export function createKeyedStateSelector() {
   return selector;
 }
 
-export function newId(state, prefix) {
+export function newId(state, prefix, ignoreKeys) {
   let index = 0;
   let newKey;
   const allKeys = Object.keys(state);
+  if (ignoreKeys) {
+    for (const key of ignoreKeys) {
+      allKeys.push(key);
+    }
+  }
   do {
     index++;
     newKey = `${prefix}-${index}`;
