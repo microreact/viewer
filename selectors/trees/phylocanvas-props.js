@@ -48,7 +48,6 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
   (_, treeId) => treeId,
   (state, treeId) => treeFileSelector(state, treeId)?._content,
   (state, treeId) => state.trees[treeId],
-  (state, treeId) => phylocanvasSourceSelector(state, treeId),
   (state, treeId) => nodeStylesSelector(state, treeId),
   (state, treeId) => paneSizeSelector(state, treeId),
   (state, treeId) => metadataBlocksSelector(state, treeId),
@@ -60,7 +59,6 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
     treeId,
     treeFileContent,
     phylocanvasProps,
-    phylocanvasSource,
     styles,
     size,
     metadataBlocks,
@@ -69,6 +67,12 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
     labelsDataColumn,
     defaults,
   ) => {
+    let originalSource = phylocanvasProps?.source;
+    while (originalSource?.original) {
+      originalSource = originalSource.original;
+    }
+    const source = (originalSource === treeFileContent) ? phylocanvasProps?.source : treeFileContent;
+
     return {
       ...phylocanvasProps,
       blocks: metadataBlocks,
@@ -79,11 +83,11 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
       metadata: metadataValues,
       nodeShape: false,
       padding: 32,
-      scalebar: false,
+      scalebar: true,
       selectedIds,
       shapeBorderAlpha: 0.56,
       size,
-      source: phylocanvasSource,
+      source,
       strokeColour: "#222",
       styles,
     };

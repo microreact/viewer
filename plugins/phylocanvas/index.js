@@ -125,11 +125,10 @@ export default function (treePane) {
 
     render() {
       super.render();
-      const tree = this;
 
-      tree.renderLasso();
+      this.renderLasso();
 
-      tree.renderScalebar();
+      // this.renderScalebar();
     }
 
     renderLasso() {
@@ -147,14 +146,14 @@ export default function (treePane) {
       }
     }
 
-    renderScalebar() {
-      const tree = this;
-      if (treePane?.scalebarRef?.current) {
-        const scaleValue = 88 / tree.getBranchScale() / tree.getScale();
-        const minDigitis = parseInt(Math.abs(Math.log(scaleValue) / Math.log(10)), 10);
-        treePane.scalebarRef.current.innerHTML = scaleValue.toFixed(minDigitis + 2);
-      }
-    }
+    // renderScalebar() {
+    //   const tree = this;
+    //   if (treePane?.scalebarRef?.current) {
+    //     const scaleValue = 88 / tree.getBranchScale() / tree.getScale();
+    //     const minDigitis = parseInt(Math.abs(Math.log(scaleValue) / Math.log(10)), 10);
+    //     treePane.scalebarRef.current.innerHTML = scaleValue.toFixed(minDigitis + 2);
+    //   }
+    // }
 
     rerootNode(node) {
       super.rerootNode(node);
