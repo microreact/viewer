@@ -115,7 +115,7 @@ class TreePane extends React.PureComponent {
 
   lassoRef = React.createRef()
 
-  scalebarRef = React.createRef()
+  // scalebarRef = React.createRef()
 
   // framerateRef = React.createRef()
 
@@ -146,20 +146,25 @@ class TreePane extends React.PureComponent {
   }
 
   handleDownloadPNG = () => {
-    const props = this.tree.props;
-    this.tree.props = { ...props, scalebar: true };
-    this.tree.render();
-    nextTick(
-      () => {
-        downloadDataUrl(
-          this.tree.exportPNG(),
-          "tree.png",
-          "image/png",
-        );
-        this.tree.props = props;
-        this.tree.render();
-      }
+    downloadDataUrl(
+      this.tree.exportPNG(),
+      "tree.png",
+      "image/png",
     );
+    // const props = this.tree.props;
+    // this.tree.props = { ...props, scalebar: true };
+    // this.tree.render();
+    // nextTick(
+    //   () => {
+    //     downloadDataUrl(
+    //       this.tree.exportPNG(),
+    //       "tree.png",
+    //       "image/png",
+    //     );
+    //     this.tree.props = props;
+    //     this.tree.render();
+    //   }
+    // );
   }
 
   handleDownloadSVG = () => {
@@ -230,11 +235,15 @@ class TreePane extends React.PureComponent {
           onZoomOut={() => this.tree.zoomOut()}
           treeType={this.props.treeType}
         />
+
+        {/*
         <div
           className="mr-tree-scalebar"
           ref={this.scalebarRef}
         >
         </div>
+        */}
+
         {/* <div
           className="mr-tree-framerate"
           ref={this.framerateRef}
