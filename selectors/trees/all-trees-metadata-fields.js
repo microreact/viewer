@@ -15,9 +15,13 @@ const allTreesMetadataFieldsSelector = createCombinedStateSelector(
       return arriesOfFields[0];
     }
     else {
-      return Array.from(
-        intersect(arriesOfFields.map((x) => new Set(x)))
-      );
+      const union = new Set();
+      for (const array of arriesOfFields) {
+        for (const element of array) {
+          union.add(element);
+        }
+      }
+      return Array.from(union);
     }
   },
 );
