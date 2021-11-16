@@ -58,6 +58,9 @@
   margin-bottom: 16px;
 }
 
+.mr-panes-editor .mr-pane-options .MuiFormControl-root.MuiTextField-root.MuiFormControl-fullWidth {
+  overflow: hidden;
+}
 
 /*#endregion*/
 
