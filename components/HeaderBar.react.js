@@ -38,7 +38,7 @@ class HeaderBar extends React.PureComponent {
 
           <nav>
             {
-              (!props.readOnly) && <AddPaneMenu />
+              (!props.isReadOnly) && <AddPaneMenu />
             }
 
             <StylesMenuTrigger />
@@ -65,12 +65,12 @@ HeaderBar.displayName = "HeaderBar";
 HeaderBar.propTypes = {
   appendNavButtons: PropTypes.node,
   drawerButton: PropTypes.node,
+  isReadOnly: PropTypes.bool.isRequired,
   onSave: PropTypes.func,
   onToggleHistoryPane: PropTypes.func.isRequired,
   onToggleStylesPane: PropTypes.func.isRequired,
   onToggleViewsPane: PropTypes.func.isRequired,
   prependNavButtons: PropTypes.node,
-  readOnly: PropTypes.bool.isRequired,
   title: PropTypes.string,
 };
 

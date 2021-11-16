@@ -173,13 +173,19 @@ export default class TimelineControls extends React.PureComponent {
           button={UiControlsButton}
           icon={<MenuIcon />}
         >
-          <UiDropdownMenu.Item
-            onClick={props.onEditPane}
-          >
-            Edit Timeline
-          </UiDropdownMenu.Item>
+          {
+            props.isReadOnly && (
+              <React.Fragment>
+                <UiDropdownMenu.Item
+                  onClick={props.onEditPane}
+                >
+                  Edit Timeline
+                </UiDropdownMenu.Item>
 
-          <Divider />
+                <Divider />
+              </React.Fragment>
+            )
+          }
 
           <UiDropdownMenu.Item
             onClick={props.onDownloadPNG}
@@ -330,6 +336,7 @@ TimelineControls.displayName = "TimelineControls";
 TimelineControls.propTypes = {
   controls: PropTypes.bool.isRequired,
   dataFields: PropTypes.arrayOf(DataColumn).isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   laneField: PropTypes.string,
   maxNodeSize: PropTypes.number.isRequired,
   minNodeSize: PropTypes.number.isRequired,

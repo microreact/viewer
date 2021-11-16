@@ -9,22 +9,24 @@ import filteredRangeUnitSelector from "../selectors/timelines/filtered-range-uni
 import { connectToPresentState } from "../utils/state";
 
 import Component from "../components/TimelineControls.react";
+import configSelector from "../selectors/config";
 
 const mapStateToProps = (state, { timelineId }) => {
   const timelineState = state.timelines[timelineId];
   return {
+    chartUnit: filteredRangeUnitSelector(state, timelineId),
     controls: timelineState.controls,
+    dataFields: dataColumnsSelector(state),
+    fullRangeChartData: fullRangeChartDataSelector(state, timelineId),
+    isReadOnly: configSelector(state).readOnly,
+    laneField: timelineState.laneField,
     maxNodeSize: 160,
     minNodeSize: 14,
     nodeSize: timelineState.nodeSize,
+    silderTemporalRange: filteredRangeExtentSelector(state, timelineId),
     speed: timelineState.speed,
     style: timelineState.style,
-    laneField: timelineState.laneField,
-    silderTemporalRange: filteredRangeExtentSelector(state, timelineId),
-    fullRangeChartData: fullRangeChartDataSelector(state, timelineId),
     unit: timelineState.unit,
-    dataFields: dataColumnsSelector(state),
-    chartUnit: filteredRangeUnitSelector(state, timelineId),
   };
 };
 

@@ -9,6 +9,7 @@ import edgeColourAttributesSelector from "../selectors/networks/edge-colour-attr
 import edgeLabelAttributesSelector from "../selectors/networks/edge-label-attributes";
 import edgeLineStyleAttributesSelector from "../selectors/networks/edge-line-style-attributes";
 import edgeLineWidthAttributesSelector from "../selectors/networks/edge-line-width-attributes";
+import configSelector from "../selectors/config";
 
 const mapStateToProps = (state, { networkId }) => {
   return {
@@ -21,6 +22,7 @@ const mapStateToProps = (state, { networkId }) => {
     edgeLineStyleFilter: state.networks[networkId].edgeLineStyleFilter,
     edgeLineWidthAttributes: edgeLineWidthAttributesSelector(state, networkId),
     edgeLineWidthFilter: state.networks[networkId].edgeLineWidthFilter,
+    isReadOnly: configSelector(state).readOnly,
     labelSize: state.networks[networkId].labelSize,
     lasso: state.networks[networkId].lasso,
     maxLabelSize: state.networks[networkId].maxFontSize,

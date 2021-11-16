@@ -7,7 +7,7 @@ import { connectToPresentState } from "../utils/state";
 
 const mapStateToProps = (state) => {
   return {
-    readOnly: configSelector(state).readOnly,
+    isReadOnly: configSelector(state).readOnly,
     title: state.meta.name,
   };
 };

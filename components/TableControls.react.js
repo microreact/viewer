@@ -27,13 +27,19 @@ const TableColumns = React.memo(
         button={UiControlsButton}
         icon={<MenuIcon />}
       >
-        <UiDropdownMenu.Item
-          onClick={props.onEditPane}
-        >
-          Edit Table
-        </UiDropdownMenu.Item>
+        {
+          props.isReadOnly && (
+            <React.Fragment>
+              <UiDropdownMenu.Item
+                onClick={props.onEditPane}
+              >
+                Edit Table
+              </UiDropdownMenu.Item>
 
-        <Divider />
+              <Divider />
+            </React.Fragment>
+          )
+        }
 
         <UiDropdownMenu.Item
           onClick={() => props.onHideUnselectedChange(!props.hideUnselected)}
@@ -114,14 +120,15 @@ TableColumns.displayName = "TableColumns";
 TableColumns.propTypes = {
   controls: PropTypes.bool.isRequired,
   dataFields: PropTypes.arrayOf(DataColumn).isRequired,
-  visibleFields: PropTypes.arrayOf(PropTypes.string.isRequired),
   displayMode: PropTypes.string.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   onControlsChange: PropTypes.func.isRequired,
-  onEditPane: PropTypes.func.isRequired,
-  onVisibleFieldsChange: PropTypes.func.isRequired,
   onDisplayModeChange: PropTypes.func.isRequired,
+  onEditPane: PropTypes.func.isRequired,
   onShowSelecttionChange: PropTypes.func.isRequired,
+  onVisibleFieldsChange: PropTypes.func.isRequired,
   showSelection: PropTypes.bool,
+  visibleFields: PropTypes.arrayOf(PropTypes.string.isRequired),
 };
 
 export default TableColumns;

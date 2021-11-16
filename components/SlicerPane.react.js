@@ -166,6 +166,7 @@ class SlicerPane extends React.PureComponent {
         }
 
         <SlicerControls
+          isReadOnly={props.isReadOnly}
           onDownloadPNG={this.downloadPNG}
           onDownloadSVG={this.downloadSVG}
           onEditPane={props.onEditPane}
@@ -185,6 +186,7 @@ SlicerPane.propTypes = {
   dataColumn: DataColumn.isRequired,
   filter: DataFilter,
   height: PropTypes.number.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   onColumnFilterChange: PropTypes.func.isRequired,
   onEditPane: PropTypes.func.isRequired,
   slicerId: PropTypes.string.isRequired,

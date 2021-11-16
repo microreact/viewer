@@ -1,7 +1,8 @@
 import { update, setVisibleColumns, downloadAsCsv } from "../actions/tables";
 import { openPaneEditor } from "../actions/ui";
 
-import TableControls from "../components/TableControls.react";
+import Component from "../components/TableControls.react";
+import configSelector from "../selectors/config";
 import dataColumnsSelector from "../selectors/datasets/data-columns";
 import visibleFieldsSelector from "../selectors/tables/visible-fields";
 import { connectToPresentState } from "../utils/state";
@@ -13,6 +14,7 @@ const mapStateToProps = (state, { tableId }) => {
     dataFields: dataColumnsSelector(state),
     displayMode: tableState.displayMode,
     hideUnselected: tableState.hideUnselected,
+    isReadOnly: configSelector(state).readOnly,
     showSelection: tableState.showSelection,
     visibleFields: visibleFieldsSelector(state, tableId),
   };
@@ -28,4 +30,4 @@ const mapDispatchToProps = (dispatch, { tableId }) => ({
   onVisibleFieldsChange: (fields) => dispatch(setVisibleColumns(tableId, fields)),
 });
 
-export default connectToPresentState(TableControls, mapStateToProps, mapDispatchToProps);
+export default connectToPresentState(Component, mapStateToProps, mapDispatchToProps);

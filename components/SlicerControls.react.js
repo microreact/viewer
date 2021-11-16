@@ -15,11 +15,15 @@ const SlicerControls = React.memo(
           button={UiControlsButton}
           icon={<MenuIcon />}
         >
-          <UiDropdownMenu.Item
-            onClick={props.onEditPane}
-          >
-            Edit Data Slicer
-          </UiDropdownMenu.Item>
+          {
+            props.isReadOnly && (
+              <UiDropdownMenu.Item
+                onClick={props.onEditPane}
+              >
+                Edit Data Slicer
+              </UiDropdownMenu.Item>
+            )
+          }
 
           {
             isChart && (<Divider />)
@@ -54,6 +58,7 @@ const SlicerControls = React.memo(
 SlicerControls.displayName = "SlicerControls";
 
 SlicerControls.propTypes = {
+  isReadOnly: PropTypes.bool.isRequired,
   onDownloadPNG: PropTypes.func.isRequired,
   onDownloadSVG: PropTypes.func.isRequired,
   onEditPane: PropTypes.func.isRequired,

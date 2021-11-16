@@ -52,13 +52,19 @@ const TreeControls = React.memo(
         button={UiControlsButton}
         icon={<MenuIcon />}
       >
-        <UiDropdownMenu.Item
-          onClick={props.onEditPane}
-        >
-          Edit Tree
-        </UiDropdownMenu.Item>
+        {
+          props.isReadOnly && (
+            <React.Fragment>
+              <UiDropdownMenu.Item
+                onClick={props.onEditPane}
+              >
+                Edit Tree
+              </UiDropdownMenu.Item>
 
-        <Divider />
+              <Divider />
+            </React.Fragment>
+          )
+        }
 
         <UiDropdownMenu.Item
           onClick={props.onDownloadNewick}
@@ -156,6 +162,7 @@ TreeControls.displayName = "TreeControls";
 
 TreeControls.propTypes = {
   controls: PropTypes.bool.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   lasso: PropTypes.bool.isRequired,
   onControlsChange: PropTypes.func.isRequired,
   onDownloadNewick: PropTypes.func.isRequired,

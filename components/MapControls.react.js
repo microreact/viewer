@@ -54,13 +54,19 @@ const MapControls = React.memo(
           button={UiControlsButton}
           icon={<MenuIcon />}
         >
-          <UiDropdownMenu.Item
-            onClick={props.onEditPane}
-          >
-            Edit Map
-          </UiDropdownMenu.Item>
+          {
+            props.isReadOnly && (
+              <React.Fragment>
+                <UiDropdownMenu.Item
+                  onClick={props.onEditPane}
+                >
+                  Edit Map
+                </UiDropdownMenu.Item>
 
-          <Divider />
+                <Divider />
+              </React.Fragment>
+            )
+          }
 
           <UiDropdownMenu.Item
             key="png"
@@ -286,6 +292,7 @@ MapControls.propTypes = {
   dataFields: PropTypes.arrayOf(DataColumn).isRequired,
   groupMarkersByRegion: PropTypes.bool,
   hasGeojsonData: PropTypes.bool,
+  isReadOnly: PropTypes.bool.isRequired,
   lasso: PropTypes.bool.isRequired,
   mapId: PropTypes.string,
   markersOpacity: PropTypes.number,
