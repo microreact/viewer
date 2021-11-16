@@ -217,7 +217,7 @@ class ViewsPane extends React.PureComponent {
       return (
         <UiEmptyState
           // title="No Views"
-          subtitle="You can add a new view by clicking the plus button"
+          subtitle={props.isReadOnly ? "You cannot add a new view to this project" : "You can add a new view by clicking the plus button"}
           icon={<ViewCompactIcon />}
         />
       );
@@ -241,12 +241,16 @@ class ViewsPane extends React.PureComponent {
           onClose={props.onClose}
           title="Views"
         >
-          <UiIconButton
-            onClick={this.handleCreateView}
-            disabled={state.isSaving}
-          >
-            <AddCircleTwoToneIcon />
-          </UiIconButton>
+          {
+            !props.isReadOnly && (
+              <UiIconButton
+                onClick={this.handleCreateView}
+                disabled={state.isSaving}
+              >
+                <AddCircleTwoToneIcon />
+              </UiIconButton>
+            )
+          }
         </UiSidePaneHeader>
 
         { this.renderContent() }
@@ -260,6 +264,7 @@ ViewsPane.displayName = "ViewsPane";
 
 ViewsPane.propTypes = {
   entries: PropTypes.array.isRequired,
+  isReadOnly: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onCreateView: PropTypes.func.isRequired,
   onDeleteView: PropTypes.func.isRequired,

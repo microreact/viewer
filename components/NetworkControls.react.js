@@ -20,13 +20,19 @@ const NetworkControls = React.memo((props) => {
         button={UiControlsButton}
         icon={<MenuIcon />}
       >
-        <UiDropdownMenu.Item
-          onClick={props.onEditPane}
-        >
-          Edit Network
-        </UiDropdownMenu.Item>
+        {
+          props.isReadOnly && (
+            <React.Fragment>
+              <UiDropdownMenu.Item
+                onClick={props.onEditPane}
+              >
+                Edit Network
+              </UiDropdownMenu.Item>
 
-        <Divider />
+              <Divider />
+            </React.Fragment>
+          )
+        }
 
         <UiDropdownMenu.Item
           onClick={() => props.onDownloadDOT(props.networkFileId)}
@@ -199,6 +205,7 @@ NetworkControls.propTypes = {
   edgeLineStyleFilter: PropTypes.string,
   edgeLineWidthAttributes: PropTypes.array.isRequired,
   edgeLineWidthFilter: PropTypes.string,
+  isReadOnly: PropTypes.bool.isRequired,
   labelSize: PropTypes.number.isRequired,
   lasso: PropTypes.bool.isRequired,
   maxLabelSize: PropTypes.number.isRequired,

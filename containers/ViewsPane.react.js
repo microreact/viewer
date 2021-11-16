@@ -5,10 +5,12 @@ import { connectToPresentState } from "../utils/state";
 import Component from "../components/ViewsPane.react";
 import { createNewView, deleteView, renameView, setViewsList, resaveView } from "../actions/views";
 import { loadView } from "../actions/ui";
+import configSelector from "../selectors/config";
 
 function mapStateToProps(state) {
   return {
     entries: state.views,
+    isReadOnly: configSelector(state).readOnly,
     key: state.views.length,
   };
 }

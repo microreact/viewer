@@ -11,16 +11,18 @@ import { connectToPresentState } from "../utils/state";
 // import dataFieldFilterSelector from "../selectors/filters/data-field-filter";
 import { openPaneEditor } from "../actions/ui";
 import slicerStateSelector from "../selectors/slicers/slicer-state";
+import configSelector from "../selectors/config";
 
 function mapStateToProps(state, { slicerId }) {
   const dataColumn = dataColumnSelector(state, slicerId);
   const slicerState = slicerStateSelector(state, slicerId);
   return {
-    slicerType: slicerState.slicerType,
+    chartAxisType: chartAxisTypeSelector(state, slicerId),
     chartData: chartDataSelector(state, slicerId),
     chartSpec: chartSpecSelector(state, slicerId),
     dataColumn,
-    chartAxisType: chartAxisTypeSelector(state, slicerId),
+    isReadOnly: configSelector(state).readOnly,
+    slicerType: slicerState.slicerType,
   };
 }
 

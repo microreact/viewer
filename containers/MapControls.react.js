@@ -10,6 +10,7 @@ import minScaledMarkerNodeSelector from "../selectors/maps/min-scaled-marker-siz
 import hasGeojsonDataSelector from "../selectors/maps/has-geojson-data";
 import colourPalettesSelector from "../selectors/styles/colour-palettes";
 import { connectToPresentState } from "../utils/state";
+import configSelector from "../selectors/config";
 
 const mapStateToProps = (state, { mapId }) => {
   const mapState = state.maps[mapId];
@@ -20,6 +21,7 @@ const mapStateToProps = (state, { mapId }) => {
     dataFields: dataColumnsSelector(state),
     groupMarkersByRegion: mapState.groupMarkersByRegion,
     hasGeojsonData: hasGeojsonDataSelector(state, mapId),
+    isReadOnly: configSelector(state).readOnly,
     lasso: mapState.lasso,
     markersOpacity: mapState.markersOpacity,
     maxNodeSize: mapState.maxNodeSize,
