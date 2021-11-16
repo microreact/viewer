@@ -195,6 +195,8 @@ export async function loadFile(input, onProgress) {
       }
     }
     else {
+      loadedFile.url = input.url;
+      loadedFile.blob = input.blob;
       loadedFile._content = input._content;
     }
   }
