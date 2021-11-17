@@ -16,7 +16,7 @@ const SlicerControls = React.memo(
           icon={<MenuIcon />}
         >
           {
-            props.isReadOnly && (
+            !props.isReadOnly && (
               <UiDropdownMenu.Item
                 onClick={props.onEditPane}
               >

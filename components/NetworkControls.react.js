@@ -21,7 +21,7 @@ const NetworkControls = React.memo((props) => {
         icon={<MenuIcon />}
       >
         {
-          props.isReadOnly && (
+          !props.isReadOnly && (
             <React.Fragment>
               <UiDropdownMenu.Item
                 onClick={props.onEditPane}

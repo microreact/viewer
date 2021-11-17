@@ -344,6 +344,7 @@ export function commitFiles(fileDescriptors) {
 export function config(payload) {
   return {
     payload,
+    savable: false,
     type: "MICROREACT VIEWER/CONFIG",
   };
 }

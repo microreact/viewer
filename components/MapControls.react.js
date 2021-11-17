@@ -55,7 +55,7 @@ const MapControls = React.memo(
           icon={<MenuIcon />}
         >
           {
-            props.isReadOnly && (
+            !props.isReadOnly && (
               <React.Fragment>
                 <UiDropdownMenu.Item
                   onClick={props.onEditPane}

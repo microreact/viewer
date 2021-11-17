@@ -30,13 +30,13 @@ class HeaderBar extends React.PureComponent {
 
             <InfoMenu />
 
-            { props.prependNavButtons }
-
           </Typography>
 
           <SearchBox />
 
           <nav>
+            { props.prependNavButtons }
+
             {
               (!props.isReadOnly) && <AddPaneMenu />
             }
