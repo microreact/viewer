@@ -251,6 +251,7 @@ const MapControls = React.memo(
               )
             }
 
+            {/*
             {
               props.showMarkers && props.scaleMarkers && (
                 <UiSlider
@@ -263,14 +264,15 @@ const MapControls = React.memo(
                 />
               )
             }
+            */}
 
             {
               props.showMarkers && props.scaleMarkers && (
                 <UiSlider
                   label="Max marker size"
                   max={128}
-                  min={1}
-                  onChange={(value) => (value > props.minScaledMarkerSize) && props.onMaxMarkerSizeChange(value)}
+                  min={props.nodeSize}
+                  onChange={(value) => props.onMaxMarkerSizeChange(value)}
                   unit="px"
                   value={props.maxScaledMarkerSize}
                 />

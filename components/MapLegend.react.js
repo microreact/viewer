@@ -77,7 +77,7 @@ class MapLegend extends React.PureComponent {
                           props.markerSizeLegendItems.map(
                             (item, index) => (
                               <tr key={item.value}>
-                                <td>
+                                <td title={`${Math.round(item.radius * 2)} px`}>
                                   <svg
                                     width={`${props.maxScaledMarkerSize * 2 + 2}px`}
                                     height={`${item.radius * 2 + 2}px`}
@@ -91,7 +91,8 @@ class MapLegend extends React.PureComponent {
                                     />
                                   </svg>
                                 </td>
-                                {
+                                <td>{ item.value }</td>
+                                {/* {
                                   (index === 0 || index === props.markerSizeLegendItems.length - 1)
                                     ?
                                     (
@@ -113,11 +114,11 @@ class MapLegend extends React.PureComponent {
                                             (
                                               <UiSlider
                                                 label="Min marker size"
-                                                max={128}
+                                                max={props.maxScaledMarkerSize}
                                                 min={1}
-                                                onChange={(value) => (value < props.maxScaledMarkerSize) && props.onMinMarkerSizeChange(value)}
+                                                onChange={(value) => props.onNodeSizeChange(value)}
                                                 unit="px"
-                                                value={props.minScaledMarkerSize}
+                                                value={props.nodeSize}
                                               />
                                             )
                                             :
@@ -125,8 +126,8 @@ class MapLegend extends React.PureComponent {
                                               <UiSlider
                                                 label="Max marker size"
                                                 max={128}
-                                                min={1}
-                                                onChange={(value) => (value > props.minScaledMarkerSize) && props.onMaxMarkerSizeChange(value)}
+                                                min={props.minScaledMarkerSize}
+                                                onChange={(value) => props.onMaxMarkerSizeChange(value)}
                                                 unit="px"
                                                 value={props.maxScaledMarkerSize}
                                               />
@@ -138,7 +139,7 @@ class MapLegend extends React.PureComponent {
                                     (
                                       <td>{ item.value }</td>
                                     )
-                                }
+                                } */}
                               </tr>
                             )
                           )

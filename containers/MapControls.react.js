@@ -27,7 +27,7 @@ const mapStateToProps = (state, { mapId }) => {
     maxNodeSize: mapState.maxNodeSize,
     maxScaledMarkerSize: maxScaledMarkerRadiusSelector(state, mapId),
     minNodeSize: mapState.minNodeSize,
-    minScaledMarkerSize: minScaledMarkerNodeSelector(state, mapId),
+    // minScaledMarkerSize: minScaledMarkerNodeSelector(state, mapId),
     nodeSize: mapState.nodeSize,
     regionsColourField: mapState.regionsColourField,
     regionsColourMethod: mapState.regionsColourMethod,

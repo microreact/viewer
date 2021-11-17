@@ -49,7 +49,7 @@ export default class MapMarkersLayer extends React.PureComponent {
                 ?
                 this.props.nodeRadius
                 :
-                this.props.minScaledMarkerSize + (this.props.maxScaledMarkerSize - this.props.minScaledMarkerSize) * marker.ratio
+                this.props.minScaledMarkerRadius + (this.props.maxScaledMarkerRadius - this.props.minScaledMarkerRadius) * marker.ratio
             );
 
             if (marker.slices) {

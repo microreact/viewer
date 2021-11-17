@@ -17,6 +17,7 @@ import hasRegionColourLegendSelector from "../selectors/maps/has-region-colour-l
 const mapStateToProps = (state, { mapId }) => {
   const hasMarkerSizeLegend = hasMarkerSizeLegendSelector(state, mapId);
   const hasRegionColourLegend = hasRegionColourLegendSelector(state, mapId);
+  const mapState = state.maps[mapId];
   return {
     hasMarkerSizeLegend,
     hasRegionColourLegend,
@@ -24,6 +25,7 @@ const mapStateToProps = (state, { mapId }) => {
     markerSizeLegendItems: hasMarkerSizeLegend ? markerSizeLegendItemsSelector(state, mapId) : null,
     maxScaledMarkerSize: maxScaledMarkerRadiusSelector(state, mapId),
     minScaledMarkerSize: minScaledMarkerNodeSelector(state, mapId),
+    nodeSize: mapState.nodeSize,
     regionColourLegendItems: hasRegionColourLegend ? regionColourLegendItemsSelector(state, mapId) : null,
     scaleMarkersDataField: scaleMarkersFieldSelector(state, mapId),
   };
@@ -31,9 +33,10 @@ const mapStateToProps = (state, { mapId }) => {
 
 const mapDispatchToProps = (dispatch, { mapId }) => {
   return {
-    onSelectRows: (ids, merge) => dispatch(selectRows(ids, merge)),
-    onMinMarkerSizeChange: (value) => dispatch(update(mapId, "minMarkerSize", value)),
     onMaxMarkerSizeChange: (value) => dispatch(update(mapId, "maxMarkerSize", value)),
+    onMinMarkerSizeChange: (value) => dispatch(update(mapId, "minMarkerSize", value)),
+    onNodeSizeChange: (value) => dispatch(update(mapId, "nodeSize", Number(value))),
+    onSelectRows: (ids, merge) => dispatch(selectRows(ids, merge)),
   };
 };
 
