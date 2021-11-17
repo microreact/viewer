@@ -15,12 +15,12 @@ const numberOfMarks = {
 
 const markerSizeLegendItemsSelector = createKeyedStateSelector(
   (state, mapId) => markersLayerDataSelector(state, mapId),
-  (state, mapId) => minScaledMarkerNodeSelector(state, mapId),
-  (state, mapId) => maxScaledMarkerRadiusSelector(state, mapId),
+  (state, mapId) => minScaledMarkerNodeSelector(state, mapId) / 2,
+  (state, mapId) => maxScaledMarkerRadiusSelector(state, mapId) / 2,
   (
     markers,
-    minScaledMarkerSize,
-    maxScaledMarkerSize,
+    minScaledMarkerRadius,
+    maxScaledMarkerRadius,
   ) => {
     const markersByMagnitude = new Map();
     for (const marker of markers) {
@@ -32,7 +32,7 @@ const markerSizeLegendItemsSelector = createKeyedStateSelector(
     const orderedMarks = Array.from(markersByMagnitude.keys()).sort((a, b) => (a - b));
 
     const items = [];
-    const radiusRange = maxScaledMarkerSize - minScaledMarkerSize;
+    const radiusRange = maxScaledMarkerRadius - minScaledMarkerRadius;
 
     if (orderedMarks.length > 0) {
       const marks = numberOfMarks[Math.min(5, orderedMarks.length)];
@@ -41,7 +41,7 @@ const markerSizeLegendItemsSelector = createKeyedStateSelector(
         const value = orderedMarks[index];
         items.push({
           value,
-          radius: minScaledMarkerSize + radiusRange * markersByMagnitude.get(value).ratio,
+          radius: minScaledMarkerRadius + radiusRange * markersByMagnitude.get(value).ratio,
         });
       }
     }

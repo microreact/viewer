@@ -5,7 +5,7 @@ const maxScaledMarkerRadiusSelector = (state, mapId) => {
     state.maps[mapId].maxMarkerSize
     ??
     (
-      (state.maps[mapId].nodeSize * 0.5) + minScaledMarkerNodeSelector(state, mapId)
+      (state.maps[mapId].nodeSize * 2)
     )
   );
 };
