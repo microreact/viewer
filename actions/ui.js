@@ -490,7 +490,6 @@ export function save() {
 
         // Serialise file blobs and remove file loaded content
         doc.files = clearLoadedContent(doc.files);
-        await serialiseBlobs(doc.files);
 
         return doc;
       });
