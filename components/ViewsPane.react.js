@@ -217,7 +217,7 @@ class ViewsPane extends React.PureComponent {
       return (
         <UiEmptyState
           // title="No Views"
-          subtitle={props.isReadOnly ? "You cannot add a new view to this project" : "You can add a new view by clicking the plus button"}
+          subtitle={props.isReadOnly ? "You cannot add a new view to this project because you are not the owner." : "You can add a new view by clicking the plus button"}
           icon={<ViewCompactIcon />}
         />
       );
