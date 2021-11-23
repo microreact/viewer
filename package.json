@@ -14,7 +14,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
     "@mdi/js": "^5.5.55",
-    "@phylocanvas/phylocanvas.gl": "^1.21.0",
+    "@phylocanvas/phylocanvas.gl": "^1.23.0",
     "@turf/centroid": "^6.0.2",
     "array-join": "^2.5.0",
     "await-to-js": "^3.0.0",
