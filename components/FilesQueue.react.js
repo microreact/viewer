@@ -191,7 +191,7 @@ class FilesQueue extends React.PureComponent {
                           <TableCell style={fileKindCellStyle}>
                             <TextField
                               select
-                              label="File kind"
+                              label=""
                               value={row.format ?? ""}
                               onChange={(event) => this.handleFileChange(row, "format", event.target.value)}
                               variant="outlined"
