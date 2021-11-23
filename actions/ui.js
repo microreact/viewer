@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 /* eslint-disable no-use-before-define */
 
-import { nameWithoutExtention, loadFiles, loadFile, clearLoadedContent, serialiseBlobs } from "../utils/files";
+import { nameWithoutExtention, loadFiles, loadFile, clearLoadedContent } from "../utils/files";
 
 import { addDataset, updateDataset } from "./datasets";
 import { addFile, updateFile } from "./files";
