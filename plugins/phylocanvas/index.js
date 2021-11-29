@@ -3,6 +3,8 @@ import PhylocanvasGL, { TreeTypes, plugins } from "@phylocanvas/phylocanvas.gl";
 import createCanvasLasso from "../canvas-lasso";
 import convertState from "./convert-state";
 
+import { isPointInPolygon } from "../../utils/geometry";
+
 function zoomToScale(zoom) {
   return Math.pow(2, zoom); // eslint-disable-line no-restricted-properties
 }
@@ -47,7 +49,7 @@ export default function (treePane) {
               ids = [];
               const graph = tree.getGraphAfterLayout();
               for (const leaf of graph.leaves) {
-                if (tree.lasso.isPointInside(leaf, path)) {
+                if (isPointInPolygon(tree.absolutePointToRelativePoint([ leaf.x, leaf.y ]), path)) {
                   ids.push(leaf.id);
                 }
               }
@@ -59,9 +61,14 @@ export default function (treePane) {
           },
           translateToCanvas: (points) => {
             const scale = zoomToScale(tree.getZoom());
-            return points.map((x) => tree.projectPoint(x, scale));
+            return points.map(
+              (x) => tree.projectPoint(
+                tree.relativePointToAbsolutePoint(x),
+                scale,
+              )
+            );
           },
-          translateFromCanvas: (x, y) => tree.unprojectPoint([ x, y ]),
+          translateFromCanvas: (x, y) => tree.absolutePointToRelativePoint(tree.unprojectPoint([ x, y ])),
         },
       );
 
@@ -91,8 +98,8 @@ export default function (treePane) {
 
     handleClick(info, event) {
       const tree = this;
+      const node = tree.pickNodeFromLayer(info);
       if (event.rightButton) {
-        const node = tree.pickNodeFromLayer(info);
         event.preventDefault();
         treePane.setState({
           contextMenuPosition: {
@@ -102,8 +109,21 @@ export default function (treePane) {
           contextMenuNode: node,
         });
       }
+      else if (node && event.srcEvent.shiftKey && this.props.selectedIds && this.props.selectedIds.length) {
+        const lastSelectedNode = this.findNodeById(this.props.selectedIds[this.props.selectedIds.length - 1]);
+        const nodes = this.getGraphAfterLayout();
+        const lastSelectedNodeIndex = nodes.leaves.indexOf(lastSelectedNode);
+        const clickedNodeIndex = nodes.leaves.indexOf(node);
+        const first = Math.min(lastSelectedNodeIndex + 1, clickedNodeIndex);
+        const last = Math.max(lastSelectedNodeIndex - 1, clickedNodeIndex);
+        const ids = [];
+        for (let index = first; index <= last; index++) {
+          ids.push(nodes.leaves[index].id);
+        }
+        this.selectLeafNodes(ids, true);
+      }
       else {
-        super.handleClick(info, event);
+        this.selectNode(node, event.srcEvent.metaKey || event.srcEvent.ctrlKey);
       }
     }
 
@@ -215,6 +235,22 @@ export default function (treePane) {
 
     zoomOut() {
       this.setZoom(this.getZoom() - 0.1);
+    }
+
+    absolutePointToRelativePoint([ pointX, pointY ]) {
+      const { root } = this.getGraphAfterLayout();
+      return [
+        (pointX - root.x) / this.getBranchScale(),
+        (pointY - root.y) / this.getStepScale(),
+      ];
+    }
+
+    relativePointToAbsolutePoint([ pointX, pointY ]) {
+      const { root } = this.getGraphAfterLayout();
+      return [
+        (pointX * this.getBranchScale()) + root.x,
+        (pointY * this.getStepScale()) + root.y,
+      ];
     }
 
     // Moved to componentDidMount to avoid updating the store when tree loads
