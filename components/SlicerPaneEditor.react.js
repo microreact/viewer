@@ -26,7 +26,7 @@ class SlicerPaneEditor extends React.PureComponent {
       if (dataColumn) {
         for (const row of rows) {
           const value = row[dataColumn.name];
-          uniqueValues.add(value.toString());
+          uniqueValues.add(value?.toString());
         }
       }
 
@@ -61,6 +61,33 @@ class SlicerPaneEditor extends React.PureComponent {
           value={slicerState.field}
         />
 
+        <UiSelect
+          label="Slicer Type"
+          variant="outlined"
+          size="small"
+          value={slicerState.slicerType}
+          onChange={(value) => props.onSlicerPropChange("slicerType", value)}
+          options={
+            [
+              {
+                label: "Filter Chart",
+                // secondary: "Metadata include a column for ISO 3166-1 or 3166-2 codes",
+                value: "chart",
+              },
+              {
+                label: "Filter by values",
+                // secondary: "Metadata include a column for ISO 3166-1 or 3166-2 codes",
+                value: "values",
+              },
+              // {
+              //   label: "Filter by condition",
+              //   // secondary: "Metadata include a column for ISO 3166-1 or 3166-2 codes",
+              //   value: "condition",
+              // },
+            ]
+          }
+        />
+
         <Box display="flex" justifyContent="space-between">
           <Box style={(slicerState.includedValues === "top") ? halfWidthWithPaddingStyle : fullSizeStyle}>
             <UiSelect
@@ -80,7 +107,7 @@ class SlicerPaneEditor extends React.PureComponent {
                     value: "top",
                   },
                   {
-                    label: "Choose which values to include",
+                    label: "Choose which values to include (Filter Chart only)",
                     value: "custom",
                   },
                 ]
@@ -88,6 +115,7 @@ class SlicerPaneEditor extends React.PureComponent {
               style={fullSizeStyle}
             />
           </Box>
+
           {
             (slicerState.includedValues === "top") && (
               <Box style={halfWidthWithPaddingStyle}>
@@ -118,33 +146,6 @@ class SlicerPaneEditor extends React.PureComponent {
             />
           )
         }
-
-        <UiSelect
-          label="Slicer Type"
-          variant="outlined"
-          size="small"
-          value={slicerState.slicerType}
-          onChange={(value) => props.onSlicerPropChange("slicerType", value)}
-          options={
-            [
-              {
-                label: "Filter Chart",
-                // secondary: "Metadata include a column for ISO 3166-1 or 3166-2 codes",
-                value: "chart",
-              },
-              {
-                label: "Filter by values",
-                // secondary: "Metadata include a column for ISO 3166-1 or 3166-2 codes",
-                value: "values",
-              },
-              // {
-              //   label: "Filter by condition",
-              //   // secondary: "Metadata include a column for ISO 3166-1 or 3166-2 codes",
-              //   value: "condition",
-              // },
-            ]
-          }
-        />
 
         {
           (slicerState.slicerType === "chart") && (
