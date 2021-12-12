@@ -19,9 +19,11 @@ import * as events from "./utils/events";
 import * as downloads from "./utils/downloads";
 import * as html from "./utils/html";
 import * as proxy from "./utils/proxy";
+import * as files from "./utils/files";
 export const utils = {
-  events,
   downloads,
+  events,
+  files,
   html,
   proxy,
 };
