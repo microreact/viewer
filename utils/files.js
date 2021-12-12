@@ -75,6 +75,18 @@ export const FileKinds = [
   },
 ];
 
+function base64ToBlob(base64) {
+  return fetch(base64).then((res) => res.blob());
+}
+
+function blobToBase64(blob) {
+  return new Promise((resolve, _) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result);
+    reader.readAsDataURL(blob);
+  });
+}
+
 export function clearLoadedContent(docFiles) {
   const files = {};
 
@@ -189,7 +201,12 @@ export async function loadFile(input, onProgress) {
       else if (input instanceof File || input.blob) {
         loadedFile.blob = input.blob || input;
         if (loadedFile.blob && typeof loadedFile.blob === "string") {
-          loadedFile.blob = new Blob([ loadedFile.blob ], { type: input.format });
+          if (/^data:.*\/.*;base64,/i.test(loadedFile.blob)) {
+            loadedFile.blob = base64ToBlob(loadedFile.blob);
+          }
+          else {
+            loadedFile.blob = new Blob([ loadedFile.blob ], { type: input.format });
+          }
         }
         loadedFile._content = await loader(loadedFile.blob);
       }
@@ -236,7 +253,7 @@ export async function loadFiles(files, delay = 1000) {
 export async function serialiseBlobs(files) {
   for (const fileId of Object.keys(files)) {
     if (files[fileId].blob instanceof Blob) {
-      files[fileId].blob = await files[fileId].blob.text();
+      files[fileId].blob = await blobToBase64(files[fileId].blob);
     }
   }
 }
