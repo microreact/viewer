@@ -10,13 +10,13 @@ const TreeStylesMenu = React.memo(
   (props) => {
     return (
       <UiControlsMenu
-        style={props.style}
         className={
           classnames(
             "mr-tree-styles-menu",
             props.className,
           )
         }
+        style={props.style}
         title="Nodes & Labels"
       >
         <UiToggleSlider
@@ -117,6 +117,7 @@ TreeStylesMenu.propTypes = {
   showPiecharts: PropTypes.bool.isRequired,
   showShapeBorders: PropTypes.bool.isRequired,
   showShapes: PropTypes.bool.isRequired,
+  style: PropTypes.object,
   styleLeafLabels: PropTypes.bool.isRequired,
   styleNodeEdges: PropTypes.bool.isRequired,
 };
