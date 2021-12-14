@@ -13,13 +13,13 @@ const TreeMetadataMenu = React.memo(
   (props) => {
     return (
       <UiControlsMenu
-        style={props.style}
         className={
           classnames(
             "mr-tree-metadata-menu",
             props.className,
           )
         }
+        style={props.style}
         title="Metadata blocks"
       >
         <section>
@@ -110,26 +110,27 @@ TreeMetadataMenu.displayName = "TreeMetadataMenu";
 
 TreeMetadataMenu.propTypes = {
   blockHeaderFontSize: PropTypes.number.isRequired,
-  blockSize: PropTypes.number.isRequired,
   blockPadding: PropTypes.number.isRequired,
   blocks: PropTypes.arrayOf(PropTypes.string.isRequired),
+  blockSize: PropTypes.number.isRequired,
   className: PropTypes.string,
   colourFields: PropTypes.arrayOf(DataColumn).isRequired,
-  maxBlockSize: PropTypes.number.isRequired,
   maxBlockPadding: PropTypes.number.isRequired,
+  maxBlockSize: PropTypes.number.isRequired,
   maxFontSize: PropTypes.number.isRequired,
-  minBlockSize: PropTypes.number.isRequired,
   minBlockPadding: PropTypes.number.isRequired,
+  minBlockSize: PropTypes.number.isRequired,
   minFontSize: PropTypes.number.isRequired,
   onBlockHeaderFontSizeChange: PropTypes.func.isRequired,
-  onBlockSizeChange: PropTypes.func.isRequired,
   onBlockPaddingChange: PropTypes.func.isRequired,
   onBlocksChange: PropTypes.func,
+  onBlockSizeChange: PropTypes.func.isRequired,
   onMetadataLabelsChange: PropTypes.func,
   onShowBlockHeadersChange: PropTypes.func,
   open: PropTypes.bool,
   showBlockHeaders: PropTypes.bool,
   showMetadataLabels: PropTypes.bool,
+  style: PropTypes.object,
   toggle: PropTypes.func,
   treeType: TreeType.isRequired,
 };
