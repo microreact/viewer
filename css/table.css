@@ -29,11 +29,16 @@
 
 /*#region Style header cells */
 
+/* .mr-table .BaseTable__header-cell.mr-group-cell {
+  justify-content: center;
+} */
+
 .mr-table .BaseTable__header-cell-text {
   color: var(--primary-main);
   font-weight: 700;
   white-space: nowrap;
 }
+
 .mr-table .BaseTable__header-cell--align-right {
   justify-content: flex-start;
   text-align: left;
