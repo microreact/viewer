@@ -1,9 +1,8 @@
-import { connect } from "react-redux";
-
 import { update } from "../actions/trees";
 
-import TreeMetadataMenu from "../components/TreeMetadataMenu.react";
+import Component from "../components/TreeMetadataMenu.react";
 import dataColumnsSelector from "../selectors/datasets/data-columns";
+import { connectToPresentState } from "../utils/state";
 
 const mapStateToProps = (state, { treeId }) => {
   const treeState = state.trees[treeId];
@@ -33,4 +32,4 @@ const mapDispatchToProps = (dispatch, { treeId }) => ({
   onShowBlockHeadersChange: (value) => dispatch(update(treeId, "showBlockHeaders", value)),
 });
 
-export default connect((state, props) => mapStateToProps(state.present, props), mapDispatchToProps)(TreeMetadataMenu);
+export default connectToPresentState(Component, mapStateToProps, mapDispatchToProps);
