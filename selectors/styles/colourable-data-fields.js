@@ -8,10 +8,10 @@ const colourableDataFieldsSelector = createSelector(
   (state) => dataColumnsSelector(state),
   (state) => state.styles.colourSettings || emptyObject,
   (
-    dataColumns,
+    allDataColumns,
     colourSettings,
   ) => {
-    const allDataColumns = dataColumns.sort(sortComparator("name"));
+    // const allDataColumns = dataColumns.sort(sortComparator("name"));
 
     const colourableDataColumns = [];
     const autocolouredDataColumns = [];

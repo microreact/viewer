@@ -7,9 +7,8 @@ import Animation from "./Animation.react";
 import UiControlsButton from "./UiControlsButton.react";
 import UiControlsMenu from "./UiControlsMenu.react";
 import UiDropdownMenu from "./UiDropdownMenu.react";
-import UiFloatingFilter from "./UiFloatingFilter.react";
 import UiRadioList from "./UiRadioList.react";
-import UiSelectList from "./UiSelectList.react";
+import MultipleDataColumnsSelect from "./MultipleDataColumnsSelect.react";
 
 import { DataColumn } from "../utils/prop-types";
 // import ToggleSelectionOnlyButton from "./ToggleSelectionOnlyButton.react";
@@ -88,27 +87,12 @@ const TableColumns = React.memo(
         <UiControlsMenu
           title="Columns"
         >
-          <UiFloatingFilter
-            items={props.dataFields}
-            label="Search columns"
-          >
-            {
-              (items) => (
-                <UiSelectList
-                  items={items}
-                  onChange={props.onVisibleFieldsChange}
-                  value={props.visibleFields}
-                  selectAll
-                  style={
-                    {
-                      height: 40 + props.dataFields.length * 28,
-                      maxHeight: "calc(100vh - 216px)",
-                    }
-                  }
-                />
-              )
-            }
-          </UiFloatingFilter>
+          <MultipleDataColumnsSelect
+            dataColumns={props.dataFields}
+            maxHeightOffset="216px"
+            onChange={props.onVisibleFieldsChange}
+            value={props.visibleFields}
+          />
         </UiControlsMenu>
       </Animation>
     </div>
