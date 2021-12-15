@@ -58,6 +58,7 @@ class TablePane extends React.PureComponent {
 
   tableRef = React.createRef()
 
+  // TODO: merge these two selectors
   dataColumnsSelector = createSelector(
     (props) => props.columns,
     (props) => props.fieldsMap,
@@ -81,6 +82,7 @@ class TablePane extends React.PureComponent {
             minWidth: 40,
             resizable: true,
             sort: col.sort,
+            group: dataColumn.group,
             sortable: true,
             tableId: this.props.tableId,
             title: col.label || dataColumn.label || dataColumn.name,
@@ -128,6 +130,76 @@ class TablePane extends React.PureComponent {
   }
 
   renderTableHeaderRow = ({ cells, columns }) => {
+    // if (columns?.length === 1 && columns?.[0]?.frozen) {
+    //   return null;
+    // }
+
+    // if (headerIndex === 0) {
+    //   if (columns?.length === 1) {
+    //     return null;
+    //   }
+
+    //   // return (
+    //   //   columns.map(
+    //   //     (x) => (
+    //   //       <div
+    //   //         role="gridcell"
+    //   //         className="BaseTable__header-cell"
+    //   //         key={x.dataKey}
+    //   //         style={
+    //   //           { width: x.width }
+    //   //         }
+    //   //       >
+    //   //         <div
+    //   //           className="BaseTable__header-cell-text">
+    //   //             { x.group || null }
+    //   //         </div>
+    //   //       </div>
+    //   //     )
+    //   //   )
+    //   // );
+
+    //   const groupCells = [];
+    //   groupCells.push(
+    //     <div
+    //       role="gridcell"
+    //       className="BaseTable__header-cell"
+    //       key={columns[0].dataKey}
+    //       style={
+    //         { width: columns[0].width }
+    //       }
+    //     >
+    //       <div className="BaseTable__header-cell-text" />
+    //     </div>
+    //   );
+    //   let previousColumn = columns[1];
+    //   let width = 0;
+    //   for (let index = 1; index < columns.length; index++) {
+    //     const column = columns[index];
+    //     if (column.group !== previousColumn.group) {
+    //       groupCells.push(
+    //         <div
+    //           role="gridcell"
+    //           className="BaseTable__header-cell mr-group-cell"
+    //           key={previousColumn.dataKey}
+    //           style={
+    //             { width }
+    //           }
+    //         >
+    //           <div
+    //             className="BaseTable__header-cell-text">
+    //               { previousColumn.group || null }
+    //           </div>
+    //         </div>
+    //       );
+    //       width = 0;
+    //     }
+    //     width += column.width;
+    //     previousColumn = column;
+    //   }
+    //   return groupCells;
+    // }
+
     return (
       <SortableContainer
         axis="x"
@@ -179,6 +251,7 @@ class TablePane extends React.PureComponent {
             }
           }
           headerHeight={40}
+          // headerHeight={[ 32, 40 ]}
           headerRenderer={this.renderTableHeaderRow}
           height={props.height - 24}
           onColumnExpand={
