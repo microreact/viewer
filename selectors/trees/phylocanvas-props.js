@@ -11,7 +11,6 @@ import selectedIdsListSelector from "../filters/selected-ids-list";
 import configSelector from "../config";
 import metadataBlocksSelector from "./metadata-blocks";
 import treeFileSelector from "./tree-file";
-import phylocanvasSourceSelector from "./phylocanvas-source";
 
 const noShape = false;
 
