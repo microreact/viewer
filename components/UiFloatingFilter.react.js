@@ -118,9 +118,9 @@ class UiFloatingFilter extends React.PureComponent {
           )
         }
 
-        {
-          props.children(items)
-        }
+        { props.renderItems(items) }
+
+        { props.children }
       </div>
     );
   }
@@ -130,7 +130,8 @@ class UiFloatingFilter extends React.PureComponent {
 UiFloatingFilter.displayName = "UiFloatingFilter";
 
 UiFloatingFilter.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.node,
+  renderItems: PropTypes.func.isRequired,
   className: PropTypes.string,
   items: PropTypes.array.isRequired,
   label: PropTypes.string,

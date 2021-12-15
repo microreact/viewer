@@ -5,7 +5,6 @@ import React from "react";
 import UiFloatingFilter from "./UiFloatingFilter.react";
 import UiRadioList from "./UiRadioList.react";
 
-import "../css/ui-fields-list.css";
 import { DataColumn } from "../utils/prop-types";
 
 const UiFieldsList = React.memo(
@@ -20,8 +19,7 @@ const UiFieldsList = React.memo(
         }
         items={props.columns}
         label="Search columns"
-      >
-        {
+        renderItems={
           (items) => (
             <UiRadioList
               items={items}
@@ -31,7 +29,7 @@ const UiFieldsList = React.memo(
             />
           )
         }
-      </UiFloatingFilter>
+      />
     );
   },
 );

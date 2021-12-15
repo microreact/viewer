@@ -2,6 +2,8 @@ import { createSelector } from "reselect";
 
 import fullDatasetSelector from "./full-dataset";
 
+const groupSeparator = "::";
+
 const dataColumnsSelector = createSelector(
   (state) => fullDatasetSelector(state),
   (
@@ -18,19 +20,33 @@ const dataColumnsSelector = createSelector(
         );
         const dataType = item.userDataType || rawDataType;
 
+        const normalisedName = item.name.trim().toLowerCase();
+
+        let label = item.name;
+        let group = null;
+
+        if (item.label) {
+          label = item.label;
+        }
+        else if (item.name.toLowerCase().endsWith("__autocolour")) {
+          label = item.name.substring(0, item.name.length - 12);
+        }
+        else if (item.name.toLowerCase().endsWith("__autocolor")) {
+          label = item.name.substring(0, item.name.length - 11);
+        }
+
+        if (label.includes(groupSeparator)) {
+          const strings = label.split(groupSeparator);
+          group = strings[0];
+          label = strings[1];
+        }
+
         columns.push({
-          label: (
-            item.label
-            ??
-            (
-              item.name.toLowerCase().endsWith("__autocolour") ? item.name.substring(0, item.name.length - 12) :
-                item.name.toLowerCase().endsWith("__autocolor") ? item.name.substring(0, item.name.length - 11) :
-                  item.name
-            )
-          ),
+          label,
+          group,
           name: item.name,
           format: item.format,
-          normalised: item.name.trim().toLowerCase(),
+          normalised: normalisedName,
           dataType,
           rawDataType,
           isNumeric: (dataType === "number"),

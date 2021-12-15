@@ -5,9 +5,8 @@ import React from "react";
 import { TreeType, DataColumn } from "../utils/prop-types";
 import UiControlsMenu from "./UiControlsMenu.react";
 import UiToggleSlider from "./UiToggleSlider.react";
-import UiSelectList from "./UiSelectList.react";
 import UiSlider from "./UiSlider.react";
-import UiFloatingFilter from "./UiFloatingFilter.react";
+import MultipleDataColumnsSelect from "./MultipleDataColumnsSelect.react";
 
 const TreeMetadataMenu = React.memo(
   (props) => {
@@ -77,28 +76,12 @@ const TreeMetadataMenu = React.memo(
           // }
         >
 
-        <UiFloatingFilter
-          items={props.colourFields}
-          label="Search columns"
-        >
-          {
-            (items) => (
-              <UiSelectList
-                items={items}
-                onChange={props.onBlocksChange}
-                value={props.blocks}
-                selectAll
-                selectOnly
-                style={
-                  {
-                    height: 40 + props.colourFields.length * 28,
-                    maxHeight: "calc(100vh - 400px)",
-                  }
-                }
-              />
-            )
-          }
-        </UiFloatingFilter>
+        <MultipleDataColumnsSelect
+          dataColumns={props.colourFields}
+          maxHeightOffset="400px"
+          onChange={props.onBlocksChange}
+          value={props.blocks}
+        />
 
         </div>
       </UiControlsMenu>
