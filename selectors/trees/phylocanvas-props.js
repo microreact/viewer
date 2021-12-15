@@ -11,6 +11,7 @@ import selectedIdsListSelector from "../filters/selected-ids-list";
 import configSelector from "../config";
 import metadataBlocksSelector from "./metadata-blocks";
 import treeFileSelector from "./tree-file";
+import { emptyString } from "../../constants";
 
 const noShape = false;
 
@@ -35,7 +36,8 @@ const nodeStylesSelector = createKeyedStateSelector(
         fillColour: rowStyle.colour,
         strokeColour: rowStyle.colour,
         shape: isActive ? rowStyle.shape : noShape,
-        label: rowStyle.label,
+        // label: rowStyle.label,
+        label: isActive ? rowStyle.label : emptyString,
       };
     }
 
