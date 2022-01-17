@@ -36,6 +36,11 @@ const SortableItem = sortableElement(
             Rename View
           </UiDropdownMenu.Item>
           <UiDropdownMenu.Item
+            onClick={() => props.onSetDefaultView(props.item)}
+          >
+            Set as Default View
+          </UiDropdownMenu.Item>
+          <UiDropdownMenu.Item
             onClick={() => props.onResaveView(props.item)}
           >
             Update View
@@ -59,6 +64,7 @@ const SortableItem = sortableElement(
         >
           <img src={props.item.meta.image} />
           <span>
+            { props.item.isDefault ? "✅ " : "" }
             { props.item.meta.name }
           </span>
         </button>
@@ -132,6 +138,7 @@ const SortableList = sortableContainer(
                 currentViewId={props.currentViewId}
                 onRenameView={props.onRenameView}
                 onResaveView={props.onResaveView}
+                onSetDefaultView={props.onSetDefaultView}
                 // onDownloadView={props.onDownloadView}
                 onDeleteView={props.onDeleteView}
                 onLoadView={props.onLoadView}
@@ -201,6 +208,7 @@ class ViewsPane extends React.PureComponent {
           onDeleteView={props.onDeleteView}
           onRenameView={this.handleRenameView}
           onResaveView={props.onResaveView}
+          onSetDefaultView={props.onSetDefaultView}
           onSortEnd={this.handleSortEnd}
           pressDelay={640}
           helperContainer={getContainerElement}

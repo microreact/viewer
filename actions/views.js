@@ -96,3 +96,10 @@ export function resaveView(view) {
     );
   };
 }
+
+export function setDefaultView(viewDocument) {
+  return {
+    type: "MICROREACT VIEWER/SET DEFAULT VIEW",
+    payload: viewDocument,
+  };
+}
