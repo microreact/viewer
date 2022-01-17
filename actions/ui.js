@@ -404,7 +404,7 @@ export function load(payload) {
     const loadMainDocumentAction = dispatch(loadDocument(payload));
 
     if (payload.schema && payload.views) {
-      const currentViewId = getPageHash();
+      const currentViewId = getPageHash() || payload.views.find((x) => x.isDefault)?.meta?.id;
       if (currentViewId) {
         const viewDocument = payload.views.find((x) => x.meta.id === currentViewId);
         if (viewDocument) {
