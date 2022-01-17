@@ -62,15 +62,20 @@ class TablePane extends React.PureComponent {
   dataColumnsSelector = createSelector(
     (props) => props.columns,
     (props) => props.fieldsMap,
+    (props) => props.dataFileContent,
     (
       columns,
       fieldsMap,
+      dataFileContent,
     ) => {
       const tableColumns = [];
+
+      const fields = new Set();
 
       for (const col of columns) {
         const dataColumn = fieldsMap.get(col.field);
         if (dataColumn) {
+          fields.add(col.field);
           tableColumns.push({
             dataColumn,
             dataKey: col.field,
@@ -91,6 +96,30 @@ class TablePane extends React.PureComponent {
           });
         }
       }
+
+      if (dataFileContent?.columns) {
+        for (const dataColumn of dataFileContent.columns) {
+          if (!fields.has(dataColumn.name)) {
+            tableColumns.push({
+              dataColumn,
+              dataKey: dataColumn.name,
+              dataType: dataColumn.dataType,
+              field: dataColumn.name,
+              hidden: false,
+              key: `data-${dataColumn.name}`,
+              minWidth: 40,
+              resizable: true,
+              group: dataColumn.group,
+              sortable: true,
+              tableId: this.props.tableId,
+              title: dataColumn.label || dataColumn.name,
+              width: 100,
+              dataGetter,
+            });
+          }
+        }
+      }
+
       return tableColumns;
     },
   );
