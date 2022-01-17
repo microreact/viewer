@@ -1,5 +1,3 @@
-import { connect } from "react-redux";
-
 import { selectRows } from "../actions/filters";
 
 import {
@@ -16,6 +14,7 @@ import dataColumnsByFieldMapSelector from "../selectors/datasets/data-columns-by
 
 import TablePane from "../components/TablePane.react";
 import fileContentSelector from "../selectors/files/file-content";
+import { connectToPresentState } from "../utils/state";
 
 const mapStateToProps = (state, { tableId }) => {
   const tableState = state.tables[tableId];
@@ -43,4 +42,4 @@ const mapDispatchToProps = (dispatch, { tableId }) => ({
   onSelectRows: (ids, merge) => dispatch(selectRows(ids, merge)),
 });
 
-export default connect((state, props) => mapStateToProps(state.present, props), mapDispatchToProps)(TablePane);
+export default connectToPresentState(TablePane, mapStateToProps, mapDispatchToProps);
