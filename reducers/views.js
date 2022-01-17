@@ -34,6 +34,18 @@ export default (state = initialState, action) => {
       );
     }
 
+    case "MICROREACT VIEWER/SET DEFAULT VIEW": {
+      return update(
+        remove(
+          state,
+          (item) => item.isDefault,
+          { isDefault: false },
+        ),
+        (item) => item.meta.id === action.payload.meta.id,
+        { isDefault: true },
+      );
+    }
+
     default: {
       return state;
     }

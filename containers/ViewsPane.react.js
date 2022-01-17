@@ -3,7 +3,7 @@ import { setSidePane } from "../actions/panes";
 import { connectToPresentState } from "../utils/state";
 
 import Component from "../components/ViewsPane.react";
-import { createNewView, deleteView, renameView, setViewsList, resaveView } from "../actions/views";
+import { createNewView, deleteView, renameView, setViewsList, resaveView, setDefaultView } from "../actions/views";
 import { loadView } from "../actions/ui";
 import configSelector from "../selectors/config";
 
@@ -24,6 +24,7 @@ function mapDispatchToProps(dispatch) {
     onLoadView: (view) => dispatch(loadView(view)),
     onRenameView: (view, name) => dispatch(renameView(view, name)),
     onResaveView: (view) => dispatch(resaveView(view)),
+    onSetDefaultView: (view) => dispatch(setDefaultView(view)),
   };
 }
 
