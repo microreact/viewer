@@ -31,10 +31,10 @@ function mapStateToProps(state, { tableId }) {
 }
 
 const mapDispatchToProps = (dispatch, { tableId }) => ({
+  onSetMasterDataset: (id) => dispatch(setMasterDataset(id)),
   onTablePropChange: (prop, value) => dispatch(updateTable(tableId, prop, value)),
   onUpdateColumnLabel: (id, columnName, value) => dispatch(setColumnLabel(id, columnName, value)),
   onUpdateDataset: (id, value) => dispatch(updateDataset(id, value)),
-  onSetMasterDataset: (id) => dispatch(setMasterDataset(id)),
 });
 
 export default connectToPresentState(Component, mapStateToProps, mapDispatchToProps);
