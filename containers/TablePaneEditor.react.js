@@ -1,6 +1,6 @@
 import { connectToPresentState } from "../utils/state";
 import { update as updateTable } from "../actions/tables";
-import { updateDataset } from "../actions/datasets";
+import { updateDataset, setColumnLabel } from "../actions/datasets";
 import Component from "../components/TablePaneEditor.react";
 import dataColumnsSelector from "../selectors/datasets/data-columns";
 import mainDatasetConfigSelector from "../selectors/datasets/main-dataset-config";
@@ -32,6 +32,7 @@ function mapStateToProps(state, { tableId }) {
 
 const mapDispatchToProps = (dispatch, { tableId }) => ({
   onTablePropChange: (prop, value) => dispatch(updateTable(tableId, prop, value)),
+  onUpdateColumnLabel: (id, columnName, value) => dispatch(setColumnLabel(id, columnName, value)),
   onUpdateDataset: (id, value) => dispatch(updateDataset(id, value)),
   onSetMasterDataset: (id) => dispatch(setMasterDataset(id)),
 });

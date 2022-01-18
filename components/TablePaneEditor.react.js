@@ -142,6 +142,7 @@ class TablePaneEditor extends React.PureComponent {
                 props.masterDataFile && (
                   <DataColumnsEditor
                     dataColumns={this.getDataColumns(props.masterDataFile)}
+                    onUpdateColumnLabel={(column, label) => props.onUpdateColumnLabel(props.tableDataset.id, column, label)}
                   />
                 )
               }
@@ -222,6 +223,7 @@ TablePaneEditor.propTypes = {
   masterDataset: PropTypes.object,
   onSetMasterDataset: PropTypes.func.isRequired,
   onTablePropChange: PropTypes.func.isRequired,
+  onUpdateColumnLabel: PropTypes.func.isRequired,
   onUpdateDataset: PropTypes.func.isRequired,
   tableDataset: PropTypes.object.isRequired,
   tableId: PropTypes.string.isRequired,
