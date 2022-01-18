@@ -13,6 +13,7 @@
   padding: 0;
 }
 
+.mr-data-columns-editor .BaseTable__row:not(:hover) .BaseTable__row-cell .MuiInputBase-root.MuiInputBase-formControl fieldset,
 .mr-data-columns-editor .BaseTable__row:not(:hover) .BaseTable__row-cell .mr-colour-settings-button:not(.is-open) fieldset {
   border-color: transparent;
 }

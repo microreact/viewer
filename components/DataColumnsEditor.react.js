@@ -8,6 +8,7 @@ import DataColumnColourSettingsMenu from "../containers/ColourSettingsMenu.react
 
 import "../css/data-columns-editor.css";
 import { DataColumn } from "../utils/prop-types";
+import UiTextfield from "./UiTextfield.react";
 
 export default class DataColumnsEditor extends React.PureComponent {
 
@@ -24,16 +25,16 @@ export default class DataColumnsEditor extends React.PureComponent {
       name: "name",
       title: "Column",
       width: 300,
-      // cellRenderer: ({ cellData, columns, column, columnIndex, rowData, rowIndex, container, isScrolling }) => {
-      //   return (
-      //     <UiTextfield
-      //       // onChange={(value) => props.onMapPropChange("dataType", value)}
-      //       size="small"
-      //       value={cellData}
-      //       variant="outlined"
-      //     />
-      //   );
-      // },
+      cellRenderer: ({ cellData, columns, column, columnIndex, rowData, rowIndex, container, isScrolling }) => {
+        return (
+          <UiTextfield
+            onChange={(value) => this.props.onUpdateColumnLabel(rowData.name, value)}
+            size="small"
+            value={cellData}
+            variant="outlined"
+          />
+        );
+      },
     },
     {
       dataKey: "dataType",

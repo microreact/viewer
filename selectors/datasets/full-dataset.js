@@ -61,9 +61,14 @@ const fullDatasetSelector = createSelector(
 
       const finalDataset = createFullDataset(mergedDataset);
 
-      for (const field of Object.keys(mainDatasetConfig.columns || emptyObject)) {
+      // for (const field of Object.keys(mainDatasetConfig.columns || emptyObject)) {
+      //   const column = finalDataset.columns.find((x) => x.name === field);
+      //   column.userDataType = mainDatasetConfig.columns[field].dataType;
+      // }
+
+      for (const field of Object.keys(mainDatasetConfig.labels || emptyObject)) {
         const column = finalDataset.columns.find((x) => x.name === field);
-        column.userDataType = mainDatasetConfig.columns[field].dataType;
+        column.label = mainDatasetConfig.labels[field];
       }
 
       for (const row of finalDataset.rows) {

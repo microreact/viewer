@@ -1,4 +1,4 @@
-import { newId, updateKeyedState } from "../utils/state";
+import { newId, updateKeyedState, replaceKeyedState } from "../utils/state";
 
 const initialState = {
 };
@@ -26,11 +26,24 @@ const reducer = (state = initialState, action) => {
       );
     }
 
-    case "MICROREACT VIEWER/UPDATE DATASET": {
-      const datasetId = action.datasetId;
+    case "MICROREACT VIEWER/SET COLUMN LABEL": {
       return updateKeyedState(
         state,
-        datasetId,
+        action.datasetId,
+        {
+          labels: replaceKeyedState(
+            state.labels,
+            action.payload.column,
+            action.payload.label,
+          ),
+        },
+      );
+    }
+
+    case "MICROREACT VIEWER/UPDATE DATASET": {
+      return updateKeyedState(
+        state,
+        action.datasetId,
         action.payload,
       );
     }
