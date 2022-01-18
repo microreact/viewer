@@ -5,8 +5,6 @@ import { createSelector } from "reselect";
 import Box from "@material-ui/core/Box";
 
 import UiCombobox from "./UiCombobox.react";
-import UiTabs from "./UiTabs.react";
-import MiniTable from "./MiniTable.react";
 import DataColumnsEditor from "./DataColumnsEditor.react";
 import FileEditor from "../containers/FileEditor.react";
 import { fullSizeStyle } from "../constants";
