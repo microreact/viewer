@@ -53,7 +53,15 @@ const rowsWithPositionFieldSelector = createKeyedStateSelector(
             :
             parseFloat(row[longitudeDataColumn.name])
         );
-        if (latitudeValue !== null && longitudeValue !== null && !Number.isNaN(latitudeValue) && !Number.isNaN(longitudeValue)) {
+        if (
+          latitudeValue >= -90
+          &&
+          latitudeValue <= 90
+          &&
+          longitudeValue >= -180
+          &&
+          longitudeValue <= 180
+        ) {
           row[positionFieldName] = [ // [lng, lat]: http://visgl.github.io/react-map-gl/docs/api-reference/canvas-overlay
             longitudeValue,
             latitudeValue,
