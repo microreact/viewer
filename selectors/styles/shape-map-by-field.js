@@ -10,10 +10,15 @@ const shapeMapByFieldSelector = createKeyedStateSelector(
     dataColumn,
     shapePalettes,
   ) => {
-    if (dataColumn && dataColumn.shapePalette) {
-      const palette = shapePalettes.find((x) => x.name === dataColumn.shapePalette);
-      const shapesMap = new Map(palette.entries);
-      return shapesMap;
+    if (dataColumn) {
+      if (dataColumn.shapePalette) {
+        const palette = shapePalettes.find((x) => x.name === dataColumn.shapePalette);
+        const shapesMap = new Map(palette.entries);
+        return shapesMap;
+      }
+      else {
+        return new Map();
+      }
     }
     else {
       return undefined;
