@@ -18,7 +18,7 @@ const ALL_FIELD_TYPES = {
 
 const ACCEPTED_ANALYZER_TYPES = [
   AnalyzerDataTypes.DATE,
-  AnalyzerDataTypes.TIME,
+  // AnalyzerDataTypes.TIME,
   AnalyzerDataTypes.DATETIME,
   AnalyzerDataTypes.NUMBER,
   AnalyzerDataTypes.INT,
