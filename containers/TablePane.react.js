@@ -13,8 +13,8 @@ import tableDataSelector from "../selectors/tables/table-data";
 import dataColumnsByFieldMapSelector from "../selectors/datasets/data-columns-by-field-map";
 
 import TablePane from "../components/TablePane.react";
-import fileContentSelector from "../selectors/files/file-content";
 import { connectToPresentState } from "../utils/state";
+import dataColumnsSelector from "../selectors/datasets/data-columns";
 
 const mapStateToProps = (state, { tableId }) => {
   const tableState = state.tables[tableId];
@@ -30,7 +30,7 @@ const mapStateToProps = (state, { tableId }) => {
     displayMode: tableState.displayMode,
     columns: tableState.columns,
     fieldsMap: dataColumnsByFieldMapSelector(state),
-    dataFileContent: fileContentSelector(state, tableState?.file),
+    dataColumns: dataColumnsSelector(state),
   };
 };
 
