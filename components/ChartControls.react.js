@@ -390,7 +390,7 @@ export default class ChartControls extends React.PureComponent {
                 onAxisOrderChange={props.onSeriesOrderChange}
                 onAxisReset={props.seriesField && props.onSeriesFieldChage}
                 onAxisTypeChange={props.onSeriesTypeChange}
-                title="Series"
+                title="Colour Series"
               >
                 <UiSelect
                   label="Stacking"
