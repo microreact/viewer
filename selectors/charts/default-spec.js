@@ -313,6 +313,7 @@ const defaultSpecSelector = createKeyedStateSelector(
 
     //#region Add colour series
     if (seriesDataColumn) {
+      vlSpec.encoding[mainAxis.encoding].axis.title += ` (coloured by ${seriesDataColumn.label})`;
       vlSpec.transform[0].groupby.push(seriesDataColumn.name);
       vlSpec.encoding.tooltip.push({
         field: seriesDataColumn.name,
