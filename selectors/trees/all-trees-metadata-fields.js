@@ -1,5 +1,4 @@
 import { createCombinedStateSelector } from "../../utils/state";
-import { intersect } from "../../utils/sets";
 
 import metadataFieldsSelector from "./metadata-fields";
 import { emptyArray } from "../../constants";
