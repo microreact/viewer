@@ -45,7 +45,7 @@ const mapDispatchToProps = (dispatch, { chartId }) => ({
   onMainAxisFieldChange: (name, value) => dispatch(updateMainAxisField(chartId, name, value)),
   onSeriesFieldChage: (value) => dispatch(update(chartId, "seriesField", value)),
   onSeriesOrderChange: (value) => dispatch(update(chartId, "seriesOrder", value)),
-  onSeriesStackingChange: (value) => dispatch(update(chartId, "seriesStacking", value || "off")),
+  onSeriesStackingChange: (value) => dispatch(update(chartId, "seriesStacking", value)),
   onSeriesTypeChange: (value) => dispatch(update(chartId, "seriesType", value)),
   onShowSelecttionChange: (value) => dispatch(update(chartId, "showSelection", value)),
   onSpecChange: (value) => dispatch(update(chartId, "spec", value)),

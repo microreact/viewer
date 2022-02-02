@@ -295,10 +295,7 @@ const defaultSpecSelector = createKeyedStateSelector(
         value: 0,
       };
 
-      if (seriesStacking === "off") {
-        vlSpec.encoding[secondaryAxis.encoding].stack = false;
-      }
-      else if (seriesStacking === "facet" || seriesStacking === "overlapping") {
+      if (seriesStacking === "facet" || seriesStacking === "overlapping") {
         vlSpec.encoding[secondaryAxis.encoding].stack = false;
         vlSpec.encoding[secondaryAxis.encoding].axis = null;
       }
@@ -306,6 +303,9 @@ const defaultSpecSelector = createKeyedStateSelector(
         vlSpec.encoding[secondaryAxis.encoding].stack = "normalize";
       }
       else if (seriesStacking === "stacked") {
+        vlSpec.encoding[secondaryAxis.encoding].stack = true;
+      }
+      else {
         vlSpec.encoding[secondaryAxis.encoding].stack = true;
       }
     }

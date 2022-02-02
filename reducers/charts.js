@@ -4,7 +4,7 @@ import { newId, removeKeyedState } from "../utils/state";
 export const initialState = {
   controls: true,
   interpolate: "linear",
-  seriesStacking: "off",
+  seriesStacking: "stacked",
   showSelection: false,
 };
 

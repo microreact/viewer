@@ -228,7 +228,7 @@ const chartTypes = [
 ];
 
 const stackingTypes = [
-  { label: "None", value: "off" },
+  // { label: "None", value: "off" },
   { label: "Stacked view", value: "stacked" },
   { label: "Normalised stacked view", value: "normalised" },
   { label: "Row view", value: "facet" },
@@ -394,7 +394,7 @@ export default class ChartControls extends React.PureComponent {
               >
                 <UiSelect
                   label="Stacking"
-                  value={props.seriesStacking ?? "off"}
+                  value={props.seriesStacking}
                   onChange={props.onSeriesStackingChange}
                   options={stackingTypes}
                 />
