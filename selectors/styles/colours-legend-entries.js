@@ -107,6 +107,31 @@ function coloursLegendEntriesSelector(state, field) {
     entries.sort(sortComparator("label"));
   }
 
+  else if (colourMap.scale === "binned") {
+    for (let index = 1; index <= colourMap.numberOfBins; index++) {
+      const start = colourMap.domain[0] + colourMap.binLength * (index - 1);
+      const end = colourMap.domain[0] + colourMap.binLength * index;
+      entries.push({
+        colour: colourMap.colourGetter(index),
+        value: [ start, end ],
+        label: `${toText(dataColumn.dataType, start.toFixed(2))} - ${toText(dataColumn.dataType, end.toFixed(2))}`,
+      });
+    }
+  }
+
+  else if (colourMap.scale === "continuous") {
+    entries.push({
+      colour: colourMap.range[0],
+      value: colourMap.domain[0],
+      label: toText(dataColumn.dataType, colourMap.domain[0]),
+    });
+    entries.push({
+      colour: colourMap.range[1],
+      value: colourMap.domain[1],
+      label: toText(dataColumn.dataType, colourMap.domain[1]),
+    });
+  }
+
   return {
     scale: colourMap.scale,
     entries,
