@@ -9,6 +9,7 @@ import "../css/panes.css";
 import { componentLoader } from "../utils/components";
 import { nextTick, nextFrame } from "../utils/browser";
 import { editableComponents } from "../constants";
+import { subscribe } from "../utils/events";
 
 import UiSpinningLoader from "./UiSpinningLoader.react";
 
@@ -46,7 +47,6 @@ class DynamicPane extends React.PureComponent {
           () => setTimeout(done, 0),
         );
       });
-
   }
 
   render() {
@@ -124,7 +124,16 @@ class LayoutManager extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.MicroreactViewerPanes = this.elRef;
+    this.addNewPaneUnsubscribe = subscribe(
+      "add-new-pane",
+      ([ label, tab ]) => {
+        this.elRef.current.addTabWithDragAndDrop(
+          `${label}<br />(Esc to cancel)`,
+          tab
+        );
+        nextFrame(() => FlexLayout.DragDrop.instance._glass.focus());
+      },
+    );
 
     this.props.onLayoutModelChange(this.props.layoutModel);
 
@@ -139,7 +148,7 @@ class LayoutManager extends React.PureComponent {
   // }
 
   componentWillUnmount() {
-    window.MicroreactViewerPanes = undefined;
+    this?.addNewPaneUnsubscribe();
 
     window.removeEventListener("resize", this.updateRect);
   }
