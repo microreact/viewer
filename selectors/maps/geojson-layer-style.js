@@ -102,8 +102,13 @@ const geojsonLayerStyleSelector = createKeyedStateSelector(
     const style = {
       "fill-color": color,
       "fill-opacity": regionsColourOpacity / 100,
-      "fill-outline-color": showRegionOutlines ? "rgba(0, 0, 0, 0.24)" : color,
+      "fill-outline-color": showRegionOutlines ? "rgba(0, 0, 0, 1)" : color,
     };
+
+    if (regionsColourOpacity === 0) {
+      style["fill-opacity"] = 100;
+      style["fill-color"] = "rgba(0, 0, 0, 0)";
+    }
 
     return style;
   },
