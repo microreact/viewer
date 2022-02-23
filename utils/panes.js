@@ -1,6 +1,6 @@
 import FlexLayout from "flexlayout-react";
 
-import { nextFrame } from "./browser";
+import { publish } from "./events";
 
 const metrics = {
   borderBarSize: 20,
@@ -9,14 +9,13 @@ const metrics = {
 };
 
 function addTab(label, tab) {
-  if (window.MicroreactViewerPanes.current) {
-    window.MicroreactViewerPanes.current.addTabWithDragAndDrop(
-      `${label}<button onclick="window.MicroreactViewerPanes.current.onCancelAdd()"></button>`,
-      tab
-    );
-
-    nextFrame(() => FlexLayout.DragDrop.instance._glass.focus());
-  }
+  publish(
+    "add-new-pane",
+    [
+      label,
+      tab,
+    ],
+  );
 }
 
 function cloneModel(model) {
