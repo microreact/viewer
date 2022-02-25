@@ -186,7 +186,7 @@ const defaultSpecSelector = createKeyedStateSelector(
         sort: xAxisOrder,
       };
 
-      vlSpec.encoding.tooltip.push({
+      vlSpec.encoding.tooltip.unshift({
         field: mainAxis.dataColumn.name,
         title: mainAxis.dataColumn.label,
         type: mainAxis.type,
@@ -283,7 +283,7 @@ const defaultSpecSelector = createKeyedStateSelector(
     }
 
     if (vlSpec.encoding[secondaryAxis.encoding]) {
-      vlSpec.encoding.tooltip.push({
+      vlSpec.encoding.tooltip.unshift({
         field: vlSpec.encoding[secondaryAxis.encoding].field,
         type: vlSpec.encoding[secondaryAxis.encoding].type,
         title: vlSpec.encoding[secondaryAxis.encoding].axis.title,
@@ -315,7 +315,7 @@ const defaultSpecSelector = createKeyedStateSelector(
     if (seriesDataColumn) {
       vlSpec.encoding[mainAxis.encoding].axis.title += ` (coloured by ${seriesDataColumn.label})`;
       vlSpec.transform[0].groupby.push(seriesDataColumn.name);
-      vlSpec.encoding.tooltip.push({
+      vlSpec.encoding.tooltip.unshift({
         field: seriesDataColumn.name,
         title: seriesDataColumn.label,
         type: seriesFieldType,
@@ -343,6 +343,21 @@ const defaultSpecSelector = createKeyedStateSelector(
         scale: seriesScale,
         legend: false,
       };
+
+      vlSpec.transform[0].groupby.push("--mr-frequency-2");
+      vlSpec.transform.unshift({
+        joinaggregate: [{
+          op: "sum",
+          field: "--mr-scalar",
+          as: "--mr-frequency-2",
+        }],
+        groupby: [ vlSpec.encoding[mainAxis.encoding].field ],
+      });
+      vlSpec.encoding.tooltip.push({
+        field: "--mr-frequency-2",
+        title: " Number of entries",
+        type: "quantitative",
+      });
     }
     else {
       vlSpec.encoding.color = {
