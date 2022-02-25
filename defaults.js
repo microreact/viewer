@@ -61,6 +61,7 @@ export default {
     { kind: "tree", extension: "tre" },
     { kind: "tree", extension: "nex" },
     { kind: "tree", extension: "nexus" },
+    { kind: "tree", extension: "nhx" },
     { kind: "network", extension: "dot" },
     { kind: "geo", extension: "geojson" },
     { kind: "microrect", extension: "microrect" },
