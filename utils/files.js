@@ -118,26 +118,10 @@ export function normaliseFilename(input) {
 }
 
 function guessFileFormat(fileName) {
-  if (/\.(microreact)$/i.test(fileName)) {
-    return "application/json";
-  }
-  else if (/\.(csv|tsv)$/i.test(fileName)) {
-    return "text/csv";
-  }
-  else if (/\.(xlsx|xlsm|xlam|xlsb|xls|xla|ods|dbf)$/i.test(fileName)) {
-    return "application/x-speadsheet";
-  }
-  else if (/\.(nwk|newick|tree|tre|nexus)$/i.test(fileName)) {
-    return "text/x-nh";
-  }
-  else if (/\.(dot|graph)$/i.test(fileName)) {
-    return "text/vnd.graphviz";
-  }
-  else if (/\.(geojson|geo\.json)$/i.test(fileName)) {
-    return "application/geo+json";
-  }
-  else if (/\.(md)$/i.test(fileName)) {
-    return "text/markdown";
+  for (const { nameValidator, format } of FileKinds) {
+    if (nameValidator.test(fileName)) {
+      return format;
+    }
   }
   return undefined;
 }
