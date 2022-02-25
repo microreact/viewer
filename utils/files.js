@@ -42,8 +42,8 @@ export const FileKinds = [
     linkable: true,
   },
   {
-    extensions: [ "nwk", "newick", "tree", "tre", "nexus" ],
-    nameValidator: /\.(nwk|newick|tree|tre|nexus)$/i,
+    extensions: [ "nwk", "newick", "tree", "tre", "nexus", "nhx" ],
+    nameValidator: /\.(nwk|newick|tree|tre|nexus|nhx)$/i,
     format: "text/x-nh",
     type: "tree",
     name: "Tree (Newick)",
