@@ -148,11 +148,11 @@ const defaultSpecSelector = createKeyedStateSelector(
       encoding: "x",
     };
     const yAxis = {
-      mode: yAxisMode,
       dataColumn: yAxisDataColumn,
-      type: yAxisType,
-      order: yAxisOrder,
       encoding: "y",
+      mode: yAxisMode,
+      order: yAxisOrder,
+      type: yAxisType,
     };
 
     let mainAxis;
