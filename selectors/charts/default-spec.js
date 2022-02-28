@@ -82,12 +82,14 @@ const defaultSpecSelector = createKeyedStateSelector(
   (state, chartId) => xAxisFieldSelector(state, chartId),
   (state, chartId) => xAxisTypeSelector(state, chartId),
   (state, chartId) => chartStateSelector(state, chartId).xAxisOrder,
-  (state, chartId) => chartStateSelector(state, chartId).xAxisBins,
+  (state, chartId) => chartStateSelector(state, chartId).xAxisLabelAngle,
+  // (state, chartId) => chartStateSelector(state, chartId).xAxisBins,
 
   (state, chartId) => yAxisModeSelector(state, chartId),
   (state, chartId) => yAxisFieldSelector(state, chartId),
   (state, chartId) => yAxisTypeSelector(state, chartId),
   (state, chartId) => chartStateSelector(state, chartId).yAxisOrder,
+  (state, chartId) => chartStateSelector(state, chartId).yAxisLabelAngle,
 
   (state, chartId) => seriesFieldSelector(state, chartId),
   (state, chartId) => seriesTypeSelector(state, chartId),
@@ -104,12 +106,14 @@ const defaultSpecSelector = createKeyedStateSelector(
     xAxisDataColumn,
     xAxisType,
     xAxisOrder,
-    xAxisBins,
+    xAxisLabelAngle,
+    // xAxisBins,
 
     yAxisMode,
     yAxisDataColumn,
     yAxisType,
     yAxisOrder,
+    yAxisLabelAngle,
 
     seriesDataColumn,
     seriesFieldType,
@@ -143,6 +147,7 @@ const defaultSpecSelector = createKeyedStateSelector(
     const xAxis = {
       dataColumn: xAxisDataColumn,
       encoding: "x",
+      labelAngle: xAxisLabelAngle,
       mode: xAxisMode,
       order: xAxisOrder,
       type: xAxisType,
@@ -150,6 +155,7 @@ const defaultSpecSelector = createKeyedStateSelector(
     const yAxis = {
       dataColumn: yAxisDataColumn,
       encoding: "y",
+      labelAngle: yAxisLabelAngle,
       mode: yAxisMode,
       order: yAxisOrder,
       type: yAxisType,
@@ -181,6 +187,7 @@ const defaultSpecSelector = createKeyedStateSelector(
         axis: {
           title: mainAxis.dataColumn.label,
           format: (mainAxis.type === "temporal") ? "%Y-%m-%d" : undefined,
+          labelAngle: mainAxis.labelAngle,
         },
         timeUnit: (mainAxis.type === "temporal") ? "yearmonthdate" : undefined,
         sort: xAxisOrder,

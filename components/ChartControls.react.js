@@ -43,6 +43,32 @@ const options = [
   },
 ];
 
+const axisSortOptions = [
+  {
+    label: "Ascending order",
+    value: "ascending",
+  },
+  {
+    label: "Descending order",
+    value: "descending",
+  },
+];
+
+const axisLabelAngleOptions = [
+  {
+    label: "Horizontal",
+    value: 0,
+  },
+  {
+    label: "Diagonal",
+    value: -45,
+  },
+  {
+    label: "Vertical",
+    value: -90,
+  },
+];
+
 const ChartDataTypeSelect = React.memo(
   (props) => {
     return (
@@ -94,19 +120,19 @@ const MainAxisMenu = React.forwardRef(
           label="Sort by"
           value={props.axisOrder ?? "ascending"}
           onChange={(value) => props.onAxisOrderChange(value)}
-          options={
-            [
-              {
-                label: "Ascending order",
-                value: "ascending",
-              },
-              {
-                label: "Descending order",
-                value: "descending",
-              },
-            ]
-          }
+          options={axisSortOptions}
         />
+
+        {
+          (typeof props.axisLabelAngle === "number") && (
+            <UiSelect
+              label="Label angle"
+              value={props.axisLabelAngle}
+              onChange={(value) => props.onAxisLabelAngleChange(value)}
+              options={axisLabelAngleOptions}
+            />
+          )
+        }
 
         { props.children }
       </UiControlsMenu>
@@ -119,11 +145,13 @@ MainAxisMenu.displayName = "MainAxisMenu";
 MainAxisMenu.propTypes = {
   axisBins: PropTypes.number,
   axisField: PropTypes.string,
+  axisLabelAngle: PropTypes.number,
   axisOrder: PropTypes.string,
   axisType: PropTypes.string,
   children: PropTypes.node,
   fullDatasetColumns: PropTypes.arrayOf(DataColumn).isRequired,
   onAxisFieldChange: PropTypes.func.isRequired,
+  onAxisLabelAngleChange: PropTypes.func.isRequired,
   onAxisOrderChange: PropTypes.func.isRequired,
   onAxisReset: PropTypes.func,
   onAxisTypeChange: PropTypes.func.isRequired,
@@ -410,10 +438,12 @@ export default class ChartControls extends React.PureComponent {
               (
                 <MainAxisMenu
                   axisField={props.yAxisField}
+                  axisLabelAngle={props.yAxisLabelAngle ?? 0}
                   axisOrder={props.yAxisOrder}
                   axisType={props.yAxisType}
                   fullDatasetColumns={props.fullDatasetColumns}
                   onAxisFieldChange={(field) => props.onMainAxisFieldChange("yAxisField", field)}
+                  onAxisLabelAngleChange={props.onYAxisLabelAngleChange}
                   onAxisOrderChange={props.onYAxisOrderChange}
                   onAxisReset={() => props.onMainAxisFieldChange("yAxisField")}
                   onAxisTypeChange={props.onYAxisTypeChange}
@@ -444,10 +474,12 @@ export default class ChartControls extends React.PureComponent {
               (
                 <MainAxisMenu
                   axisField={props.xAxisField}
+                  axisLabelAngle={props.xAxisLabelAngle ?? -90}
                   axisOrder={props.xAxisOrder}
                   axisType={props.xAxisType}
                   fullDatasetColumns={props.fullDatasetColumns}
                   onAxisFieldChange={(field) => props.onMainAxisFieldChange("xAxisField", field)}
+                  onAxisLabelAngleChange={props.onXAxisLabelAngleChange}
                   onAxisOrderChange={props.onXAxisOrderChange}
                   onAxisReset={() => props.onMainAxisFieldChange("xAxisField")}
                   onAxisTypeChange={props.onXAxisTypeChange}
@@ -545,10 +577,12 @@ ChartControls.propTypes = {
   onShowSelecttionChange: PropTypes.func.isRequired,
   onSpecChange: PropTypes.func.isRequired,
   onXAxisFieldChage: PropTypes.func.isRequired,
+  onXAxisLabelAngleChange: PropTypes.func.isRequired,
   onXAxisModeChange: PropTypes.func.isRequired,
   onXAxisOrderChange: PropTypes.func.isRequired,
   onXAxisTypeChange: PropTypes.func.isRequired,
   onYAxisFieldChage: PropTypes.func.isRequired,
+  onYAxisLabelAngleChange: PropTypes.func.isRequired,
   onYAxisModeChange: PropTypes.func.isRequired,
   onYAxisOrderChange: PropTypes.func.isRequired,
   onYAxisTypeChange: PropTypes.func.isRequired,
@@ -561,10 +595,12 @@ ChartControls.propTypes = {
   spec: PropTypes.string,
   xAxisBins: PropTypes.number,
   xAxisField: PropTypes.string,
+  xAxisLabelAngle: PropTypes.number,
   xAxisMode: ChartAxisMode,
   xAxisOrder: PropTypes.string,
   xAxisType: PropTypes.string,
   yAxisField: PropTypes.string,
+  yAxisLabelAngle: PropTypes.number,
   yAxisMode: ChartAxisMode,
   yAxisOrder: PropTypes.string,
   yAxisType: PropTypes.string,
