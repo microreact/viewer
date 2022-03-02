@@ -89,7 +89,7 @@ function coloursLegendEntriesSelector(state, field) {
     const selectedRows = selectedRowsSelector(state, field);
     const { rows } = activeRowsWithStyleFieldsSelector(state);
     for (const row of rows) {
-      const value = row[field];
+      const value = (dataColumn.dataType === "date") ? row[field].valueOf() : row[field];
       if (!uniqueValues.has(value)) {
         const colour = colourMap.get(value);
         entries.push({
@@ -104,7 +104,7 @@ function coloursLegendEntriesSelector(state, field) {
         uniqueValues.add(value);
       }
     }
-    entries.sort(sortComparator("label"));
+    entries.sort(sortComparator("value"));
   }
 
   else if (colourMap.scale === "binned") {
