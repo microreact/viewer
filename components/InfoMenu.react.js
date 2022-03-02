@@ -62,9 +62,27 @@ class DownloadFilesMenu extends React.PureComponent {
           >
             { props.name }
           </Typography>
+
           <p>
             { props.description || "(no description)" }
           </p>
+
+          {
+            (props.createdAt) && (
+              <p>
+                Created: <time dateTime={props.createdAt} >{(new Date(props.createdAt)).toLocaleString()}</time>
+              </p>
+            )
+          }
+
+          {
+            (props.updatedAt) && (
+              <p>
+                Updated: <time dateTime={props.updatedAt} >{(new Date(props.updatedAt)).toLocaleString()}</time>
+              </p>
+            )
+          }
+
           {
             (props.email) && (
               <p>
@@ -78,6 +96,7 @@ class DownloadFilesMenu extends React.PureComponent {
               </p>
             )
           }
+
           {
             (props.website) && (
               <p>
