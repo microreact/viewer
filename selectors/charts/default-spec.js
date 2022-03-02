@@ -351,18 +351,18 @@ const defaultSpecSelector = createKeyedStateSelector(
         legend: false,
       };
 
-      vlSpec.transform[0].groupby.push("--mr-frequency-2");
       vlSpec.transform.unshift({
         joinaggregate: [{
           op: "sum",
           field: "--mr-scalar",
-          as: "--mr-frequency-2",
+          as: "--mr-frequency-total",
         }],
         groupby: [ vlSpec.encoding[mainAxis.encoding].field ],
       });
+      vlSpec.transform[1].groupby.push("--mr-frequency-total");
       vlSpec.encoding.tooltip.push({
-        field: "--mr-frequency-2",
-        title: " Number of entries",
+        field: "--mr-frequency-total",
+        title: "Total number of entries",
         type: "quantitative",
       });
     }
