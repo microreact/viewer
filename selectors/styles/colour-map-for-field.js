@@ -31,13 +31,7 @@ const discreteValueToColourMapSelector = createKeyedStateSelector(
       let index = 0;
       for (const value of uniqueFieldValues) {
         if ((value ?? undefined) !== undefined) {
-          const colour = (
-            (index <= palette.entries.length)
-              ?
-              palette.entries[index]
-              :
-              palette.entries[index % palette.entries.length]
-          );
+          const colour = palette.entries[index % palette.entries.length];
           colourMap.set(
             value,
             colour,
