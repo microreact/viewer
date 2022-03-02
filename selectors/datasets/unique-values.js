@@ -2,6 +2,7 @@ import { createKeyedStateSelector } from "../../utils/state";
 import { uniqueElements } from "../../utils/arrays";
 
 import rowsSelector from "./rows";
+import dataColumnByFieldSelector from "./data-column-by-field";
 
 /**
  * Returns unique values of a field. Caches values by field name.
@@ -11,12 +12,26 @@ import rowsSelector from "./rows";
  */
 const uniqueValuesSelector = createKeyedStateSelector(
   (state) => rowsSelector(state),
-  (_, field) => field,
+  (state, field) => dataColumnByFieldSelector(state, field),
   (
     rows,
-    field,
+    dataColumn,
   ) => {
-    return uniqueElements(rows, field, true);
+    const uniqueRawValues = uniqueElements(
+      rows,
+      (x) => x[dataColumn.name]?.valueOf(),
+      true,
+    );
+    if (dataColumn.dataType === "date") {
+      const uniqueDateValues = [];
+      for (const value of uniqueRawValues) {
+        uniqueDateValues.push(new Date(value));
+      }
+      return uniqueDateValues;
+    }
+    else {
+      return uniqueRawValues;
+    }
   },
 );
 
