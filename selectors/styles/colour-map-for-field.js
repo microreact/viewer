@@ -156,6 +156,10 @@ function colourMapForFieldSelector(state, field) {
   const colourPalette = colourPaletteForFieldSelector(state, field);
   const colourMode = colourModeForFieldSelector(state, field);
 
+  if (!dataColumn) {
+    return new Map();
+  }
+
   if (colourPalette && dataColumn?.isNumeric && colourMode === "gradient") {
     if (colourPalette.bins > 0 || colourPalette.entries.length > 2) {
       return binnedValueToColourMapSelector(state, field);
