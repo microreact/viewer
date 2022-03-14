@@ -7,7 +7,6 @@ import {
 } from "../utils/state";
 
 const initialState = {
-  ids: null,
   lasso: false,
   path: null,
   subtreeIds: null,
@@ -18,6 +17,7 @@ const initialState = {
   blocks: [],
   controls: false,
   fontSize: 16,
+  ids: null,
   nodeSize: 14,
   showBlockHeaders: true,
   showBlockLabels: false,
