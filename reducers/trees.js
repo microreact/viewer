@@ -14,6 +14,7 @@ const initialState = {
   blockSize: 14,
   controls: false,
   fontSize: 16,
+  hideOrphanDataRows: false,
   ids: null,
   lasso: false,
   nodeSize: 14,
@@ -33,7 +34,6 @@ const initialState = {
   styleNodeEdges: false,
   subtreeIds: null,
   type: "rc",
-  hideOrphanDataRows: false,
 };
 
 const queryPropMap = {
