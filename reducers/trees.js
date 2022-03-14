@@ -7,7 +7,6 @@ import {
 } from "../utils/state";
 
 const initialState = {
-  path: null,
   subtreeIds: null,
   alignLabels: true,
   blockHeaderFontSize: 13,
@@ -19,6 +18,7 @@ const initialState = {
   ids: null,
   lasso: false,
   nodeSize: 14,
+  path: null,
   showBlockHeaders: true,
   showBlockLabels: false,
   showBranchLengths: false,
