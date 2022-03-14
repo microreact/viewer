@@ -9,9 +9,9 @@ import {
 const initialState = {
   alignLabels: true,
   blockHeaderFontSize: 13,
-  blockSize: 14,
   blockPadding: 0,
   blocks: [],
+  blockSize: 14,
   controls: false,
   fontSize: 16,
   ids: null,
