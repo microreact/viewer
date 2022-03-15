@@ -59,6 +59,7 @@ const TreeStylesMenu = React.memo(
         />
 
         <hr />
+
         <UiToggleSwitch
           label="Show Internal Nodes"
           onChange={props.onShowPiechartsChange}
@@ -74,13 +75,30 @@ const TreeStylesMenu = React.memo(
           onChange={props.onShowBranchLengthsChange}
           value={props.showBranchLengths}
         />
+        {
+          (props.showBranchLengths) && (
+            <UiToggleSlider
+              checked={props.roundBranchLengths}
+              label="Rounding digits"
+              max={16}
+              min={0}
+              onChange={props.onRoundBranchLengthsDigitsChange}
+              onCheckedChange={props.onRoundBranchLengthsChange}
+              unit=""
+              value={props.branchLengthsDigits}
+            />
+          )
+        }
+
+        <hr />
+
         <UiToggleSwitch
           label="Colour Internal Edges"
           onChange={props.onStyleNodeEdgesChange}
           value={props.styleNodeEdges}
         />
         <UiToggleSwitch
-          label="Opaque Edges"
+          label="Solid Edges"
           onChange={(value) => props.onScaleLineAlphaChange(!value)}
           value={!props.scaleLineAlpha}
         />
@@ -93,6 +111,7 @@ TreeStylesMenu.displayName = "TreeStylesMenu";
 
 TreeStylesMenu.propTypes = {
   alignLabels: PropTypes.bool.isRequired,
+  branchLengthsDigits: PropTypes.number.isRequired,
   className: PropTypes.string,
   fontSize: PropTypes.number.isRequired,
   maxFontSize: PropTypes.number.isRequired,
@@ -103,6 +122,9 @@ TreeStylesMenu.propTypes = {
   onAlignLabelsChange: PropTypes.func.isRequired,
   onFontSizeChange: PropTypes.func.isRequired,
   onNodeSizeChange: PropTypes.func.isRequired,
+  onRoundBranchLengthsChange: PropTypes.func.isRequired,
+  onRoundBranchLengthsDigitsChange: PropTypes.func.isRequired,
+  onScaleLineAlphaChange: PropTypes.func.isRequired,
   onShowBranchLengthsChange: PropTypes.func.isRequired,
   onShowInternalLabelsChange: PropTypes.func.isRequired,
   onShowLeafLabelsChange: PropTypes.func.isRequired,
@@ -111,6 +133,8 @@ TreeStylesMenu.propTypes = {
   onShowShapesChange: PropTypes.func.isRequired,
   onStyleLeafLabelsChange: PropTypes.func.isRequired,
   onStyleNodeEdgesChange: PropTypes.func.isRequired,
+  roundBranchLengths: PropTypes.bool.isRequired,
+  scaleLineAlpha: PropTypes.bool.isRequired,
   showBranchLengths: PropTypes.bool.isRequired,
   showInternalLabels: PropTypes.bool.isRequired,
   showLeafLabels: PropTypes.bool.isRequired,
