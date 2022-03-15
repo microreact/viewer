@@ -68,7 +68,9 @@ const fullDatasetSelector = createSelector(
 
       for (const field of Object.keys(mainDatasetConfig.labels || emptyObject)) {
         const column = finalDataset.columns.find((x) => x.name === field);
-        column.label = mainDatasetConfig.labels[field];
+        if (column) {
+          column.label = mainDatasetConfig.labels[field];
+        }
       }
 
       for (const row of finalDataset.rows) {
