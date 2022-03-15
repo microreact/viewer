@@ -87,6 +87,8 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
       scalebar: true,
       selectedIds,
       shapeBorderAlpha: 0.56,
+      branchLengthsFormat: phylocanvasProps.roundBranchLengths ? "decimal" : "scientific",
+      branchLengthsDigits: phylocanvasProps.roundBranchLengths ? phylocanvasProps.branchLengthsDigits : 1,
       size,
       source,
       strokeColour: "#222",
