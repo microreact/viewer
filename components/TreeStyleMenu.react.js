@@ -70,6 +70,9 @@ const TreeStylesMenu = React.memo(
           onChange={props.onShowInternalLabelsChange}
           value={props.showInternalLabels}
         />
+
+        <hr />
+
         <UiToggleSwitch
           label="Show Branch Lengths"
           onChange={props.onShowBranchLengthsChange}
