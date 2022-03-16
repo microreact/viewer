@@ -203,7 +203,12 @@ export default function (treePane) {
         }
         if (node && !node.isHidden) {
           const nodes = tree.getLeafNodes(node, { includeHidden: true });
-          treePane.props.onFilterChange(nodes.map((x) => x.id));
+          if (isAppend) {
+            treePane.props.onSelectRows(nodes.map((x) => x.id), isAppend);
+          }
+          else {
+            treePane.props.onFilterChange(nodes.map((x) => x.id));
+          }
         }
         else if (!isAppend) {
           if (treePane.props.selectedIds.length) {
