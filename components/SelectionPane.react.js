@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import ListSubheader from "@material-ui/core/ListSubheader";
+import { Vega } from "react-vega";
 
 import "../css/selection-pane.css";
 
@@ -15,82 +16,161 @@ import UiEmptyState from "./UiEmptyState.react";
 import UiSidePaneHeader from "./UiSidePaneHeader.react";
 import SelectionChart from "../containers/SelectionChart.react";
 import UiCombobox from "./UiCombobox.react";
-import LegendsList from "./LegendsList.react";
+
+const onError = (err) => console.error("SelectionChart", err);
+const onParseError = (err) => console.error("SelectionChart", err);
 
 class SelectionPane extends React.PureComponent {
 
-  state = {
-    selectedColour: null,
-  }
-
-  slicesSelector = createSelector(
-    (props) => props.selectedRows,
-    getGroupedColours,
+  selectionChartSpecSelector = createSelector(
+    (state) => paneSizeSelector(state, "--mr-selection-pane"),
+    (state) => coloursDataColumnSelector(state),
+    (state) => configSelector(state),
+    (state) => state.filters.selectionBreakdownField,
+    (state) => (state.filters.selectionBreakdownField ? colourMapForFieldSelector(state, state.filters.selectionBreakdownField) : null),
+    (
+      size,
+      coloursDataColumn,
+      defaults,
+      selectionBreakdownField,
+      selectionBreakdownColourMap,
+    ) => {
+      const vlSpec = {
+        $schema: "https://vega.github.io/schema/vega-lite/v4.json",
+        autosize: {
+          contains: "padding",
+          type: "fit",
+        },
+        bounds: "flush",
+        data: { name: "table" },
+        view: { stroke: null },
+  
+        height: size.width,
+        padding: { left: 0, top: 2, right: 0, bottom: 8 },
+        width: size.width - 32,
+  
+        layer: [
+          {
+            transform: [
+              {
+                aggregate: [
+                  { op: "sum", field: "--mr-scalar", as: "--mr-selection-colour-frequency" },
+                ],
+                groupby: [ coloursDataColumn.name, "--microreact-colour" ],
+              },
+            ],
+            mark: { type: "arc", innerRadius: 33, outerRadius: 100 },
+            encoding: {
+              theta: {
+                // aggregate: "count",
+                // field: coloursDataColumn.name,
+                field: "--mr-selection-colour-frequency",
+                type: "quantitative",
+                stack: "normalize",
+              },
+              color: { field: "--microreact-colour", type: "nominal", legend: false, scale: false },
+              strokeWidth: {
+                value: 2,
+              },
+              stroke: {
+                value: defaults.theme.background.main,
+              },
+              tooltip: [
+                {
+                  field: coloursDataColumn.name,
+                  title: coloursDataColumn.name,
+                  type: "nominal",
+                },
+                {
+                  field: "--mr-selection-colour-frequency",
+                  title: "Number of entries",
+                  type: "quantitative",
+                },
+              ],
+            },
+          },
+  
+          // {
+          //   data: { name: "table2" },
+          //   "mark": {"type": "arc", "innerRadius": 50, "outerRadius": 100 },
+          //   "encoding": {
+          //     "theta": {"field": "value", "type": "quantitative", "stack": "normalize"},
+          //     "color": {"field": "category", "type": "nominal", legend: false}
+          //   }
+          // }
+        ],
+      };
+  
+      if (selectionBreakdownField) {
+        vlSpec.layer.push({
+          transform: [
+            {
+              aggregate: [
+                { op: "sum", field: "--mr-scalar", as: "--mr-selection-details-frequency" },
+              ],
+              groupby: [ coloursDataColumn.name, "--microreact-colour", selectionBreakdownField ],
+            },
+          ],
+          mark: { type: "arc", innerRadius: 66, outerRadius: 100 },
+          encoding: {
+            theta: {
+              field: "--mr-selection-details-frequency",
+              type: "quantitative",
+              stack: "normalize",
+            },
+            color: {
+              field: selectionBreakdownField,
+              type: "nominal",
+              scale: colourMapToScale(selectionBreakdownColourMap),
+              legend: false,
+            },
+            strokeWidth: {
+              value: 2,
+            },
+            stroke: {
+              value: defaults.theme.background.main,
+            },
+            tooltip: [
+              {
+                field: selectionBreakdownField,
+                title: selectionBreakdownField,
+                type: "nominal",
+              },
+              {
+                field: "--mr-selection-details-frequency",
+                title: "Number of entries",
+                type: "quantitative",
+              },
+            ],
+          },
+        });
+      }
+  
+      const vgSpec = vegaLiteToVega(vlSpec);
+  
+      return vgSpec;
+    }
   );
 
   coloursLegendEntriesSelector = createSelector(
     (props) => props.selectedRows,
-    (_, state) => state.selectedColour,
     (
       rows,
-      selectedColour,
     ) => {
       const unique = {};
 
       for (const row of rows) {
-        if (!selectedColour || row["--microreact-colour"] === selectedColour) {
-          const key = row["--microreact-colour"];
-          if (key in unique) {
-            unique[key].count += 1;
-          }
-          else {
-            unique[key] = {
-              count: 1,
-              colour: row["--microreact-colour"],
-              label: row["--microreact-colour-label"],
-              value: row[0],
-            };
-          }
+        const key = row["--microreact-colour"];
+        if (key in unique) {
+          unique[key].count += 1;
         }
-      }
-
-      const items = Object.values(unique);
-
-      for (const item of items) {
-        item.label = `${item.label} (${item.count})`;
-      }
-
-      return items;
-    },
-  );
-
-  breakdownColoursLegendEntriesSelector = createSelector(
-    (props) => props.selectedRows,
-    (_, state) => state.selectedColour,
-    (props) => props.breakdownField,
-    (props) => props.breakdownFieldColourMap,
-    (
-      rows,
-      selectedColour,
-      breakdownField,
-      breakdownFieldColourMap,
-    ) => {
-      const unique = {};
-
-      for (const row of rows) {
-        if (!selectedColour || row["--microreact-colour"] === selectedColour) {
-          const key = breakdownFieldColourMap.get(row[breakdownField]);
-          if (key in unique) {
-            unique[key].count += 1;
-          }
-          else {
-            unique[key] = {
-              count: 1,
-              colour: key,
-              label: row[breakdownField],
-              value: row[0],
-            };
-          }
+        else {
+          unique[key] = {
+            count: 1,
+            colour: row["--microreact-colour"],
+            label: row["--microreact-colour-label"],
+            value: row[0],
+          };
         }
       }
 
@@ -106,27 +186,23 @@ class SelectionPane extends React.PureComponent {
 
   shapesLegendEntriesSelector = createSelector(
     (props) => props.selectedRows,
-    (_, state) => state.selectedColour,
     (
       rows,
-      selectedColour,
     ) => {
       const unique = {};
 
       for (const row of rows) {
-        if (!selectedColour || row["--microreact-colour"] === selectedColour) {
-          const key = row["--microreact-shape"];
-          if (key in unique) {
-            unique[key].count += 1;
-          }
-          else {
-            unique[key] = {
-              count: 1,
-              shape: row["--microreact-shape"],
-              label: row["--microreact-shape-label"],
-              value: row[0],
-            };
-          }
+        const key = row["--microreact-shape"];
+        if (key in unique) {
+          unique[key].count += 1;
+        }
+        else {
+          unique[key] = {
+            count: 1,
+            shape: row["--microreact-shape"],
+            label: row["--microreact-shape-label"],
+            value: row[0],
+          };
         }
       }
 
@@ -139,12 +215,6 @@ class SelectionPane extends React.PureComponent {
       return items;
     },
   );
-
-  signalListeners = {
-    onItemSelect: (_, [ event, item ]) => {
-      this.setState({ selectedColour: item ? item["--microreact-colour"] : null });
-    },
-  }
 
   renderSelectionChart() {
     const { props } = this;
@@ -161,43 +231,10 @@ class SelectionPane extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <UiCombobox
-          label="Details Column"
-          onChange={(item) => props.onBreakdownFieldChange(item?.name)}
-          options={props.fullDatasetColumns}
-          value={props.breakdownField}
-          clearable
-        />
         <SelectionChart
           signalListeners={this.signalListeners}
         />
       </React.Fragment>
-    );
-  }
-
-  renderSelectedSlice() {
-    const { props, state } = this;
-
-    if (props.selectedRows.length === 0) {
-      return null;
-    }
-
-    if (!state.selectedColour) {
-      return (
-        <Typography
-          variant="subtitle1"
-          color="textSecondary"
-        >
-          Select a chart slice to see details
-        </Typography>
-      );
-    }
-
-    return (
-      <ShapesLegend
-        id="selected-chart-slice-legend"
-        entries={this.shapesLegendEntriesSelector(props, state)}
-      />
     );
   }
 
@@ -218,20 +255,6 @@ class SelectionPane extends React.PureComponent {
           id="selection-colours-legend"
           scale="discrete"
         />
-        {
-          (props.breakdownField) && (
-            <React.Fragment>
-              <ListSubheader component="div">
-                Colours Legend
-              </ListSubheader>
-              <ColoursLegend
-                entries={this.breakdownColoursLegendEntriesSelector(props, state)}
-                id="selection-breakdown-colours-legend"
-                scale="discrete"
-              />
-            </React.Fragment>
-          )
-        }
         {
           (props.shapesDataColum) && (
             <React.Fragment>
