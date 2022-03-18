@@ -181,10 +181,10 @@ const reducer = (state = initialState, action) => {
       };
     }
 
-    case "MICROREACT VIEWER/SET SELECTION BREAKDOWN FIELD": {
+    case "MICROREACT VIEWER/SET SELECTION SUMMARY FIELD": {
       return {
         ...state,
-        selectionBreakdownField: action.payload,
+        selectionSummaryField: action.payload,
       };
     }
 

@@ -8,32 +8,57 @@ import { Vega } from "react-vega";
 
 import "../css/selection-pane.css";
 
-import { getGroupedColours } from "../utils/drawing";
+import { vegaLiteToVega } from "../utils/charts";
 
 import ColoursLegend from "./ColoursLegend.react";
 import ShapesLegend from "./ShapesLegend.react";
 import UiEmptyState from "./UiEmptyState.react";
 import UiSidePaneHeader from "./UiSidePaneHeader.react";
-import SelectionChart from "../containers/SelectionChart.react";
 import UiCombobox from "./UiCombobox.react";
+import { emptyArray } from "../constants";
 
 const onError = (err) => console.error("SelectionChart", err);
 const onParseError = (err) => console.error("SelectionChart", err);
 
+function colourMapToScale(colourMap) {
+  const domain = [];
+  const range = [];
+
+  for (const [ value, colour ] of colourMap.entries()) {
+    domain.push(value);
+    range.push(colour);
+  }
+
+  return {
+    domain,
+    range,
+  };
+}
+
 class SelectionPane extends React.PureComponent {
 
+  selectionChartDataSelector = createSelector(
+    (props) => props.selectedRows,
+    (props) => props.activeRowsWithStyleFields,
+    (
+      selectedRows,
+    ) => {
+      return {
+        table: selectedRows ?? emptyArray,
+      };
+    }
+  );
+
   selectionChartSpecSelector = createSelector(
-    (state) => paneSizeSelector(state, "--mr-selection-pane"),
-    (state) => coloursDataColumnSelector(state),
-    (state) => configSelector(state),
-    (state) => state.filters.selectionBreakdownField,
-    (state) => (state.filters.selectionBreakdownField ? colourMapForFieldSelector(state, state.filters.selectionBreakdownField) : null),
+    (props) => props.selectionPaneSize,
+    (props) => props.summaryDataColumn,
+    (props) => props.summaryColourMap,
+    (props) => props.defaults,
     (
       size,
-      coloursDataColumn,
+      summaryDataColumn,
+      summaryColourMap,
       defaults,
-      selectionBreakdownField,
-      selectionBreakdownColourMap,
     ) => {
       const vlSpec = {
         $schema: "https://vega.github.io/schema/vega-lite/v4.json",
@@ -44,11 +69,11 @@ class SelectionPane extends React.PureComponent {
         bounds: "flush",
         data: { name: "table" },
         view: { stroke: null },
-  
-        height: size.width,
-        padding: { left: 0, top: 2, right: 0, bottom: 8 },
+
+        height: size.width - 32,
+        padding: { left: 0, top: 0, right: 0, bottom: 0 },
         width: size.width - 32,
-  
+
         layer: [
           {
             transform: [
@@ -56,19 +81,24 @@ class SelectionPane extends React.PureComponent {
                 aggregate: [
                   { op: "sum", field: "--mr-scalar", as: "--mr-selection-colour-frequency" },
                 ],
-                groupby: [ coloursDataColumn.name, "--microreact-colour" ],
+                groupby: [ summaryDataColumn.name ],
               },
             ],
             mark: { type: "arc", innerRadius: 33, outerRadius: 100 },
             encoding: {
               theta: {
                 // aggregate: "count",
-                // field: coloursDataColumn.name,
+                // field: summaryDataColumn.name,
                 field: "--mr-selection-colour-frequency",
                 type: "quantitative",
                 stack: "normalize",
               },
-              color: { field: "--microreact-colour", type: "nominal", legend: false, scale: false },
+              color: {
+                field: summaryDataColumn.name,
+                type: "nominal",
+                legend: false,
+                scale: colourMapToScale(summaryColourMap),
+              },
               strokeWidth: {
                 value: 2,
               },
@@ -77,8 +107,8 @@ class SelectionPane extends React.PureComponent {
               },
               tooltip: [
                 {
-                  field: coloursDataColumn.name,
-                  title: coloursDataColumn.name,
+                  field: summaryDataColumn.name,
+                  title: summaryDataColumn.name,
                   type: "nominal",
                 },
                 {
@@ -89,7 +119,7 @@ class SelectionPane extends React.PureComponent {
               ],
             },
           },
-  
+
           // {
           //   data: { name: "table2" },
           //   "mark": {"type": "arc", "innerRadius": 50, "outerRadius": 100 },
@@ -100,76 +130,37 @@ class SelectionPane extends React.PureComponent {
           // }
         ],
       };
-  
-      if (selectionBreakdownField) {
-        vlSpec.layer.push({
-          transform: [
-            {
-              aggregate: [
-                { op: "sum", field: "--mr-scalar", as: "--mr-selection-details-frequency" },
-              ],
-              groupby: [ coloursDataColumn.name, "--microreact-colour", selectionBreakdownField ],
-            },
-          ],
-          mark: { type: "arc", innerRadius: 66, outerRadius: 100 },
-          encoding: {
-            theta: {
-              field: "--mr-selection-details-frequency",
-              type: "quantitative",
-              stack: "normalize",
-            },
-            color: {
-              field: selectionBreakdownField,
-              type: "nominal",
-              scale: colourMapToScale(selectionBreakdownColourMap),
-              legend: false,
-            },
-            strokeWidth: {
-              value: 2,
-            },
-            stroke: {
-              value: defaults.theme.background.main,
-            },
-            tooltip: [
-              {
-                field: selectionBreakdownField,
-                title: selectionBreakdownField,
-                type: "nominal",
-              },
-              {
-                field: "--mr-selection-details-frequency",
-                title: "Number of entries",
-                type: "quantitative",
-              },
-            ],
-          },
-        });
-      }
-  
+
       const vgSpec = vegaLiteToVega(vlSpec);
-  
+
       return vgSpec;
     }
   );
 
   coloursLegendEntriesSelector = createSelector(
     (props) => props.selectedRows,
+    (props) => props.summaryDataColumn,
+    (props) => props.summaryColourMap,
     (
       rows,
+      summaryDataColumn,
+      summaryColourMap,
     ) => {
       const unique = {};
 
       for (const row of rows) {
-        const key = row["--microreact-colour"];
+        const value = row[summaryDataColumn.name];
+        const colour = summaryColourMap.get(value);
+        const key = colour;
         if (key in unique) {
           unique[key].count += 1;
         }
         else {
           unique[key] = {
             count: 1,
-            colour: row["--microreact-colour"],
-            label: row["--microreact-colour-label"],
-            value: row[0],
+            colour,
+            label: value,
+            value,
           };
         }
       }
@@ -231,8 +222,19 @@ class SelectionPane extends React.PureComponent {
 
     return (
       <React.Fragment>
-        <SelectionChart
-          signalListeners={this.signalListeners}
+        <UiCombobox
+          label="Summary Column"
+          onChange={(item) => props.onSummaryFieldChange(item?.name)}
+          options={props.fullDatasetColumns}
+          value={props.summaryDataColumn?.name}
+          clearable
+        />
+        <Vega
+          actions={false}
+          data={this.selectionChartDataSelector(props)}
+          onError={onError}
+          onParseError={onParseError}
+          spec={this.selectionChartSpecSelector(props)}
         />
       </React.Fragment>
     );
@@ -255,6 +257,7 @@ class SelectionPane extends React.PureComponent {
           id="selection-colours-legend"
           scale="discrete"
         />
+
         {
           (props.shapesDataColum) && (
             <React.Fragment>
