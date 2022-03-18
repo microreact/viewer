@@ -14,11 +14,11 @@ function colourMapToScale(colourMap) {
     domain.push(value);
     range.push(colour);
   }
-  
+
   return {
     domain,
     range,
-  }
+  };
 }
 
 const selectionChartSpecSelector = createSelector(
