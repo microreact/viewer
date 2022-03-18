@@ -24,8 +24,10 @@
 
 .mr-legends .MuiListSubheader-root {
   line-height: 16px;
-  padding-top: 16px;
-  padding-bottom: 8px;
+  padding-top: 2px;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 2px;
 }
 
 /*#endregion*/

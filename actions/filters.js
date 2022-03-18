@@ -51,14 +51,14 @@ export const selectQueryRows = (query, merge = false) => (
   }
 );
 
-export function setSelectionBreakdownField(field) {
+export function setSelectionSummaryField(field) {
   return {
     delay: true,
-    group: "Filters/selection breakdown field",
-    label: `Filters: Set selection breakdown column to ${field}`,
+    group: "Filters/selection summary field",
+    label: `Filters: Set selection summary column to ${field}`,
     payload: field,
     savable: false,
-    type: "MICROREACT VIEWER/SET SELECTION BREAKDOWN FIELD",
+    type: "MICROREACT VIEWER/SET SELECTION SUMMARY FIELD",
   };
 }
 
