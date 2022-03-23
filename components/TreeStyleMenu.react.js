@@ -73,10 +73,15 @@ const TreeStylesMenu = React.memo(
 
         <hr />
 
-        <UiToggleSwitch
-          label="Show Branch Lengths"
-          onChange={props.onShowBranchLengthsChange}
-          value={props.showBranchLengths}
+        <UiToggleSlider
+          checked={props.showBranchLengths}
+          label="Branch Lengths"
+          max={props.maxFontSize}
+          min={props.minFontSize}
+          onChange={props.onBranchLabelsFontSizeChange}
+          onCheckedChange={props.onShowBranchLengthsChange}
+          unit="px"
+          value={props.branchLabelsFontSize}
         />
         {
           (props.showBranchLengths) && (
