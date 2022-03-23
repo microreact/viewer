@@ -1,34 +1,39 @@
-import { connect } from "react-redux";
-
 import { update } from "../actions/trees";
 
-import TreeStyleMenu from "../components/TreeStyleMenu.react";
+import { connectToPresentState } from "../utils/state";
 
-const mapStateToProps = (state, { treeId }) => ({
-  alignLabels: state.trees[treeId].alignLabels,
-  branchLengthsDigits: state.trees[treeId].branchLengthsDigits,
-  fontSize: state.trees[treeId].fontSize,
-  maxFontSize: 64,
-  maxNodeSize: 64,
-  minFontSize: 4,
-  minNodeSize: 1,
-  nodeSize: state.trees[treeId].nodeSize,
-  roundBranchLengths: state.trees[treeId].roundBranchLengths,
-  scaleLineAlpha: state.trees[treeId].scaleLineAlpha,
-  showBranchLengths: state.trees[treeId].showBranchLengths,
-  showInternalLabels: state.trees[treeId].showInternalLabels,
-  showLeafLabels: state.trees[treeId].showLeafLabels,
-  showPiecharts: state.trees[treeId].showPiecharts,
-  showShapeBorders: state.trees[treeId].showShapeBorders,
-  showShapes: state.trees[treeId].showShapes,
-  styleLeafLabels: state.trees[treeId].styleLeafLabels,
-  styleLeafNodes: state.trees[treeId].styleLeafNodes,
-  styleNodeEdges: state.trees[treeId].styleNodeEdges,
-  styleNodeLines: state.trees[treeId].styleNodeLines,
-});
+import Component from "../components/TreeStyleMenu.react";
+
+const mapStateToProps = (state, { treeId }) => {
+  const treeState = state.trees[treeId];
+  return {
+    alignLabels: treeState.alignLabels,
+    branchLabelsFontSize: treeState.branchLabelsFontSize,
+    branchLengthsDigits: treeState.branchLengthsDigits,
+    fontSize: treeState.fontSize,
+    maxFontSize: 64,
+    maxNodeSize: 64,
+    minFontSize: 4,
+    minNodeSize: 1,
+    nodeSize: treeState.nodeSize,
+    roundBranchLengths: treeState.roundBranchLengths,
+    scaleLineAlpha: treeState.scaleLineAlpha,
+    showBranchLengths: treeState.showBranchLengths,
+    showInternalLabels: treeState.showInternalLabels,
+    showLeafLabels: treeState.showLeafLabels,
+    showPiecharts: treeState.showPiecharts,
+    showShapeBorders: treeState.showShapeBorders,
+    showShapes: treeState.showShapes,
+    styleLeafLabels: treeState.styleLeafLabels,
+    styleLeafNodes: treeState.styleLeafNodes,
+    styleNodeEdges: treeState.styleNodeEdges,
+    styleNodeLines: treeState.styleNodeLines,
+  };
+};
 
 const mapDispatchToProps = (dispatch, { treeId }) => ({
   onAlignLabelsChange: (value) => dispatch(update(treeId, "alignLabels", value)),
+  onBranchLabelsFontSizeChange: (value) => dispatch(update(treeId, "branchLabelsFontSize", value)),
   onFontSizeChange: (value) => dispatch(update(treeId, "fontSize", value)),
   onNodeSizeChange: (value) => dispatch(update(treeId, "nodeSize", value)),
   onRoundBranchLengthsChange: (value) => dispatch(update(treeId, "roundBranchLengths", value)),
@@ -46,4 +51,4 @@ const mapDispatchToProps = (dispatch, { treeId }) => ({
   onStyleNodeLinesChange: (value) => dispatch(update(treeId, "styleNodeLines", value)),
 });
 
-export default connect((state, props) => mapStateToProps(state.present, props), mapDispatchToProps)(TreeStyleMenu);
+export default connectToPresentState(Component, mapStateToProps, mapDispatchToProps);
