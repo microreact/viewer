@@ -43,6 +43,19 @@ const options = [
   },
 ];
 
+const axisBinsOptions = [
+  {
+    label: "Unbinned",
+    value: 0,
+  },
+];
+for (let index = 2; index <= 48; index++) {
+  axisBinsOptions.push({
+    label: `${index} bins`,
+    value: index,
+  });
+}
+
 const axisSortOptions = [
   {
     label: "Ascending order",
@@ -91,7 +104,7 @@ ChartDataTypeSelect.propTypes = {
 
 //#endregion
 
-//#region XAxisMenu
+//#region Main Axis Menu
 
 const MainAxisMenu = React.forwardRef(
   (props, ref) => {
@@ -115,6 +128,17 @@ const MainAxisMenu = React.forwardRef(
           onChange={(value) => props.onAxisTypeChange(value)}
           value={props.axisType}
         />
+
+        {
+          (props.axisMaxBins !== undefined) && (
+            <UiSelect
+              label="Maximum number of bins"
+              onChange={(value) => props.onAxisMaxBinsChange(value)}
+              options={axisBinsOptions}
+              value={props.axisMaxBins ?? 0}
+            />
+          )
+        }
 
         <UiSelect
           label="Sort by"
@@ -143,15 +167,16 @@ const MainAxisMenu = React.forwardRef(
 MainAxisMenu.displayName = "MainAxisMenu";
 
 MainAxisMenu.propTypes = {
-  axisBins: PropTypes.number,
   axisField: PropTypes.string,
   axisLabelAngle: PropTypes.number,
+  axisMaxBins: PropTypes.number,
   axisOrder: PropTypes.string,
   axisType: PropTypes.string,
   children: PropTypes.node,
   fullDatasetColumns: PropTypes.arrayOf(DataColumn).isRequired,
   onAxisFieldChange: PropTypes.func.isRequired,
-  onAxisLabelAngleChange: PropTypes.func.isRequired,
+  onAxisLabelAngleChange: PropTypes.func,
+  onAxisMaxBinsChange: PropTypes.func.isRequired,
   onAxisOrderChange: PropTypes.func.isRequired,
   onAxisReset: PropTypes.func,
   onAxisTypeChange: PropTypes.func.isRequired,
@@ -439,11 +464,13 @@ export default class ChartControls extends React.PureComponent {
                 <MainAxisMenu
                   axisField={props.yAxisField}
                   axisLabelAngle={props.yAxisLabelAngle ?? 0}
+                  axisMaxBins={props.chartType === "bar" && props.yAxisAutoType === "quantitative" ? (props.yAxisBins ?? 0) : undefined}
                   axisOrder={props.yAxisOrder}
                   axisType={props.yAxisType}
                   fullDatasetColumns={props.fullDatasetColumns}
                   onAxisFieldChange={(field) => props.onMainAxisFieldChange("yAxisField", field)}
                   onAxisLabelAngleChange={props.onYAxisLabelAngleChange}
+                  onAxisMaxBinsChange={props.onYAxisBinsChange}
                   onAxisOrderChange={props.onYAxisOrderChange}
                   onAxisReset={() => props.onMainAxisFieldChange("yAxisField")}
                   onAxisTypeChange={props.onYAxisTypeChange}
@@ -475,11 +502,13 @@ export default class ChartControls extends React.PureComponent {
                 <MainAxisMenu
                   axisField={props.xAxisField}
                   axisLabelAngle={props.xAxisLabelAngle ?? -90}
+                  axisMaxBins={props.chartType === "bar" && props.xAxisAutoType === "quantitative" ? (props.xAxisBins ?? 0) : undefined}
                   axisOrder={props.xAxisOrder}
                   axisType={props.xAxisType}
                   fullDatasetColumns={props.fullDatasetColumns}
                   onAxisFieldChange={(field) => props.onMainAxisFieldChange("xAxisField", field)}
                   onAxisLabelAngleChange={props.onXAxisLabelAngleChange}
+                  onAxisMaxBinsChange={props.onXAxisBinsChange}
                   onAxisOrderChange={props.onXAxisOrderChange}
                   onAxisReset={() => props.onMainAxisFieldChange("xAxisField")}
                   onAxisTypeChange={props.onXAxisTypeChange}
@@ -578,6 +607,7 @@ ChartControls.propTypes = {
   onSpecChange: PropTypes.func.isRequired,
   onXAxisFieldChage: PropTypes.func.isRequired,
   onXAxisLabelAngleChange: PropTypes.func.isRequired,
+  onXAxisBinsChange: PropTypes.func.isRequired,
   onXAxisModeChange: PropTypes.func.isRequired,
   onXAxisOrderChange: PropTypes.func.isRequired,
   onXAxisTypeChange: PropTypes.func.isRequired,
@@ -586,6 +616,7 @@ ChartControls.propTypes = {
   onYAxisModeChange: PropTypes.func.isRequired,
   onYAxisOrderChange: PropTypes.func.isRequired,
   onYAxisTypeChange: PropTypes.func.isRequired,
+  onYAxisBinsChange: PropTypes.func.isRequired,
   seriesDataColumn: DataColumn,
   seriesField: PropTypes.string,
   seriesOrder: PropTypes.string,
@@ -593,12 +624,15 @@ ChartControls.propTypes = {
   seriesType: PropTypes.string,
   showSelection: PropTypes.bool,
   spec: PropTypes.string,
+  xAxisAutoType: PropTypes.string,
   xAxisBins: PropTypes.number,
   xAxisField: PropTypes.string,
   xAxisLabelAngle: PropTypes.number,
   xAxisMode: ChartAxisMode,
   xAxisOrder: PropTypes.string,
   xAxisType: PropTypes.string,
+  yAxisAutoType: PropTypes.string,
+  yAxisBins: PropTypes.number,
   yAxisField: PropTypes.string,
   yAxisLabelAngle: PropTypes.number,
   yAxisMode: ChartAxisMode,

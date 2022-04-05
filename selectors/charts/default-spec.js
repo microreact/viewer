@@ -83,13 +83,14 @@ const defaultSpecSelector = createKeyedStateSelector(
   (state, chartId) => xAxisTypeSelector(state, chartId),
   (state, chartId) => chartStateSelector(state, chartId).xAxisOrder,
   (state, chartId) => chartStateSelector(state, chartId).xAxisLabelAngle,
-  // (state, chartId) => chartStateSelector(state, chartId).xAxisBins,
+  (state, chartId) => chartStateSelector(state, chartId).xAxisBins,
 
   (state, chartId) => yAxisModeSelector(state, chartId),
   (state, chartId) => yAxisFieldSelector(state, chartId),
   (state, chartId) => yAxisTypeSelector(state, chartId),
   (state, chartId) => chartStateSelector(state, chartId).yAxisOrder,
   (state, chartId) => chartStateSelector(state, chartId).yAxisLabelAngle,
+  (state, chartId) => chartStateSelector(state, chartId).yAxisBins,
 
   (state, chartId) => seriesFieldSelector(state, chartId),
   (state, chartId) => seriesTypeSelector(state, chartId),
@@ -107,13 +108,14 @@ const defaultSpecSelector = createKeyedStateSelector(
     xAxisType,
     xAxisOrder,
     xAxisLabelAngle,
-    // xAxisBins,
+    xAxisBins,
 
     yAxisMode,
     yAxisDataColumn,
     yAxisType,
     yAxisOrder,
     yAxisLabelAngle,
+    yAxisBins,
 
     seriesDataColumn,
     seriesFieldType,
@@ -122,7 +124,7 @@ const defaultSpecSelector = createKeyedStateSelector(
     seriesScale,
   ) => {
     const vlSpec = {
-      $schema: "https://vega.github.io/schema/vega-lite",
+      $schema: "https://vega.github.io/schema/vega-lite/v4.json",
       transform: [
         {
           aggregate: [],
@@ -148,6 +150,7 @@ const defaultSpecSelector = createKeyedStateSelector(
       dataColumn: xAxisDataColumn,
       encoding: "x",
       labelAngle: xAxisLabelAngle,
+      maxbins: xAxisBins,
       mode: xAxisMode,
       order: xAxisOrder,
       type: xAxisType,
@@ -156,6 +159,7 @@ const defaultSpecSelector = createKeyedStateSelector(
       dataColumn: yAxisDataColumn,
       encoding: "y",
       labelAngle: yAxisLabelAngle,
+      maxbins: yAxisBins,
       mode: yAxisMode,
       order: yAxisOrder,
       type: yAxisType,
@@ -179,8 +183,6 @@ const defaultSpecSelector = createKeyedStateSelector(
 
     //#region Add main axis
     if (mainAxis.mode === "field") {
-      vlSpec.transform[0].groupby.push(mainAxis.dataColumn.name);
-
       vlSpec.encoding[mainAxis.encoding] = {
         field: mainAxis.dataColumn.name,
         type: mainAxis.type,
@@ -190,20 +192,49 @@ const defaultSpecSelector = createKeyedStateSelector(
           labelAngle: mainAxis.labelAngle,
         },
         timeUnit: (mainAxis.type === "temporal") ? "yearmonthdate" : undefined,
-        sort: xAxisOrder,
+        sort: mainAxis.order,
       };
 
-      vlSpec.encoding.tooltip.unshift({
-        field: mainAxis.dataColumn.name,
-        title: mainAxis.dataColumn.label,
-        type: mainAxis.type,
-      });
+      if (mainAxis.maxbins > 1) {
+        vlSpec.encoding[mainAxis.encoding].field = "--mr-bins";
+        vlSpec.encoding[mainAxis.encoding].bind = { binned: true };
+        vlSpec.encoding[`${mainAxis.encoding}2`] = { field: "--mr-bins_end" };
+
+        vlSpec.transform[vlSpec.transform.length - 1].groupby.push("--mr-bins");
+        vlSpec.transform[vlSpec.transform.length - 1].groupby.push("--mr-bins_end");
+
+        vlSpec.transform.unshift({
+          bin: { maxbins: mainAxis.maxbins },
+          field: mainAxis.dataColumn.name,
+          as: "--mr-bins",
+        });
+
+        vlSpec.encoding.tooltip.unshift({
+          field: "--mr-bins_end",
+          title: `${mainAxis.dataColumn.label} (to)`,
+          type: mainAxis.type,
+        });
+        vlSpec.encoding.tooltip.unshift({
+          field: "--mr-bins",
+          title: `${mainAxis.dataColumn.label} (from)`,
+          type: mainAxis.type,
+        });
+      }
+      else {
+        vlSpec.transform[vlSpec.transform.length - 1].groupby.push(mainAxis.dataColumn.name);
+
+        vlSpec.encoding.tooltip.unshift({
+          field: mainAxis.dataColumn.name,
+          title: mainAxis.dataColumn.label,
+          type: mainAxis.type,
+        });
+      }
     }
     //#endregion
 
     //#region Add other axis
     if (secondaryAxis.mode === "frequency") {
-      vlSpec.transform[0].aggregate = [{ op: "sum", field: "--mr-scalar", as: "--mr-frequency" }];
+      vlSpec.transform[vlSpec.transform.length - 1].aggregate = [{ op: "sum", field: "--mr-scalar", as: "--mr-frequency" }];
       vlSpec.encoding[secondaryAxis.encoding] = {
         field: "--mr-frequency",
         type: "quantitative",
@@ -219,7 +250,7 @@ const defaultSpecSelector = createKeyedStateSelector(
       };
     }
     else if (secondaryAxis.mode === "cumulative-frequency") {
-      vlSpec.transform[0].aggregate = [{ op: "sum", field: "--mr-scalar", as: "--mr-frequency" }];
+      vlSpec.transform[vlSpec.transform.length - 1].aggregate = [{ op: "sum", field: "--mr-scalar", as: "--mr-frequency" }];
       vlSpec.transform.push({
         sort: [{ field: mainAxis.dataColumn.name }],
         window: [{ op: "sum", field: "--mr-frequency", as: "--mr-cumulative-frequency" }],
@@ -239,7 +270,7 @@ const defaultSpecSelector = createKeyedStateSelector(
       };
     }
     else if (secondaryAxis.mode === "sum-of" && secondaryAxis.dataColumn) {
-      vlSpec.transform[0].aggregate = [{ op: "sum", field: secondaryAxis.dataColumn.name, as: "--mr-sum" }];
+      vlSpec.transform[vlSpec.transform.length - 1].aggregate = [{ op: "sum", field: secondaryAxis.dataColumn.name, as: "--mr-sum" }];
       vlSpec.encoding[secondaryAxis.encoding] = {
         field: "--mr-sum",
         type: "quantitative",
@@ -254,7 +285,7 @@ const defaultSpecSelector = createKeyedStateSelector(
       };
     }
     else if (secondaryAxis.mode === "cumulative-sum-of" && secondaryAxis.dataColumn) {
-      vlSpec.transform[0].aggregate = [{ op: "sum", field: secondaryAxis.dataColumn.name, as: "--mr-sum" }];
+      vlSpec.transform[vlSpec.transform.length - 1].aggregate = [{ op: "sum", field: secondaryAxis.dataColumn.name, as: "--mr-sum" }];
       vlSpec.transform.push({
         sort: [{ field: mainAxis.dataColumn.name }],
         window: [{ op: "sum", field: "--mr-sum", as: "--mr-cumulative-sum" }],
@@ -274,7 +305,7 @@ const defaultSpecSelector = createKeyedStateSelector(
       };
     }
     else if (secondaryAxis.mode === "average-of" && secondaryAxis.dataColumn) {
-      vlSpec.transform[0].aggregate = [{ op: "average", field: secondaryAxis.dataColumn.name, as: "--mr-average" }];
+      vlSpec.transform[vlSpec.transform.length - 1].aggregate = [{ op: "average", field: secondaryAxis.dataColumn.name, as: "--mr-average" }];
       vlSpec.encoding[secondaryAxis.encoding] = {
         field: "--mr-average",
         type: "quantitative",
@@ -321,7 +352,7 @@ const defaultSpecSelector = createKeyedStateSelector(
     //#region Add colour series
     if (seriesDataColumn) {
       vlSpec.encoding[mainAxis.encoding].axis.title += ` (coloured by ${seriesDataColumn.label})`;
-      vlSpec.transform[0].groupby.push(seriesDataColumn.name);
+      vlSpec.transform[vlSpec.transform.length - 1].groupby.push(seriesDataColumn.name);
       vlSpec.encoding.tooltip.unshift({
         field: seriesDataColumn.name,
         title: seriesDataColumn.label,
@@ -359,7 +390,7 @@ const defaultSpecSelector = createKeyedStateSelector(
         }],
         groupby: [ vlSpec.encoding[mainAxis.encoding].field ],
       });
-      vlSpec.transform[1].groupby.push("--mr-frequency-total");
+      vlSpec.transform[vlSpec.transform.length - 1].groupby.push("--mr-frequency-total");
       vlSpec.encoding.tooltip.push({
         field: "--mr-frequency-total",
         title: "Total number of entries",
