@@ -10,6 +10,8 @@ import { connectToPresentState } from "../utils/state";
 import Component from "../components/ChartControls.react";
 import mainAxisEncodingSelector from "../selectors/charts/main-axis-encoding";
 import seriesFieldSelector from "../selectors/charts/series-field";
+import xAxisTypeSelector from "../selectors/charts/x-axis-type";
+import yAxisTypeSelector from "../selectors/charts/y-axis-type";
 
 const mapStateToProps = (state, { chartId }) => {
   const chartState = chartStateSelector(state, chartId);
@@ -27,11 +29,15 @@ const mapStateToProps = (state, { chartId }) => {
     seriesType: chartState.seriesType,
     showSelection: chartState.showSelection,
     spec: chartState.spec,
+    xAxisAutoType: xAxisTypeSelector(state, chartId),
     xAxisField: chartState.xAxisField,
+    xAxisBins: chartState.xAxisBins,
+    yAxisBins: chartState.yAxisBins,
     xAxisLabelAngle: chartState.xAxisLabelAngle,
     xAxisMode: chartState.xAxisMode,
     xAxisOrder: chartState.xAxisOrder,
     xAxisType: chartState.xAxisType,
+    yAxisAutoType: yAxisTypeSelector(state, chartId),
     yAxisField: chartState.yAxisField,
     yAxisLabelAngle: chartState.yAxisLabelAngle,
     yAxisMode: chartState.yAxisMode,
@@ -51,11 +57,13 @@ const mapDispatchToProps = (dispatch, { chartId }) => ({
   onSeriesTypeChange: (value) => dispatch(update(chartId, "seriesType", value)),
   onShowSelecttionChange: (value) => dispatch(update(chartId, "showSelection", value)),
   onSpecChange: (value) => dispatch(update(chartId, "spec", value)),
+  onXAxisBinsChange: (value) => dispatch(update(chartId, "xAxisBins", value)),
   onXAxisFieldChage: (value) => dispatch(update(chartId, "xAxisField", value)),
   onXAxisLabelAngleChange: (value) => dispatch(update(chartId, "xAxisLabelAngle", value)),
   onXAxisModeChange: (value) => dispatch(update(chartId, "xAxisMode", value)),
   onXAxisOrderChange: (value) => dispatch(update(chartId, "xAxisOrder", value)),
   onXAxisTypeChange: (value) => dispatch(update(chartId, "xAxisType", value)),
+  onYAxisBinsChange: (value) => dispatch(update(chartId, "yAxisBins", value)),
   onYAxisFieldChage: (value) => dispatch(update(chartId, "yAxisField", value)),
   onYAxisLabelAngleChange: (value) => dispatch(update(chartId, "yAxisLabelAngle", value)),
   onYAxisModeChange: (value) => dispatch(update(chartId, "yAxisMode", value)),
