@@ -6,11 +6,11 @@ import Component from "../components/MapControls.react";
 
 import regionsColourMethodTypeSelector from "../selectors/maps/regions-colour-method-type";
 import maxScaledMarkerRadiusSelector from "../selectors/maps/max-scaled-marker-size";
-import minScaledMarkerNodeSelector from "../selectors/maps/min-scaled-marker-size";
 import hasGeojsonDataSelector from "../selectors/maps/has-geojson-data";
 import colourPalettesSelector from "../selectors/styles/colour-palettes";
 import { connectToPresentState } from "../utils/state";
 import configSelector from "../selectors/config";
+import mapStyleTypeSelector from "../selectors/maps/style-type";
 
 const mapStateToProps = (state, { mapId }) => {
   const mapState = state.maps[mapId];
@@ -27,7 +27,6 @@ const mapStateToProps = (state, { mapId }) => {
     maxNodeSize: mapState.maxNodeSize,
     maxScaledMarkerSize: maxScaledMarkerRadiusSelector(state, mapId),
     minNodeSize: mapState.minNodeSize,
-    // minScaledMarkerSize: minScaledMarkerNodeSelector(state, mapId),
     nodeSize: mapState.nodeSize,
     regionsColourField: mapState.regionsColourField,
     regionsColourMethod: mapState.regionsColourMethod,
@@ -39,7 +38,7 @@ const mapStateToProps = (state, { mapId }) => {
     showMarkers: mapState.showMarkers,
     showRegionOutlines: mapState.showRegionOutlines,
     showRegions: mapState.showRegions,
-    style: mapState.style,
+    style: mapStyleTypeSelector(state, mapId),
     trackViewport: mapState.trackViewport,
     type: mapState.type,
   };
