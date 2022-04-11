@@ -1,5 +1,6 @@
 import { createKeyedStateSelector } from "../../utils/state";
-import configSelector from "../config";
+
+import mapStyleTypeSelector from "./style-type";
 
 // const categories = [ "labels", "roads", "buildings", "parks", "water", "background" ];
 // const layerSelector = {
@@ -12,7 +13,7 @@ import configSelector from "../config";
 // };
 
 const mapboxStyleSelector = createKeyedStateSelector(
-  (state, mapId) => state.maps[mapId].style || configSelector(state)?.maps?.style,
+  (state, mapId) => mapStyleTypeSelector(state, mapId),
   (
     style,
   ) => {
