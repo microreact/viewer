@@ -83,6 +83,14 @@ const axisLabelAngleOptions = [
 
 const axisLabelLimitOptions = [
   {
+    label: "10px",
+    value: 10,
+  },
+  {
+    label: "20px",
+    value: 20,
+  },
+  {
     label: "30px",
     value: 30,
   },
