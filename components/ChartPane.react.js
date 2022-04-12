@@ -10,7 +10,10 @@ import { ChartTypes } from "../utils/prop-types";
 import { exportPNG, exportSVG } from "../utils/charts";
 import { downloadDataUrl } from "../utils/downloads";
 
-const noScrollStyle = {};
+const noScrollStyle = {
+  overflowX: "hidden",
+  overflowY: "auto",
+};
 const scrollStyle = {
   overflow: "auto",
 };

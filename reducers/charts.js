@@ -5,8 +5,8 @@ export const initialState = {
   controls: true,
   interpolate: "linear",
   seriesStacking: "stacked",
-  xAxisLabelLimit: 180,
-  yAxisLabelLimit: 180,
+  xAxisLabelLimit: 120,
+  yAxisLabelLimit: 30,
 };
 
 const queryPropMap = {

@@ -12,6 +12,11 @@
   display: none;
 }
 
+.mr-chart .vega-embed,
+.mr-chart .vega-embed .chart-wrapper {
+  display: flex;
+}
+
 .mr-chart-spec-menu textarea {
   width: 100%;
   min-height: 240px;
