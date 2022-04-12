@@ -65,13 +65,6 @@ export function vegaLiteToVega(vlSpec) {
             { events: "click", update: "[ event, datum ]" },
           ],
         },
-        // {
-        //   name: 'onSeriesSelect',
-        //   value: {},
-        //   on: [
-        //     { events: 'dblclick', update: 'datum' },
-        //   ],
-        // },
       ];
     }
     catch (error) {
