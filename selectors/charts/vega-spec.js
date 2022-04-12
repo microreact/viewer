@@ -5,6 +5,7 @@ import chartStateSelector from "./chart-state";
 import defaultSpecSelector from "./default-spec";
 import chartTypeSelector from "./chart-type";
 
+
 const customChartSpecSelector = createKeyedStateSelector(
   (state, chartId) => chartStateSelector(state, chartId).spec,
   (
@@ -34,6 +35,7 @@ const vegaLiteSpecSelector = (state, chartId) => {
   return undefined;
 };
 
+// TODO: move this chart panel
 const vegaSpecSelector = createKeyedStateSelector(
   (state, chartId) => vegaLiteSpecSelector(state, chartId),
   (
