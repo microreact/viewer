@@ -364,6 +364,24 @@ const interpolateTypes = [
   { label: "Monotone", value: "monotone" },
 ];
 
+const gridOptions = [
+  { value: 1 },
+  { value: 2 },
+  { value: 3 },
+  { value: 4 },
+  { value: 5 },
+  { value: 6 },
+  { value: 7 },
+  { value: 8 },
+  { value: 9 },
+  { value: 10 },
+  { value: 12 },
+  { value: 15 },
+  { value: 20 },
+  { value: 25 },
+  { value: 30 },
+];
+
 export default class ChartControls extends React.PureComponent {
 
   state = {
@@ -503,15 +521,44 @@ export default class ChartControls extends React.PureComponent {
           {
             isStandardChartType && (
               <MainAxisMenu
+                axisField={props.facetField}
+                axisOrder={props.facetOrder}
+                axisType={props.facetType}
+                fullDatasetColumns={props.fullDatasetColumns}
+                onAxisFieldChange={(field) => props.onFacetFieldChange(field)}
+                onAxisOrderChange={props.onFacetOrderChange}
+                onAxisReset={props.facetField && props.onFacetFieldChange}
+                onAxisTypeChange={props.onFacetTypeChange}
+                title="Facet"
+              >
+                <UiSelect
+                  label="Number of columns"
+                  onChange={props.onFacetGridColumnsChange}
+                  options={gridOptions}
+                  value={props.facetGridColumns}
+                />
+                <UiSelect
+                  label="Number of rows"
+                  onChange={props.onFacetGridRowsChange}
+                  options={gridOptions}
+                  value={props.facetGridRows}
+                />
+              </MainAxisMenu>
+            )
+          }
+
+          {
+            isStandardChartType && (
+              <MainAxisMenu
                 axisField={props.seriesDataColumn?.name}
                 axisOrder={props.seriesOrder}
                 axisType={props.seriesType}
                 fullDatasetColumns={props.fullDatasetColumns}
-                onAxisFieldChange={(field) => props.onSeriesFieldChage(field)}
+                onAxisFieldChange={(field) => props.onSeriesFieldChange(field)}
                 onAxisOrderChange={props.onSeriesOrderChange}
-                onAxisReset={props.seriesField && props.onSeriesFieldChage}
+                onAxisReset={props.seriesField && props.onSeriesFieldChange}
                 onAxisTypeChange={props.onSeriesTypeChange}
-                title="Colour Series"
+                title="Detail"
               >
                 <UiSelect
                   label="Stacking"
@@ -555,7 +602,7 @@ export default class ChartControls extends React.PureComponent {
                   axisLabelLimit={props.yAxisLabelLimit}
                   axisMode={props.yAxisMode}
                   fullDatasetColumns={props.fullDatasetColumns}
-                  onAxisFieldChange={(field) => props.onYAxisFieldChage(field)}
+                  onAxisFieldChange={(field) => props.onYAxisFieldChange(field)}
                   onAxisLabelLimitChange={props.onYAxisLabelLimitChange}
                   onAxisModeChange={props.onYAxisModeChange}
                   onAxisReset={() => props.onMainAxisFieldChange("yAxisField")}
@@ -597,7 +644,7 @@ export default class ChartControls extends React.PureComponent {
                   axisLabelLimit={props.xAxisLabelLimit}
                   axisMode={props.xAxisMode}
                   fullDatasetColumns={props.fullDatasetColumns}
-                  onAxisFieldChange={(field) => props.onXAxisFieldChage(field)}
+                  onAxisFieldChange={(field) => props.onXAxisFieldChange(field)}
                   onAxisLabelLimitChange={props.onXAxisLabelLimitChange}
                   onAxisModeChange={props.onXAxisModeChange}
                   onAxisReset={() => props.onMainAxisFieldChange("xAxisField")}
@@ -666,6 +713,11 @@ ChartControls.propTypes = {
   chartType: ChartTypes,
   controls: PropTypes.bool.isRequired,
   dataFileUrl: PropTypes.string,
+  facetField: PropTypes.string,
+  facetGridColumns: PropTypes.number,
+  facetGridRows: PropTypes.number,
+  facetOrder: PropTypes.string,
+  facetType: PropTypes.string,
   fullDatasetColumns: PropTypes.arrayOf(DataColumn).isRequired,
   interpolateType: PropTypes.string.isRequired,
   mainAxisEncoding: PropTypes.oneOf([ "x", "y" ]),
@@ -673,23 +725,28 @@ ChartControls.propTypes = {
   onControlsChange: PropTypes.func.isRequired,
   onDownloadPNG: PropTypes.func.isRequired,
   onDownloadSVG: PropTypes.func.isRequired,
+  onFacetFieldChange: PropTypes.func.isRequired,
+  onFacetGridColumnsChange: PropTypes.func.isRequired,
+  onFacetGridRowsChange: PropTypes.func.isRequired,
+  onFacetOrderChange: PropTypes.func.isRequired,
+  onFacetTypeChange: PropTypes.func.isRequired,
   onInterpolateChange: PropTypes.func.isRequired,
   onMainAxisFieldChange: PropTypes.func.isRequired,
-  onSeriesFieldChage: PropTypes.func.isRequired,
+  onSeriesFieldChange: PropTypes.func.isRequired,
   onSeriesOrderChange: PropTypes.func.isRequired,
   onSeriesStackingChange: PropTypes.func.isRequired,
   onSeriesTypeChange: PropTypes.func.isRequired,
   onShowSelecttionChange: PropTypes.func.isRequired,
   onSpecChange: PropTypes.func.isRequired,
   onXAxisBinsChange: PropTypes.func.isRequired,
-  onXAxisFieldChage: PropTypes.func.isRequired,
+  onXAxisFieldChange: PropTypes.func.isRequired,
   onXAxisLabelAngleChange: PropTypes.func.isRequired,
   onXAxisLabelLimitChange: PropTypes.func.isRequired,
   onXAxisModeChange: PropTypes.func.isRequired,
   onXAxisOrderChange: PropTypes.func.isRequired,
   onXAxisTypeChange: PropTypes.func.isRequired,
   onYAxisBinsChange: PropTypes.func.isRequired,
-  onYAxisFieldChage: PropTypes.func.isRequired,
+  onYAxisFieldChange: PropTypes.func.isRequired,
   onYAxisLabelAngleChange: PropTypes.func.isRequired,
   onYAxisLabelLimitChange: PropTypes.func.isRequired,
   onYAxisModeChange: PropTypes.func.isRequired,

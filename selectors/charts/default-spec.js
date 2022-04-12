@@ -100,6 +100,8 @@ const defaultSpecSelector = createKeyedStateSelector(
   (state, chartId) => seriesStackingSelector(state, chartId),
   (state, chartId) => seriesScaleSelector(state, chartId),
 
+  (state, chartId) => chartStateSelector(state, chartId).facetField,
+  (state, chartId) => chartStateSelector(state, chartId).facetGridColumns,
   (
     chartType,
     interpolateType,
@@ -126,6 +128,9 @@ const defaultSpecSelector = createKeyedStateSelector(
     seriesOrder,
     seriesStacking,
     seriesScale,
+
+    facetField,
+    facetGridColumns,
   ) => {
     const aggregateTransform = {
       aggregate: [],
@@ -374,7 +379,17 @@ const defaultSpecSelector = createKeyedStateSelector(
         legend: false,
       };
     }
+    //#endregion
 
+    //#region Add facet
+    if (facetField) {
+      aggregateTransform.groupby.push(facetField);
+      vlSpec.encoding.facet = {
+        field: facetField,
+        type: "nominal",
+        columns: facetGridColumns,
+      };
+    }
     //#endregion
 
     return vlSpec;
@@ -387,6 +402,8 @@ const vlSpecSelector = createKeyedStateSelector(
   (state, chartId) => defaultSpecSelector(state, chartId),
   (state, chartId) => chartStateSelector(state, chartId).xAxisLabelLimit,
   (state, chartId) => chartStateSelector(state, chartId).yAxisLabelLimit,
+  (state, chartId) => chartStateSelector(state, chartId).facetGridColumns,
+  (state, chartId) => chartStateSelector(state, chartId).facetGridRows,
   (state, chartId) => paneSizeSelector(state, chartId),
   (
     seriesStacking,
@@ -394,6 +411,8 @@ const vlSpecSelector = createKeyedStateSelector(
     vlSpec,
     xAxisLabelLimit,
     yAxisLabelLimit,
+    facetGridColumns,
+    facetGridRows,
     size,
   ) => {
     if (vlSpec) {
@@ -402,6 +421,11 @@ const vlSpecSelector = createKeyedStateSelector(
         type: "fit",
         contains: "padding",
       };
+
+      // Reset the scale to remove any previous facet/overlapping range
+      vlSpec.encoding.y.scale = undefined;
+      vlSpec.width = size.width;
+      vlSpec.height = size.height;
 
       if (vlSpec.encoding.y) {
         // Divide the overall chart pane height by the number of unique values (number of rows)
@@ -416,12 +440,11 @@ const vlSpecSelector = createKeyedStateSelector(
           vlSpec.width = size.width - yAxisLabelLimit - 16 /* padding */ - 32/* title */;
           vlSpec.height = step;
         }
-        else {
-          // Reset the scale to remove any previous facet/overlapping range
-          vlSpec.encoding.y.scale = undefined;
-          vlSpec.width = size.width;
-          vlSpec.height = size.height;
-        }
+      }
+
+      if (vlSpec.encoding.facet) {
+        vlSpec.width = (size.width - yAxisLabelLimit - 16 /* padding */ - 32/* title */) / facetGridColumns;
+        vlSpec.height = ((size.height - xAxisLabelLimit - 40 /* padding */ - 32 /* title */) / facetGridRows) - 16;
       }
 
       return { ...vlSpec };
