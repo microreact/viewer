@@ -58,11 +58,31 @@ class Chart extends React.PureComponent {
   signalListeners = {
     onItemSelect: (_, [ event, item ] = []) => {
       event?.stopPropagation();
-      if (item) {
-        this.props.onSelectItem(item, event.metaKey || event.ctrilKey);
+      if (!this.lastItemSelect) {
+        this.lastItemSelect = 1;
+        setTimeout(
+          () => {
+            if (this.lastItemSelect) {
+              if (item) {
+                this.props.onSelectItem(item, event.metaKey || event.ctrilKey);
+              }
+              else {
+                this.props.onSelectItem(false);
+              }
+            }
+            this.lastItemSelect = 0;
+          },
+          300,
+        );
       }
       else {
-        this.props.onSelectItem(false);
+        this.lastItemSelect = 0;
+        if (item && this.props.seriesDataColumn) {
+          this.lastSeriesSelect = new Date();
+          const series = { ...item };
+          delete series[this.props.seriesDataColumn.name];
+          this.props.onSelectItem(series, event.metaKey || event.ctrilKey);
+        }
       }
     },
     // brush: (_, item) => {
@@ -73,22 +93,6 @@ class Chart extends React.PureComponent {
     //   else {
     //     this.debouncedSelectItem(item);
     //   }
-    // },
-    // onItemSelect: (event, item) => {
-    // if (item) {
-    //   for (const row of this.props.chartData.table) {
-    //     if (
-    //       (!this.props.xAxisField || row[this.props.xAxisField] === item[this.props.xAxisField])
-    //       &&
-    //       (!this.props.yAxisField || row[this.props.yAxisField] === item[this.props.yAxisField])
-    //       &&
-    //       (!this.props.seriesField || row[this.props.seriesField] === item[this.props.seriesField])
-    //     ) {
-    //       this.props.setHighlightedIds([ row.__id ]);
-    //       break;
-    //     }
-    //   }
-    // }
     // },
   }
 
