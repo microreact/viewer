@@ -83,6 +83,7 @@ const defaultSpecSelector = createKeyedStateSelector(
   (state, chartId) => xAxisTypeSelector(state, chartId),
   (state, chartId) => chartStateSelector(state, chartId).xAxisOrder,
   (state, chartId) => chartStateSelector(state, chartId).xAxisLabelAngle,
+  (state, chartId) => chartStateSelector(state, chartId).xAxisLabelLimit,
   (state, chartId) => chartStateSelector(state, chartId).xAxisBins,
 
   (state, chartId) => yAxisModeSelector(state, chartId),
@@ -90,6 +91,7 @@ const defaultSpecSelector = createKeyedStateSelector(
   (state, chartId) => yAxisTypeSelector(state, chartId),
   (state, chartId) => chartStateSelector(state, chartId).yAxisOrder,
   (state, chartId) => chartStateSelector(state, chartId).yAxisLabelAngle,
+  (state, chartId) => chartStateSelector(state, chartId).yAxisLabelLimit,
   (state, chartId) => chartStateSelector(state, chartId).yAxisBins,
 
   (state, chartId) => seriesFieldSelector(state, chartId),
@@ -108,6 +110,7 @@ const defaultSpecSelector = createKeyedStateSelector(
     xAxisType,
     xAxisOrder,
     xAxisLabelAngle,
+    xAxisLabelLimit,
     xAxisBins,
 
     yAxisMode,
@@ -115,6 +118,7 @@ const defaultSpecSelector = createKeyedStateSelector(
     yAxisType,
     yAxisOrder,
     yAxisLabelAngle,
+    yAxisLabelLimit,
     yAxisBins,
 
     seriesDataColumn,
@@ -150,6 +154,7 @@ const defaultSpecSelector = createKeyedStateSelector(
       dataColumn: xAxisDataColumn,
       encoding: "x",
       labelAngle: xAxisLabelAngle,
+      labelLimit: xAxisLabelLimit,
       maxbins: xAxisBins,
       mode: xAxisMode,
       order: xAxisOrder,
@@ -159,6 +164,7 @@ const defaultSpecSelector = createKeyedStateSelector(
       dataColumn: yAxisDataColumn,
       encoding: "y",
       labelAngle: yAxisLabelAngle,
+      labelLimit: yAxisLabelLimit,
       maxbins: yAxisBins,
       mode: yAxisMode,
       order: yAxisOrder,
@@ -190,6 +196,7 @@ const defaultSpecSelector = createKeyedStateSelector(
           title: mainAxis.dataColumn.label,
           format: (mainAxis.type === "temporal") ? "%Y-%m-%d" : undefined,
           labelAngle: mainAxis.labelAngle,
+          labelLimit: mainAxis.labelLimit,
         },
         timeUnit: (mainAxis.type === "temporal") ? "yearmonthdate" : undefined,
         sort: mainAxis.order,
@@ -365,11 +372,10 @@ const defaultSpecSelector = createKeyedStateSelector(
           spacing: 0,
           header: {
             title: seriesDataColumn.label,
-            labelPadding: 4,
-            // labelFontSize: 11,
-            // titleFontSize: 13,
+            labelPadding: 0,
             labelAlign: "left",
             labelAngle: 0,
+            labelLimit: secondaryAxis.labelLimit,
           },
           sort: { op: "sum", field: vlSpec.encoding[secondaryAxis.encoding].field, order: seriesOrder },
         };
@@ -415,11 +421,15 @@ const vlSpecSelector = createKeyedStateSelector(
   (state, chartId) => seriesStackingSelector(state, chartId),
   (state, chartId) => seriesScaleSelector(state, chartId),
   (state, chartId) => defaultSpecSelector(state, chartId),
+  (state, chartId) => chartStateSelector(state, chartId).xAxisLabelLimit,
+  (state, chartId) => chartStateSelector(state, chartId).yAxisLabelLimit,
   (state, chartId) => paneSizeSelector(state, chartId),
   (
     seriesStacking,
     seriesScale,
     vlSpec,
+    xAxisLabelLimit,
+    yAxisLabelLimit,
     size,
   ) => {
     if (vlSpec) {
@@ -430,20 +440,21 @@ const vlSpecSelector = createKeyedStateSelector(
       };
 
       if (vlSpec.encoding.y) {
-        vlSpec.encoding.y.scale = undefined;
         // Divide the overall chart pane height by the number of unique values (number of rows)
         // in row view (facet) and overlapping row view (overlapping)
         if ((seriesStacking === "facet" || seriesStacking === "overlapping")) {
           const numberOfDomainValues = seriesScale.domain.length;
-          const step = Math.floor((size.height - 40) / numberOfDomainValues);
+          const step = Math.floor((size.height - xAxisLabelLimit - 40 /* padding */ - 32 /* title */) / numberOfDomainValues);
           if (seriesStacking === "overlapping" && numberOfDomainValues > 1) {
             const overlap = numberOfDomainValues / 2;
             vlSpec.encoding.y.scale = { range: [ step, -overlap * step ] };
           }
-          vlSpec.width = size.width - 120;
+          vlSpec.width = size.width - yAxisLabelLimit - 16 /* padding */ - 32/* title */;
           vlSpec.height = step;
         }
         else {
+          // Reset the scale to remove any previous facet/overlapping range
+          vlSpec.encoding.y.scale = undefined;
           vlSpec.width = size.width;
           vlSpec.height = size.height;
         }
