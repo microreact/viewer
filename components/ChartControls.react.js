@@ -21,7 +21,7 @@ import UiSelect from "./UiSelect.react";
 
 const options = [
   {
-    label: "Auto (based on the column type)",
+    label: "Auto",
     value: "auto",
   },
   {
