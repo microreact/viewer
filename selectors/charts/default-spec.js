@@ -127,14 +127,13 @@ const defaultSpecSelector = createKeyedStateSelector(
     seriesStacking,
     seriesScale,
   ) => {
+    const aggregateTransform = {
+      aggregate: [],
+      groupby: [],
+    };
     const vlSpec = {
       $schema: "https://vega.github.io/schema/vega-lite/v4.json",
-      transform: [
-        {
-          aggregate: [],
-          groupby: [],
-        },
-      ],
+      transform: [ aggregateTransform ],
       mark: {
         type: chartType,
         point: (chartType === "line"),
@@ -207,8 +206,8 @@ const defaultSpecSelector = createKeyedStateSelector(
         vlSpec.encoding[mainAxis.encoding].bind = { binned: true };
         vlSpec.encoding[`${mainAxis.encoding}2`] = { field: "--mr-bins_end" };
 
-        vlSpec.transform[vlSpec.transform.length - 1].groupby.push("--mr-bins");
-        vlSpec.transform[vlSpec.transform.length - 1].groupby.push("--mr-bins_end");
+        aggregateTransform.groupby.push("--mr-bins");
+        aggregateTransform.groupby.push("--mr-bins_end");
 
         vlSpec.transform.unshift({
           bin: { maxbins: mainAxis.maxbins },
@@ -228,7 +227,7 @@ const defaultSpecSelector = createKeyedStateSelector(
         });
       }
       else {
-        vlSpec.transform[vlSpec.transform.length - 1].groupby.push(mainAxis.dataColumn.name);
+        aggregateTransform.groupby.push(mainAxis.dataColumn.name);
 
         vlSpec.encoding.tooltip.unshift({
           field: mainAxis.dataColumn.name,
@@ -241,23 +240,15 @@ const defaultSpecSelector = createKeyedStateSelector(
 
     //#region Add other axis
     if (secondaryAxis.mode === "frequency") {
-      vlSpec.transform[vlSpec.transform.length - 1].aggregate = [{ op: "sum", field: "--mr-scalar", as: "--mr-frequency" }];
+      aggregateTransform.aggregate = [{ op: "sum", field: "--mr-scalar", as: "--mr-frequency" }];
       vlSpec.encoding[secondaryAxis.encoding] = {
         field: "--mr-frequency",
         type: "quantitative",
-        axis: {
-          tickMinStep: 1,
-          title: "Number of entries",
-          gridWidth: {
-            condition: { test: "floor(datum.value) === datum.value", value: 1 },
-            value: 0,
-          },
-        },
-        // stack: false,
+        axis: { title: "Number of entries" },
       };
     }
     else if (secondaryAxis.mode === "cumulative-frequency") {
-      vlSpec.transform[vlSpec.transform.length - 1].aggregate = [{ op: "sum", field: "--mr-scalar", as: "--mr-frequency" }];
+      aggregateTransform.aggregate = [{ op: "sum", field: "--mr-scalar", as: "--mr-frequency" }];
       vlSpec.transform.push({
         sort: [{ field: mainAxis.dataColumn.name }],
         window: [{ op: "sum", field: "--mr-frequency", as: "--mr-cumulative-frequency" }],
@@ -266,33 +257,19 @@ const defaultSpecSelector = createKeyedStateSelector(
       vlSpec.encoding[secondaryAxis.encoding] = {
         field: "--mr-cumulative-frequency",
         type: "quantitative",
-        axis: {
-          tickMinStep: 1,
-          title: "Cumulative number of entries",
-          gridWidth: {
-            condition: { test: "floor(datum.value) === datum.value", value: 1 },
-            value: 0,
-          },
-        },
+        axis: { title: "Cumulative number of entries" },
       };
     }
     else if (secondaryAxis.mode === "sum-of" && secondaryAxis.dataColumn) {
-      vlSpec.transform[vlSpec.transform.length - 1].aggregate = [{ op: "sum", field: secondaryAxis.dataColumn.name, as: "--mr-sum" }];
+      aggregateTransform.aggregate = [{ op: "sum", field: secondaryAxis.dataColumn.name, as: "--mr-sum" }];
       vlSpec.encoding[secondaryAxis.encoding] = {
         field: "--mr-sum",
         type: "quantitative",
-        axis: {
-          tickMinStep: 1,
-          title: `Sum of ${secondaryAxis.dataColumn.label}`,
-          gridWidth: {
-            condition: { test: "floor(datum.value) === datum.value", value: 1 },
-            value: 0,
-          },
-        },
+        axis: { title: `Sum of ${secondaryAxis.dataColumn.label}` },
       };
     }
     else if (secondaryAxis.mode === "cumulative-sum-of" && secondaryAxis.dataColumn) {
-      vlSpec.transform[vlSpec.transform.length - 1].aggregate = [{ op: "sum", field: secondaryAxis.dataColumn.name, as: "--mr-sum" }];
+      aggregateTransform.aggregate = [{ op: "sum", field: secondaryAxis.dataColumn.name, as: "--mr-sum" }];
       vlSpec.transform.push({
         sort: [{ field: mainAxis.dataColumn.name }],
         window: [{ op: "sum", field: "--mr-sum", as: "--mr-cumulative-sum" }],
@@ -301,29 +278,15 @@ const defaultSpecSelector = createKeyedStateSelector(
       vlSpec.encoding[secondaryAxis.encoding] = {
         field: "--mr-cumulative-sum",
         type: "quantitative",
-        axis: {
-          tickMinStep: 1,
-          title: `Cumulative sum of ${secondaryAxis.dataColumn.label}`,
-          gridWidth: {
-            condition: { test: "floor(datum.value) === datum.value", value: 1 },
-            value: 0,
-          },
-        },
+        axis: { title: `Cumulative sum of ${secondaryAxis.dataColumn.label}` },
       };
     }
     else if (secondaryAxis.mode === "average-of" && secondaryAxis.dataColumn) {
-      vlSpec.transform[vlSpec.transform.length - 1].aggregate = [{ op: "average", field: secondaryAxis.dataColumn.name, as: "--mr-average" }];
+      aggregateTransform.aggregate = [{ op: "average", field: secondaryAxis.dataColumn.name, as: "--mr-average" }];
       vlSpec.encoding[secondaryAxis.encoding] = {
         field: "--mr-average",
         type: "quantitative",
-        axis: {
-          tickMinStep: 1,
-          title: `Average of ${secondaryAxis.dataColumn.label}`,
-          gridWidth: {
-            condition: { test: "floor(datum.value) === datum.value", value: 1 },
-            value: 0,
-          },
-        },
+        axis: { title: `Average of ${secondaryAxis.dataColumn.label}` },
       };
     }
 
@@ -335,6 +298,7 @@ const defaultSpecSelector = createKeyedStateSelector(
       });
 
       vlSpec.encoding[secondaryAxis.encoding].axis.tickMinStep = 1;
+      vlSpec.encoding[secondaryAxis.encoding].axis.labelLimit = secondaryAxis.labelLimit;
       vlSpec.encoding[secondaryAxis.encoding].axis.gridWidth = {
         condition: { test: "floor(datum.value) === datum.value", value: 1 },
         value: 0,
@@ -359,7 +323,7 @@ const defaultSpecSelector = createKeyedStateSelector(
     //#region Add colour series
     if (seriesDataColumn) {
       vlSpec.encoding[mainAxis.encoding].axis.title += ` (coloured by ${seriesDataColumn.label})`;
-      vlSpec.transform[vlSpec.transform.length - 1].groupby.push(seriesDataColumn.name);
+      aggregateTransform.groupby.push(seriesDataColumn.name);
       vlSpec.encoding.tooltip.unshift({
         field: seriesDataColumn.name,
         title: seriesDataColumn.label,
@@ -396,7 +360,7 @@ const defaultSpecSelector = createKeyedStateSelector(
         }],
         groupby: [ vlSpec.encoding[mainAxis.encoding].field ],
       });
-      vlSpec.transform[vlSpec.transform.length - 1].groupby.push("--mr-frequency-total");
+      aggregateTransform.groupby.push("--mr-frequency-total");
       vlSpec.encoding.tooltip.push({
         field: "--mr-frequency-total",
         title: "Total number of entries",
