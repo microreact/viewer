@@ -447,7 +447,7 @@ export default class ChartControls extends React.PureComponent {
               >
                 <UiSelect
                   label="Stacking"
-                  value={props.seriesStacking}
+                  value={props.seriesStacking ?? "stacked"}
                   onChange={props.onSeriesStackingChange}
                   options={stackingTypes}
                 />
