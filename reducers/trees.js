@@ -17,6 +17,8 @@ const initialState = {
   fontSize: 16,
   hideOrphanDataRows: false,
   ids: null,
+  internalLabelsFilterRange: [ 0, 100],
+  internalLabelsFontSize: 13,
   lasso: false,
   nodeSize: 14,
   path: null,
