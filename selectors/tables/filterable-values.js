@@ -45,13 +45,13 @@ const filterableValuesSelector = createKeyedStateSelector(
         hasBlanks = true;
       }
       else if (
-        !uniqueValues.has(value)
+        !uniqueValues.has(value.valueOf())
         &&
         (!filteredNonDataIds || filteredNonDataIds.has(row[0]))
         &&
         (!filteredDataIds || filteredDataIds.has(row[0]))
       ) {
-        uniqueValues.add(value);
+        uniqueValues.add(value.valueOf());
       }
     }
 
