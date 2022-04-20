@@ -18,3 +18,7 @@
   top: calc(50% + 48px);
   position: absolute;
 }
+
+.mr-ui-spinning-loader .mr-file-loader {
+  font-family: monospace, monospace;
+}
