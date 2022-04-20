@@ -41,7 +41,10 @@
 
 .mr-map.hovered .overlays {
   cursor: pointer !important;
-  /* overflow: visible !important; */
+}
+
+.mr-map.hovered .overlays .mr-map-lasso {
+  height: 100%;
 }
 
 /*#endregion*/

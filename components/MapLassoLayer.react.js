@@ -55,15 +55,15 @@ function translateFromCanvas(x, y, unproject) {
   ];
 }
 
+const cursorStyle = {
+  cursor: "crosshair",
+};
+
 export default class MapLassoOverlay extends React.PureComponent {
 
   state = {}
 
   onCanvasOverlayRedraw = ({ width, height, ctx, isDragging, project, unproject }) => {
-    if (!this.mouseCanvas) {
-      this.addEvents(ctx.canvas);
-    }
-
     const path = this.getPath();
 
     if (this.props.isActive) {
@@ -87,29 +87,43 @@ export default class MapLassoOverlay extends React.PureComponent {
       ctx.clearRect(0, 0, width, height);
     }
 
-    if (this.props.isActive) {
-      if (!Array.isArray(path)) {
-        ctx.canvas.style.cursor = "crosshair";
-        ctx.canvas.title = "Click to draw points";
-      }
-      else {
-        ctx.canvas.style.cursor = null;
-        ctx.canvas.title = "Click outside the path to clear";
-      }
-    }
-    else {
-      ctx.canvas.style.cursor = null;
-      ctx.canvas.title = "";
-      // if (lasso.internalPath) {
-      //   lasso.internalPath = null;
-      // }
-    }
-
     this.unproject = unproject;
   };
 
   getPath = () => {
-    return this.props.path || this.state.internalPath;
+    return this.props.path || this.state.incompletePath;
+  }
+
+  getTitle = () => {
+    if (this.props.isActive) {
+      if (Array.isArray(this.props.path)) {
+        return "Click outside the path to clear";
+      }
+      else if (!this.state.incompletePath || this.state.incompletePath.length === 0) {
+        return "Click to draw points";
+      }
+      else if (this.state.incompletePath.length > 2) {
+        return "Click to draw more points, or click on the first point to finish";
+      }
+      else {
+        return "Click to draw more points";
+      }
+    }
+    else {
+      return undefined;
+    }
+  }
+
+  getStyle = () => {
+    if (this.props.isActive) {
+      if (Array.isArray(this.props.path)) {
+        return undefined;
+      }
+      return cursorStyle;
+    }
+    else {
+      return undefined;
+    }
   }
 
   handleOnClick = (event) => {
@@ -124,33 +138,33 @@ export default class MapLassoOverlay extends React.PureComponent {
       return;
     }
 
-    const internalPath = this.state.internalPath ? [ ...this.state.internalPath ] : [];
+    const incompletePath = this.state.incompletePath ? [ ...this.state.incompletePath ] : [];
 
-    if (internalPath.length > 0) {
+    if (incompletePath.length > 0) {
       const padding = this.props.pointSize;
       const pointTopLeft = translateFromCanvas(event.offsetX - padding, event.offsetY - padding, this.unproject);
       const pointBottomRight = translateFromCanvas(event.offsetX + padding, event.offsetY + padding, this.unproject);
       if (
-        (pointBottomRight[0] >= internalPath[0][0] && pointTopLeft[0] <= internalPath[0][0])
+        (pointBottomRight[0] >= incompletePath[0][0] && pointTopLeft[0] <= incompletePath[0][0])
         &&
         (
-          (pointBottomRight[1] >= internalPath[0][1] && pointTopLeft[1] <= internalPath[0][1])
+          (pointBottomRight[1] >= incompletePath[0][1] && pointTopLeft[1] <= incompletePath[0][1])
           ||
-          (pointBottomRight[1] <= internalPath[0][1] && pointTopLeft[1] >= internalPath[0][1])
+          (pointBottomRight[1] <= incompletePath[0][1] && pointTopLeft[1] >= incompletePath[0][1])
         )
       ) {
         // push the first point to the end of the path to close the polygon
         // and mark the path as finished
-        const path = internalPath;
+        const path = incompletePath;
         path.push(path[0]);
-        this.setState({ internalPath: null });
+        this.setState({ incompletePath: null });
         this.props.onPathChange(path);
         return;
       }
     }
 
-    internalPath.push(point);
-    this.setState({ internalPath });
+    incompletePath.push(point);
+    this.setState({ incompletePath });
   };
 
   offsetX = null;
@@ -158,43 +172,36 @@ export default class MapLassoOverlay extends React.PureComponent {
   offsetY = null;
 
   handleMousedown = (event) => {
-    this.offsetX = event.offsetX;
-    this.offsetY = event.offsetY;
+    this.offsetX = event.nativeEvent.offsetX;
+    this.offsetY = event.nativeEvent.offsetY;
   };
 
   handleMouseup = (event) => {
-    if (Math.abs(this.offsetX - event.offsetX) < 5 && Math.abs(this.offsetY - event.offsetY) < 5) {
-      this.handleOnClick(event);
+    if (Math.abs(this.offsetX - event.nativeEvent.offsetX) < 5 && Math.abs(this.offsetY - event.nativeEvent.offsetY) < 5) {
+      this.handleOnClick(event.nativeEvent);
     }
     this.offsetX = null;
     this.offsetY = null;
   };
-
-  addEvents = (mouseCanvas) => {
-    this.mouseCanvas = mouseCanvas;
-    this.mouseCanvas.addEventListener("mousedown", this.handleMousedown, false /* useCapture */);
-    this.mouseCanvas.addEventListener("mouseup", this.handleMouseup, false /* useCapture */);
-  }
-
-  removeEvents = () => {
-    this.mouseCanvas?.removeEventListener("mousedown", this.handleMousedown);
-    this.mouseCanvas?.removeEventListener("mouseup", this.handleMouseup);
-  }
-
-  componentWillUnmount() {
-    this.removeEvents();
-  }
 
   render() {
     if (!this.props.isActive) {
       return null;
     }
     return (
-      <CanvasOverlay
-        path={this.getPath}
-        internalPath={this.state.internalPath}
-        redraw={this.onCanvasOverlayRedraw}
-      />
+      <div
+        className="mr-map-lasso"
+        onMouseDown={this.handleMousedown}
+        onMouseUp={this.handleMouseup}
+        style={this.getStyle()}
+        title={this.getTitle()}
+      >
+        <CanvasOverlay
+          path={this.getPath}
+          incompletePath={this.state.incompletePath}
+          redraw={this.onCanvasOverlayRedraw}
+        />
+      </div>
     );
   }
 
@@ -206,6 +213,7 @@ MapLassoOverlay.propTypes = {
   isActive: PropTypes.bool.isRequired,
   onPathChange: PropTypes.func.isRequired,
   path: PropTypes.array,
+  pointSize: PropTypes.number,
 };
 
 MapLassoOverlay.defaultProps = {
