@@ -43,7 +43,11 @@ class FileLoader extends React.PureComponent {
       <UiSpinningLoader>
         Loading { props.file.name || "file" }
         &nbsp;
-        { (state.bytesUsed > 0) && `(${fileSize(state.bytesUsed)})` }
+        {
+          (state.bytesUsed > 0)
+            &&
+            (<span className="mr-file-loader">({ fileSize(state.bytesUsed) })</span>)
+        }
         …
       </UiSpinningLoader>
     );
