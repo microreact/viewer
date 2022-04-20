@@ -5,10 +5,10 @@ import { connectToPresentStateWithRef } from "../utils/state";
 
 const mapStateToProps = (state, { mapId }) => {
   const mapState = state.maps[mapId];
-  return ({
+  return {
     isActive: mapState.lasso,
     path: mapState.path,
-  });
+  };
 };
 
 const mapDispatchToProps = (dispatch, { mapId }) => ({
