@@ -214,9 +214,13 @@ export function commitFiles(fileDescriptors) {
           const leafLabels = newickLabels(file._content);
           const dataFile = {
             id: generateHashId(),
-            name: "metadata",
+            name: "tree-labels",
             format: "text/csv",
-            blob: `id\n${leafLabels.join("\n")}`,
+            blob: new File(
+              [ `id\n${leafLabels.join("\n")}` ],
+              "tree-labels.csv",
+              { type: "text/csv" },
+            ),
             type: "data",
             _content: createBasicDataset(leafLabels.map((id) => ({ id }))),
           };
