@@ -1,4 +1,5 @@
 import { createKeyedStateSelector } from "../../utils/state";
+import configSelector from "../config";
 
 import mapStyleTypeSelector from "./style-type";
 
@@ -14,8 +15,10 @@ import mapStyleTypeSelector from "./style-type";
 
 const mapboxStyleSelector = createKeyedStateSelector(
   (state, mapId) => mapStyleTypeSelector(state, mapId),
+  (state) => configSelector(state).mapVectorFiles ?? `${location.origin}/public/vector`,
   (
     style,
+    mapVectorFiles,
   ) => {
     if (style === "microreact") {
       const mapboxStyle = {
@@ -25,11 +28,11 @@ const mapboxStyleSelector = createKeyedStateSelector(
             type: "vector",
             // "url": "mapbox://map-id"
             // "url": "http://tileserver.com/layer.json",
-            tiles: [ `${location.origin}/public/vector/tiles/{z}/{x}/{y}.pbf` ],
+            tiles: [ `${mapVectorFiles}/tiles/{z}/{x}/{y}.pbf` ],
             maxzoom: 6,
           },
         },
-        glyphs: `${location.origin}/public/vector/glyphs/{fontstack}/{range}.pbf`,
+        glyphs: `${mapVectorFiles}/glyphs/{fontstack}/{range}.pbf`,
         layers: [
           {
             id: "background",
