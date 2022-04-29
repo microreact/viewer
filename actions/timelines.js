@@ -61,7 +61,7 @@ export const selectItem = (timelineId, item, merge) => (
         ids = [];
         for (const row of rows) {
           const timestamp = row[dateFieldName]?.valueOf();
-          if (timestamp && row["--microreact-colour"] === item.groupColour && timestamp >= lowerTimestamp && timestamp <= upperTimestamp) {
+          if (timestamp && row["--microreact-colour-label"] === item.groupLabel && timestamp >= lowerTimestamp && timestamp <= upperTimestamp) {
             ids.push(row[0]);
           }
         }

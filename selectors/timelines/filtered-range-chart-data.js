@@ -32,7 +32,7 @@ const chartDataSelector = createKeyedStateSelector(
           const unitLabel = toUnitString(row[dateFieldName], unit);
           countsByUnits[unitLabel] = (countsByUnits[unitLabel] ?? 0) + rowCount;
 
-          const groupKey = `${unitLabel} ${row["--microreact-colour"]}`;
+          const groupKey = `${unitLabel} ${row["--microreact-colour"]} ${row["--microreact-colour-label"]}`;
 
           if (groupKey in groups) {
             groups[groupKey].groupCount += rowCount;
