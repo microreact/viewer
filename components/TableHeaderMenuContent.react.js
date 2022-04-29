@@ -348,7 +348,6 @@ TableHeaderMenuContent.propTypes = {
   onColumnHide: PropTypes.func.isRequired,
   onColumnSort: PropTypes.func.isRequired,
   tableColumn: TableColumn,
-  uniqueValues: PropTypes.array,
 };
 
 export default TableHeaderMenuContent;
