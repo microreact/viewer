@@ -18,7 +18,7 @@ import Box from "@material-ui/core/Box";
 
 import "../css/table-column-controls.css";
 
-import { DataColumn, DataFilter, ReactRef, TableColumn } from "../utils/prop-types";
+import { DataFilter, ReactRef, TableColumn } from "../utils/prop-types";
 
 import MdiIcon from "./MdiIcon.react";
 import { triggerWindowResize, nextTick } from "../utils/browser";
