@@ -63,6 +63,7 @@ const filterableValuesSelector = createKeyedStateSelector(
 
     for (const value of Array.from(uniqueValues).sort()) {
       items.push({
+        // TODO: rename name to value
         name: value,
         label: toText(
           dataColumn.dataType,
