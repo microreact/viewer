@@ -41,7 +41,7 @@ const filterableValuesSelector = createKeyedStateSelector(
 
     for (const row of rows) {
       const value = row[dataColumn.name];
-      if (value == null || value === undefined) {
+      if (value === "" || value === null || value === undefined) {
         hasBlanks = true;
       }
       else if (
