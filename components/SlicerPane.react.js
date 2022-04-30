@@ -12,9 +12,6 @@ import SlicerControls from "./SlicerControls.react";
 import { ChartDataTable, DataColumn, DataFilter } from "../utils/prop-types";
 import { emptyArray } from "../constants";
 
-// const scrollStyle = {
-//   overflow: "auto",
-// };
 
 class SlicerPane extends React.PureComponent {
 
