@@ -113,7 +113,9 @@ class UiSelectList extends React.PureComponent {
         style={args.style}
         title="Click to toggle group"
       >
-        { groupName }
+        <div className="MuiListItemText-root">
+          { props.groupPrefix }{ groupName }
+        </div>
       </ListSubheader>
     );
   }
@@ -183,6 +185,7 @@ UiSelectList.propTypes = {
   className: PropTypes.string,
   disableSelectAll: PropTypes.bool,
   groupItem: PropTypes.func,
+  groupPrefix: PropTypes.node,
   items: PropTypes.array,
   maxHeight: PropTypes.string,
   onChange: PropTypes.func,
