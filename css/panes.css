@@ -81,7 +81,6 @@
 
 /*#endregion*/
 
-
 /*#region Max/restore buttons */
 
 .mr-panes .flexlayout__tab_toolbar_button {
@@ -93,7 +92,6 @@
 }
 
 /*#endregion*/
-
 
 /*#region Splitters */
 
@@ -132,7 +130,6 @@
 
 /*#endregion*/
 
-
 /*#region Reset tab header height */
 
 .mr-panes.flexlayout__layout .flexlayout__tabset-selected {
@@ -168,7 +165,6 @@
 
 /*#endregion*/
 
-
 /*#region Style tab buttons to match Pathogen.watch tabs */
 
 .mr-panes.flexlayout__layout .flexlayout__tab_button {
@@ -201,6 +197,12 @@
   background: var(--primary-dark);
   border-color: var(--primary-dark);
   color: var(--primary-contrast);
+}
+
+.mr-panes.flexlayout__layout .flexlayout__tab_button_textbox {
+  font-size: 11px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /*#endregion*/
