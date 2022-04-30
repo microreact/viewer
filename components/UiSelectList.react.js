@@ -87,6 +87,7 @@ class UiSelectList extends React.PureComponent {
                 }
               }
               size="small"
+              title="Click to only select this item"
             >
               Only
             </Button>
