@@ -158,9 +158,7 @@ class SlicerPane extends React.PureComponent {
 
     return (
       <div className="mr-slicer">
-        {
-           this.renderSlicer()
-        }
+        { this.renderSlicer() }
 
         <SlicerControls
           isReadOnly={props.isReadOnly}
