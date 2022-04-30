@@ -70,20 +70,13 @@ class SlicerPaneEditor extends React.PureComponent {
           options={
             [
               {
-                label: "Filter Chart",
-                // secondary: "Metadata include a column for ISO 3166-1 or 3166-2 codes",
-                value: "chart",
-              },
-              {
                 label: "Filter by values",
-                // secondary: "Metadata include a column for ISO 3166-1 or 3166-2 codes",
                 value: "values",
               },
-              // {
-              //   label: "Filter by condition",
-              //   // secondary: "Metadata include a column for ISO 3166-1 or 3166-2 codes",
-              //   value: "condition",
-              // },
+              {
+                label: "Filter Chart",
+                value: "chart",
+              },
             ]
           }
         />
@@ -107,7 +100,7 @@ class SlicerPaneEditor extends React.PureComponent {
                     value: "top",
                   },
                   {
-                    label: "Choose which values to include (Filter Chart only)",
+                    label: "Choose which values to include",
                     value: "custom",
                   },
                 ]
@@ -143,6 +136,18 @@ class SlicerPaneEditor extends React.PureComponent {
               onChange={(values) => props.onSlicerPropChange("dataValues", values.map((x) => x.name))}
               options={this.uniqueDataValues(props)}
               value={(slicerState.dataValues?.length > 0) ? this.uniqueDataValues(props).filter((x) => slicerState.dataValues.includes(x.name)) : []}
+            />
+          )
+        }
+
+        {
+          (slicerState.slicerType === "values") && (
+            <UiCombobox
+              clearable
+              label="Group Column"
+              onChange={(value) => props.onSlicerPropChange("groupField", value?.name || null)}
+              options={props.dataColumns}
+              value={slicerState.groupField}
             />
           )
         }

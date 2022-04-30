@@ -3,19 +3,23 @@
   flex-direction: column;
 }
 
+.mr-ui-select-list .MuiListSubheader-root {
+  display: flex;
+}
+.mr-ui-select-list .MuiListSubheader-root .MuiListItemText-root {
+  margin: 0;
+}
 
 .mr-ui-select-list .mr-select-only {
-  min-width: 48px;
-  /* position: absolute; */
-  /* right: 0; */
-  text-transform: none;
   display: none;
+  min-width: 48px;
+  text-transform: none;
 }
 
+.mr-ui-select-list .MuiListSubheader-root:hover .mr-select-only,
 .mr-ui-select-list .MuiListItem-root:hover .mr-select-only {
-  display: unset;
+  display: flex;
 }
-
 
 .mr-ui-select-list .mr-select-all {
   margin: 0;
