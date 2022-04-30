@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import UiFloatingFilter from "./UiFloatingFilter.react";
-import UiRadioList from "./UiRadioList.react";
 import UiSelectList from "./UiSelectList.react";
 
 import "../css/multiple-data-columns-select.css";
