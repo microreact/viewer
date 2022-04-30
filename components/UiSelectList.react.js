@@ -116,6 +116,29 @@ class UiSelectList extends React.PureComponent {
         <div className="MuiListItemText-root">
           { props.groupPrefix }{ groupName }
         </div>
+        {
+          props.showSelectOnly && (
+            <Button
+              className="mr-select-only"
+              color="primary"
+              onClick={
+                (event) => {
+                  event.stopPropagation();
+                  props.onChange(
+                    toggleSelection(
+                      emptyArray,
+                      groupItems.map((x) => x.name),
+                    )
+                  );
+                }
+              }
+              size="small"
+              title="Click to only select all items in this group"
+            >
+              Only
+            </Button>
+          )
+        }
       </ListSubheader>
     );
   }
