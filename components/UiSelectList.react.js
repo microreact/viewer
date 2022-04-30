@@ -39,7 +39,6 @@ class UiSelectList extends React.PureComponent {
     const { props } = this;
     return (
       <ListItem
-        role={undefined}
         button
         key={item.name}
         onClick={
@@ -50,6 +49,7 @@ class UiSelectList extends React.PureComponent {
             )
           )
         }
+        role={undefined}
         style={args.style}
         disableGutters
         dense
