@@ -71,7 +71,7 @@ class UiSelectList extends React.PureComponent {
           title={item.label}
         />
         {
-          props.selectOnly && (
+          props.showSelectOnly && (
             <Button
               className="mr-select-only"
               color="primary"
@@ -187,6 +187,7 @@ UiSelectList.propTypes = {
   maxHeight: PropTypes.string,
   onChange: PropTypes.func,
   selectAllLabel: PropTypes.string,
+  showSelectOnly: PropTypes.bool,
   style: PropTypes.object,
   title: PropTypes.string,
   value: PropTypes.array,
