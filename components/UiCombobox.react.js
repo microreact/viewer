@@ -149,6 +149,7 @@ UiCombobox.propTypes = {
   autoFocus: PropTypes.bool,
   className: PropTypes.string,
   clearable: PropTypes.bool,
+  grouped: PropTypes.bool,
   helperText: PropTypes.string,
   label: PropTypes.string,
   limitTags: PropTypes.number,
