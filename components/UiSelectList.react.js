@@ -15,11 +15,11 @@ import UiList from "./UiList.react";
 import EmptyIcon from "./EmptyIcon.react";
 import { emptyArray } from "../constants";
 
-function toggleSelection(selection, toggledValues) {
+function toggleSelection(selection, toggledValues, appendOnlyMode) {
   const newSelection = [];
 
   for (const value of selection) {
-    if (!toggledValues.includes(value)) {
+    if (!toggledValues.includes(value) || appendOnlyMode) {
       newSelection.push(value);
     }
   }
@@ -106,6 +106,7 @@ class UiSelectList extends React.PureComponent {
             toggleSelection(
               props.value,
               groupItems.map((x) => x.name),
+              !groupItems.every((x) => props.value.includes(x.name)),
             ),
           )
         }
