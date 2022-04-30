@@ -159,7 +159,6 @@ class SlicerPane extends React.PureComponent {
     return (
       <div
         className="mr-slicer"
-        // style={scrollStyle}
       >
         {
            this.renderSlicer()
