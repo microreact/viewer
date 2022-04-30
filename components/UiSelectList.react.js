@@ -106,7 +106,7 @@ class UiSelectList extends React.PureComponent {
             toggleSelection(
               props.value,
               groupItems.map((x) => x.name),
-            )
+            ),
           )
         }
         style={args.style}
