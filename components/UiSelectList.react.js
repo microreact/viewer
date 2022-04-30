@@ -41,6 +41,7 @@ class UiSelectList extends React.PureComponent {
       <ListItem
         button
         dense
+        disableGutters
         key={item.name}
         onClick={
           () => props.onChange(
@@ -52,7 +53,6 @@ class UiSelectList extends React.PureComponent {
         }
         role={undefined}
         style={args.style}
-        disableGutters
       >
         <ListItemIcon>
           <Checkbox
