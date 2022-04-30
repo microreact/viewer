@@ -157,9 +157,7 @@ class SlicerPane extends React.PureComponent {
     const { props } = this;
 
     return (
-      <div
-        className="mr-slicer"
-      >
+      <div className="mr-slicer">
         {
            this.renderSlicer()
         }
