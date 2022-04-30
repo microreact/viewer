@@ -39,9 +39,9 @@ class UiSelectList extends React.PureComponent {
     const { props } = this;
     return (
       <ListItem
-        key={item.name}
         role={undefined}
         button
+        key={item.name}
         onClick={
           () => props.onChange(
             toggleSelection(
