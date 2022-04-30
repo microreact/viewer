@@ -22,7 +22,6 @@ const DataColumnFilterByValues = React.memo(
         renderItems= {
           (items) => (
             <UiSelectList
-              // boxed={false}
               disableSelectAll
               items={items}
               onChange={
