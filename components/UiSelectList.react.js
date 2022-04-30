@@ -46,7 +46,7 @@ class UiSelectList extends React.PureComponent {
             toggleSelection(
               props.value,
               [ item.name ],
-            )
+            ),
           )
         }
         role={undefined}
