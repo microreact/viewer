@@ -61,8 +61,8 @@ class UiSelectList extends React.PureComponent {
             color="primary"
             disableRipple
             edge="start"
-            tabIndex={-1}
             icon={props.boxed ? undefined : <EmptyIcon />}
+            tabIndex={-1}
           />
         </ListItemIcon>
         <ListItemText
