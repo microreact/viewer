@@ -93,11 +93,11 @@ class UiList extends React.PureComponent {
           {
             ({ width, height }) => (
               <FixedSizeList
+                className={"MuiList-root MuiList-dense"}
                 height={height}
                 width={width}
                 itemSize={28}
                 itemCount={items.length}
-                className={"MuiList-root MuiList-dense"}
               >
                 { (args) => this.renderItem(args, items, groups) }
               </FixedSizeList>
