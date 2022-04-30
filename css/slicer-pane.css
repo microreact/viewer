@@ -13,13 +13,12 @@
   display: none;
 }
 
-.mr-slicer .mr-floating-filter {
-  padding: 8px;
-  padding-top: 24px;
+.mr-slicer .mr-ui-select-list {
+  padding: 24px 0 0 8px;
 }
 
-/* .mr-slicer .mr-slicer-menu-trigger {
-  position: absolute;
-  right: 8px;
-  top: 8px;
-} */
+.mr-slicer .mr-ui-select-list .MuiListSubheader-root {
+  line-height: 28px;
+  padding: 0;
+  cursor: pointer;
+}

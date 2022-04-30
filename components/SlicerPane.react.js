@@ -11,7 +11,10 @@ import DataColumnFilterByValues from "../containers/DataColumnFilterByValues.rea
 import SlicerControls from "./SlicerControls.react";
 import { ChartDataTable, DataColumn, DataFilter } from "../utils/prop-types";
 import { emptyArray } from "../constants";
+import { createSelector } from "reselect";
+import UiSelectList from "./UiSelectList.react";
 
+const groupBy = (item) => (item.group ?? "");
 
 class SlicerPane extends React.PureComponent {
 
@@ -34,9 +37,9 @@ class SlicerPane extends React.PureComponent {
 
     else if (props.chartAxisType === "quantitative") {
       const filterRange = [ Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER ];
-      if (append && props.filter && props.filter.operator === "between") {
-        filterRange[0] = props.filter.value[0];
-        filterRange[1] = props.filter.value[1];
+      if (append && props.columnFilter && props.columnFilter.operator === "between") {
+        filterRange[0] = props.columnFilter.value[0];
+        filterRange[1] = props.columnFilter.value[1];
       }
       for (const selectedRange of selection) {
         const rangePoints = selectedRange.split("–");
@@ -58,11 +61,11 @@ class SlicerPane extends React.PureComponent {
 
     else {
       let values = selection;
-      if (append && props.filter && props.filter.operator === "in" && props.filter.value) {
+      if (append && props.columnFilter && props.columnFilter.operator === "in" && props.columnFilter.value) {
         values = Array.from(
           new Set([
             ...selection,
-            ...props.filter.value,
+            ...props.columnFilter.value,
           ])
         );
       }
@@ -120,6 +123,70 @@ class SlicerPane extends React.PureComponent {
     );
   }
 
+  butttonsDataSelector = createSelector(
+    (params) => params.allRows,
+    (params) => params.uniqueValues,
+    (params) => params.dataColumn,
+    (params) => params.groupColumn,
+    (
+      allRows,
+      uniqueValues,
+      dataColumn,
+      groupColumn,
+    ) => {
+      if (dataColumn && groupColumn) {
+        const items = [];
+        const groups = {};
+        for (const row of allRows) {
+          groups[row[dataColumn.name]] = row[groupColumn.name];
+        }
+        for (const { name, label } of uniqueValues) {
+          items.push({
+            name,
+            label,
+            group: groups[name],
+          });
+        }
+        return items;
+      }
+      else {
+        return uniqueValues;
+      }
+    }
+  );
+
+  renderSlicerButtons() {
+    const { props } = this;
+
+    const valuesFilter = (props.columnFilter && props.columnFilter.operator === "in") ? props.columnFilter : undefined;
+    const selectedValues = valuesFilter ? valuesFilter.value : emptyArray;
+    return (
+      <UiSelectList
+        disableSelectAll
+        // groupPrefix={props.groupColumn ? `${props.groupColumn.label}: ` : undefined}
+        groupItem={props.groupColumn ? groupBy : undefined}
+        items={this.butttonsDataSelector(props)}
+        onChange={
+          (selection) => {
+            props.onColumnFilterChange(
+              props.dataColumn.name,
+              (selection.length > 0) ? "in" : null,
+              selection,
+            );
+          }
+        }
+        showSelectOnly
+        style={
+          {
+            height: 40 + props.uniqueValues.length * 28,
+            maxHeight: props.height ?? "max(144px, calc(60vh - 256px))",
+          }
+        }
+        value={selectedValues}
+      />
+    );
+  }
+
   renderSlicer() {
     const { props } = this;
 
@@ -139,12 +206,7 @@ class SlicerPane extends React.PureComponent {
     }
 
     if (props.slicerType === "values") {
-      return (
-        <DataColumnFilterByValues
-          field={props.dataColumn.name}
-          height={props.height - 64}
-        />
-      );
+      return this.renderSlicerButtons();
     }
 
     return null;
@@ -174,14 +236,19 @@ SlicerPane.propTypes = {
   chartAxisType: PropTypes.string,
   chartData: ChartDataTable.isRequired,
   chartSpec: PropTypes.object,
+  columnFilter: DataFilter,
   dataColumn: DataColumn.isRequired,
-  filter: DataFilter,
+  groupColumn: DataColumn,
   height: PropTypes.number.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   onColumnFilterChange: PropTypes.func.isRequired,
   onEditPane: PropTypes.func.isRequired,
   slicerId: PropTypes.string.isRequired,
   slicerType: PropTypes.string.isRequired,
+  uniqueValues: PropTypes.array,
+};
+
+SlicerPane.defaultProps = {
 };
 
 export default SlicerPane;
