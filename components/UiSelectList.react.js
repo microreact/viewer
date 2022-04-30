@@ -57,12 +57,12 @@ class UiSelectList extends React.PureComponent {
         <ListItemIcon>
           <Checkbox
             checked={props.value.indexOf(item.name) !== -1}
+            checkedIcon={props.boxed ? undefined : <DoneRoundedIcon />}
             color="primary"
             disableRipple
             edge="start"
             tabIndex={-1}
             icon={props.boxed ? undefined : <EmptyIcon />}
-            checkedIcon={props.boxed ? undefined : <DoneRoundedIcon />}
           />
         </ListItemIcon>
         <ListItemText
