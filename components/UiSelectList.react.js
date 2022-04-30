@@ -75,7 +75,6 @@ class UiSelectList extends React.PureComponent {
             <Button
               className="mr-select-only"
               color="primary"
-              size="small"
               onClick={
                 (event) => {
                   event.stopPropagation();
@@ -87,6 +86,7 @@ class UiSelectList extends React.PureComponent {
                   );
                 }
               }
+              size="small"
             >
               Only
             </Button>
