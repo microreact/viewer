@@ -168,7 +168,6 @@ class SlicerPane extends React.PureComponent {
           slicerId={props.slicerId}
           slicerType={props.slicerType}
         />
-
       </div>
     );
   }
