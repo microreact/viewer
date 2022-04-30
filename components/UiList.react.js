@@ -12,6 +12,7 @@ import groupby from "lodash.groupby";
 import { AutoSizer } from "react-virtualized";
 
 import "../css/ui-list.css";
+import { fullSizeStyle } from "../constants";
 
 class UiList extends React.PureComponent {
 
@@ -80,14 +81,7 @@ class UiList extends React.PureComponent {
             props.className,
           )
         }
-        style={
-          {
-            height: "100%",
-            width: "100%",
-            // height: items.length * 28,
-            // maxHeight: "100vh",
-          }
-        }
+        style={fullSizeStyle}
       >
         <AutoSizer>
           {
