@@ -30,7 +30,7 @@ const MultipleDataColumnsSelect = React.memo(
               onChange={props.onChange}
               value={props.value}
               groupItem={groupBy}
-              selectOnly
+              showSelectOnly
               style={
                 {
                   height: 40 + props.dataColumns.length * 28,
