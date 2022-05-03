@@ -1,161 +1,103 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Vega } from "react-vega";
-import debounce from "lodash.debounce";
+import { createSelector } from "reselect";
 
 import "../css/slicer-pane.css";
-import { exportPNG, exportSVG } from "../utils/charts";
-import { downloadDataUrl } from "../utils/downloads";
 
-import DataColumnFilterByValues from "../containers/DataColumnFilterByValues.react";
 import SlicerControls from "./SlicerControls.react";
-import { ChartDataTable, DataColumn, DataFilter } from "../utils/prop-types";
+import { DataColumn, DataFilter } from "../utils/prop-types";
 import { emptyArray } from "../constants";
-import { createSelector } from "reselect";
 import UiSelectList from "./UiSelectList.react";
 
 const groupBy = (item) => (item.group ?? "");
 
+const sortFunctions = {
+  alphabetical: (a, b) => a.value.localeCompare(a.value),
+  ascending: (a, b) => (b.count - a.count),
+  descending: (a, b) => (a.count - b.count),
+};
+
 class SlicerPane extends React.PureComponent {
 
-  state = {
-    vegaError: null,
-  }
-
-  vegaRef = React.createRef()
-
-  handleFilterChange = (selection, append) => {
-    const { props } = this;
-    const field = this.props.dataColumn.name;
-
-    if (selection.length === 0) {
-      props.onColumnFilterChange(
-        field,
-        null,
-      );
-    }
-
-    else if (props.chartAxisType === "quantitative") {
-      const filterRange = [ Number.MAX_SAFE_INTEGER, Number.MIN_SAFE_INTEGER ];
-      if (append && props.columnFilter && props.columnFilter.operator === "between") {
-        filterRange[0] = props.columnFilter.value[0];
-        filterRange[1] = props.columnFilter.value[1];
-      }
-      for (const selectedRange of selection) {
-        const rangePoints = selectedRange.split("–");
-        const rangeStart = parseFloat(rangePoints[0]);
-        const rangeEnd = parseFloat(rangePoints[1]);
-        if (rangeStart < filterRange[0]) {
-          filterRange[0] = rangeStart;
-        }
-        if (rangeEnd > filterRange[1]) {
-          filterRange[1] = rangeEnd;
-        }
-      }
-      props.onColumnFilterChange(
-        field,
-        "between",
-        filterRange,
-      );
-    }
-
-    else {
-      let values = selection;
-      if (append && props.columnFilter && props.columnFilter.operator === "in" && props.columnFilter.value) {
-        values = Array.from(
-          new Set([
-            ...selection,
-            ...props.columnFilter.value,
-          ])
-        );
-      }
-      props.onColumnFilterChange(
-        field,
-        "in",
-        values,
-      );
-    }
-  }
-
-  debouncedFilterChange = debounce(
-    this.handleFilterChange,
-    200,
-  );
-
-  signalListeners = {
-    onItemSelect: (_, [ event, item ] = []) => {
-      // console.debug(_, event, item)
-      const { props } = this;
-      event?.stopPropagation();
-      if (item) {
-        const key = (props.chartAxisType === "quantitative") ? Object.keys(item).find((x) => x.endsWith("_range")) : props.dataColumn.name;
-        if (key in item) {
-          this.debouncedFilterChange([ item[key] ], event.metaKey || event.ctrilKey);
-        }
-      }
-      else {
-        this.debouncedFilterChange([]);
-      }
-    },
-    brush: (_, item) => {
-      const { props } = this;
-      const field = props.dataColumn.name;
-      const selection = (field in item) ? item[field] : emptyArray;
-      this.debouncedFilterChange(selection);
-    },
-  }
-
-  downloadPNG = async () => {
-    const dataUrl = await exportPNG(this.vegaRef.current);
-    downloadDataUrl(
-      dataUrl,
-      "data-slicer-chart.png",
-      "image/png",
-    );
-  }
-
-  downloadSVG = async () => {
-    const dataUrl = await exportSVG(this.vegaRef.current);
-    downloadDataUrl(
-      dataUrl,
-      "data-slicer-chart.svg",
-      "image/svg+xml",
-    );
-  }
-
-  butttonsDataSelector = createSelector(
-    (params) => params.allRows,
-    (params) => params.uniqueValues,
-    (params) => params.dataColumn,
-    (params) => params.groupColumn,
+  valuesSelector = createSelector(
+    (props) => props.allRows,
+    (props) => props.dataColumn,
+    (props) => props.groupColumn,
     (
       allRows,
-      uniqueValues,
       dataColumn,
       groupColumn,
     ) => {
-      if (dataColumn && groupColumn) {
+      if (dataColumn) {
         const items = [];
         const groups = {};
-        for (const row of allRows) {
-          groups[row[dataColumn.name]] = row[groupColumn.name];
+        const counts = {};
+        if (groupColumn) {
+          for (const row of allRows) {
+            counts[row[dataColumn.name]] = (counts[row[dataColumn.name]] ?? 0) + 1;
+            groups[row[dataColumn.name]] = row[groupColumn.name];
+          }
         }
-        for (const { name, label } of uniqueValues) {
+        else {
+          for (const row of allRows) {
+            counts[row[dataColumn.name]] = (counts[row[dataColumn.name]] ?? 0) + 1;
+          }
+        }
+        for (const value of Object.keys(counts)) {
           items.push({
-            name,
-            label,
-            group: groups[name],
+            value,
+            count: counts[value],
+            group: groups[value],
           });
         }
         return items;
       }
       else {
-        return uniqueValues;
+        return emptyArray;
       }
     }
   );
 
-  renderSlicerButtons() {
+  orderedValuesSelector = createSelector(
+    (props) => this.valuesSelector(props),
+    (props) => props.sortOrder ?? "alphabetical",
+    (
+      values,
+      sortOrder,
+    ) => {
+      return values.sort(sortFunctions[sortOrder]);
+    },
+  );
+
+  itemsSelector = createSelector(
+    (props) => this.orderedValuesSelector(props),
+    (props) => props.uniqueValues,
+    (props) => props.colourMode,
+    (props) => props.dataColumn,
+    (props) => props.groupColumn,
+    (
+      values,
+      uniqueValues,
+      colourMode,
+      dataColumn,
+      groupColumn,
+    ) => {
+      const items = [];
+      for (const row of values) {
+        groups[row[dataColumn.name]] = row[groupColumn.name];
+      }
+      for (const { name, label } of uniqueValues) {
+        items.push({
+          name,
+          label,
+          group: groups[name],
+        });
+      }
+      return items;
+    }
+  );
+
+  renderSlicer() {
     const { props } = this;
 
     const valuesFilter = (props.columnFilter && props.columnFilter.operator === "in") ? props.columnFilter : undefined;
@@ -163,9 +105,8 @@ class SlicerPane extends React.PureComponent {
     return (
       <UiSelectList
         disableSelectAll
-        // groupPrefix={props.groupColumn ? `${props.groupColumn.label}: ` : undefined}
         groupItem={props.groupColumn ? groupBy : undefined}
-        items={this.butttonsDataSelector(props)}
+        items={this.itemsSelector(props)}
         onChange={
           (selection) => {
             props.onColumnFilterChange(
@@ -187,56 +128,29 @@ class SlicerPane extends React.PureComponent {
     );
   }
 
-  renderSlicer() {
-    const { props } = this;
-
-    if (props.slicerType === "chart" && props.chartSpec) {
-      return (
-        <Vega
-          data={this.props.chartData}
-          logLevel={2}
-          onError={console.error}
-          onParseError={console.error}
-          // onNewView={console.debug}
-          ref={this.vegaRef}
-          signalListeners={this.signalListeners}
-          spec={props.chartSpec}
-        />
-      );
-    }
-
-    if (props.slicerType === "values") {
-      return this.renderSlicerButtons();
-    }
-
-    return null;
-  }
-
   render() {
     const { props } = this;
 
     return (
       <div className="mr-slicer">
         { this.renderSlicer() }
-
-        <SlicerControls
-          isReadOnly={props.isReadOnly}
-          onDownloadPNG={this.downloadPNG}
-          onDownloadSVG={this.downloadSVG}
-          onEditPane={props.onEditPane}
-          slicerId={props.slicerId}
-          slicerType={props.slicerType}
-        />
+        {
+          (!props.isReadOnly) && (
+            <SlicerControls
+              isReadOnly={props.isReadOnly}
+              onEditPane={props.onEditPane}
+              slicerId={props.slicerId}
+              slicerType={props.slicerType}
+            />
+          )
+        }
       </div>
     );
   }
 }
 
 SlicerPane.propTypes = {
-  chartAxisType: PropTypes.string,
-  chartData: ChartDataTable.isRequired,
-  chartSpec: PropTypes.object,
-  columnFilter: DataFilter,
+  columnFilter: DataFilter.isRequired,
   dataColumn: DataColumn.isRequired,
   groupColumn: DataColumn,
   height: PropTypes.number.isRequired,

@@ -18,20 +18,20 @@ import dataFieldFilterSelector from "../selectors/filters/data-field-filter";
 function mapStateToProps(state, { slicerId }) {
   const slicerState = slicerStateSelector(state, slicerId);
   const fieldsMap = dataColumnsByFieldMapSelector(state);
-  const dataColumn = fieldsMap.get(slicerState.field);
+  const dataColumn = fieldsMap.get(slicerState.dataField || slicerState.field);
   const groupColumn = fieldsMap.get(slicerState.groupField);
   return {
     allRows: rowsSelector(state),
-    chartAxisType: chartAxisTypeSelector(state, slicerId),
-    chartData: chartDataSelector(state, slicerId),
-    chartSpec: chartSpecSelector(state, slicerId),
+    colourMode: slicerState.colourMode,
     columnFilter: dataColumn && dataFieldFilterSelector(state, dataColumn?.name),
     dataColumn,
+    dataRows: rowsSelector(state),
+    displayMode: slicerState.displayMode,
     groupColumn,
     isReadOnly: configSelector(state).readOnly,
-    multiSelect: slicerState.multiSelect,
-    showSearchBox: slicerState.showSearchBox,
+    // showSearchBox: slicerState.showSearchBox,
     slicerType: slicerState.slicerType,
+    sortOrder: slicerState.sortOrder,
     uniqueValues: dataColumn && filterableValuesSelector(state, dataColumn?.name),
   };
 }
