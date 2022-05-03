@@ -1,16 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Box from "@material-ui/core/Box";
 import { createSelector } from "reselect";
 
 import { DataColumn } from "../utils/prop-types";
-import { halfWidthWithPaddingStyle, fullSizeStyle } from "../constants";
 import { toText } from "../utils/text";
 
 import UiSelect from "./UiSelect.react";
 import UiCombobox from "./UiCombobox.react";
 import UiTextfield from "./UiTextfield.react";
-import ChartDataTypeSelect from "./ChartDataTypeSelect.react";
 
 class SlicerPaneEditor extends React.PureComponent {
 
@@ -50,7 +47,6 @@ class SlicerPaneEditor extends React.PureComponent {
   render() {
     const { props } = this;
 
-    const slicerState = props.slicerState;
     return (
       <React.Fragment>
 
@@ -58,176 +54,92 @@ class SlicerPaneEditor extends React.PureComponent {
           label="Data Column"
           onChange={(value) => props.onSlicerPropChange("field", value.name)}
           options={props.dataColumns}
-          value={slicerState.field}
+          value={props.dataColumn?.name}
+        />
+
+        <UiCombobox
+          clearable
+          label="Group Column"
+          onChange={(value) => props.onSlicerPropChange("groupField", value?.name || null)}
+          options={props.dataColumns}
+          value={props.groupColumn?.name}
         />
 
         <UiSelect
-          label="Slicer Type"
-          variant="outlined"
-          size="small"
-          value={slicerState.slicerType}
-          onChange={(value) => props.onSlicerPropChange("slicerType", value)}
+          label="Display mode"
+          onChange={(value) => props.onSlicerPropChange("displayMode", value)}
           options={
             [
               {
-                label: "Filter by values",
-                value: "values",
+                label: "Text only",
+                value: "text",
               },
               {
-                label: "Filter Chart",
-                value: "chart",
+                label: "Show bars",
+                value: "frequencies",
+              },
+              {
+                label: "Show frequencies",
+                value: "bars",
+              },
+              {
+                label: "Show bars and frequencies",
+                value: "frequencies-bars",
               },
             ]
           }
+          size="small"
+          value={props.displayMode}
+          variant="outlined"
         />
 
-        <Box display="flex" justifyContent="space-between">
-          <Box style={(slicerState.includedValues === "top") ? halfWidthWithPaddingStyle : fullSizeStyle}>
-            <UiSelect
-              label="Included Values"
-              variant="outlined"
-              size="small"
-              value={slicerState.includedValues}
-              onChange={(value) => props.onSlicerPropChange("includedValues", value)}
-              options={
-                [
-                  {
-                    label: "Include all values",
-                    value: "all",
-                  },
-                  {
-                    label: "Top N values",
-                    value: "top",
-                  },
-                  {
-                    label: "Choose which values to include",
-                    value: "custom",
-                  },
-                ]
-              }
-              style={fullSizeStyle}
-            />
-          </Box>
-
-          {
-            (slicerState.includedValues === "top") && (
-              <Box style={halfWidthWithPaddingStyle}>
-                <UiTextfield
-                  autoFocus
-                  fullWidth
-                  label="Maximum number of values"
-                  onChange={(value) => props.onSlicerPropChange("topNValues", parseInt(value, 10))}
-                  style={fullSizeStyle}
-                  type="number"
-                  value={slicerState.topNValues.toString()}
-                  variant="outlined"
-                />
-              </Box>
-            )
+        <UiSelect
+          label="Sort by"
+          onChange={(value) => props.onSlicerPropChange("sortOrder", value)}
+          options={
+            [
+              {
+                label: "Values (alphabetical order)",
+                value: "alphabetical",
+              },
+              {
+                label: "Frequency (descending order)",
+                value: "descending",
+              },
+              {
+                label: "Frequency (ascending order)",
+                value: "ascending",
+              },
+            ]
           }
-        </Box>
+          size="small"
+          value={props.sortOrder}
+          variant="outlined"
+        />
 
-        {
-          (slicerState.includedValues === "custom") && (
-            <UiCombobox
-              autoFocus
-              label="Values to include"
-              multiple
-              onChange={(values) => props.onSlicerPropChange("dataValues", values.map((x) => x.name))}
-              options={this.uniqueDataValues(props)}
-              value={(slicerState.dataValues?.length > 0) ? this.uniqueDataValues(props).filter((x) => slicerState.dataValues.includes(x.name)) : []}
-            />
-          )
-        }
-
-        {
-          (slicerState.slicerType === "values") && (
-            <UiCombobox
-              clearable
-              label="Group Column"
-              onChange={(value) => props.onSlicerPropChange("groupField", value?.name || null)}
-              options={props.dataColumns}
-              value={slicerState.groupField}
-            />
-          )
-        }
-
-        {
-          (slicerState.slicerType === "chart") && (
-            <ChartDataTypeSelect
-              value={slicerState.chartAxisType}
-              onChange={(value) => props.onSlicerPropChange("chartAxisType", value)}
-            />
-          )
-        }
-
-        {
-          (slicerState.slicerType === "chart") && (
-            <UiSelect
-              label="Chart Type"
-              variant="outlined"
-              size="small"
-              value={slicerState.chartMainAxis}
-              onChange={(value) => props.onSlicerPropChange("chartMainAxis", value)}
-              options={
-                [
-                  {
-                    label: "Vertical bar chart",
-                    secondary: "Data values are plotted on the x-axis",
-                    value: "x",
-                  },
-                  {
-                    label: "Horizontal bar chart",
-                    secondary: "Data values are plotted on the y-axis",
-                    value: "y",
-                  },
-                ]
-              }
-            />
-          )
-        }
-
-        {
-          (slicerState.slicerType === "chart") && (
-            <UiSelect
-              label="Sort by"
-              variant="outlined"
-              size="small"
-              value={slicerState.chartOrder}
-              onChange={(value) => props.onSlicerPropChange("chartOrder", value)}
-              options={
-                [
-                  {
-                    label: "Values (alphabetical order)",
-                    value: "alphabetical",
-                  },
-                  {
-                    label: "Frequency (descending order)",
-                    value: "descending",
-                  },
-                  {
-                    label: "Frequency (ascending order)",
-                    value: "ascending",
-                  },
-                ]
-              }
-            />
-          )
-        }
-
-        {
-          (slicerState.slicerType === "chart" && props.chartAxisType === "quantitative") && (
-            <UiTextfield
-              fullWidth
-              helperText="There will often be fewer bins since the domain get sliced at “nicely-rounded” values."
-              label="Maximum number of bins"
-              onChange={(value) => props.onSlicerPropChange("chartMaxBins", value)}
-              type="number"
-              value={slicerState.chartMaxBins}
-              variant="outlined"
-            />
-          )
-        }
+        <UiSelect
+          label="Colours"
+          onChange={(value) => props.onSlicerPropChange("colourMode", value)}
+          options={
+            [
+              {
+                label: "Do not colour slicer items",
+                value: "off",
+              },
+              {
+                label: "Colour items by data column",
+                value: "data",
+              },
+              {
+                label: "Colour items by group column",
+                value: "group",
+              },
+            ]
+          }
+          size="small"
+          value={props.colourMode}
+          variant="outlined"
+        />
 
       </React.Fragment>
     );
@@ -238,12 +150,15 @@ class SlicerPaneEditor extends React.PureComponent {
 SlicerPaneEditor.displayName = "SlicerPaneEditor";
 
 SlicerPaneEditor.propTypes = {
-  chartAxisType: PropTypes.string,
+  colourMode: PropTypes.string,
+  dataColumn: DataColumn,
   dataColumns: PropTypes.arrayOf(DataColumn).isRequired,
   dataRows: PropTypes.array.isRequired,
+  displayMode: PropTypes.string,
+  groupColumn: DataColumn,
   onSlicerPropChange: PropTypes.func.isRequired,
   slicerId: PropTypes.string.isRequired,
-  slicerState: PropTypes.object.isRequired,
+  sortOrder: PropTypes.string,
 };
 
 export default SlicerPaneEditor;

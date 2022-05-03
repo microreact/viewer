@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import UiSelect from "./UiSelect.react";
+import UiSelect from "../../components/UiSelect.react";
 
 const options = [
   {
