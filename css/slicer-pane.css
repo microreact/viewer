@@ -29,7 +29,7 @@
   height: 2px;
 }
 .mr-slicer .mr-ui-select-list .mr-slicer-bar {
-  background-color: var(--primary-text);
+  background-color: var(--text-primary);
   height: 100%;
 }
 

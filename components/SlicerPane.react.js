@@ -61,6 +61,7 @@ class SlicerPane extends React.PureComponent {
   itemsSelector = createSelector(
     (props) => this.valuesSelector(props),
     (props) => this.groupsDataSelector(props),
+    (props) => props.displayMode,
     (
       values,
       groups,
@@ -120,11 +121,13 @@ class SlicerPane extends React.PureComponent {
     const scale = this.scaleSelector(props);
     const style = { width: `${scale(item.count)}%` };
 
-    if (props.displayMode === "coloured-by-data") {
-      style.backgroundColor = props.coloursMap.get(item.value);
-    }
-    else if (props.displayMode === "coloured-by-group") {
-      style.backgroundColor = props.coloursMap.get(item.group);
+    if (props.coloursMap) {
+      if (props.displayMode === "coloured-by-data") {
+        style.backgroundColor = props.coloursMap.get(item.value);
+      }
+      else if (props.displayMode === "coloured-by-group") {
+        style.backgroundColor = props.coloursMap.get(item.group);
+      }
     }
 
     return (
