@@ -6,93 +6,120 @@ import "../css/slicer-pane.css";
 
 import SlicerControls from "./SlicerControls.react";
 import { DataColumn, DataFilter } from "../utils/prop-types";
-import { emptyArray } from "../constants";
+import { emptyArray, emptyObject } from "../constants";
 import UiSelectList from "./UiSelectList.react";
 
 const groupBy = (item) => (item.group ?? "");
 
 const sortFunctions = {
-  alphabetical: (a, b) => a.value.localeCompare(a.value),
-  ascending: (a, b) => (b.count - a.count),
-  descending: (a, b) => (a.count - b.count),
+  // alphabetical: (a, b) => a.value.localeCompare(a.value),
+  descending: (a, b) => (b.count - a.count),
+  ascending: (a, b) => (a.count - b.count),
 };
 
 class SlicerPane extends React.PureComponent {
 
-  valuesSelector = createSelector(
-    (props) => props.allRows,
-    (props) => props.dataColumn,
-    (props) => props.groupColumn,
+  groupsDataSelector = createSelector(
+    (params) => params.allRows,
+    (params) => params.dataColumn,
+    (params) => params.groupColumn,
     (
       allRows,
       dataColumn,
       groupColumn,
     ) => {
-      if (dataColumn) {
-        const items = [];
+      if (dataColumn && groupColumn) {
         const groups = {};
-        const counts = {};
-        if (groupColumn) {
-          for (const row of allRows) {
-            counts[row[dataColumn.name]] = (counts[row[dataColumn.name]] ?? 0) + 1;
-            groups[row[dataColumn.name]] = row[groupColumn.name];
-          }
+        for (const row of allRows) {
+          groups[row[dataColumn.name]] = row[groupColumn.name];
         }
-        else {
-          for (const row of allRows) {
-            counts[row[dataColumn.name]] = (counts[row[dataColumn.name]] ?? 0) + 1;
-          }
-        }
-        for (const value of Object.keys(counts)) {
-          items.push({
-            value,
-            count: counts[value],
-            group: groups[value],
-          });
-        }
-        return items;
+        return groups;
       }
       else {
-        return emptyArray;
+        return emptyObject;
       }
     }
   );
 
+  // valuesSelector = createSelector(
+  //   (props) => props.allRows,
+  //   (props) => props.dataColumn,
+  //   (props) => props.groupColumn,
+  //   (
+  //     allRows,
+  //     dataColumn,
+  //     groupColumn,
+  //   ) => {
+  //     if (dataColumn) {
+  //       const items = [];
+  //       const groups = {};
+  //       const counts = {};
+  //       if (groupColumn) {
+  //         for (const row of allRows) {
+  //           counts[row[dataColumn.name]] = (counts[row[dataColumn.name]] ?? 0) + 1;
+  //           groups[row[dataColumn.name]] = row[groupColumn.name];
+  //         }
+  //       }
+  //       else {
+  //         for (const row of allRows) {
+  //           counts[row[dataColumn.name]] = (counts[row[dataColumn.name]] ?? 0) + 1;
+  //         }
+  //       }
+  //       for (const value of Object.keys(counts)) {
+  //         items.push({
+  //           value,
+  //           count: counts[value],
+  //           group: groups[value],
+  //         });
+  //       }
+  //       return items;
+  //     }
+  //     else {
+  //       return emptyArray;
+  //     }
+  //   }
+  // );
+
   orderedValuesSelector = createSelector(
-    (props) => this.valuesSelector(props),
+    (props) => props.uniqueValues,
     (props) => props.sortOrder ?? "alphabetical",
     (
       values,
       sortOrder,
     ) => {
-      return values.sort(sortFunctions[sortOrder]);
+      if (sortOrder !== "alphabetical") {
+        return [ ...values ].sort(sortFunctions[sortOrder]);
+      }
+      else {
+        return values;
+      }
     },
   );
 
   itemsSelector = createSelector(
     (props) => this.orderedValuesSelector(props),
-    (props) => props.uniqueValues,
+    (props) => this.groupsDataSelector(props),
     (props) => props.colourMode,
     (props) => props.dataColumn,
     (props) => props.groupColumn,
     (
       values,
-      uniqueValues,
+      groups,
       colourMode,
       dataColumn,
       groupColumn,
     ) => {
       const items = [];
-      for (const row of values) {
-        groups[row[dataColumn.name]] = row[groupColumn.name];
-      }
-      for (const { name, label } of uniqueValues) {
+
+      for (const { value, label, count } of values) {
         items.push({
-          name,
-          label,
-          group: groups[name],
+          value,
+          count,
+          label: `${label} (${count})`,
+          group: groups[value],
         });
       }
+
       return items;
     }
   );
@@ -124,6 +151,7 @@ class SlicerPane extends React.PureComponent {
           }
         }
         value={selectedValues}
+        valueProperty="value"
       />
     );
   }
@@ -150,7 +178,7 @@ class SlicerPane extends React.PureComponent {
 }
 
 SlicerPane.propTypes = {
-  columnFilter: DataFilter.isRequired,
+  columnFilter: DataFilter,
   dataColumn: DataColumn.isRequired,
   groupColumn: DataColumn,
   height: PropTypes.number.isRequired,

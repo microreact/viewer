@@ -39,6 +39,7 @@ const DataColumnFilterByValues = React.memo(
                 }
               }
               value={selectedValues}
+              valueProperty="value"
             />
           )
         }

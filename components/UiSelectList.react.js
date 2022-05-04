@@ -42,12 +42,12 @@ class UiSelectList extends React.PureComponent {
         button
         dense
         disableGutters
-        key={item.name}
+        key={item[props.valueProperty]}
         onClick={
           () => props.onChange(
             toggleSelection(
               props.value,
-              [ item.name ],
+              [ item[props.valueProperty] ],
             ),
           )
         }
@@ -56,7 +56,7 @@ class UiSelectList extends React.PureComponent {
       >
         <ListItemIcon>
           <Checkbox
-            checked={props.value.indexOf(item.name) !== -1}
+            checked={props.value.indexOf(item[props.valueProperty]) !== -1}
             checkedIcon={props.boxed ? undefined : <DoneRoundedIcon />}
             color="primary"
             disableRipple
@@ -81,7 +81,7 @@ class UiSelectList extends React.PureComponent {
                   props.onChange(
                     toggleSelection(
                       emptyArray,
-                      [ item.name ],
+                      [ item[props.valueProperty] ],
                     )
                   );
                 }
@@ -106,8 +106,8 @@ class UiSelectList extends React.PureComponent {
           () => props.onChange(
             toggleSelection(
               props.value,
-              groupItems.map((x) => x.name),
-              !groupItems.every((x) => props.value.includes(x.name)),
+              groupItems.map((x) => x[props.valueProperty]),
+              !groupItems.every((x) => props.value.includes(x[props.valueProperty])),
             ),
           )
         }
@@ -128,7 +128,7 @@ class UiSelectList extends React.PureComponent {
                   props.onChange(
                     toggleSelection(
                       emptyArray,
-                      groupItems.map((x) => x.name),
+                      groupItems.map((x) => x[props.valueProperty]),
                     )
                   );
                 }
@@ -150,7 +150,7 @@ class UiSelectList extends React.PureComponent {
     const allSelected = (
       props.items.length
       &&
-      props.items.every((x) => props.value.includes(x.name))
+      props.items.every((x) => props.value.includes(x[props.valueProperty]))
     );
 
     return (
@@ -180,7 +180,7 @@ class UiSelectList extends React.PureComponent {
                 () => props.onChange(
                   toggleSelection(
                     props.value,
-                    allSelected ? props.items.map((x) => x.name) : props.items.map((x) => x.name).filter(((x) => !props.value.includes(x))),
+                    allSelected ? props.items.map((x) => x[props.valueProperty]) : props.items.map((x) => x[props.valueProperty]).filter(((x) => !props.value.includes(x))),
                   )
                 )
               }
@@ -211,6 +211,7 @@ UiSelectList.propTypes = {
   groupItem: PropTypes.func,
   groupPrefix: PropTypes.node,
   items: PropTypes.array,
+  labelProperty: PropTypes.string,
   maxHeight: PropTypes.string,
   onChange: PropTypes.func,
   selectAllLabel: PropTypes.string,
@@ -218,13 +219,16 @@ UiSelectList.propTypes = {
   style: PropTypes.object,
   title: PropTypes.string,
   value: PropTypes.array,
+  valueProperty: PropTypes.string,
 };
 
 UiSelectList.defaultProps = {
   boxed: true,
   disableSelectAll: false,
+  labelProperty: "label",
   maxHeight: "calc(100vh - 200px)",
   value: emptyArray,
+  valueProperty: "name",
 };
 
 export default UiSelectList;
