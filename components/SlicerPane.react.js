@@ -100,26 +100,34 @@ class SlicerPane extends React.PureComponent {
     (props) => this.orderedValuesSelector(props),
     (props) => this.groupsDataSelector(props),
     (props) => props.colourMode,
+    (props) => props.coloursMap,
     (props) => props.dataColumn,
     (props) => props.groupColumn,
     (
       values,
       groups,
       colourMode,
+      coloursMap,
       dataColumn,
       groupColumn,
     ) => {
       const items = [];
 
       for (const { value, label, count } of values) {
+        const style = (
+          (colourMode === "data") ? { color: coloursMap.get(value) } :
+            (colourMode === "group") ? { color: coloursMap.get(groups[value]) } :
+              undefined
+        );
         items.push({
-          value,
+          style,
           count,
-          label: `${label} (${count})`,
           group: groups[value],
+          label: `${label} (${count})`,
+          value,
         });
       }
-
+console.log(items)
       return items;
     }
   );
@@ -178,6 +186,7 @@ class SlicerPane extends React.PureComponent {
 }
 
 SlicerPane.propTypes = {
+  coloursMap: PropTypes.instanceOf(Map),
   columnFilter: DataFilter,
   dataColumn: DataColumn.isRequired,
   groupColumn: DataColumn,

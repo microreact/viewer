@@ -2,34 +2,33 @@ import Component from "../components/SlicerPane.react";
 
 import { setFieldFilter } from "../actions/filters";
 
-import chartAxisTypeSelector from "../selectors/slicers/chart-axis-type";
-import chartDataSelector from "../selectors/slicers/chart-data";
-import chartSpecSelector from "../selectors/slicers/chart-spec";
-
 import { connectToPresentState } from "../utils/state";
+
 import { openPaneEditor } from "../actions/ui";
-import slicerStateSelector from "../selectors/slicers/slicer-state";
+
 import configSelector from "../selectors/config";
+import dataColumnByFieldSelector from "../selectors/datasets/data-column-by-field";
+import dataColumnSelector from "../selectors/slicers/data-column";
+import dataFieldFilterSelector from "../selectors/filters/data-field-filter";
 import filterableValuesSelector from "../selectors/tables/filterable-values";
 import rowsSelector from "../selectors/datasets/rows";
-import dataColumnsByFieldMapSelector from "../selectors/datasets/data-columns-by-field-map";
-import dataFieldFilterSelector from "../selectors/filters/data-field-filter";
+import slicerColoursMapSelector from "../selectors/slicers/slicer-colours-map";
+import slicerStateSelector from "../selectors/slicers/slicer-state";
 
 function mapStateToProps(state, { slicerId }) {
   const slicerState = slicerStateSelector(state, slicerId);
-  const fieldsMap = dataColumnsByFieldMapSelector(state);
-  const dataColumn = fieldsMap.get(slicerState.dataField || slicerState.field);
-  const groupColumn = fieldsMap.get(slicerState.groupField);
+  const dataColumn = dataColumnSelector(state, slicerId);
+  const groupColumn = dataColumnByFieldSelector(state, slicerState.groupField);
   return {
     allRows: rowsSelector(state),
     colourMode: slicerState.colourMode,
+    coloursMap: slicerColoursMapSelector(state, slicerId),
     columnFilter: dataColumn && dataFieldFilterSelector(state, dataColumn?.name),
     dataColumn,
     dataRows: rowsSelector(state),
     displayMode: slicerState.displayMode,
     groupColumn,
     isReadOnly: configSelector(state).readOnly,
-    // showSearchBox: slicerState.showSearchBox,
     slicerType: slicerState.slicerType,
     sortOrder: slicerState.sortOrder,
     uniqueValues: dataColumn && filterableValuesSelector(state, dataColumn?.name),

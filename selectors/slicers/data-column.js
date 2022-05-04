@@ -1,15 +1,12 @@
-import dataColumnsByFieldMapSelector from "../datasets/data-columns-by-field-map";
+import dataColumnByFieldSelector from "../datasets/data-column-by-field";
 import slicerStateSelector from "./slicer-state";
 
 function dataColumnSelector(state, slicerId) {
-  const fieldsMap = dataColumnsByFieldMapSelector(state);
-  const { field } = slicerStateSelector(state, slicerId);
-  if (field) {
-    return fieldsMap.get(field);
-  }
-  else {
-    return undefined;
-  }
+  const slicerState = slicerStateSelector(state, slicerId);
+  return dataColumnByFieldSelector(
+    state,
+    slicerState.dataField || slicerState.field,
+  );
 }
 
 export default dataColumnSelector;

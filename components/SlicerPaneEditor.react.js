@@ -137,7 +137,7 @@ class SlicerPaneEditor extends React.PureComponent {
             ]
           }
           size="small"
-          value={props.colourMode}
+          value={props.colourMode ?? "off"}
           variant="outlined"
         />
 
