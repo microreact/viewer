@@ -7,14 +7,6 @@ import {
 } from "../utils/state";
 
 export const initialState = {
-  chartAxisType: "auto",
-  chartMaxBins: 10,
-  chartOrder: "alphabetical",
-  slicerType: "values",
-  dataValues: [],
-  includedValues: "all",
-  topNValues: 10,
-  chartMainAxis: "y",
   displayMode: "off",
   sortOrder: "alphabetical",
 };
