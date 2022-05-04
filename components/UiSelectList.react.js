@@ -69,8 +69,12 @@ class UiSelectList extends React.PureComponent {
           disableTypography
           primary={item.label}
           title={item.label}
-          style={item.style}
+          // style={item.style}
+          // secondary={props.renderItemContent?.(item, args)}
         />
+        {
+          props.renderItemContent?.(item, args)
+        }
         {
           props.showSelectOnly && (
             <Button
@@ -215,6 +219,7 @@ UiSelectList.propTypes = {
   labelProperty: PropTypes.string,
   maxHeight: PropTypes.string,
   onChange: PropTypes.func,
+  renderItemContent: PropTypes.func,
   selectAllLabel: PropTypes.string,
   showSelectOnly: PropTypes.bool,
   style: PropTypes.object,

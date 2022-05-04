@@ -8,14 +8,14 @@ function slicerColoursMapSelector(state, slicerId) {
   if (dataColumn) {
     const slicerState = slicerStateSelector(state, slicerId);
 
-    if (slicerState.colourMode === "data") {
+    if (slicerState.displayMode === "coloured-by-data") {
       return colourMapForFieldSelector(
         state,
         dataColumn.name,
       );
     }
 
-    if (slicerState.colourMode === "group" && slicerState.groupField) {
+    if (slicerState.displayMode === "coloured-by-group" && slicerState.groupField) {
       return colourMapForFieldSelector(
         state,
         slicerState.groupField,

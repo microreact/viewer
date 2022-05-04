@@ -21,7 +21,6 @@ function mapStateToProps(state, { slicerId }) {
   const groupColumn = dataColumnByFieldSelector(state, slicerState.groupField);
   return {
     allRows: rowsSelector(state),
-    colourMode: slicerState.colourMode,
     coloursMap: slicerColoursMapSelector(state, slicerId),
     columnFilter: dataColumn && dataFieldFilterSelector(state, dataColumn?.name),
     dataColumn,

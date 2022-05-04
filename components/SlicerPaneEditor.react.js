@@ -71,25 +71,25 @@ class SlicerPaneEditor extends React.PureComponent {
           options={
             [
               {
-                label: "Text only",
-                value: "text",
+                label: "Do not show bars",
+                value: "off",
               },
               {
-                label: "Show bars",
-                value: "frequencies",
+                label: "Show bars without colours",
+                value: "uncoloured",
               },
               {
-                label: "Show frequencies",
-                value: "bars",
+                label: "Colour bars by data column",
+                value: "coloured-by-data",
               },
               {
-                label: "Show bars and frequencies",
-                value: "frequencies-bars",
+                label: "Colour bars by group column",
+                value: "coloured-by-group",
               },
             ]
           }
           size="small"
-          value={props.displayMode}
+          value={props.displayMode ?? "off"}
           variant="outlined"
         />
 
@@ -117,7 +117,7 @@ class SlicerPaneEditor extends React.PureComponent {
           variant="outlined"
         />
 
-        <UiSelect
+        {/* <UiSelect
           label="Colours"
           onChange={(value) => props.onSlicerPropChange("colourMode", value)}
           options={
@@ -139,7 +139,7 @@ class SlicerPaneEditor extends React.PureComponent {
           size="small"
           value={props.colourMode ?? "off"}
           variant="outlined"
-        />
+        /> */}
 
       </React.Fragment>
     );
@@ -150,7 +150,6 @@ class SlicerPaneEditor extends React.PureComponent {
 SlicerPaneEditor.displayName = "SlicerPaneEditor";
 
 SlicerPaneEditor.propTypes = {
-  colourMode: PropTypes.string,
   dataColumn: DataColumn,
   dataColumns: PropTypes.arrayOf(DataColumn).isRequired,
   dataRows: PropTypes.array.isRequired,

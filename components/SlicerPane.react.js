@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { createSelector } from "reselect";
+import { scaleLog } from "d3-scale";
 
 import "../css/slicer-pane.css";
 
@@ -99,38 +100,68 @@ class SlicerPane extends React.PureComponent {
   itemsSelector = createSelector(
     (props) => this.orderedValuesSelector(props),
     (props) => this.groupsDataSelector(props),
-    (props) => props.colourMode,
+    (props) => props.displayMode,
     (props) => props.coloursMap,
-    (props) => props.dataColumn,
-    (props) => props.groupColumn,
     (
       values,
       groups,
-      colourMode,
+      displayMode,
       coloursMap,
-      dataColumn,
-      groupColumn,
     ) => {
-      const items = [];
+      let maxCount = 0;
+      let minCount = Number.MAX_SAFE_INTEGER;
+      for (const { count } of values) {
+        if (count < minCount) {
+          minCount = count;
+        }
+        if (count > maxCount) {
+          maxCount = count;
+        }
+      }
 
+      const scale = (
+        scaleLog()
+          .domain([ minCount, maxCount ])
+          .range([ 100 * minCount / maxCount, 100 ])
+      );
+
+      const items = [];
       for (const { value, label, count } of values) {
-        const style = (
-          (colourMode === "data") ? { color: coloursMap.get(value) } :
-            (colourMode === "group") ? { color: coloursMap.get(groups[value]) } :
-              undefined
-        );
+        const style = { width: `${scale(count)}%` };
+        if (displayMode === "coloured-by-data") {
+          style.backgroundColor = coloursMap.get(value);
+        }
+        else if (displayMode === "coloured-by-group") {
+          style.backgroundColor = coloursMap.get(groups[value]);
+        }
+
         items.push({
           style,
           count,
           group: groups[value],
-          label: `${label} (${count})`,
+          label,
+          // title: `${label} (${count})`,
           value,
         });
       }
-console.log(items)
+
       return items;
     }
   );
+
+  renderItemContent = (item) => {
+    return (
+      <div
+        className="mr-slicer-content"
+        title={item.count}
+      >
+        <div
+          className="mr-slicer-bar"
+          style={item.style}
+        />
+      </div>
+    );
+  }
 
   renderSlicer() {
     const { props } = this;
@@ -151,6 +182,7 @@ console.log(items)
             );
           }
         }
+        renderItemContent={props.displayMode !== "off" ? this.renderItemContent : undefined}
         showSelectOnly
         style={
           {
@@ -189,6 +221,7 @@ SlicerPane.propTypes = {
   coloursMap: PropTypes.instanceOf(Map),
   columnFilter: DataFilter,
   dataColumn: DataColumn.isRequired,
+  displayMode: PropTypes.string,
   groupColumn: DataColumn,
   height: PropTypes.number.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
