@@ -113,7 +113,7 @@ class SlicerPaneEditor extends React.PureComponent {
             ]
           }
           size="small"
-          value={props.sortOrder}
+          value={props.sortOrder ?? "alphabetical"}
           variant="outlined"
         />
 

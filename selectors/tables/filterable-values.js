@@ -7,11 +7,6 @@ import filteredFieldIdsSelector from "../filters/filtered-field-ids";
 import rowsSelector from "../datasets/rows";
 import filteredNonDataIdsSelector from "../filters/filtered-non-data-ids";
 
-const blankItem = {
-  name: undefined,
-  label: "(blank)",
-};
-
 const filteredDataIdsSelector = createCombinedStateSelector(
   (state, field) => state.filters.dataFilters.map((x) => x.field).filter((x) => x !== field),
   filteredFieldIdsSelector,
@@ -35,36 +30,42 @@ const filterableValuesSelector = createKeyedStateSelector(
   ) => {
     const dataColumn = fieldsMap.get(field);
 
-    const uniqueValues = new Set();
-
-    let hasBlanks = false;
+    const countByValue = new Map();
+    let blankCount = 0;
 
     for (const row of rows) {
       const value = row[dataColumn.name];
-      if (value === "" || value === null || value === undefined) {
-        hasBlanks = true;
-      }
-      else if (
-        !uniqueValues.has(value.valueOf())
-        &&
+      if (
         (!filteredNonDataIds || filteredNonDataIds.has(row[0]))
         &&
         (!filteredDataIds || filteredDataIds.has(row[0]))
       ) {
-        uniqueValues.add(value.valueOf());
+        if (value === "" || value === null || value === undefined) {
+          blankCount += 1;
+        }
+        else {
+          countByValue.set(
+            value.valueOf(),
+            (countByValue.get(value.valueOf()) ?? 0) + 1,
+          );
+        }
       }
     }
 
     const items = [];
 
-    if (hasBlanks) {
-      items.push(blankItem);
+    if (blankCount > 0) {
+      items.push({
+        value: undefined,
+        count: blankCount,
+        label: "(blank)",
+      });
     }
 
-    for (const value of Array.from(uniqueValues).sort()) {
+    for (const value of Array.from(countByValue.keys()).sort()) {
       items.push({
-        // TODO: rename name to value
-        name: value,
+        value,
+        count: countByValue.get(value),
         label: toText(
           dataColumn.dataType,
           value,
