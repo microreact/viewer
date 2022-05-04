@@ -89,7 +89,7 @@ class SlicerPaneEditor extends React.PureComponent {
             ]
           }
           size="small"
-          value={props.displayMode ?? "off"}
+          value={props.displayMode}
           variant="outlined"
         />
 
@@ -113,7 +113,7 @@ class SlicerPaneEditor extends React.PureComponent {
             ]
           }
           size="small"
-          value={props.sortOrder ?? "alphabetical"}
+          value={props.sortOrder}
           variant="outlined"
         />
 

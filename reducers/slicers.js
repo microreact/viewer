@@ -15,6 +15,8 @@ export const initialState = {
   includedValues: "all",
   topNValues: 10,
   chartMainAxis: "y",
+  displayMode: "off",
+  sortOrder: "alphabetical",
 };
 
 const queryPropMap = {
