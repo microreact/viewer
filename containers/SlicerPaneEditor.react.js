@@ -7,13 +7,13 @@ import dataColumnsSelector from "../selectors/datasets/data-columns";
 
 import Component from "../components/SlicerPaneEditor.react";
 import rowsSelector from "../selectors/datasets/rows";
-import dataColumnsByFieldMapSelector from "../selectors/datasets/data-columns-by-field-map";
+import dataColumnSelector from "../selectors/slicers/data-column";
+import dataColumnByFieldSelector from "../selectors/datasets/data-column-by-field";
 
 function mapStateToProps(state, { slicerId }) {
   const slicerState = slicerStateSelector(state, slicerId);
-  const fieldsMap = dataColumnsByFieldMapSelector(state);
-  const dataColumn = fieldsMap.get(slicerState.dataField || slicerState.field);
-  const groupColumn = fieldsMap.get(slicerState.groupField);
+  const dataColumn = dataColumnSelector(state, slicerId);
+  const groupColumn = dataColumnByFieldSelector(state, slicerState.groupField);
   return {
     colourMode: slicerState.colourMode,
     dataColumn,

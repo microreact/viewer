@@ -69,6 +69,7 @@ class UiSelectList extends React.PureComponent {
           disableTypography
           primary={item.label}
           title={item.label}
+          style={item.style}
         />
         {
           props.showSelectOnly && (
