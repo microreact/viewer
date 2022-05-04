@@ -42,46 +42,7 @@ class SlicerPane extends React.PureComponent {
     }
   );
 
-  // valuesSelector = createSelector(
-  //   (props) => props.allRows,
-  //   (props) => props.dataColumn,
-  //   (props) => props.groupColumn,
-  //   (
-  //     allRows,
-  //     dataColumn,
-  //     groupColumn,
-  //   ) => {
-  //     if (dataColumn) {
-  //       const items = [];
-  //       const groups = {};
-  //       const counts = {};
-  //       if (groupColumn) {
-  //         for (const row of allRows) {
-  //           counts[row[dataColumn.name]] = (counts[row[dataColumn.name]] ?? 0) + 1;
-  //           groups[row[dataColumn.name]] = row[groupColumn.name];
-  //         }
-  //       }
-  //       else {
-  //         for (const row of allRows) {
-  //           counts[row[dataColumn.name]] = (counts[row[dataColumn.name]] ?? 0) + 1;
-  //         }
-  //       }
-  //       for (const value of Object.keys(counts)) {
-  //         items.push({
-  //           value,
-  //           count: counts[value],
-  //           group: groups[value],
-  //         });
-  //       }
-  //       return items;
-  //     }
-  //     else {
-  //       return emptyArray;
-  //     }
-  //   }
-  // );
-
-  orderedValuesSelector = createSelector(
+  valuesSelector = createSelector(
     (props) => props.uniqueValues,
     (props) => props.sortOrder ?? "alphabetical",
     (
@@ -98,16 +59,38 @@ class SlicerPane extends React.PureComponent {
   );
 
   itemsSelector = createSelector(
-    (props) => this.orderedValuesSelector(props),
+    (props) => this.valuesSelector(props),
     (props) => this.groupsDataSelector(props),
-    (props) => props.displayMode,
-    (props) => props.coloursMap,
     (
       values,
       groups,
-      displayMode,
-      coloursMap,
     ) => {
+      const items = [];
+
+      for (const { value, label, count } of values) {
+        items.push({
+          count,
+          group: groups[value],
+          label,
+          value,
+        });
+      }
+
+      return items;
+    }
+  );
+
+  scaleSelector = createSelector(
+    (props) => props.uniqueValues,
+    (props) => props.displayMode,
+    (
+      values,
+      displayMode,
+    ) => {
+      if (displayMode === "off") {
+        return undefined;
+      }
+
       let maxCount = 0;
       let minCount = Number.MAX_SAFE_INTEGER;
       for (const { count } of values) {
@@ -119,37 +102,31 @@ class SlicerPane extends React.PureComponent {
         }
       }
 
-      const scale = (
+      return (
         scaleLog()
           .domain([ minCount, maxCount ])
           .range([ 100 * minCount / maxCount, 100 ])
       );
-
-      const items = [];
-      for (const { value, label, count } of values) {
-        const style = { width: `${scale(count)}%` };
-        if (displayMode === "coloured-by-data") {
-          style.backgroundColor = coloursMap.get(value);
-        }
-        else if (displayMode === "coloured-by-group") {
-          style.backgroundColor = coloursMap.get(groups[value]);
-        }
-
-        items.push({
-          style,
-          count,
-          group: groups[value],
-          label,
-          // title: `${label} (${count})`,
-          value,
-        });
-      }
-
-      return items;
     }
   );
 
   renderItemContent = (item) => {
+    const { props } = this;
+
+    if (props.displayMode === "off") {
+      return null;
+    }
+
+    const scale = this.scaleSelector(props);
+    const style = { width: `${scale(item.count)}%` };
+
+    if (props.displayMode === "coloured-by-data") {
+      style.backgroundColor = props.coloursMap.get(item.value);
+    }
+    else if (props.displayMode === "coloured-by-group") {
+      style.backgroundColor = props.coloursMap.get(item.group);
+    }
+
     return (
       <div
         className="mr-slicer-content"
@@ -157,7 +134,7 @@ class SlicerPane extends React.PureComponent {
       >
         <div
           className="mr-slicer-bar"
-          style={item.style}
+          style={style}
         />
       </div>
     );
