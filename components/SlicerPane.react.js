@@ -162,7 +162,7 @@ class SlicerPane extends React.PureComponent {
             );
           }
         }
-        renderItemContent={props.displayMode !== "off" ? this.renderItemContent : undefined}
+        renderItemContent={(props.displayMode !== "off") ? this.renderItemContent : undefined}
         showSelectOnly
         style={
           {
