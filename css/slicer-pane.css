@@ -5,27 +5,21 @@
   overflow: hidden;
 }
 
-.mr-slicer .vega-embed.has-actions {
-  padding-right: 0;
-}
-
-.mr-slicer .vega-embed details {
-  display: none;
-}
-
 .mr-slicer .mr-ui-select-list {
-  padding: 24px 0 0 8px;
+  height: calc(100% - 24px);
+  width: calc(100% - 8px);
+  margin-top: 24px;
+  margin-left: 8px;
 }
 
 .mr-slicer .mr-ui-select-list .MuiListItemText-root {
   position: relative;
-  margin-right: 8px;
 }
 .mr-slicer .mr-ui-select-list .mr-slicer-content {
   position: absolute;
   bottom: 0;
   left: 30px;
-  right: 16px;
+  right: 10px;
   height: 2px;
 }
 .mr-slicer .mr-ui-select-list .mr-slicer-bar {
