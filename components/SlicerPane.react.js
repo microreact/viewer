@@ -164,12 +164,7 @@ class SlicerPane extends React.PureComponent {
         }
         renderItemContent={(props.displayMode !== "off") ? this.renderItemContent : undefined}
         showSelectOnly
-        style={
-          {
-            height: 40 + props.uniqueValues.length * 28,
-            maxHeight: props.height ?? "max(144px, calc(60vh - 256px))",
-          }
-        }
+        style={emptyObject}
         value={selectedValues}
         valueProperty="value"
       />
