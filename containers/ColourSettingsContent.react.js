@@ -16,7 +16,6 @@ function mapStateToProps(state, { field }) {
     colourSettings: state.styles.colourSettings[field],
     dataColumn: dataColumnByFieldSelector(state, field),
     dataColumns: dataColumnsSelector(state),
-    // numberOfUniqueValues: uniqueValuesSelector(state, field).length,
   };
 }
 
