@@ -5,7 +5,7 @@ import Slider from "@material-ui/core/Slider";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
 
-import Animation from "./Animation.react";
+import UiAnimation from "./UiAnimation.react";
 
 const UiToggleSlider = React.memo(
   (props) => {
@@ -39,14 +39,14 @@ const UiToggleSlider = React.memo(
           }
           labelPlacement="start"
         />
-        <Animation in={props.checked}>
+        <UiAnimation in={props.checked}>
           <Slider
             max={props.max}
             min={props.min}
             onChange={(event, value) => props.onChange(value, event)}
             value={props.value}
           />
-        </Animation>
+        </UiAnimation>
       </div>
     );
   }

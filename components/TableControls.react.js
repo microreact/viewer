@@ -3,7 +3,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import PropTypes from "prop-types";
 import React from "react";
 
-import Animation from "./Animation.react";
+import UiAnimation from "./UiAnimation.react";
 import UiControlsButton from "./UiControlsButton.react";
 import UiControlsMenu from "./UiControlsMenu.react";
 import UiDropdownMenu from "./UiDropdownMenu.react";
@@ -65,7 +65,7 @@ const TableColumns = React.memo(
         onClick={() => props.onControlsChange(!props.controls)}
       />
 
-      <Animation in={props.controls}>
+      <UiAnimation in={props.controls}>
 
         {/* <ToggleSelectionOnlyButton
           active={props.showSelection}
@@ -94,7 +94,7 @@ const TableColumns = React.memo(
             value={props.visibleFields}
           />
         </UiControlsMenu>
-      </Animation>
+      </UiAnimation>
     </div>
   )
 );

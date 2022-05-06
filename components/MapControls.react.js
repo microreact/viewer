@@ -9,7 +9,7 @@ import "../css/map-controls.css";
 
 import { DataColumn, StylePalette } from "../utils/prop-types";
 
-import Animation from "./Animation.react";
+import UiAnimation from "./UiAnimation.react";
 import DataColumnValuesCombobox from "../containers/DataColumnValuesCombobox.react";
 import LassoButton from "./LassoButton.react";
 import UiCombobox from "./UiCombobox.react";
@@ -89,7 +89,7 @@ const MapControls = React.memo(
           onClick={() => props.onControlsChange(!props.controls)}
         />
 
-        <Animation in={props.controls}>
+        <UiAnimation in={props.controls}>
 
           <LassoButton
             active={props.lasso}
@@ -337,7 +337,7 @@ const MapControls = React.memo(
             }
 
           </UiControlsMenu>
-        </Animation>
+        </UiAnimation>
       </div>
     );
   }
