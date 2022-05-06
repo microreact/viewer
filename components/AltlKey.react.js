@@ -1,8 +1,9 @@
 import React from "react";
+import { isMac } from "../utils/browser";
 
 const AltKey = React.memo(() => (
   <kbd title="Shift key on PC, or Alt key on Mac.">
-    { (navigator.platform.toUpperCase().indexOf("MAC") >= 0) ? "Alt" : "Shift" }
+    { isMac() ? "Alt" : "Shift" }
   </kbd>
 ));
 
