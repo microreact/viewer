@@ -3,7 +3,6 @@ import clsx from "clsx";
 import PropTypes from "prop-types";
 
 import Paper from "@material-ui/core/Paper";
-import Popper from "@material-ui/core/Popper";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Checkbox from "@material-ui/core/Checkbox";
