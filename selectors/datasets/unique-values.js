@@ -5,7 +5,7 @@ import rowsSelector from "./rows";
 import dataColumnByFieldSelector from "./data-column-by-field";
 
 /**
- * Returns unique values of a field. Caches values by field name.
+ * Returns unique values of a data column. Caches values by column name.
  *
  * @param {Object} state - Current viewer state
  * @param {String} field - The column name to be queried.
