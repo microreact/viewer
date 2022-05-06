@@ -8,7 +8,7 @@ import { graphLabels } from "../utils/networks";
 
 import UiCombobox from "./UiCombobox.react";
 import FileEditor from "../containers/FileEditor.react";
-import MiniTable from "./MiniTable.react";
+import MiniTable from "./UiMiniTable.react";
 
 class NetworkPaneEditor extends React.PureComponent {
 

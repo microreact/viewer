@@ -2,7 +2,6 @@ import { createSelector } from "reselect";
 import DonutSmallIcon from "@material-ui/icons/DonutSmall";
 import PropTypes from "prop-types";
 import React from "react";
-import Typography from "@material-ui/core/Typography";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import { Vega } from "react-vega";
 

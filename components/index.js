@@ -48,4 +48,4 @@ export { default as UiToggleSwitch } from "./UiToggleSwitch.react";
 
 export { default as UiZoomControls } from "./ZoomControls.react";
 
-export { default as UiSvgIcon } from "./MdiIcon.react";
+export { default as UiSvgIcon } from "./UiSvgIcon.react";

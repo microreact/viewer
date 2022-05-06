@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SvgIcon from "@material-ui/core/SvgIcon";
 
-const MdiIcon = React.memo(
+const UiSvgIcon = React.memo(
   ({ children, ...rest }) => (
     <SvgIcon {...rest}>
       <path d={children} />
@@ -10,10 +10,10 @@ const MdiIcon = React.memo(
   ),
 );
 
-MdiIcon.propTypes = {
+UiSvgIcon.propTypes = {
   children: PropTypes.node,
 };
 
-MdiIcon.displayName = "MdiIcon";
+UiSvgIcon.displayName = "UiSvgIcon";
 
-export default MdiIcon;
+export default UiSvgIcon;
