@@ -6,6 +6,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import clsx from "clsx";
+
 import "../css/ui-select.css";
 
 function formatOptions(props) {
@@ -56,7 +58,12 @@ function UiSelect(props) {
       size={size}
       variant={variant}
       style={style}
-      className={props.disabled ? "mr-disabled" : undefined}
+      className={
+        clsx(
+          "mr-ui-select",
+          props.disabled ? "mr-disabled" : undefined,
+        )
+      }
     >
       <InputLabel>
         { props.label }
