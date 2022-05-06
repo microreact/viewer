@@ -7,7 +7,7 @@
 .mr-ui-slider label {
   min-height: 24px;
   margin-top: 8px;
-  /* margin-bottom: -8px; */
+  margin-bottom: -8px;
 }
 
 .mr-ui-slider .MuiSlider-root
