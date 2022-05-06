@@ -48,7 +48,6 @@ class UiControlsMenu extends React.PureComponent {
         className={
           classnames(
             "mr-controls-menu",
-            // { "mr-fixed-size": props.fixedSize },
             props.className
           )
         }
