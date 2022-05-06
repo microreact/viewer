@@ -166,10 +166,14 @@ const MainAxisMenu = React.forwardRef(
           value={props.axisField}
         />
 
-        <ChartDataTypeSelect
-          onChange={(value) => props.onAxisTypeChange(value)}
-          value={props.axisType}
-        />
+        {
+          (!props.hideAxisType) && (
+            <ChartDataTypeSelect
+              onChange={(value) => props.onAxisTypeChange(value)}
+              value={props.axisType}
+            />
+          )
+        }
 
         {
           (props.axisMaxBins !== undefined) && (
@@ -228,6 +232,7 @@ MainAxisMenu.propTypes = {
   axisType: PropTypes.string,
   children: PropTypes.node,
   fullDatasetColumns: PropTypes.arrayOf(DataColumn).isRequired,
+  hideAxisType: PropTypes.bool,
   onAxisFieldChange: PropTypes.func.isRequired,
   onAxisLabelAngleChange: PropTypes.func,
   onAxisLabelLimitChange: PropTypes.func,
@@ -523,12 +528,11 @@ export default class ChartControls extends React.PureComponent {
               <MainAxisMenu
                 axisField={props.facetField}
                 axisOrder={props.facetOrder}
-                axisType={props.facetType}
                 fullDatasetColumns={props.fullDatasetColumns}
+                hideAxisType
                 onAxisFieldChange={(field) => props.onFacetFieldChange(field)}
                 onAxisOrderChange={props.onFacetOrderChange}
                 onAxisReset={props.facetField && props.onFacetFieldChange}
-                onAxisTypeChange={props.onFacetTypeChange}
                 title="Facet"
               >
                 <UiSelect
@@ -717,7 +721,6 @@ ChartControls.propTypes = {
   facetGridColumns: PropTypes.number,
   facetGridRows: PropTypes.number,
   facetOrder: PropTypes.string,
-  facetType: PropTypes.string,
   fullDatasetColumns: PropTypes.arrayOf(DataColumn).isRequired,
   interpolateType: PropTypes.string.isRequired,
   mainAxisEncoding: PropTypes.oneOf([ "x", "y" ]),
@@ -729,7 +732,6 @@ ChartControls.propTypes = {
   onFacetGridColumnsChange: PropTypes.func.isRequired,
   onFacetGridRowsChange: PropTypes.func.isRequired,
   onFacetOrderChange: PropTypes.func.isRequired,
-  onFacetTypeChange: PropTypes.func.isRequired,
   onInterpolateChange: PropTypes.func.isRequired,
   onMainAxisFieldChange: PropTypes.func.isRequired,
   onSeriesFieldChange: PropTypes.func.isRequired,
