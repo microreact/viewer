@@ -1,7 +1,8 @@
 import React from "react";
+import { isMac } from "../utils/browser";
 
 export default (
   <kbd title="Ctrl key on PC, or Cmd key on Mac.">
-    { (navigator.platform.toUpperCase().indexOf("MAC") >= 0) ? "Cmd" : "Ctrl" }
+    { isMac() ? "Cmd" : "Ctrl" }
   </kbd>
 );
