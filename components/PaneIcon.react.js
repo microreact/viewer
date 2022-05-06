@@ -16,7 +16,7 @@ import {
 } from "@mdi/js";
 
 import RectangularTreeIcon from "./RectangularTreeIcon.react";
-import MdiIcon from "./MdiIcon.react";
+import UiSvgIcon from "./UiSvgIcon.react";
 import FilterAltIcon from "./FilterAltIcon.react";
 
 const PaneIcon = React.memo(
@@ -29,7 +29,7 @@ const PaneIcon = React.memo(
         return (<FilterAltIcon />);
 
       case "Filters":
-        return (<MdiIcon >{ mdiFilter }</MdiIcon>);
+        return (<UiSvgIcon >{ mdiFilter }</UiSvgIcon>);
 
       case "History":
         return (<UndoRoundedIcon />);
@@ -38,7 +38,7 @@ const PaneIcon = React.memo(
         return (<PublicTwoToneIcon />);
 
       case "Network":
-        return (<MdiIcon >{ mdiGraphql }</MdiIcon>);
+        return (<UiSvgIcon >{ mdiGraphql }</UiSvgIcon>);
 
       case "Note":
         return (<NoteTwoToneIcon />);

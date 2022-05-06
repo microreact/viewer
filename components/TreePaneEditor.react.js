@@ -7,7 +7,7 @@ import { fullSizeStyle } from "../constants";
 import { newickLabels } from "../utils/trees";
 
 import FileEditor from "../containers/FileEditor.react";
-import MiniTable from "./MiniTable.react";
+import MiniTable from "./UiMiniTable.react";
 import UiCombobox from "./UiCombobox.react";
 import UiToggleSwitch from "./UiToggleSwitch.react";
 

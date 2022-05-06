@@ -20,7 +20,7 @@ import "../css/table-column-controls.css";
 
 import { DataFilter, ReactRef, TableColumn } from "../utils/prop-types";
 
-import MdiIcon from "./MdiIcon.react";
+import UiSvgIcon from "./UiSvgIcon.react";
 import { triggerWindowResize, nextTick } from "../utils/browser";
 
 import DataColumnFilterByValues from "../containers/DataColumnFilterByValues.react";
@@ -158,7 +158,7 @@ class TableHeaderMenuContent extends React.PureComponent {
                   size="small"
                   title="Expand this column"
                 >
-                  <MdiIcon >{ mdiArrowExpandHorizontal }</MdiIcon>
+                  <UiSvgIcon >{ mdiArrowExpandHorizontal }</UiSvgIcon>
                 </IconButton>
               </Box>
 
@@ -210,19 +210,19 @@ class TableHeaderMenuContent extends React.PureComponent {
                     value="text"
                     title="Change data type to Text"
                   >
-                    <MdiIcon fontSize="small" >{ mdiAlphabetical }</MdiIcon>
+                    <UiSvgIcon fontSize="small" >{ mdiAlphabetical }</UiSvgIcon>
                   </ToggleButton>
                   <ToggleButton
                     value="number"
                     title="Change data type to Number"
                   >
-                    <MdiIcon fontSize="small" >{ mdiNumeric }</MdiIcon>
+                    <UiSvgIcon fontSize="small" >{ mdiNumeric }</UiSvgIcon>
                   </ToggleButton>
                   <ToggleButton
                     value="date"
                     title="Change data type to Date"
                   >
-                    <MdiIcon fontSize="small" >{ mdiCalendarClock }</MdiIcon>
+                    <UiSvgIcon fontSize="small" >{ mdiCalendarClock }</UiSvgIcon>
                   </ToggleButton>
                 </ToggleButtonGroup>
               </Box>

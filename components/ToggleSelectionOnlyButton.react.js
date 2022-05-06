@@ -3,7 +3,7 @@ import CheckBoxRoundedIcon from "@material-ui/icons/CheckBoxRounded";
 import PropTypes from "prop-types";
 import React from "react";
 
-import MdiIcon from "./MdiIcon.react";
+import UiSvgIcon from "./UiSvgIcon.react";
 import UiControlsButton from "./UiControlsButton.react";
 
 const ToggleSelectionOnlyButton = React.memo(
@@ -19,7 +19,7 @@ const ToggleSelectionOnlyButton = React.memo(
           ?
           <CheckBoxRoundedIcon />
           :
-          <MdiIcon fontSize="small" >{ mdiFilter }</MdiIcon>
+          <UiSvgIcon fontSize="small" >{ mdiFilter }</UiSvgIcon>
       }
     </UiControlsButton>
   ),

@@ -8,7 +8,7 @@ import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import { mdiLinkVariantPlus } from "@mdi/js";
 
 import "../css/plus-actions.css";
-import MdiIcon from "./MdiIcon.react";
+import UiSvgIcon from "./UiSvgIcon.react";
 
 class PlusFloatingActingButton extends React.PureComponent {
 
@@ -49,7 +49,7 @@ class PlusFloatingActingButton extends React.PureComponent {
             onClick={this.props.onBrowseFiles}
           />
           <SpeedDialAction
-            icon={<MdiIcon>{ mdiLinkVariantPlus }</MdiIcon>}
+            icon={<UiSvgIcon>{ mdiLinkVariantPlus }</UiSvgIcon>}
             tooltipTitle="Add URLs"
             tooltipOpen
             onClick={this.props.onAddUrls}
