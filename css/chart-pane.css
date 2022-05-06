@@ -34,9 +34,7 @@
   color: red;
 }
 
-.mr-controls-menu.mr-chart-axis-menu {
-  padding-top: 16px;
-  padding-bottom: 16px;
+.mr-ui-popover-menu.mr-controls-menu.mr-chart-axis-menu {
   width: 320px;
   min-height: 32px;
 }
