@@ -35,8 +35,8 @@ const checkedIcon = <CheckBoxIcon fontSize="small" />;
 // }
 */
 function getOptionLabel(option) {
-  if (typeof option === "string") {
-    return option;
+  if (typeof option === "string" || typeof option === "number") {
+    return option.toString();
   }
   else {
     return option.label || option.name;
