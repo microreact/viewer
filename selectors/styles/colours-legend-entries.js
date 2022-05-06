@@ -1,9 +1,7 @@
-import { createSelector } from "reselect";
 import { sortComparator } from "../../utils/arrays";
 import { toText } from "../../utils/text";
 
 import dataColumnByFieldSelector from "../datasets/data-column-by-field";
-import uniqueValuesSelector from "../datasets/unique-values";
 import activeRowsWithStyleFieldsSelector from "../filters/active-rows-with-style-fields";
 import selectedRowsSelector from "../filters/selected-rows";
 import colourMapForFieldSelector from "./colour-map-for-field";
