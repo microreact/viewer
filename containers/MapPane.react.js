@@ -19,7 +19,7 @@ function mapStateToProps(state, { mapId }) {
   const mapState = state.maps[mapId];
   return {
     controls: mapState.controls,
-    hasLegend: hasMarkerSizeLegendSelector(state, mapId) || hasRegionColourLegendSelector(state, mapId),
+    // hasLegend: hasMarkerSizeLegendSelector(state, mapId) || hasRegionColourLegendSelector(state, mapId),
     mapboxApiAccessToken: mapState.mapboxApiAccessToken || configSelector(state).mapboxApiAccessToken,
     mapboxStyle: mapboxStyleSelector(state, mapId),
     markers: markersLayerDataSelector(state, mapId),

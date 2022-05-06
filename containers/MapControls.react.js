@@ -4,13 +4,13 @@ import { openPaneEditor } from "../actions/ui";
 
 import Component from "../components/MapControls.react";
 
-import regionsColourMethodTypeSelector from "../selectors/maps/regions-colour-method-type";
 import maxScaledMarkerRadiusSelector from "../selectors/maps/max-scaled-marker-size";
 import hasGeojsonDataSelector from "../selectors/maps/has-geojson-data";
 import colourPalettesSelector from "../selectors/styles/colour-palettes";
 import { connectToPresentState } from "../utils/state";
 import configSelector from "../selectors/config";
 import mapStyleTypeSelector from "../selectors/maps/style-type";
+import uniqueValuesSelector from "../selectors/datasets/unique-values";
 
 const mapStateToProps = (state, { mapId }) => {
   const mapState = state.maps[mapId];
@@ -18,7 +18,7 @@ const mapStateToProps = (state, { mapId }) => {
   return {
     colourPalettes: colourPalettesSelector(state),
     controls: mapState.controls,
-    dataFields: dataColumnsSelector(state),
+    allDataColumns: dataColumnsSelector(state),
     groupMarkersByRegion: mapState.groupMarkersByRegion,
     hasGeojsonData: hasGeojsonDataSelector(state, mapId),
     isReadOnly: configSelector(state).readOnly,
@@ -29,8 +29,9 @@ const mapStateToProps = (state, { mapId }) => {
     minNodeSize: mapState.minNodeSize,
     nodeSize: mapState.nodeSize,
     regionsColourField: mapState.regionsColourField,
+    regionsColourValues: mapState.regionsColourValues,
+    regionsColourUniqueValues: (mapState.regionsColourMethod === "value" && mapState.regionsColourField) ? uniqueValuesSelector(state, mapState.regionsColourField) : undefined,
     regionsColourMethod: mapState.regionsColourMethod,
-    regionsColourMethodType: regionsColourMethodTypeSelector(state, mapId),
     regionsColourOpacity: mapState.regionsColourOpacity,
     regionsColourPalette: mapState.regionsColourPalette,
     scaleMarkers: mapState.scaleMarkers,
@@ -57,6 +58,7 @@ const mapDispatchToProps = (dispatch, { mapId }) => ({
   onRegionsColourMethodChange: (value) => dispatch(update(mapId, "regionsColourMethod", value)),
   onRegionsColourOpacityChange: (value) => dispatch(update(mapId, "regionsColourOpacity", value)),
   onRegionsColourPaletteChange: (value) => dispatch(update(mapId, "regionsColourPalette", value)),
+  onRegionsColourValuesChange: (value) => dispatch(update(mapId, "regionsColourValues", value)),
   onScaleMarkersChange: (value) => dispatch(update(mapId, "scaleMarkers", value)),
   onScaleTypeChange: (value) => dispatch(update(mapId, "scaleType", value)),
   onShowMarkersChange: (value) => dispatch(update(mapId, "showMarkers", value)),

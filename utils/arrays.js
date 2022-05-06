@@ -160,10 +160,6 @@ export function uniqueElements(array, valueOf, sort = false) {
   }
 }
 
-export function uniqueElementsCount(array, valueOf) {
-  return uniqueElements(array, valueOf).length;
-}
-
 export function remove(array, predicate, clone = true) {
   const index = array.findIndex(predicate);
 
