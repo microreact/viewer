@@ -7,19 +7,20 @@ import {
   median,
   min,
   sum,
+  count,
 } from "d3-array";
 
 import {
-  firstElement,
-  lastElement,
   mode,
-  uniqueElementsCount,
+  uniqueElements,
 } from "../../utils/arrays";
 import { createKeyedStateSelector } from "../../utils/state";
 
 import rowsByRegionSelector from "./rows-by-region";
-import dataColumnsByFieldMapSelector from "../datasets/data-columns-by-field-map";
-import colourPalettesSelector from "../styles/colour-palettes";
+import colourPaletteByNameSelector from "../styles/colour-palette-by-name";
+import mapStateSelector from "./map-state";
+import dataColumnByFieldSelector from "../datasets/data-column-by-field";
+import { emptyArray } from "../../constants";
 
 const computeColourMethods = {
   max,
@@ -28,64 +29,120 @@ const computeColourMethods = {
   min,
   mode,
   sum,
-  first: firstElement,
-  last: lastElement,
-  unique: uniqueElementsCount,
+  unique: (array, valueOf) => uniqueElements(array, valueOf).length,
+  value: (array, valueOf, value) => count(array, (x) => (valueOf(x) === value ? 1 : undefined)),
+};
+
+// const regionsColourColumnSelector = (state, mapId) => {
+//   const mapState = mapStateSelector(state, mapId);
+//   return dataColumnByFieldSelector(state, mapState.regionsColourField);
+// };
+
+const regionsColourPaletteSelector = (state, mapId) => {
+  const mapState = mapStateSelector(state, mapId);
+  return colourPaletteByNameSelector(state, mapState.regionsColourPalette);
 };
 
 const regionValueFunctionSelector = createKeyedStateSelector(
-  (state, mapId) => dataColumnsByFieldMapSelector(state).get(state.maps[mapId].regionsColourField),
   (state, mapId) => state.maps[mapId].regionsColourMethod,
+  (state, mapId) => state.maps[mapId].regionsColourField,
+  (state, mapId) => state.maps[mapId].regionsColourValues ?? emptyArray,
   (
-    regionsColourDataField,
     regionsColourMethod,
+    regionsColourField,
+    regionsColourValues,
   ) => {
-    if (regionsColourDataField) {
-      const colourMethod = regionsColourMethod || (regionsColourDataField.isNumeric ? "sum" : "mode");
-      return (rows) => {
-        return computeColourMethods[colourMethod](
-          rows,
-          (x) => x[regionsColourDataField.name],
-        );
-      };
+    if (regionsColourField || regionsColourMethod) {
+      switch (regionsColourMethod) {
+        case "max":
+          return (
+            (rows) => max(
+              rows,
+              (x) => x[regionsColourField],
+            )
+          );
+        case "mean":
+          return (
+            (rows) => mean(
+              rows,
+              (x) => x[regionsColourField],
+            )
+          );
+        case "median":
+          return (
+            (rows) => median(
+              rows,
+              (x) => x[regionsColourField],
+            )
+          );
+        case "min":
+          return (
+            (rows) => min(
+              rows,
+              (x) => x[regionsColourField],
+            )
+          );
+        case "mode":
+          return (
+            (rows) => mode(
+              rows,
+              (x) => x[regionsColourField],
+            )
+          );
+        case "sum":
+          return (
+            (rows) => sum(
+              rows,
+              (x) => x[regionsColourField],
+            )
+          );
+        case "unique":
+          return (
+            (rows) => uniqueElements(
+              rows,
+              (x) => x[regionsColourField],
+            ).length
+          );
+        case "value":
+          return (
+            (rows) => count(
+              rows,
+              (x) => (regionsColourValues.includes(x[regionsColourField]) || undefined),
+            )
+          );
+      }
     }
-    else {
-      return (rows) => {
-        return sum(
-          rows,
-          (x) => x["--mr-scalar"] ?? 1,
-        );
-      };
-    }
+
+    return (
+      (rows) => sum(
+        rows,
+        (x) => x["--mr-scalar"] ?? 1,
+      )
+    );
   },
 );
 
 const regionColoursMapSelector = createKeyedStateSelector(
   (state, mapId) => rowsByRegionSelector(state, mapId),
-  (state, mapId) => state.maps[mapId].regionsColourPalette,
   (state, mapId) => regionValueFunctionSelector(state, mapId),
-  (state) => colourPalettesSelector(state),
+  (state, mapId) => regionsColourPaletteSelector(state, mapId),
   (
     rowsByRegion,
-    regionsColourPaletteName,
     regionValueFunction,
-    colourPalettes,
+    colourPalette,
   ) => {
     const domainValues = [];
-
     const coloursByRegion = {};
 
-    for (const regionId of Object.keys(rowsByRegion)) {
-      const regionRows = rowsByRegion[regionId];
-      if (regionRows.length) {
-        const value = regionValueFunction(regionRows);
-        coloursByRegion[regionId] = { value };
-        domainValues.push(value);
-      }
-    }
-
-    const colourPalette = colourPalettes.find((x) => x.name === regionsColourPaletteName);
     if (colourPalette) {
+      for (const [ regionId, regionRows ] of Object.entries(rowsByRegion)) {
+        if (regionRows.length) {
+          const value = regionValueFunction(regionRows);
+          coloursByRegion[regionId] = { value };
+          domainValues.push(value);
+        }
+      }
+
       const domainExtent = extent(domainValues);
 
       const colourGetter = scaleLinear()
@@ -95,8 +152,7 @@ const regionColoursMapSelector = createKeyedStateSelector(
           Array.isArray(colourPalette.entries[colourPalette.entries.length - 1]) ? colourPalette.entries[colourPalette.entries.length - 1][1] : colourPalette.entries[colourPalette.entries.length - 1],
         ]);
 
-      for (const regionId of Object.keys(coloursByRegion)) {
-        const regionEntry = coloursByRegion[regionId];
+      for (const regionEntry of Object.values(coloursByRegion)) {
         const colour = colourGetter(regionEntry.value);
         regionEntry.colour = colour;
       }

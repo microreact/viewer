@@ -21,6 +21,7 @@ const initialState = {
   nodeSize: 14,
   path: null,
   regionsColourField: null,
+  regionsColourMethod: "entries",
   regionsColourOpacity: 100,
   regionsColourPalette: "ColorBrewer YlOrBr-2",
   scaleMarkers: false,

@@ -6,19 +6,23 @@ import CropFreeOutlinedIcon from "@material-ui/icons/CropFreeOutlined";
 import Box from "@material-ui/core/Box";
 
 import "../css/map-controls.css";
-import Animation from "./Animation.react";
-import UiControlsMenu from "./UiControlsMenu.react";
-import LassoButton from "./LassoButton.react";
-import UiToggleSwitch from "./UiToggleSwitch.react";
-import UiToggleSlider from "./UiToggleSlider.react";
-import UiRadioList from "./UiRadioList.react";
-import GradientColourPalettePicker from "./GradientColourPalettePicker.react";
+
 import { DataColumn, StylePalette } from "../utils/prop-types";
-import UiTabs from "./UiTabs.react";
-import UiDropdownMenu from "./UiDropdownMenu.react";
+
+import Animation from "./Animation.react";
+import DataColumnValuesCombobox from "../containers/DataColumnValuesCombobox.react";
+import LassoButton from "./LassoButton.react";
+import UiCombobox from "./UiCombobox.react";
 import UiControlsButton from "./UiControlsButton.react";
+import UiControlsMenu from "./UiControlsMenu.react";
+import UiDropdownMenu from "./UiDropdownMenu.react";
+import UiRadioList from "./UiRadioList.react";
+import UiSelect from "./UiSelect.react";
 import UiSlider from "./UiSlider.react";
+import UiTabs from "./UiTabs.react";
 import UiToggleButtons from "./UiToggleButtons.react";
+import UiToggleSlider from "./UiToggleSlider.react";
+import UiToggleSwitch from "./UiToggleSwitch.react";
 
 const mapStyles = [
   { value: "microreact", label: "Microreact" },
@@ -31,16 +35,21 @@ const mapStyles = [
 ];
 
 const colourMethods = [
-  { value: "sum", label: "Sum", type: "continuous" },
-  { value: "mean", label: "Mean", type: "continuous" },
-  { value: "median", label: "Median", type: "continuous" },
-  { value: "mode", label: "Mode", type: "continuous" },
-  { value: "min", label: "Min", type: "continuous" },
-  { value: "max", label: "Max", type: "continuous" },
-  { value: "first", label: "First", type: "discrete" },
-  { value: "last", label: "Last", type: "discrete" },
-  { value: "mode", label: "Most frequent value", type: "discrete" },
-  { value: "unique", label: "Number of unique values", type: "discrete" },
+  { value: "entries", label: "Number of entries" },
+
+  { value: "unique", label: "Number of unique values in a column" },
+  { value: "value", label: "Number of specific values in a column" },
+
+  // { value: "first", label: "First", type: "discrete" },
+  // { value: "last", label: "Last", type: "discrete" },
+  // { value: "frequent", label: "Most frequent value in a column", type: "discrete" },
+
+  { value: "sum", label: "Sum of a numeric column", numeric: true },
+  { value: "mean", label: "Mean of a numeric column", numeric: true },
+  { value: "median", label: "Median of a numeric column", numeric: true },
+  { value: "mode", label: "Mode of a numeric column", numeric: true },
+  { value: "min", label: "Min of a numeric column", numeric: true },
+  { value: "max", label: "Max of a numeric column", numeric: true },
 ];
 
 const MapControls = React.memo(
@@ -69,7 +78,6 @@ const MapControls = React.memo(
           }
 
           <UiDropdownMenu.Item
-            key="png"
             onClick={props.onDownloadPNG}
           >
             Download as PNG image
@@ -113,41 +121,88 @@ const MapControls = React.memo(
           {
             props.hasGeojsonData && (
               <UiControlsMenu
-                className="map-regions"
+                className="mr-map-regions"
                 title="Regions"
               >
                 <UiToggleSwitch
-                  label="Show regions"
+                  label="Show GeoJSON features"
                   onChange={props.onShowRegionsChange}
                   value={props.showRegions}
                 />
 
                 {
                   props.showRegions && (
-                    <UiToggleSwitch
-                      label="Outline regions"
-                      onChange={props.onShowRegionOutlinesChange}
-                      value={props.showRegionOutlines}
-                    />
-                  )
-                }
+                    <React.Fragment>
 
-                {
-                  props.showRegions && (
-                    <UiSlider
-                      label="Fill colour opacity"
-                      max={100}
-                      min={0}
-                      onChange={(value) => props.onRegionsColourOpacityChange(value)}
-                      unit="%"
-                      value={props.regionsColourOpacity}
-                    />
-                  )
-                }
+                      <UiToggleSwitch
+                        label="Region outlines"
+                        onChange={props.onShowRegionOutlinesChange}
+                        value={props.showRegionOutlines}
+                      />
 
-                {
-                  props.showRegions && (
-                    <UiTabs>
+                      <UiSlider
+                        label="Region opacity"
+                        max={100}
+                        min={0}
+                        onChange={(value) => props.onRegionsColourOpacityChange(value)}
+                        unit="%"
+                        value={props.regionsColourOpacity}
+                      />
+
+                      {/* <UiToggleSlider
+                        checked={props.regionsColourOpacity > 0}
+                        onCheckedChange={(value) => props.onRegionsColourOpacityChange(value ? 100 : 0)}
+                        label="Fill regions"
+                        max={100}
+                        min={0}
+                        onChange={(value) => props.onRegionsColourOpacityChange(value)}
+                        unit="%"
+                        value={props.regionsColourOpacity}
+                      /> */}
+
+                      <UiSelect
+                        label="Colour method"
+                        onChange={props.onRegionsColourMethodChange}
+                        options={colourMethods}
+                        size="small"
+                        value={props.regionsColourMethod}
+                        variant="outlined"
+                      />
+
+                      {
+                        (props.regionsColourMethod && props.regionsColourMethod !== "entries")
+                        &&
+                        (
+                          <UiCombobox
+                            label="Data Column"
+                            onChange={(item) => props.onRegionsColourFieldChange(item.name)}
+                            options={
+                              colourMethods.find((x) => x.value === props.regionsColourMethod)?.numeric
+                                ?
+                                props.allDataColumns.filter((x) => x.isNumeric)
+                                :
+                                props.allDataColumns
+                            }
+                            value={props.regionsColourField}
+                          />
+                        )
+                      }
+
+                      {
+                        (props.regionsColourMethod === "value")
+                        &&
+                        (
+                          <DataColumnValuesCombobox
+                            multiple
+                            columnName={props.regionsColourField}
+                            label="Values to count"
+                            onChange={props.onRegionsColourValuesChange}
+                            value={props.regionsColourValues ?? []}
+                          />
+                        )
+                      }
+
+                    {/* <UiTabs>
                       <div label="Colour by">
                         <UiRadioList
                           items={props.dataFields}
@@ -181,7 +236,9 @@ const MapControls = React.memo(
                           />
                         </Box>
                       </UiTabs.TabPanel>
-                    </UiTabs>
+                    </UiTabs> */}
+
+                    </React.Fragment>
                   )
                 }
               </UiControlsMenu>
@@ -289,9 +346,9 @@ const MapControls = React.memo(
 MapControls.displayName = "MapControls";
 
 MapControls.propTypes = {
+  allDataColumns: PropTypes.arrayOf(DataColumn).isRequired,
   colourPalettes: PropTypes.arrayOf(StylePalette),
   controls: PropTypes.bool.isRequired,
-  dataFields: PropTypes.arrayOf(DataColumn).isRequired,
   groupMarkersByRegion: PropTypes.bool,
   hasGeojsonData: PropTypes.bool,
   isReadOnly: PropTypes.bool.isRequired,
@@ -325,10 +382,6 @@ MapControls.propTypes = {
   onTrackViewportChange: PropTypes.func.isRequired,
   regionsColourField: PropTypes.string,
   regionsColourMethod: PropTypes.oneOf(colourMethods.map((x) => x.value)),
-  regionsColourMethodType: PropTypes.oneOf([
-    "continuous",
-    "discrete",
-  ]),
   regionsColourOpacity: PropTypes.number,
   regionsColourPalette: PropTypes.string,
   scaleMarkers: PropTypes.bool.isRequired,
