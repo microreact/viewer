@@ -5,8 +5,13 @@ import React from "react";
 
 import "../css/map-legend.css";
 import { DataColumn } from "../utils/prop-types";
-import UiPopoverMenu from "./UiPopoverMenu.react";
-import UiSlider from "./UiSlider.react";
+
+function toNumber(value) {
+  if (value?.toFixed) {
+    return parseFloat(value.toFixed(4));
+  }
+  return value;
+}
 
 class MapLegend extends React.PureComponent {
 
@@ -91,7 +96,7 @@ class MapLegend extends React.PureComponent {
                                     />
                                   </svg>
                                 </td>
-                                <td>{ item.value }</td>
+                                <td>{ toNumber(item.value) }</td>
                                 {/* {
                                   (index === 0 || index === props.markerSizeLegendItems.length - 1)
                                     ?
@@ -181,14 +186,14 @@ class MapLegend extends React.PureComponent {
                           <td
                             style={{ verticalAlign: "top", textAlign: "left" }}
                           >
-                            &nbsp;{props.regionColourLegendItems[0]?.value}
+                            &nbsp;{toNumber(props.regionColourLegendItems[0]?.value)}
                           </td>
                         </tr>
                         <tr>
                           <td
                             style={{ verticalAlign: "bottom", textAlign: "left" }}
                           >
-                            &nbsp;{props.regionColourLegendItems[props.regionColourLegendItems.length - 1]?.value}
+                            &nbsp;{toNumber(props.regionColourLegendItems[props.regionColourLegendItems.length - 1]?.value)}
                           </td>
                         </tr>
                       </tbody>

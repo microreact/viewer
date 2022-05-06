@@ -10,7 +10,6 @@ import colourPalettesSelector from "../selectors/styles/colour-palettes";
 import { connectToPresentState } from "../utils/state";
 import configSelector from "../selectors/config";
 import mapStyleTypeSelector from "../selectors/maps/style-type";
-import uniqueValuesSelector from "../selectors/datasets/unique-values";
 
 const mapStateToProps = (state, { mapId }) => {
   const mapState = state.maps[mapId];
@@ -30,7 +29,6 @@ const mapStateToProps = (state, { mapId }) => {
     nodeSize: mapState.nodeSize,
     regionsColourField: mapState.regionsColourField,
     regionsColourValues: mapState.regionsColourValues,
-    regionsColourUniqueValues: (mapState.regionsColourMethod === "value" && mapState.regionsColourField) ? uniqueValuesSelector(state, mapState.regionsColourField) : undefined,
     regionsColourMethod: mapState.regionsColourMethod,
     regionsColourOpacity: mapState.regionsColourOpacity,
     regionsColourPalette: mapState.regionsColourPalette,
