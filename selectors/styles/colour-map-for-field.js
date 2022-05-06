@@ -9,12 +9,10 @@ import dataColumnByFieldSelector from "../datasets/data-column-by-field";
 import colourModeForFieldSelector from "./colour-mode-for-field";
 
 const discreteValueToColourMapSelector = createKeyedStateSelector(
-  (state, field) => dataColumnByFieldSelector(state, field),
   (state, field) => colourPaletteForFieldSelector(state, field),
   (state, field) => ((colourPaletteForFieldSelector(state, field)?.type !== "custom") ? uniqueValuesSelector(state, field) : undefined),
   (state) => state.styles.defaultColour,
   (
-    dataColumn,
     palette,
     uniqueFieldValues,
     defaultColour,
@@ -32,7 +30,6 @@ const discreteValueToColourMapSelector = createKeyedStateSelector(
     else {
       let index = 0;
       for (const rawValue of uniqueFieldValues) {
-        // console.log({rawValue})
         const value = rawValue?.valueOf();
         if ((value ?? undefined) !== undefined) {
           const colour = palette.entries[index % palette.entries.length];
