@@ -89,8 +89,8 @@ UiSelect.propTypes = {
 };
 
 UiSelect.defaultProps = {
-  variant: "outlined",
   size: "small",
+  variant: "outlined",
 };
 
 UiSelect.Item = MenuItem;
