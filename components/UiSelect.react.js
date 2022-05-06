@@ -6,6 +6,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
+import "../css/ui-select.css";
 
 function formatOptions(props) {
   if (props.children) {
