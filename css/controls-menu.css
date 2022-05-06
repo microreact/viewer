@@ -1,15 +1,16 @@
 /*#region Add a bit of space to the top on the menu to match Google Flights style */
 
-.mr-controls-menu
+.mr-controls-menu.mr-ui-popover-menu
 {
+  padding-top: 16px;
+  padding-bottom: 16px;
   margin-top: 8px;
-  /* padding: 8px; */
 }
 
 /*#endregion*/
 
 
-/*#region Reverse the order of chip contents to match Google Fonts menus */
+/*#region Reverse the order of chip contents to match Google Fonts menus (arrows after labels) */
 
 .mr-controls-menu-trigger.MuiChip-root
 {
@@ -70,6 +71,7 @@
 
 
 /*#region Style separators  */
+
 .mr-controls-menu hr
 {
   border-style: solid none none none;
@@ -112,6 +114,22 @@
 }
 .mr-controls-menu .MuiTabPanel-root {
   margin: 0;
+}
+
+/*#endregion*/
+
+
+/*#region  */
+
+.mr-controls-menu .mr-ui-popover-click-trap {
+  display: flex;
+  flex-direction: column;
+}
+
+.mr-controls-menu .mr-ui-select.MuiFormControl-root,
+.mr-controls-menu .mr-ui-combobox.MuiFormControl-root
+{
+  margin-top: 16px;
 }
 
 /*#endregion*/
