@@ -9,7 +9,7 @@ import { ChartAxisMode, ChartTypes, DataColumn } from "../utils/prop-types";
 import * as Downloads from "../utils/downloads";
 import * as Charts from "../utils/charts";
 
-import Animation from "./Animation.react";
+import UiAnimation from "./UiAnimation.react";
 import UiControlsButton from "./UiControlsButton.react";
 import UiControlsMenu from "./UiControlsMenu.react";
 import UiDropdownMenu from "./UiDropdownMenu.react";
@@ -485,7 +485,7 @@ export default class ChartControls extends React.PureComponent {
           active={props.controls}
           onClick={() => props.onControlsChange(!props.controls)}
         />
-        <Animation in={props.controls}>
+        <UiAnimation in={props.controls}>
 
           {
             (props.chartType === "custom") && (
@@ -706,7 +706,7 @@ export default class ChartControls extends React.PureComponent {
             }
           </UiControlsMenu>
 
-        </Animation>
+        </UiAnimation>
       </div>
     );
   }

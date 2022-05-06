@@ -4,7 +4,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import Divider from "@material-ui/core/Divider";
 
 import { TreeType } from "../utils/prop-types";
-import Animation from "./Animation.react";
+import UiAnimation from "./UiAnimation.react";
 import CircularTreeIcon from "./CircularTreeIcon.react";
 import DiagonalTreeIcon from "./DiagonalTreeIcon.react";
 import HierarchicalTreeIcon from "./HierarchicalTreeIcon.react";
@@ -88,7 +88,7 @@ const TreeControls = React.memo(
         onClick={() => props.onControlsChange(!props.controls)}
       />
 
-      <Animation in={props.controls}>
+      <UiAnimation in={props.controls}>
 
         <LassoButton
           active={props.lasso}
@@ -153,7 +153,7 @@ const TreeControls = React.memo(
           treeId={props.treeId}
         />
 
-      </Animation>
+      </UiAnimation>
     </div>
   ),
 );

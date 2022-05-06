@@ -14,7 +14,7 @@ import { createSelector } from "reselect";
 import { timeUnits, timeSpeeds } from "../constants";
 import { DataColumn } from "../utils/prop-types";
 
-import Animation from "./Animation.react";
+import UiAnimation from "./UiAnimation.react";
 import UiControlsMenu from "./UiControlsMenu.react";
 import UiRadioList from "./UiRadioList.react";
 import UiControlsButton from "./UiControlsButton.react";
@@ -203,7 +203,7 @@ export default class TimelineControls extends React.PureComponent {
           active={props.controls}
           onClick={() => props.onControlsChange(!props.controls)}
         />
-        <Animation in={props.controls}>
+        <UiAnimation in={props.controls}>
           <UiControlsButton
               onClick={
                 () => {
@@ -324,7 +324,7 @@ export default class TimelineControls extends React.PureComponent {
               )
             }
           </UiControlsMenu>
-        </Animation>
+        </UiAnimation>
       </div>
     );
   }

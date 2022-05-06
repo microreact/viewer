@@ -5,7 +5,7 @@ import Slider from "@material-ui/core/Slider";
 import MenuIcon from "@material-ui/icons/Menu";
 import Divider from "@material-ui/core/Divider";
 
-import Animation from "./Animation.react";
+import UiAnimation from "./UiAnimation.react";
 import UiControlsMenu from "./UiControlsMenu.react";
 import LassoButton from "./LassoButton.react";
 import UiControlsButton from "./UiControlsButton.react";
@@ -56,7 +56,7 @@ const NetworkControls = React.memo((props) => {
         onClick={() => props.onControlsChange(!props.controls)}
       />
 
-      <Animation in={props.controls}>
+      <UiAnimation in={props.controls}>
         <LassoButton
           active={props.lasso}
           onClick={() => props.onLassoChange(!props.lasso)}
@@ -188,7 +188,7 @@ const NetworkControls = React.memo((props) => {
         <NetworkEdgeLineStyles
           networkId={props.networkId}
         /> */}
-      </Animation>
+      </UiAnimation>
     </div>
   );
 });

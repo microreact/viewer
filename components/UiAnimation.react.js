@@ -42,7 +42,7 @@ const transitionStyles = {
 //   </Transition>
 // );
 
-const Animation = (props) => {
+const UiAnimation = (props) => {
   if (Array.isArray(props.children)) {
     return (
       <Transition
@@ -95,9 +95,9 @@ const Animation = (props) => {
   }
 };
 
-Animation.propTypes = {
+UiAnimation.propTypes = {
   children: PropTypes.node,
   in: PropTypes.bool,
 };
 
-export default Animation;
+export default UiAnimation;
