@@ -101,6 +101,7 @@ const defaultSpecSelector = createKeyedStateSelector(
   (state, chartId) => seriesScaleSelector(state, chartId),
 
   (state, chartId) => chartStateSelector(state, chartId).facetField,
+  (state, chartId) => chartStateSelector(state, chartId).facetOrder,
   (state, chartId) => chartStateSelector(state, chartId).facetGridColumns,
   (
     chartType,
@@ -130,6 +131,7 @@ const defaultSpecSelector = createKeyedStateSelector(
     seriesScale,
 
     facetField,
+    facetOrder,
     facetGridColumns,
   ) => {
     const aggregateTransform = {
@@ -388,6 +390,7 @@ const defaultSpecSelector = createKeyedStateSelector(
         field: facetField,
         type: "nominal",
         columns: facetGridColumns,
+        sort: facetOrder,
       };
     }
     //#endregion
