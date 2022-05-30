@@ -186,13 +186,13 @@ export async function loadFile(input, onProgress) {
         loadedFile.blob = input.blob || input;
         if (loadedFile.blob && typeof loadedFile.blob === "string") {
           if (/^data:.*\/.*;base64,/i.test(loadedFile.blob)) {
-            loadedFile.blob = base64ToBlob(loadedFile.blob);
+            loadedFile.blob = await base64ToBlob(loadedFile.blob);
           }
           else {
             loadedFile.blob = new Blob([ loadedFile.blob ], { type: input.format });
           }
         }
-        loadedFile._content = await loader(loadedFile.blob);
+        loadedFile._content = await loader(loadedFile.blob, loadedFile.settings, onProgress);
       }
     }
     else {
