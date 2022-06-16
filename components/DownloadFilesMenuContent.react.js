@@ -13,16 +13,16 @@ const icons = {
   geo: "Map",
 };
 
-class DownloadFilesMenuContent extends React.PureComponent {
-
-  static normmaliseUrl(url) {
-    if (typeof url === "string") {
-      return url.replace("https://beta.microreact.org/", "https://microreact.org/");
-    }
-    else {
-      return url;
-    }
+function normmaliseUrl(url) {
+  if (typeof url === "string") {
+    return url.replace("https://beta.microreact.org/", "https://microreact.org/");
   }
+  else {
+    return url;
+  }
+}
+
+class DownloadFilesMenuContent extends React.PureComponent {
 
   filesSelector() {
     const { props } = this;
@@ -33,7 +33,7 @@ class DownloadFilesMenuContent extends React.PureComponent {
     return (
       this.filesSelector().map(
         (item) => {
-          const normmalisedUrl = this.normmaliseUrl(item.url);
+          const normmalisedUrl = normmaliseUrl(item.url);
           return (
             <UiDropdownMenu.Item
               key={item.id}
