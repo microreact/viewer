@@ -72,6 +72,8 @@
     "reselect": "^3.0.1",
     "short-uuid": "^4.1.0",
     "slugify": "^1.6.0",
+    "sweetalert2": "^11.4.17",
+    "sweetalert2-react-content": "^5.0.0",
     "type-analyzer": "microreact/type-analyzer#dev",
     "valid-url": "^1.0.9",
     "vega": "^5.21.0",

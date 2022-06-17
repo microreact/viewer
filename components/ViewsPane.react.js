@@ -5,7 +5,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import ViewCompactIcon from "@material-ui/icons/ViewCompact";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import HashChange from "react-hashchange";
-import { sortableContainer, sortableElement } from 'react-sortable-hoc';
+import { sortableContainer, sortableElement } from "react-sortable-hoc";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 import "../css/views-pane.css";
 
@@ -18,6 +20,8 @@ import UiDropdownMenu from "./UiDropdownMenu.react";
 import UiControlsButton from "./UiControlsButton.react";
 import { swap } from "../utils/arrays";
 import { getContainerElement } from "../utils/html";
+
+const MySwal = withReactContent(Swal);
 
 const SortableItem = sortableElement(
   (props) => {
@@ -165,11 +169,19 @@ class ViewsPane extends React.PureComponent {
     );
   }
 
-  handleRenameView = (item) => {
+  handleRenameView = async (item) => {
     const { props } = this;
-    const name = window.prompt("Enter view title", item.meta.name); // eslint-disable-line no-alert
-    if (name) {
-      props.onRenameView(item, name);
+
+    const { value } = await Swal.fire({
+      // title: "Rename View",
+      input: "text",
+      inputValue: item.meta.name,
+      inputLabel: "Enter view title",
+      showCancelButton: true,
+    });
+
+    if (value) {
+      props.onRenameView(item, value);
     }
   }
 
