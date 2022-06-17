@@ -7,7 +7,9 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import HashChange from "react-hashchange";
 import { sortableContainer, sortableElement } from "react-sortable-hoc";
 import Swal from "sweetalert2";
-import withReactContent from "sweetalert2-react-content";
+// import withReactContent from "sweetalert2-react-content";
+
+import "@sweetalert2/theme-material-ui/material-ui.css";
 
 import "../css/views-pane.css";
 
@@ -21,7 +23,7 @@ import UiControlsButton from "./UiControlsButton.react";
 import { swap } from "../utils/arrays";
 import { getContainerElement } from "../utils/html";
 
-const MySwal = withReactContent(Swal);
+// const MySwal = withReactContent(Swal);
 
 const SortableItem = sortableElement(
   (props) => {
@@ -178,6 +180,7 @@ class ViewsPane extends React.PureComponent {
       inputValue: item.meta.name,
       inputLabel: "Enter view title",
       showCancelButton: true,
+      confirmButtonText: "Rename",
     });
 
     if (value) {
