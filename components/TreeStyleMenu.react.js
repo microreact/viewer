@@ -80,6 +80,9 @@ const TreeStylesMenu = React.memo(
           onChange={props.onShowPiechartsChange}
           value={props.showPiecharts}
         />
+
+        <hr />
+
         <UiToggleSlider
           checked={props.showInternalLabels}
           label="Internal Labels"
