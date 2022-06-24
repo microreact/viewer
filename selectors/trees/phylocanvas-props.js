@@ -77,6 +77,7 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
     return {
       ...phylocanvasProps,
       blocks: metadataBlocks,
+      branchLengthsDigits: phylocanvasProps.roundBranchLengths ? phylocanvasProps.branchLengthsDigits : 1,
       fontFamily: defaults.fontFamily,
       id: treeId,
       interactive: true,
@@ -88,7 +89,6 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
       selectedIds,
       shapeBorderAlpha: 0.56,
       branchLengthsFormat: phylocanvasProps.roundBranchLengths ? "decimal" : "scientific",
-      branchLengthsDigits: phylocanvasProps.roundBranchLengths ? phylocanvasProps.branchLengthsDigits : 1,
       size,
       source,
       strokeColour: "#222",
