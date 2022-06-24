@@ -82,6 +82,7 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
       fontFamily: defaults.fontFamily,
       id: treeId,
       interactive: true,
+      internalLabelsFilterRange: phylocanvasProps.filterInternalLabels ? phylocanvasProps.internalLabelsFilterRange : undefined,
       labelField: (labelsDataColumn) ? labelsDataColumn.label : null,
       metadata: metadataValues,
       nodeShape: false,
