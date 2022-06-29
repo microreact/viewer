@@ -35,9 +35,15 @@
   pointer-events: none;
 }
 
+.mr-map .overlays > div[style="position: absolute;"] {
+  position: unset !important;
+}
+
 /*#endregion*/
 
-/*#region  */
+
+
+/*#region Hovered styles */
 
 .mr-map.hovered .overlays {
   cursor: pointer !important;
