@@ -64,7 +64,7 @@ export default {
     { kind: "tree", extension: "nhx" },
     { kind: "network", extension: "dot" },
     { kind: "geo", extension: "geojson" },
-    { kind: "microrect", extension: "microrect" },
+    { kind: "microreact", extension: "microreact" },
   ],
 
   DELAY: 64,
