@@ -65,7 +65,7 @@ export const FileDescriptor = PropTypes.shape({
 });
 
 export const FileKind = PropTypes.oneOf([
-  "microrect",
+  "microreact",
   "data",
   "geo",
   "network",

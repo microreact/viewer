@@ -31,16 +31,11 @@ const TreeStylesMenu = React.memo(
           unit="px"
           value={props.nodeSize}
         />
-
-        {
-          (props.showShapes) && (
-            <UiToggleSwitch
-              label="Leaf Borders"
-              onChange={props.onShowShapeBordersChange}
-              value={props.showShapeBorders}
-            />
-          )
-        }
+        <UiToggleSwitch
+          label="Leaf Borders"
+          onChange={props.onShowShapeBordersChange}
+          value={props.showShapeBorders}
+        />
 
         <hr />
 
@@ -80,9 +75,6 @@ const TreeStylesMenu = React.memo(
           onChange={props.onShowPiechartsChange}
           value={props.showPiecharts}
         />
-
-        <hr />
-
         <UiToggleSlider
           checked={props.showInternalLabels}
           label="Internal Labels"
