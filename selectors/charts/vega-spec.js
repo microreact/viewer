@@ -3,8 +3,8 @@ import { vegaLiteToVega } from "../../utils/charts";
 
 import chartStateSelector from "./chart-state";
 import defaultSpecSelector from "./default-spec";
+import heatmapSpecSelector from "./heatmap-spec";
 import chartTypeSelector from "./chart-type";
-
 
 const customChartSpecSelector = createKeyedStateSelector(
   (state, chartId) => chartStateSelector(state, chartId).spec,
@@ -26,6 +26,10 @@ const vegaLiteSpecSelector = (state, chartId) => {
 
   if (chartType === "custom") {
     return customChartSpecSelector(state, chartId);
+  }
+
+  if (chartType === "heatmap") {
+    return heatmapSpecSelector(state, chartId);
   }
 
   if (chartType) {
