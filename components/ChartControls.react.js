@@ -9,6 +9,7 @@ import { ChartAxisMode, ChartTypes, DataColumn } from "../utils/prop-types";
 import * as Downloads from "../utils/downloads";
 import * as Charts from "../utils/charts";
 
+import MultipleDataColumnsSelect from "./MultipleDataColumnsSelect.react";
 import UiAnimation from "./UiAnimation.react";
 import UiControlsButton from "./UiControlsButton.react";
 import UiControlsMenu from "./UiControlsMenu.react";
@@ -236,10 +237,10 @@ MainAxisMenu.propTypes = {
   onAxisFieldChange: PropTypes.func.isRequired,
   onAxisLabelAngleChange: PropTypes.func,
   onAxisLabelLimitChange: PropTypes.func,
-  onAxisMaxBinsChange: PropTypes.func.isRequired,
+  onAxisMaxBinsChange: PropTypes.func,
   onAxisOrderChange: PropTypes.func.isRequired,
   onAxisReset: PropTypes.func,
-  onAxisTypeChange: PropTypes.func.isRequired,
+  onAxisTypeChange: PropTypes.func,
   title: PropTypes.string.isRequired,
 };
 
@@ -350,6 +351,7 @@ const chartTypes = [
   { label: "Line Chart", value: "line" },
   { label: "Point", value: "point" },
   { label: "Tick", value: "tick" },
+  { label: "Heatmap Matrix", value: "heatmap" },
   { label: "Custom", value: "custom" },
 ];
 
@@ -451,128 +453,112 @@ export default class ChartControls extends React.PureComponent {
     Downloads.openUrl(url);
   }
 
-  render() {
+  renderControls() {
     const { props } = this;
-    const isStandardChartType = (props.chartType && props.chartType !== "custom");
 
-    return (
-      <div className="mr-main-controls">
-        <UiDropdownMenu
-          button={UiControlsButton}
-          icon={<MenuIcon />}
+    const isStandardChartType = (
+      props.chartType
+      &&
+      props.chartType !== "custom"
+    );
+
+    if (props.chartType === "custom") {
+      return (
+        <UiControlsMenu
+          className="mr-chart-spec-menu"
+          onClear={(props.spec) && (() => props.onSpecChange(null))}
+          onClose={this.saveSpecChanges}
+          onOpen={() => this.setState({ spec: props.spec || "" })}
+          ref={this.vegaSpecMenu}
+          title="Vega Spec"
         >
-          {/* <UiDropdownMenu.Item
-            onClick={props.onEditPane}
+          <Box
+            alignItems="center"
+            display="flex"
+            flexDirection="row"
+            justifyContent="space-between"
+            style={{ marginBottom: 4 }}
+            className="mr-action-buttons"
           >
-            Edit Chart
-          </UiDropdownMenu.Item>
+            <IconButton
+              onClick={this.openInVegaEditor}
+              size="small"
+              title="Edit in Vega Editor"
+            >
+              <EditRoundedIcon />
+            </IconButton>
+          </Box>
 
-          <Divider /> */}
+          <textarea
+            value={this.state.spec}
+            onChange={this.handleSpecChange}
+            placeholder="Enter Vega or Vega-Lite sepc"
+          />
+        </UiControlsMenu>
+      );
+    }
 
-          <UiDropdownMenu.Item
-            onClick={props.onDownloadPNG}
+    if (props.chartType === "heatmap") {
+      return (
+        <UiControlsMenu
+          title="Columns"
+        >
+          <MultipleDataColumnsSelect
+            dataColumns={props.fullDatasetColumns.filter((x) => x !== props.idDataColumn)}
+            // maxHeightOffset="400px"
+            onChange={props.onColumnsChange}
+            value={props.columns}
+          />
+        </UiControlsMenu>
+      );
+    }
+
+    if (isStandardChartType) {
+      return (
+        <React.Fragment>
+
+          <MainAxisMenu
+            axisField={props.facetField}
+            axisOrder={props.facetOrder}
+            fullDatasetColumns={props.fullDatasetColumns}
+            hideAxisType
+            onAxisFieldChange={(field) => props.onFacetFieldChange(field)}
+            onAxisOrderChange={props.onFacetOrderChange}
+            onAxisReset={props.facetField && props.onFacetFieldChange}
+            title="Facet"
           >
-            Download as PNG image
-          </UiDropdownMenu.Item>
-          <UiDropdownMenu.Item
-            onClick={props.onDownloadSVG}
+            <UiSelect
+              label="Number of columns"
+              onChange={props.onFacetGridColumnsChange}
+              options={gridOptions}
+              value={props.facetGridColumns}
+            />
+            <UiSelect
+              label="Number of rows"
+              onChange={props.onFacetGridRowsChange}
+              options={gridOptions}
+              value={props.facetGridRows}
+            />
+          </MainAxisMenu>
+
+          <MainAxisMenu
+            axisField={props.seriesDataColumn?.name}
+            axisOrder={props.seriesOrder}
+            axisType={props.seriesType}
+            fullDatasetColumns={props.fullDatasetColumns}
+            onAxisFieldChange={(field) => props.onSeriesFieldChange(field)}
+            onAxisOrderChange={props.onSeriesOrderChange}
+            onAxisReset={props.seriesField && props.onSeriesFieldChange}
+            onAxisTypeChange={props.onSeriesTypeChange}
+            title="Colour"
           >
-            Download as SVG image
-          </UiDropdownMenu.Item>
-        </UiDropdownMenu>
-
-        <UiControlsButton
-          active={props.controls}
-          onClick={() => props.onControlsChange(!props.controls)}
-        />
-        <UiAnimation in={props.controls}>
-
-          {
-            (props.chartType === "custom") && (
-              <UiControlsMenu
-                className="mr-chart-spec-menu"
-                onClear={(props.spec) && (() => props.onSpecChange(null))}
-                onClose={this.saveSpecChanges}
-                onOpen={() => this.setState({ spec: props.spec || "" })}
-                ref={this.vegaSpecMenu}
-                title="Vega Spec"
-              >
-                <Box
-                  alignItems="center"
-                  display="flex"
-                  flexDirection="row"
-                  justifyContent="space-between"
-                  style={{ marginBottom: 4 }}
-                  className="mr-action-buttons"
-                >
-                  <IconButton
-                    onClick={this.openInVegaEditor}
-                    size="small"
-                    title="Edit in Vega Editor"
-                  >
-                    <EditRoundedIcon />
-                  </IconButton>
-                </Box>
-
-                <textarea
-                  value={this.state.spec}
-                  onChange={this.handleSpecChange}
-                  placeholder="Enter Vega or Vega-Lite sepc"
-                />
-              </UiControlsMenu>
-            )
-          }
-
-          {
-            isStandardChartType && (
-              <MainAxisMenu
-                axisField={props.facetField}
-                axisOrder={props.facetOrder}
-                fullDatasetColumns={props.fullDatasetColumns}
-                hideAxisType
-                onAxisFieldChange={(field) => props.onFacetFieldChange(field)}
-                onAxisOrderChange={props.onFacetOrderChange}
-                onAxisReset={props.facetField && props.onFacetFieldChange}
-                title="Facet"
-              >
-                <UiSelect
-                  label="Number of columns"
-                  onChange={props.onFacetGridColumnsChange}
-                  options={gridOptions}
-                  value={props.facetGridColumns}
-                />
-                <UiSelect
-                  label="Number of rows"
-                  onChange={props.onFacetGridRowsChange}
-                  options={gridOptions}
-                  value={props.facetGridRows}
-                />
-              </MainAxisMenu>
-            )
-          }
-
-          {
-            isStandardChartType && (
-              <MainAxisMenu
-                axisField={props.seriesDataColumn?.name}
-                axisOrder={props.seriesOrder}
-                axisType={props.seriesType}
-                fullDatasetColumns={props.fullDatasetColumns}
-                onAxisFieldChange={(field) => props.onSeriesFieldChange(field)}
-                onAxisOrderChange={props.onSeriesOrderChange}
-                onAxisReset={props.seriesField && props.onSeriesFieldChange}
-                onAxisTypeChange={props.onSeriesTypeChange}
-                title="Colour"
-              >
-                <UiSelect
-                  label="Stacking"
-                  value={props.seriesStacking ?? "stacked"}
-                  onChange={props.onSeriesStackingChange}
-                  options={stackingTypes}
-                />
-              </MainAxisMenu>
-            )
-          }
+            <UiSelect
+              label="Stacking"
+              value={props.seriesStacking ?? "stacked"}
+              onChange={props.onSeriesStackingChange}
+              options={stackingTypes}
+            />
+          </MainAxisMenu>
 
           {
             isStandardChartType
@@ -657,6 +643,49 @@ export default class ChartControls extends React.PureComponent {
                 />
               )
           }
+        </React.Fragment>
+      );
+    }
+
+    return null;
+  }
+
+  render() {
+    const { props } = this;
+
+    return (
+      <div className="mr-main-controls">
+        <UiDropdownMenu
+          button={UiControlsButton}
+          icon={<MenuIcon />}
+        >
+          {/* <UiDropdownMenu.Item
+            onClick={props.onEditPane}
+          >
+            Edit Chart
+          </UiDropdownMenu.Item>
+
+          <Divider /> */}
+
+          <UiDropdownMenu.Item
+            onClick={props.onDownloadPNG}
+          >
+            Download as PNG image
+          </UiDropdownMenu.Item>
+          <UiDropdownMenu.Item
+            onClick={props.onDownloadSVG}
+          >
+            Download as SVG image
+          </UiDropdownMenu.Item>
+        </UiDropdownMenu>
+
+        <UiControlsButton
+          active={props.controls}
+          onClick={() => props.onControlsChange(!props.controls)}
+        />
+        <UiAnimation in={props.controls}>
+
+          { this.renderControls() }
 
           <UiControlsMenu
             title="Chart Type"
@@ -715,6 +744,7 @@ export default class ChartControls extends React.PureComponent {
 
 ChartControls.propTypes = {
   chartType: ChartTypes,
+  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
   controls: PropTypes.bool.isRequired,
   dataFileUrl: PropTypes.string,
   facetField: PropTypes.string,
@@ -725,6 +755,7 @@ ChartControls.propTypes = {
   interpolateType: PropTypes.string.isRequired,
   mainAxisEncoding: PropTypes.oneOf([ "x", "y" ]),
   onChartTypeChange: PropTypes.func.isRequired,
+  onColumnsChange: PropTypes.func.isRequired,
   onControlsChange: PropTypes.func.isRequired,
   onDownloadPNG: PropTypes.func.isRequired,
   onDownloadSVG: PropTypes.func.isRequired,

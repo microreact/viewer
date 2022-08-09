@@ -13,10 +13,11 @@ export const ChartTypes = PropTypes.oneOf([
   "area",
   "bar",
   "circle",
+  "custom",
+  "heatmap",
   "line",
   "point",
   "tick",
-  "custom",
 ]);
 
 export const ChartAxisMode = PropTypes.oneOf([

@@ -1,9 +1,10 @@
 .mr-ui-popover-menu.mr-ui-dropdown-menu.MuiPopover-paper {
   min-height: unset;
+  padding: 0;
 }
 
 .mr-ui-dropdown-menu.MuiList-root {
-  margin: -8px -16px;
+  margin: 0;
 }
 
 .mr-ui-dropdown-menu hr {

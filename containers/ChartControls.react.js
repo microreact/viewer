@@ -2,6 +2,7 @@ import { update, updateMainAxisField } from "../actions/charts";
 
 import chartStateSelector from "../selectors/charts/chart-state";
 import dataColumnsSelector from "../selectors/datasets/data-columns";
+import idDataFieldSelector from "../selectors/datasets/id-data-field";
 import dataFileUrlSelector from "../selectors/charts/data-file-url";
 import seriesStackingSelector from "../selectors/charts/series-stacking";
 
@@ -17,6 +18,7 @@ const mapStateToProps = (state, { chartId }) => {
   const chartState = chartStateSelector(state, chartId);
   return {
     chartType: chartState.type,
+    columns: chartState.columns,
     controls: chartState.controls,
     dataFileUrl: dataFileUrlSelector(state, chartId),
     facetField: chartState.facetField,
@@ -24,6 +26,7 @@ const mapStateToProps = (state, { chartId }) => {
     facetGridRows: chartState.facetGridRows,
     facetOrder: chartState.facetOrder,
     fullDatasetColumns: dataColumnsSelector(state),
+    idDataColumn: idDataFieldSelector(state),
     interpolateType: chartState.interpolate,
     mainAxisEncoding: mainAxisEncodingSelector(state, chartId),
     seriesDataColumn: seriesFieldSelector(state, chartId),
@@ -53,6 +56,7 @@ const mapStateToProps = (state, { chartId }) => {
 
 const mapDispatchToProps = (dispatch, { chartId }) => ({
   onChartTypeChange: (value) => dispatch(update(chartId, "type", value)),
+  onColumnsChange: (value) => dispatch(update(chartId, "columns", value)),
   onControlsChange: (value) => dispatch(update(chartId, "controls", value)),
   onFacetFieldChange: (value) => dispatch(update(chartId, "facetField", value)),
   onFacetGridColumnsChange: (value) => dispatch(update(chartId, "facetGridColumns", value)),
