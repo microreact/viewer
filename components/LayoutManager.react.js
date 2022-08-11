@@ -128,7 +128,7 @@ class LayoutManager extends React.PureComponent {
       "add-new-pane",
       ([ label, tab ]) => {
         this.elRef.current.addTabWithDragAndDrop(
-          `${label}<br />(Esc to cancel)`,
+          `${label} (Esc to cancel)`,
           tab
         );
         nextFrame(() => FlexLayout.DragDrop.instance._glass.focus());
