@@ -26,6 +26,11 @@ const InteractiveMap = React.memo(
     return (
       <ReactMapGL
         {...props.viewport}
+        mapOptions={
+          {
+            renderWorldCopies: false,
+          }
+        }
         height={props.height}
         mapboxApiAccessToken={props.mapboxApiAccessToken}
         mapId={props.mapId}
@@ -53,7 +58,9 @@ const InteractiveMap = React.memo(
           mapId={props.mapId}
         />
 
-        <ScaleControl />
+        {
+          !props.hideScaleControl && (<ScaleControl />)
+        }
 
       </ReactMapGL>
     );
@@ -63,6 +70,7 @@ const InteractiveMap = React.memo(
 InteractiveMap.displayName = "InteractiveMap";
 
 InteractiveMap.propTypes = {
+  hideScaleControl: PropTypes.bool,
   height: PropTypes.number.isRequired,
   mapboxApiAccessToken: PropTypes.string.isRequired,
   mapboxStyle: MapboxStyle.isRequired,
@@ -103,6 +111,9 @@ class MapPane extends React.PureComponent {
         _mapbox._render();
       },
     );
+
+    // const _mapbox = this.getMapboxWrapper();
+    // _mapbox.setPaintProperty("water", "fill-color", "#bd0026");
   }
 
   componentWillUnmount() {
@@ -327,6 +338,7 @@ class MapPane extends React.PureComponent {
           viewport={props.viewport}
           width={props.width}
           showRegions={props.showRegions}
+          hideScaleControl={props.hideScaleControl}
           // markersOverlayRef={this.markersOverlayRef}
           // lassoOverlayRef={this.lassoOverlayRef}
           renderedWidth={state.renderedWidth}
@@ -366,6 +378,7 @@ MapPane.propTypes = {
   controls: PropTypes.bool.isRequired,
   hasLegend: PropTypes.bool.isRequired,
   height: PropTypes.number.isRequired,
+  hideScaleControl: PropTypes.bool,
   mapboxApiAccessToken: PropTypes.string.isRequired,
   mapboxStyle: MapboxStyle.isRequired,
   mapId: PropTypes.string.isRequired,

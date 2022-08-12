@@ -4,7 +4,7 @@
   align-items: center;
   background-color: hsla(0,0%,100%,.75);
   border-radius: 12px;
-  bottom: 28px;
+  bottom: 48px;
   cursor: pointer;
   display: flex;
   height: 24px;
@@ -25,7 +25,7 @@
 .mr-map-legend {
   background-color: hsla(0,0%,100%,.75);
   border-radius: 8px;
-  bottom: 28px;
+  bottom: 48px;
   max-height: calc(100% - 80px);
   overflow-x: hidden;
   overflow-y: hidden;

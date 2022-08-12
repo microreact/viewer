@@ -5,6 +5,7 @@ import chartStateSelector from "./chart-state";
 import defaultSpecSelector from "./default-spec";
 import heatmapSpecSelector from "./heatmap-spec";
 import chartTypeSelector from "./chart-type";
+import paneSizeSelector from "../panes/pane-size";
 
 const customChartSpecSelector = createKeyedStateSelector(
   (state, chartId) => chartStateSelector(state, chartId).spec,
@@ -42,8 +43,10 @@ const vegaLiteSpecSelector = (state, chartId) => {
 // TODO: move this chart panel
 const vegaSpecSelector = createKeyedStateSelector(
   (state, chartId) => vegaLiteSpecSelector(state, chartId),
+  (state, chartId) => paneSizeSelector(state, chartId),
   (
     spec,
+    size,
   ) => {
     if (!spec) {
       return undefined;
@@ -51,9 +54,19 @@ const vegaSpecSelector = createKeyedStateSelector(
 
     const vlSpec = {
       ...spec,
-      padding: { left: 8, top: 32, right: 8, bottom: 8 },
       data: { name: "table" },
     };
+
+    if (!vlSpec.padding) {
+      vlSpec.padding = { left: 8, top: 32, right: 8, bottom: 8 };
+    }
+
+    if (vlSpec.width === "auto") {
+      vlSpec.width = size.width;
+    }
+    if (vlSpec.height === "auto") {
+      vlSpec.height = size.height;
+    }
 
     const vgSpec = vegaLiteToVega(vlSpec);
 
