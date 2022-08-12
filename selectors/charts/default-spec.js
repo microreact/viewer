@@ -426,11 +426,12 @@ const vlSpecSelector = createKeyedStateSelector(
       };
 
       // Reset the scale to remove any previous facet/overlapping range
-      vlSpec.encoding.y.scale = undefined;
       vlSpec.width = size.width;
       vlSpec.height = size.height;
 
       if (vlSpec.encoding.y) {
+        vlSpec.encoding.y.scale = undefined;
+
         // Divide the overall chart pane height by the number of unique values (number of rows)
         // in row view (facet) and overlapping row view (overlapping)
         if ((seriesStacking === "facet" || seriesStacking === "overlapping")) {
