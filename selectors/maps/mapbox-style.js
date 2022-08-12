@@ -206,6 +206,9 @@ const mapboxStyleSelector = createKeyedStateSelector(
 
       // return mapboxStyle;
     }
+    else if (style.startsWith("mapbox://")) {
+      return style;
+    }
     else {
       return `mapbox://styles/mapbox/${style || "light"}-v9`;
     }

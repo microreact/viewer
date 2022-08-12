@@ -10,6 +10,8 @@ const reducer = (state = initialState, action) => {
         if (
           model.borders
           &&
+          model.borders.length
+          &&
           (
             model.borders[0].children.some((x) => x.component === "Styles")
             ||

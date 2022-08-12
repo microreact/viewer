@@ -145,10 +145,11 @@ class Chart extends React.PureComponent {
                 logLevel={2}
                 onError={handleError}
                 // onNewView={
-                //   () => {
-                //     if (this.state.vegaError !== null) {
-                //       this.setState({ vegaError: null });
-                //     }
+                //   (x) => {
+                //     console.log(x)
+                //     // if (this.state.vegaError !== null) {
+                //     //   this.setState({ vegaError: null });
+                //     // }
                 //   }
                 // }
                 onParseError={handleParseError}

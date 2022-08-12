@@ -19,6 +19,7 @@ function mapStateToProps(state, { mapId }) {
   const mapState = state.maps[mapId];
   return {
     controls: mapState.controls,
+    hideScaleControl: mapState.hideScaleControl,
     hasLegend: hasMarkerSizeLegendSelector(state, mapId) || hasRegionColourLegendSelector(state, mapId),
     mapboxApiAccessToken: mapState.mapboxApiAccessToken || configSelector(state).mapboxApiAccessToken,
     mapboxStyle: mapboxStyleSelector(state, mapId),

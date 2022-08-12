@@ -248,7 +248,9 @@ const layoutModelSelector = createSelector(
     if (!json.borders) {
       json.borders = borders;
     }
-    json.global = global;
+    if (!json.global) {
+      json.global = global;
+    }
 
     const model = FlexLayout.Model.fromJson(json);
 
