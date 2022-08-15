@@ -1,5 +1,5 @@
 import { createKeyedStateSelector } from "../../utils/state";
-import { vegaLiteToVega } from "../../utils/charts";
+import { isVegaLiteSpec, vegaLiteToVega } from "../../utils/charts";
 
 import chartStateSelector from "./chart-state";
 import defaultSpecSelector from "./default-spec";
@@ -54,8 +54,14 @@ const vegaSpecSelector = createKeyedStateSelector(
 
     const vlSpec = {
       ...spec,
-      data: { name: "table" },
     };
+
+    if (isVegaLiteSpec(vlSpec)) {
+      vlSpec.data = { name: "table" };
+    }
+    else if (!vlSpec.data) {
+      vlSpec.data = [ { name: "table" } ];
+    }
 
     if (!vlSpec.padding) {
       vlSpec.padding = { left: 8, top: 32, right: 8, bottom: 8 };
