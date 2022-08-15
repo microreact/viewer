@@ -72,11 +72,20 @@ const IGNORE_DATA_TYPES = Object.keys(AnalyzerDataTypes).filter(
   (type) => !ACCEPTED_ANALYZER_TYPES.includes(type)
 );
 
-function getSampleForTypeAnalyze(allData, headerNames, sampleCount = 1000) {
-  const total = Math.min(sampleCount, allData.length);
+function getSampleForTypeAnalyze(allData, headerNames) {
+  let sampleCount = 0;
+  if (allData.length <= 1000) {
+    sampleCount = allData.length;
+  }
+  else {
+    sampleCount = Math.ceil(allData.length / 50);
+    if (sampleCount > 5000) {
+      sampleCount = 5000;
+    }
+  }
   // const fieldOrder = fields.map(f => f.name);
   const sample = [];
-  for (let index = 0; index < total; index++) {
+  for (let index = 0; index < sampleCount; index++) {
     sample.push({});
   }
 
@@ -87,7 +96,7 @@ function getSampleForTypeAnalyze(allData, headerNames, sampleCount = 1000) {
     // sample counter
     let j = 0;
 
-    while (j < total) {
+    while (j < sampleCount) {
       if (i >= allData.length) {
         // if depleted data pool
         sample[j][field] = null;
