@@ -42,10 +42,14 @@ export async function exportSVG(vega) {
   return dataUrl;
 }
 
+export function isVegaLiteSpec(vlSpec) {
+  return vlSpec.$schema && vlSpec.$schema.startsWith("https://vega.github.io/schema/vega-lite");
+}
+
 export function vegaLiteToVega(vlSpec) {
   let vgSpec;
 
-  if (vlSpec.$schema && vlSpec.$schema.startsWith("https://vega.github.io/schema/vega-lite")) {
+  if (isVegaLiteSpec(vlSpec)) {
     try {
       vgSpec = compile(vlSpec, {}).spec;
 
