@@ -73,6 +73,16 @@ const vegaSpecSelector = createKeyedStateSelector(
     if (vlSpec.height === "auto") {
       vlSpec.height = size.height;
     }
+    // if (vlSpec.hconcat) {
+    //   for (const subSpec of vlSpec.hconcat) {
+    //     if (subSpec.width === "auto") {
+    //       subSpec.width = size.width;
+    //     }
+    //     if (subSpec.height === "auto") {
+    //       subSpec.height = size.height;
+    //     }
+    //   }
+    // }
 
     const vgSpec = vegaLiteToVega(vlSpec);
 
