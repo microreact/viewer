@@ -1,4 +1,4 @@
-import { createMuiTheme, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { createSelector } from "reselect";
 import CssBaseline from "@mui/material/CssBaseline";
 import PropTypes from "prop-types";
@@ -12,7 +12,7 @@ class Theme extends React.PureComponent {
   themeSelector = createSelector(
     (props) => props.theme,
     (theme) => {
-      const muiTheme = createMuiTheme({
+      const muiTheme = createTheme({
         palette: {
           text: {
             primary: theme.text.primary,
