@@ -14,7 +14,9 @@ const activeRowsWithStyleFieldsSelector = createSelector(
     if (filteredIds) {
       const rows = [];
       for (const row of styledRows) {
-        if (filteredIds.has(row[0])) {
+        const filtered = filteredIds.has(row[0]);
+        row["--mr-filtered"] = filtered;
+        if (filtered) {
           rows.push(row);
         }
       }

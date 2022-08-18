@@ -5,18 +5,21 @@ import filteredTreesIdsSelector from "./filtered-tree-ids";
 import filteredNetworksIdsSelector from "./filtered-network-ids";
 import filteredTimelinesIdsSelector from "./filtered-timeline-ids";
 import filteredSearchRowIdsSelector from "./filtered-search-ids";
+import filteredChartsIdsSelector from "./filtered-charts-ids";
 
 const filteredNonDataIdsSelector = createSelector(
   (state) => filteredMapIdsSelector(state),
   (state) => filteredTreesIdsSelector(state),
   (state) => filteredNetworksIdsSelector(state),
   (state) => filteredTimelinesIdsSelector(state),
+  (state) => filteredChartsIdsSelector(state),
   (state) => filteredSearchRowIdsSelector(state),
   (
     mapRowIds,
     treeRowIds,
     networkRowIds,
     timelineRowIds,
+    chartRowIds,
     searchRowIds,
   ) => {
     let ids;
@@ -32,6 +35,9 @@ const filteredNonDataIdsSelector = createSelector(
     }
     if (timelineRowIds && (ids === undefined || timelineRowIds.size < ids.size)) {
       ids = timelineRowIds;
+    }
+    if (chartRowIds && (ids === undefined || chartRowIds.size < ids.size)) {
+      ids = chartRowIds;
     }
     if (searchRowIds && (ids === undefined || searchRowIds.size < ids.size)) {
       ids = searchRowIds;
@@ -49,6 +55,8 @@ const filteredNonDataIdsSelector = createSelector(
           (networkRowIds === undefined || networkRowIds.has(id))
           &&
           (timelineRowIds === undefined || timelineRowIds.has(id))
+          &&
+          (chartRowIds === undefined || chartRowIds.has(id))
           &&
           (searchRowIds === undefined || searchRowIds.has(id))
         ) {

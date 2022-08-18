@@ -3,6 +3,7 @@ import * as Arrays from "../utils/arrays";
 
 const initialState = {
   dataFilters: [],
+  chartFilters: [],
   searchOperator: "includes",
   searchValue: "",
   selection: emptyArray,
@@ -135,6 +136,30 @@ const reducer = (state = initialState, action) => {
 
     case "MICROREACT VIEWER/SELECT ROWS": {
       return addRowsToSelection(state, action.payload);
+    }
+
+    case "MICROREACT VIEWER/SET CHART FILTER": {
+      if (action.payload.query) {
+        const chartFilters = Arrays.update(
+          state.chartFilters,
+          (x) => x.chartId === action.payload.chartId,
+          action.payload,
+        );
+        return {
+          ...state,
+          chartFilters,
+        };
+      }
+      else {
+        const chartFilters = Arrays.remove(
+          state.chartFilters,
+          (x) => x.chartId === action.payload.chartId,
+        );
+        return {
+          ...state,
+          chartFilters,
+        };
+      }
     }
 
     case "MICROREACT VIEWER/SET FIELD FILTER": {

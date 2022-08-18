@@ -51,6 +51,19 @@ export const selectQueryRows = (query, merge = false) => (
   }
 );
 
+export function setChartFilter(chartId, filterQuery) {
+  return {
+    delay: true,
+    label: "Filters: Change chart filter",
+    group: `Filters/chart ${chartId}`,
+    payload: {
+      chartId,
+      query: filterQuery,
+    },
+    type: "MICROREACT VIEWER/SET CHART FILTER",
+  };
+}
+
 export function setSelectionSummaryField(field) {
   return {
     delay: true,
