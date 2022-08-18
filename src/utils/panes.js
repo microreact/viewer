@@ -1,4 +1,4 @@
-import FlexLayout from "flexlayout-react";
+import * as FlexLayout from "flexlayout-react";
 
 import { publish } from "./events";
 

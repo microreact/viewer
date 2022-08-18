@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import colorbrewer from 'colorbrewer';
-import {VizColorPalette} from './custom-color-ranges';
+import colorbrewer from "colorbrewer";
+import { VizColorPalette } from "./custom-color-ranges";
 
 // Add colorbrewer color schemes (Data Science requirement)
 // See http://colorbrewer2.org/
@@ -30,10 +30,10 @@ const colorBrewerMap = Object.entries(colorbrewer.schemeGroups).reduce(
     ...palettes.reduce(
       (group, name) => ({
         ...group,
-        [name]: type
+        [name]: type,
       }),
       {}
-    )
+    ),
   }),
   {}
 );
@@ -41,13 +41,13 @@ const colorBrewerMap = Object.entries(colorbrewer.schemeGroups).reduce(
 const colorRanges = [...VizColorPalette];
 
 for (const [keyName, colorScheme] of Object.entries(colorbrewer)) {
-  if (keyName !== 'schemeGroups') {
+  if (keyName !== "schemeGroups") {
     for (const [lenKey, colors] of Object.entries(colorScheme)) {
       colorRanges.push({
         name: `ColorBrewer ${keyName}-${lenKey}`,
         type: colorBrewerMap[keyName],
-        category: 'ColorBrewer',
-        colors
+        category: "ColorBrewer",
+        colors,
       });
     }
   }
@@ -55,9 +55,9 @@ for (const [keyName, colorScheme] of Object.entries(colorbrewer)) {
 
 export const COLOR_RANGES = colorRanges;
 
-export const DEFAULT_COLOR_RANGE = colorRanges.find(({name}) => name === 'Global Warming') || {
-  name: 'Global Warming',
-  type: 'SEQ',
-  category: 'Uber',
-  colors: ['#5A1846', '#900C3F', '#C70039', '#E3611C', '#F1920E', '#FFC300']
+export const DEFAULT_COLOR_RANGE = colorRanges.find(({ name }) => name === "Global Warming") || {
+  name: "Global Warming",
+  type: "SEQ",
+  category: "Uber",
+  colors: ["#5A1846", "#900C3F", "#C70039", "#E3611C", "#F1920E", "#FFC300"],
 };

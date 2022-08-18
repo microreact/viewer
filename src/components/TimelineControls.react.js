@@ -1,14 +1,14 @@
-import FastForwardRoundedIcon from "@material-ui/icons/FastForwardRounded";
-import FastRewindRoundedIcon from "@material-ui/icons/FastRewindRounded";
-import PauseRoundedIcon from "@material-ui/icons/PauseRounded";
-import PlayArrowRoundedIcon from "@material-ui/icons/PlayArrowRounded";
+import FastForwardRoundedIcon from "@mui/icons-material/FastForwardRounded";
+import FastRewindRoundedIcon from "@mui/icons-material/FastRewindRounded";
+import PauseRoundedIcon from "@mui/icons-material/PauseRounded";
+import PlayArrowRoundedIcon from "@mui/icons-material/PlayArrowRounded";
 import PropTypes from "prop-types";
 import React from "react";
-import SkipNextRoundedIcon from "@material-ui/icons/SkipNextRounded";
-import SkipPreviousRoundedIcon from "@material-ui/icons/SkipPreviousRounded";
-import Slider from "@material-ui/core/Slider";
-import MenuIcon from "@material-ui/icons/Menu";
-import Divider from "@material-ui/core/Divider";
+import SkipNextRoundedIcon from "@mui/icons-material/SkipNextRounded";
+import SkipPreviousRoundedIcon from "@mui/icons-material/SkipPreviousRounded";
+import Slider from "@mui/material/Slider";
+import MenuIcon from "@mui/icons-material/Menu";
+import Divider from "@mui/material/Divider";
 import { createSelector } from "reselect";
 
 import { timeUnits, timeSpeeds } from "../constants";

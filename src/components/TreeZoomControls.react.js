@@ -2,7 +2,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import ControlCameraRoundedIcon from "@material-ui/icons/ControlCameraRounded";
+import ControlCameraRoundedIcon from "@mui/icons-material/ControlCameraRounded";
 import { TreeTypes } from "@phylocanvas/phylocanvas.gl";
 
 import ZoomControls from "./ZoomControls.react";

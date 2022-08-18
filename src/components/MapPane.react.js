@@ -6,7 +6,7 @@ import ReactMapGL, {
 } from "react-map-gl";
 import debounce from "lodash.debounce";
 
-import "../css/map-pane.css";
+import "../styles/map-pane.css";
 
 import ZoomControls from "./ZoomControls.react";
 import MapMarkersLayer from "../containers/MapMarkersLayer.react";
@@ -58,9 +58,9 @@ const InteractiveMap = React.memo(
           mapId={props.mapId}
         />
 
-        {
+        {/* {
           !props.hideScaleControl && (<ScaleControl />)
-        }
+        } */}
 
       </ReactMapGL>
     );

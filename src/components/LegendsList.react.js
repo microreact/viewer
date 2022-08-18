@@ -1,4 +1,4 @@
-import ListSubheader from "@material-ui/core/ListSubheader";
+import ListSubheader from "@mui/material/ListSubheader";
 import PropTypes from "prop-types";
 import React from "react";
 

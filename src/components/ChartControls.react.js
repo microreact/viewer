@@ -1,7 +1,7 @@
-import Box from "@material-ui/core/Box";
-import EditRoundedIcon from "@material-ui/icons/EditRounded";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import Box from "@mui/material/Box";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
 import PropTypes from "prop-types";
 import React from "react";
 

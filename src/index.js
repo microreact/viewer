@@ -1,35 +1,51 @@
-/* eslint-disable import/newline-after-import */
-/* eslint-disable import/first */
+import React from "react";
+import ReactDOM from "react-dom";
+import { fetchFile } from "@loaders.gl/core";
 
-import Index from "./containers/Viewer.react";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { setFetcher } from "./utils/proxy";
 
-export { default as Theme } from "./containers/Theme.react";
+setFetcher(async (originalUrl) => {
+  if (typeof originalUrl !== "string") {
+    return fetchFile(originalUrl);
+  }
 
-export { default as store } from "./store";
+  let url = originalUrl;
+  if (url.startsWith("microreact://")) {
+    url = `/api/files/raw?${url.substr(13)}`;
+  }
+  // if (url.startsWith("/")) {
+  //   url = `https://microreact.org${url}`;
+  // }
 
-export { default as defaults } from "./defaults";
-export * as constants from "./constants";
+  try {
+    console.log("fetching file", url);
+    const content = await fetch(url);
+    return content;
+  }
+  catch (error) {
+    if (error instanceof TypeError) {
+      console.debug("direct fetch failed, will try via proxy");
+      const content = fetch(`/proxy?url=${encodeURIComponent(url)}`);
+      return content;
+    }
+    else {
+      throw error;
+    }
+  }
+});
 
-import * as ui from "./actions/ui";
-export const actions = ui;
+ReactDOM.render(
+  (
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  ),
+  document.getElementById("root")
+);
 
-export * from "./components";
-
-import * as events from "./utils/events";
-import * as downloads from "./utils/downloads";
-import * as html from "./utils/html";
-import * as proxy from "./utils/proxy";
-import * as files from "./utils/files";
-export const utils = {
-  downloads,
-  events,
-  files,
-  html,
-  proxy,
-};
-
-export * as selectors from "./selectors";
-
-export * as schema from "./schema";
-
-export default Index;
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();

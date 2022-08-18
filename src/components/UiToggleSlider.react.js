@@ -1,9 +1,9 @@
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
-import Slider from "@material-ui/core/Slider";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
+import Slider from "@mui/material/Slider";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Switch from "@mui/material/Switch";
 
 import UiAnimation from "./UiAnimation.react";
 

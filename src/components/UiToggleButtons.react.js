@@ -1,8 +1,8 @@
-import Box from "@material-ui/core/Box";
+import Box from "@mui/material/Box";
 import PropTypes from "prop-types";
 import React from "react";
-import ToggleButton from "@material-ui/lab/ToggleButton";
-import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import ToggleButton from "@mui/lab/ToggleButton";
+import ToggleButtonGroup from "@mui/lab/ToggleButtonGroup";
 
 const style = { height: 40 };
 
