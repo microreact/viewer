@@ -6,6 +6,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { setFetcher } from "./utils/proxy";
 
+import projectJson from "./dev/debug.json";
+
 setFetcher(async (originalUrl) => {
   if (typeof originalUrl !== "string") {
     return fetchFile(originalUrl);
@@ -39,7 +41,9 @@ setFetcher(async (originalUrl) => {
 ReactDOM.render(
   (
     <React.StrictMode>
-      <App />
+      <App
+        data={projectJson}
+      />
     </React.StrictMode>
   ),
   document.getElementById("root")
