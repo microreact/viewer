@@ -10,7 +10,7 @@ import chartTypeSelector from "../selectors/charts/chart-type";
 
 const mapStateToProps = (state, { chartId }) => {
   return {
-    chartData: chartDataSelector(state),
+    chartData: chartDataSelector(state, chartId),
     chartType: chartTypeSelector(state, chartId),
     vegaSpec: vegaSpecSelector(state, chartId),
     // seriesDataColumn: seriesFieldSelector(state, chartId),

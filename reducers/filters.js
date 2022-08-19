@@ -1,3 +1,5 @@
+import deepEqual from "deep-equal";
+
 import { emptyArray, emptyObject } from "../constants";
 import * as Arrays from "../utils/arrays";
 
@@ -139,7 +141,8 @@ const reducer = (state = initialState, action) => {
     }
 
     case "MICROREACT VIEWER/SET CHART FILTER": {
-      if (action.payload.query) {
+      const currentFilter = state.chartFilters.find((x) => x.chartId === action.payload.chartId);
+      if (action.payload.query && !deepEqual(action.payload, currentFilter)) {
         const chartFilters = Arrays.update(
           state.chartFilters,
           (x) => x.chartId === action.payload.chartId,

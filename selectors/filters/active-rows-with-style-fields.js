@@ -15,7 +15,7 @@ const activeRowsWithStyleFieldsSelector = createSelector(
       const rows = [];
       for (const row of styledRows) {
         const filtered = filteredIds.has(row[0]);
-        row["--mr-filtered"] = filtered;
+        row["--mr-filtered"] = filtered ? 1 : 0;
         if (filtered) {
           rows.push(row);
         }
@@ -23,6 +23,9 @@ const activeRowsWithStyleFieldsSelector = createSelector(
       return { rows };
     }
     else {
+      for (const row of styledRows) {
+        row["--mr-filtered"] = 1;
+      }
       return { rows: styledRows };
     }
   },

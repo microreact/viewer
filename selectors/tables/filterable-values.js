@@ -6,6 +6,7 @@ import dataColumnsByFieldMapSelector from "../datasets/data-columns-by-field-map
 import filteredFieldIdsSelector from "../filters/filtered-field-ids";
 import rowsSelector from "../datasets/rows";
 import filteredNonDataIdsSelector from "../filters/filtered-non-data-ids";
+import filteredChartsIdsSelector from "../filters/filtered-charts-ids";
 
 const filteredDataIdsSelector = createCombinedStateSelector(
   (state, field) => state.filters.dataFilters.map((x) => x.field).filter((x) => x !== field),
@@ -19,12 +20,14 @@ const filterableValuesSelector = createKeyedStateSelector(
   (state) => dataColumnsByFieldMapSelector(state),
   (state) => rowsSelector(state),
   (state) => filteredNonDataIdsSelector(state),
+  (state) => filteredChartsIdsSelector(state),
   (state, field) => filteredDataIdsSelector(state, field),
   (_, field) => field,
   (
     fieldsMap,
     rows,
     filteredNonDataIds,
+    chartRowIds,
     filteredDataIds,
     field,
   ) => {
@@ -37,6 +40,8 @@ const filterableValuesSelector = createKeyedStateSelector(
       const value = row[dataColumn.name];
       if (
         (!filteredNonDataIds || filteredNonDataIds.has(row[0]))
+        &&
+        (!chartRowIds || chartRowIds.has(row[0]))
         &&
         (!filteredDataIds || filteredDataIds.has(row[0]))
       ) {

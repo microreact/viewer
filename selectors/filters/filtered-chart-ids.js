@@ -1,8 +1,6 @@
-import { makePredicate } from "../../utils/expressions";
 import { createKeyedStateSelector } from "../../utils/state";
 
 import rowsSelector from "../datasets/rows";
-import dataColumnsByFieldMapSelector from "../datasets/data-columns-by-field-map";
 import { filterByQuery } from "../../utils/arrays";
 
 function chartFilterSelector(state, chartId) {

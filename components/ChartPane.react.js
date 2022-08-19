@@ -64,7 +64,7 @@ class Chart extends React.PureComponent {
 
       this.props.onSelectItem(
         item || false,
-        event.metaKey || event.ctrilKey,
+        event?.metaKey || event?.ctrilKey,
       );
       // if (!this.lastItemSelect) {
       //   this.lastItemSelect = 1;
