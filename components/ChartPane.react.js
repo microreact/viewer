@@ -63,7 +63,7 @@ class Chart extends React.PureComponent {
       event?.stopPropagation();
 
       this.props.onSelectItem(
-        item || false,
+        (item?.datum) || item || false,
         event?.metaKey || event?.ctrilKey,
       );
       // if (!this.lastItemSelect) {
