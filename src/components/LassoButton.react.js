@@ -42,7 +42,7 @@ const LassoButton = React.memo(
             props.className,
           )
         }
-        color={active ? "primary" : undefined}
+        color={active ? "primary" : "inherit"}
         onClick={props.onClick}
         size="small"
         title={
