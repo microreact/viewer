@@ -87,8 +87,7 @@ InteractiveMap.propTypes = {
 
 class MapPane extends React.PureComponent {
 
-  state = {
-  };
+  state = {};
 
   elementRef = React.createRef();
 
