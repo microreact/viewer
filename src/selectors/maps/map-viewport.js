@@ -19,9 +19,6 @@ const defaultViewportSelector = createKeyedStateSelector(
       longitude: 0,
       latitude: 0,
       zoom: 0,
-      bearing: 0,
-      pitch: 0,
-      altitude: 1.5,
     });
 
     if (markers?.length) {
@@ -77,12 +74,9 @@ const defaultViewportSelector = createKeyedStateSelector(
       //#endregion
 
       return {
-        altitude: defaultViewport.defaultViewport,
         latitude,
         longitude,
         zoom: Math.max(0, zoom),
-        bearing: defaultViewport.defaultViewport,
-        pitch: defaultViewport.defaultViewport,
       };
     }
 
