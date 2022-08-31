@@ -88,11 +88,11 @@ InteractiveMap.propTypes = {
 class MapPane extends React.PureComponent {
 
   state = {
-  }
+  };
 
-  elementRef = React.createRef()
+  elementRef = React.createRef();
 
-  reactMapRef = React.createRef()
+  reactMapRef = React.createRef();
 
   componentDidMount() {
     this.beforeScreenshotUnsubscribe = subscribe(
@@ -143,7 +143,7 @@ class MapPane extends React.PureComponent {
 
   getMapboxWrapper = () => {
     return this.reactMapRef.current.getMap();
-  }
+  };
 
   handleMarkerClick = (event) => {
     const isAppend = (event.srcEvent.metaKey || event.srcEvent.ctrlKey);
@@ -170,7 +170,7 @@ class MapPane extends React.PureComponent {
     if (!isAppend) {
       this.props.onSelectRows();
     }
-  }
+  };
 
   handleMapHover = (event) => {
     if (this.props.showMarkers) {
@@ -208,7 +208,7 @@ class MapPane extends React.PureComponent {
     if (this.state.hover) {
       this.setState({ hover: null });
     }
-  }
+  };
 
   handleViewportChange = (viewState, interactionState, oldViewState) => {
     // Ignores the very first viewport change event by waiting for the reference to be set
@@ -248,14 +248,14 @@ class MapPane extends React.PureComponent {
         this.debouncedViewportFilter();
       }
     }
-  }
+  };
 
   handleResize = () => {
     this.setState({
       renderedWidth: this.props.width,
       renderedHeight: this.props.height,
     });
-  }
+  };
 
   handleZoom = (delta) => {
     this.handleViewportChange({
@@ -277,7 +277,7 @@ class MapPane extends React.PureComponent {
         );
     });
     mapboxMap.triggerRepaint();
-  }
+  };
 
   handleViewportFilter = () => {
     const mapboxMap = this.reactMapRef.current.getMap();
@@ -289,7 +289,7 @@ class MapPane extends React.PureComponent {
       bounds.getSouthWest().toArray(),
       bounds.getNorthWest().toArray(),
     ]);
-  }
+  };
 
   debouncedViewportFilter = debounce(
     this.handleViewportFilter,
