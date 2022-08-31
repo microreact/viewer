@@ -1,18 +1,16 @@
 import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
-import ReactMapGL, {
-  ScaleControl,
-} from "react-map-gl";
+import ReactMapGL, { ScaleControl } from "react-map-gl";
 import debounce from "lodash.debounce";
 
 import "../styles/map-pane.css";
 
 import ZoomControls from "./ZoomControls.react";
-import MapMarkersLayer from "../containers/MapMarkersLayer.react";
-import MapLassoOverlay from "../containers/MapLassoLayer.react";
+// import MapMarkersLayer from "../containers/MapMarkersLayer.react";
+// import MapLassoOverlay from "../containers/MapLassoLayer.react";
 import MapControls from "../containers/MapControls.react";
-import MapGeojsonLayer from "../containers/MapGeojsonLayer.react";
+// import MapGeojsonLayer from "../containers/MapGeojsonLayer.react";
 import MapLegend from "../containers/MapLegend.react";
 import MapTooltip from "../containers/MapTooltip.react";
 
@@ -26,41 +24,43 @@ const InteractiveMap = React.memo(
     return (
       <ReactMapGL
         {...props.viewport}
-        mapOptions={
+        renderWorldCopies={false}
+        mapboxAccessToken={props.mapboxApiAccessToken}
+        mapId={props.mapId}
+        width={props.width}
+        height={props.height}
+        mapStyle={props.mapboxStyle}
+        // onClick={props.onClick}
+        onResize={props.onResize}
+        // onHover={props.onHover}
+        onMove={props.onViewportChange}
+        ref={props.reactMapRef}
+        style={
           {
-            renderWorldCopies: false,
+            width: props.width,
+            height: props.height,
           }
         }
-        height={props.height}
-        mapboxApiAccessToken={props.mapboxApiAccessToken}
-        mapId={props.mapId}
-        mapStyle={props.mapboxStyle}
-        onClick={props.onClick}
-        onResize={props.onResize}
-        onHover={props.onHover}
-        onViewportChange={props.onViewportChange}
-        ref={props.reactMapRef}
-        width={props.width}
       >
-        {
+        {/* {
           props.showRegions && (
             <MapGeojsonLayer
               mapId={props.mapId}
             />
           )
-        }
-
-        <MapMarkersLayer
-          mapId={props.mapId}
-        />
-
-        <MapLassoOverlay
-          mapId={props.mapId}
-        />
-
-        {/* {
-          !props.hideScaleControl && (<ScaleControl />)
         } */}
+
+        {/* <MapMarkersLayer
+          mapId={props.mapId}
+        /> */}
+
+        {/* <MapLassoOverlay
+          mapId={props.mapId}
+        /> */}
+
+        {
+          !props.hideScaleControl && (<ScaleControl />)
+        }
 
       </ReactMapGL>
     );
@@ -81,7 +81,7 @@ InteractiveMap.propTypes = {
   onViewportChange: PropTypes.func.isRequired,
   reactMapRef: ReactRef,
   showRegions: PropTypes.bool.isRequired,
-  viewport: ReactMapGL.propTypes.viewState,
+  // viewport: ReactMapGL.propTypes.viewState,
   width: PropTypes.number.isRequired,
 };
 
@@ -209,43 +209,28 @@ class MapPane extends React.PureComponent {
     }
   };
 
-  handleViewportChange = (viewState, interactionState, oldViewState) => {
-    // Ignores the very first viewport change event by waiting for the reference to be set
-    if (oldViewState && Object.keys(oldViewState).length === 0) {
-      this.setState({ renderedAt: new Date().valueOf() });
+  handleViewportChange = (event) => {
+    const { props } = this;
+    if (
+      event.viewState
+      ||
+      event.viewState.altitude !== props.viewport.altitude
+      ||
+      event.viewState.bearing !== props.viewport.bearing
+      ||
+      event.viewState.latitude !== props.viewport.latitude
+      ||
+      event.viewState.longitude !== props.viewport.longitude
+      ||
+      event.viewState.pitch !== props.viewport.pitch
+      ||
+      event.viewState.zoom !== props.viewport.zoom
+    ) {
+      this.props.onViewportChange(event.viewState);
     }
-    else {
-      if (
-        !oldViewState
-        ||
-        oldViewState.altitude !== viewState.altitude
-        ||
-        oldViewState.bearing !== viewState.bearing
-        ||
-        oldViewState.latitude !== viewState.latitude
-        ||
-        oldViewState.longitude !== viewState.longitude
-        ||
-        oldViewState.pitch !== viewState.pitch
-        ||
-        oldViewState.zoom !== viewState.zoom
-      ) {
-        this.props.onViewportChange({
-          altitude: viewState.altitude,
-          bearing: viewState.bearing,
-          latitude: viewState.latitude,
-          longitude: viewState.longitude,
-          pitch: viewState.pitch,
-          zoom: viewState.zoom,
-        });
-      }
-      else {
-        this.setState({ renderedAt: new Date().valueOf() });
-      }
 
-      if (this.props.trackViewport) {
-        this.debouncedViewportFilter();
-      }
+    if (this.props.trackViewport) {
+      this.debouncedViewportFilter();
     }
   };
 
@@ -392,7 +377,7 @@ MapPane.propTypes = {
   tileLayerUrl: PropTypes.string,
   trackViewport: PropTypes.bool.isRequired,
   type: PropTypes.string,
-  viewport: ReactMapGL.propTypes.viewState,
+  // viewport: ReactMapGL.propTypes.viewState,
   width: PropTypes.number.isRequired,
   zoom: PropTypes.number,
 };
