@@ -1,4 +1,4 @@
-import { WebMercatorViewport } from "react-map-gl";
+import { WebMercatorViewport } from "@math.gl/web-mercator";
 
 import { createKeyedStateSelector } from "../../utils/state";
 
