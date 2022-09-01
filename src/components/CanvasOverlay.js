@@ -1,7 +1,6 @@
-import * as React from "react";
-import { useState, cloneElement } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { useControl } from "react-map-gl";
-import { createPortal } from "react-dom";
 
 // Based on template in https://docs.mapbox.com/mapbox-gl-js/api/markers/#icontrol
 class OverlayControl {
@@ -69,9 +68,7 @@ class OverlayControl {
  * A custom control that rerenders arbitrary React content whenever the camera changes
  */
 function CustomOverlay(props) {
-  // const [, setVersion] = useState(0);
   const ctrl = useControl(() => {
-    // const forceUpdate = () => props.redraw;
     return new OverlayControl(props.redraw);
   });
 
@@ -84,4 +81,8 @@ function CustomOverlay(props) {
   return null;
 }
 
-export default (CustomOverlay);
+CustomOverlay.propTypes = {
+  redraw: PropTypes.func.isRequied,
+};
+
+export default React.memo(CustomOverlay);
