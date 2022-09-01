@@ -36,8 +36,8 @@ const InteractiveMap = React.memo(
         mapboxAccessToken={props.mapboxApiAccessToken}
         mapId={props.mapId}
         mapStyle={props.mapboxStyle}
-        // onHover={props.onHover}
         onClick={props.onClick}
+        onMouseMove={props.onHover}
         onMove={props.onViewportChange}
         ref={props.reactMapRef}
         style={style}
@@ -179,14 +179,14 @@ class MapPane extends React.PureComponent {
 
   handleMapHover = (event) => {
     if (this.props.showMarkers) {
-      const marker = this.findMarkerAtPoint(event.offsetCenter);
+      const marker = this.findMarkerAtPoint(event.point);
       if (marker) {
         if (marker !== this.state.hover?.marker) {
           this.setState({
             hover: {
               marker,
-              x: event.srcEvent.offsetX,
-              y: event.srcEvent.offsetY,
+              x: event.originalEvent.offsetX,
+              y: event.originalEvent.offsetY,
             },
           });
         }
@@ -201,8 +201,8 @@ class MapPane extends React.PureComponent {
           this.setState({
             hover: {
               region,
-              x: event.srcEvent.offsetX,
-              y: event.srcEvent.offsetY,
+              x: event.originalEvent.offsetX,
+              y: event.originalEvent.offsetY,
             },
           });
         }
@@ -299,7 +299,7 @@ class MapPane extends React.PureComponent {
 
     return (
       <div
-        className={state.hover ? "mr-map hovered" : "mr-map"}
+        className={state.hover ? "mr-map mr-hovered" : "mr-map"}
         ref={this.elementRef}
       >
         <InteractiveMap
