@@ -22,7 +22,7 @@ const UiControlsButton = React.forwardRef(
             className,
           )
         }
-        color={active ? "primary" : undefined}
+        color={active ? "primary" : "inherit"}
         size="small"
         variant="contained"
         ref={ref}
