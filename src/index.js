@@ -22,7 +22,7 @@ setFetcher(async (originalUrl) => {
   // }
 
   try {
-    console.log("fetching file", url);
+    console.debug("fetching file", url);
     const content = await fetch(url);
     return content;
   }
