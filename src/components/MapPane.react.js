@@ -10,7 +10,7 @@ import ZoomControls from "./ZoomControls.react";
 import MapMarkersLayer from "../containers/MapMarkersLayer.react";
 // import MapLassoOverlay from "../containers/MapLassoLayer.react";
 import MapControls from "../containers/MapControls.react";
-// import MapGeojsonLayer from "../containers/MapGeojsonLayer.react";
+import MapGeojsonLayer from "../containers/MapGeojsonLayer.react";
 import MapLegend from "../containers/MapLegend.react";
 import MapTooltip from "../containers/MapTooltip.react";
 
@@ -42,13 +42,13 @@ const InteractiveMap = React.memo(
         ref={props.reactMapRef}
         style={style}
       >
-        {/* {
+        {
           props.showRegions && (
             <MapGeojsonLayer
               mapId={props.mapId}
             />
           )
-        } */}
+        }
 
         <MapMarkersLayer
           mapId={props.mapId}
@@ -152,6 +152,7 @@ class MapPane extends React.PureComponent {
 
   handleMarkerClick = (event) => {
     const isAppend = (event.originalEvent.metaKey || event.originalEvent.ctrlKey);
+
     if (this.props.showMarkers) {
       const marker = this.findMarkerAtPoint(event.point);
       if (marker) {
@@ -162,6 +163,7 @@ class MapPane extends React.PureComponent {
         return;
       }
     }
+
     if (this.props.showRegions && event.features) {
       const feature = event.features.find((x) => x.layer.id === "mr-geojson-layer");
       if (feature) {
@@ -172,6 +174,7 @@ class MapPane extends React.PureComponent {
         return;
       }
     }
+
     if (!isAppend) {
       this.props.onSelectRows();
     }
