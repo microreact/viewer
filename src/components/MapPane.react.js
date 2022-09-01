@@ -32,7 +32,6 @@ const InteractiveMap = React.memo(
     return (
       <ReactMapGL
         {...props.viewport}
-        renderWorldCopies={false}
         mapboxAccessToken={props.mapboxApiAccessToken}
         mapId={props.mapId}
         mapStyle={props.mapboxStyle}
@@ -40,6 +39,7 @@ const InteractiveMap = React.memo(
         onMouseMove={props.onHover}
         onMove={props.onViewportChange}
         ref={props.reactMapRef}
+        renderWorldCopies={false}
         style={style}
       >
         {
