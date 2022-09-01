@@ -70,7 +70,6 @@ class OverlayControl {
  */
 function CustomOverlay(props) {
   // const [, setVersion] = useState(0);
-console.log("1")
   const ctrl = useControl(() => {
     // const forceUpdate = () => props.redraw;
     return new OverlayControl(props.redraw);
