@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useControl } from "react-map-gl";
 
@@ -68,18 +68,15 @@ class OverlayControl {
  * A custom control that rerenders arbitrary React content whenever the camera changes
  */
 function CustomOverlay(props) {
-  const { redraw, ...rest } = props;
+  const { redraw } = props;
 
   const ctrl = useControl(() => {
     return new OverlayControl(redraw);
   });
 
-  React.useEffect(
-    () => {
-      ctrl._redraw();
-    },
-    Object.values(rest),
-  );
+  useEffect(() => {
+    ctrl._redraw();
+  }, [props]);
 
   return null;
 }
