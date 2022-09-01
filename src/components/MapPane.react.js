@@ -296,12 +296,6 @@ class MapPane extends React.PureComponent {
       <div
         className={state.hover ? "mr-map hovered" : "mr-map"}
         ref={this.elementRef}
-        // style={
-        //   {
-        //     width: this.props.width,
-        //     height: this.props.height,
-        //   }
-        // }
       >
         <InteractiveMap
           height={props.height}
