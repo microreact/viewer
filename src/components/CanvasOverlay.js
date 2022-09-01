@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { useControl } from "react-map-gl";
 
@@ -72,9 +72,10 @@ function CustomOverlay(props) {
     return new OverlayControl(props.redraw);
   });
 
-  useEffect(() => {
-    ctrl._redraw();
-  }, [props]);
+  React.useEffect(
+    ctrl._redraw,
+    [ props ],
+  );
 
   return null;
 }
