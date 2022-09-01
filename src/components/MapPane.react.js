@@ -22,6 +22,13 @@ import { triggerWindowResize } from "../utils/browser";
 
 const InteractiveMap = React.memo(
   (props) => {
+    const style = React.useMemo(
+      () => ({
+        width: `${props.width}px`,
+        height: `${props.height}px`,
+      }),
+      [ props.width, props.height ]
+    );
     return (
       <ReactMapGL
         {...props.viewport}
@@ -33,10 +40,7 @@ const InteractiveMap = React.memo(
         onMouseMove={props.onHover}
         onMove={props.onViewportChange}
         ref={props.reactMapRef}
-        style={{
-          width: `${props.width}px`,
-          height: `${props.height}px`,
-        }}
+        style={style}
       >
         {
           props.showRegions && (
