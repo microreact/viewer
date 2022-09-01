@@ -12,14 +12,40 @@ class OverlayControl {
   _redraw;
 
   constructor(redraw) {
-    this._redraw = redraw;
+    this._redraw = () => {
+      const canvas = this.getElement();
+      const ctx = this.getElement()?.getContext("2d");
+      if (ctx) {
+        const width = this._map.getContainer().clientWidth;
+        const height = this._map.getContainer().clientHeight;
+        const pixelRatio = (typeof window !== "undefined" && window.devicePixelRatio) || 1;
+
+        canvas.width = width * pixelRatio;
+        canvas.height = height * pixelRatio;
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+
+        ctx.save();
+        ctx.scale(pixelRatio, pixelRatio);
+
+        redraw({
+          width,
+          height,
+          ctx,
+          project: this._map.project.bind(this._map),
+          unproject: this._map.unproject.bind(this._map),
+        });
+
+        ctx.restore();
+      }
+    };
   }
 
   onAdd(map) {
     this._map = map;
     map.on("move", this._redraw);
     /* global document */
-    this._container = document.createElement("div");
+    this._container = document.createElement("canvas");
     this._redraw();
     return this._container;
   }
@@ -43,19 +69,15 @@ class OverlayControl {
  * A custom control that rerenders arbitrary React content whenever the camera changes
  */
 function CustomOverlay(props) {
-  const [, setVersion] = useState(0);
+  // const [, setVersion] = useState(0);
   const ctrl = useControl(() => {
-
-    const forceUpdate = () => {
-      console.log("force update is called");
-      setVersion((v) => v + 1);
-    };
-    return new OverlayControl(forceUpdate);
+    // const forceUpdate = () => props.redraw;
+    return new OverlayControl(props.redraw);
   });
 
   const map = ctrl.getMap();
 
-  return map && createPortal(cloneElement(props.children, { map }), ctrl.getElement());
+  return map && null;
 }
 
-export default React.memo(CustomOverlay);
+export default (CustomOverlay);

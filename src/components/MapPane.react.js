@@ -18,23 +18,29 @@ import { downloadDataUrl } from "../utils/downloads";
 import { MapboxStyle, MapMarker, ReactRef } from "../utils/prop-types";
 import * as HtmlUtils from "../utils/html";
 import { subscribe } from "../utils/events";
-import CanvasOverlay from "./CanvasOverlay";
 
 const InteractiveMap = React.memo(
   (props) => {
     return (
       <ReactMapGL
         {...props.viewport}
-          trackResize={false}
         renderWorldCopies={false}
         mapboxAccessToken={props.mapboxApiAccessToken}
         mapId={props.mapId}
+        width={props.width}
+        height={props.height}
         mapStyle={props.mapboxStyle}
         // onClick={props.onClick}
         onResize={props.onResize}
         // onHover={props.onHover}
         onMove={props.onViewportChange}
         ref={props.reactMapRef}
+        style={
+          {
+            width: props.width,
+            height: props.height,
+          }
+        }
       >
         {/* {
           props.showRegions && (
@@ -43,9 +49,10 @@ const InteractiveMap = React.memo(
             />
           )
         } */}
-          <MapMarkersLayer
-              mapId={props.mapId}
-          />
+
+        <MapMarkersLayer
+          mapId={props.mapId}
+        />
 
         {/* <MapLassoOverlay
           mapId={props.mapId}
@@ -227,8 +234,7 @@ class MapPane extends React.PureComponent {
     }
   };
 
-  handleResize = (params) => {
-    console.log(params);
+  handleResize = () => {
     this.setState({
       renderedWidth: this.props.width,
       renderedHeight: this.props.height,
