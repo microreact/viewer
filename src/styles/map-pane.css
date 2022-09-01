@@ -45,11 +45,11 @@
 
 /*#region Hovered styles */
 
-.mr-map.hovered .overlays {
+.mr-map.mr-hovered .mapboxgl-canvas-container {
   cursor: pointer !important;
 }
 
-.mr-map.hovered .overlays .mr-map-lasso {
+.mr-map.mr-hovered .overlays .mr-map-lasso {
   height: 100%;
 }
 
