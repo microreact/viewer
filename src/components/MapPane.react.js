@@ -34,7 +34,7 @@ const InteractiveMap = React.memo(
     return (
       <ReactMapGL
         {...props.viewport}
-        interactiveLayerIds={interactiveLayerIds}
+        interactiveLayerIds={props.showRegions ? interactiveLayerIds : undefined}
         mapboxAccessToken={props.mapboxApiAccessToken}
         mapId={props.mapId}
         mapStyle={props.mapboxStyle}
