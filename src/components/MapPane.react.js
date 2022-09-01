@@ -36,7 +36,6 @@ const InteractiveMap = React.memo(
         mapId={props.mapId}
         mapStyle={props.mapboxStyle}
         // onClick={props.onClick}
-        onResize={props.onResize}
         // onHover={props.onHover}
         onMove={props.onViewportChange}
         ref={props.reactMapRef}
@@ -236,13 +235,6 @@ class MapPane extends React.PureComponent {
     }
   };
 
-  handleResize = () => {
-    this.setState({
-      renderedWidth: this.props.width,
-      renderedHeight: this.props.height,
-    });
-  };
-
   handleZoom = (delta) => {
     this.handleViewportChange({
       ...this.props.viewport,
@@ -318,7 +310,6 @@ class MapPane extends React.PureComponent {
           mapboxStyle={props.mapboxStyle}
           onClick={this.handleMarkerClick}
           onHover={this.handleMapHover}
-          onResize={this.handleResize}
           onViewportChange={this.handleViewportChange}
           reactMapRef={this.reactMapRef}
           viewport={props.viewport}
