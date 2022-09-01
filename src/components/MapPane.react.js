@@ -79,7 +79,7 @@ InteractiveMap.propTypes = {
   onViewportChange: PropTypes.func.isRequired,
   reactMapRef: ReactRef,
   showRegions: PropTypes.bool.isRequired,
-  // viewport: ReactMapGL.propTypes.viewState,
+  viewport: PropTypes.object.viewState,
   width: PropTypes.number.isRequired,
 };
 
@@ -375,7 +375,7 @@ MapPane.propTypes = {
   tileLayerUrl: PropTypes.string,
   trackViewport: PropTypes.bool.isRequired,
   type: PropTypes.string,
-  // viewport: ReactMapGL.propTypes.viewState,
+  viewport: PropTypes.object.viewState,
   width: PropTypes.number.isRequired,
   zoom: PropTypes.number,
 };
