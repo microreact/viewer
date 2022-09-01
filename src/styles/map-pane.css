@@ -13,7 +13,7 @@
   bottom: 28px;
   left: 0px;
   margin-left: 4px;
-  margin-bottom: 4px;
+  margin-bottom: 0;
   position: absolute;
 }
 .mr-map .mapboxgl-ctrl-attrib-button {
