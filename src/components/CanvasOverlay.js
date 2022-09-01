@@ -68,14 +68,17 @@ class OverlayControl {
  * A custom control that rerenders arbitrary React content whenever the camera changes
  */
 function CustomOverlay(props) {
+  const { redraw, ...rest } = props;
+
   const ctrl = useControl(() => {
-    return new OverlayControl(props.redraw);
+    return new OverlayControl(redraw);
   });
 
   React.useEffect(
     () => {
       ctrl._redraw();
-    }
+    },
+    Object.values(rest),
   );
 
   return null;
