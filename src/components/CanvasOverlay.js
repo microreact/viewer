@@ -28,15 +28,10 @@ class OverlayControl {
         ctx.save();
         ctx.scale(pixelRatio, pixelRatio);
 
-        // position: 'absolute',
-        // left: 0,
-        // top: 0,
-
         redraw({
           width,
           height,
           ctx,
-          // isDragging,
           project: this._map.project.bind(this._map),
           unproject: this._map.unproject.bind(this._map),
         });
