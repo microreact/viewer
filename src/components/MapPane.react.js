@@ -36,8 +36,8 @@ const InteractiveMap = React.memo(
         mapboxAccessToken={props.mapboxApiAccessToken}
         mapId={props.mapId}
         mapStyle={props.mapboxStyle}
-        // onClick={props.onClick}
         // onHover={props.onHover}
+        onClick={props.onClick}
         onMove={props.onViewportChange}
         ref={props.reactMapRef}
         style={style}
@@ -151,9 +151,9 @@ class MapPane extends React.PureComponent {
   };
 
   handleMarkerClick = (event) => {
-    const isAppend = (event.srcEvent.metaKey || event.srcEvent.ctrlKey);
+    const isAppend = (event.originalEvent.metaKey || event.originalEvent.ctrlKey);
     if (this.props.showMarkers) {
-      const marker = this.findMarkerAtPoint(event.offsetCenter);
+      const marker = this.findMarkerAtPoint(event.point);
       if (marker) {
         this.props.onSelectRows(
           marker.rows.map((row) => row[0]),
