@@ -75,9 +75,13 @@ function CustomOverlay(props) {
     return new OverlayControl(props.redraw);
   });
 
-  const map = ctrl.getMap();
+  React.useEffect(
+    () => {
+      ctrl._redraw();
+    }
+  );
 
-  return map && null;
+  return null;
 }
 
 export default (CustomOverlay);
