@@ -4,13 +4,13 @@
   align-items: center;
   background-color: hsla(0,0%,100%,.75);
   border-radius: 12px;
-  bottom: 48px;
+  bottom: 56px;
   cursor: pointer;
   display: flex;
   height: 24px;
   justify-content: center;
   position: absolute;
-  left: 2px;
+  left: 6px;
   width: 24px;
 }
 .mr-map-legend-button svg {
@@ -25,12 +25,12 @@
 .mr-map-legend {
   background-color: hsla(0,0%,100%,.75);
   border-radius: 8px;
-  bottom: 48px;
+  bottom: 56px;
   max-height: calc(100% - 80px);
   overflow-x: hidden;
   overflow-y: hidden;
   position: absolute;
-  left: 2px;
+  left: 6px;
   scrollbar-width: thin;
 }
 
