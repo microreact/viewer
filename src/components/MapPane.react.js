@@ -21,6 +21,13 @@ import { subscribe } from "../utils/events";
 
 const InteractiveMap = React.memo(
   (props) => {
+    const style = React.useMemo(
+      () => ({
+        width: `${props.width}px`,
+        height: `${props.height}px`,
+      }),
+      [ props.width, props.height ]
+    );
     return (
       <ReactMapGL
         {...props.viewport}
@@ -33,12 +40,7 @@ const InteractiveMap = React.memo(
         // onHover={props.onHover}
         onMove={props.onViewportChange}
         ref={props.reactMapRef}
-        style={
-          {
-            width: props.width,
-            height: props.height,
-          }
-        }
+        style={style}
       >
         {/* {
           props.showRegions && (
