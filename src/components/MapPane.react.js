@@ -123,7 +123,9 @@ class MapPane extends React.PureComponent {
   componentDidUpdate(prevProps) {
     // require("../../dev/compare-prev-props")(prevProps, this.props, "map-props");
     // require("../../dev/compare-prev-props")(prevState, this.state, "map-state");
-    if (this.props.trackViewport && this.props.trackViewport !== prevProps.trackViewport) {
+    const { props } = this;
+
+    if (props.trackViewport && props.trackViewport !== prevProps.trackViewport) {
       this.handleViewportFilter();
     }
   }
