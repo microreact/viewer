@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { CanvasOverlay } from "react-map-gl";
+import CanvasOverlay from "./CanvasOverlay";
 
 import { drawShape, drawPieChart } from "../utils/drawing";
 import defaults from "../defaults";
@@ -14,14 +14,9 @@ function round(x, n) {
 
 export default class MapMarkersLayer extends React.PureComponent {
 
-  canvasOverlayRef = React.createRef()
-
-  markerBounds = []
-
   onCanvasOverlayRedraw = ({ width, height, ctx, isDragging, project, unproject }) => {
     const {
       compositeOperation,
-      renderWhileDragging,
       globalOpacity,
     } = this.props;
 
@@ -29,12 +24,12 @@ export default class MapMarkersLayer extends React.PureComponent {
     ctx.globalCompositeOperation = compositeOperation;
     ctx.globalAlpha = globalOpacity;
 
-    if ((renderWhileDragging || !isDragging) && this.props.showMarkers && this.props.markers) {
+    if (this.props.showMarkers && this.props.markers) {
       for (const marker of this.props.markers) {
         if (marker.rows.length > 0) {
           const pixel = project(marker.position);
-          const pixelX = round(pixel[0], 1);
-          const pixelY = round(pixel[1], 1);
+          const pixelX = round(pixel.x, 1);
+          const pixelY = round(pixel.y, 1);
 
           if (
             pixelX + this.props.nodeRadius >= 0 &&
