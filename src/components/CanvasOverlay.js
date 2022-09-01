@@ -70,10 +70,7 @@ class OverlayControl {
 function CustomOverlay(props) {
   const ctrl = useControl(() => new OverlayControl(props.redraw));
 
-  React.useEffect(
-    ctrl._redraw,
-    [ props ],
-  );
+  React.useEffect(ctrl._redraw);
 
   return null;
 }
