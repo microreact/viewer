@@ -18,6 +18,7 @@ import { downloadDataUrl } from "../utils/downloads";
 import { MapboxStyle, MapMarker, ReactRef } from "../utils/prop-types";
 import * as HtmlUtils from "../utils/html";
 import { subscribe } from "../utils/events";
+import { triggerWindowResize } from "../utils/browser";
 
 const InteractiveMap = React.memo(
   (props) => {
@@ -123,6 +124,10 @@ class MapPane extends React.PureComponent {
     // require("../../dev/compare-prev-props")(prevProps, this.props, "map-props");
     // require("../../dev/compare-prev-props")(prevState, this.state, "map-state");
     const { props } = this;
+
+    if (props.width !== prevProps.width || props.height !== prevProps.height) {
+      triggerWindowResize();
+    }
 
     if (props.trackViewport && props.trackViewport !== prevProps.trackViewport) {
       this.handleViewportFilter();
@@ -312,9 +317,6 @@ class MapPane extends React.PureComponent {
           hideScaleControl={props.hideScaleControl}
           // markersOverlayRef={this.markersOverlayRef}
           // lassoOverlayRef={this.lassoOverlayRef}
-          renderedWidth={state.renderedWidth}
-          renderedHeight={state.renderedHeight}
-          renderedAt={state.renderedAt}
         />
 
         { this.renderTooltip() }
