@@ -20,6 +20,8 @@ import * as HtmlUtils from "../utils/html";
 import { subscribe } from "../utils/events";
 import { triggerWindowResize } from "../utils/browser";
 
+const interactiveLayerIds = [ "mr-geojson-layer" ];
+
 const InteractiveMap = React.memo(
   (props) => {
     const style = React.useMemo(
@@ -32,6 +34,7 @@ const InteractiveMap = React.memo(
     return (
       <ReactMapGL
         {...props.viewport}
+        interactiveLayerIds={interactiveLayerIds}
         mapboxAccessToken={props.mapboxApiAccessToken}
         mapId={props.mapId}
         mapStyle={props.mapboxStyle}
