@@ -12,7 +12,9 @@ function round(x, n) {
   return Math.round(x * tenN) / tenN;
 }
 
-export default class MapMarkersLayer extends React.PureComponent {
+class MapMarkersLayer extends React.Component {
+
+  canvasRef = React.createRef();
 
   onCanvasOverlayRedraw = ({ width, height, ctx, isDragging, project, unproject }) => {
     const {
@@ -79,12 +81,72 @@ export default class MapMarkersLayer extends React.PureComponent {
     }
   };
 
+  componentDidMount() {
+
+    this.redraw();
+  }
+
+  componentDidUpdate() {
+    this.redraw();
+  }
+
+  redraw() {
+    console.log("redraw method is called ", this);
+    const { props, canvasRef } = this;
+    const width = props.map.getContainer().clientWidth;
+    const height = props.map.getContainer().clientHeight;
+    const ctx = canvasRef.current?.getContext("2d");
+
+    this.onCanvasOverlayRedraw({
+      width,
+      height,
+      ctx,
+      project: props.map.project.bind(props.map),
+      unproject: props.map.unproject.bind(props.map),
+    });
+  }
+
   render() {
+    //   () => {
+    // const canvas = this.getElement();
+    // const ctx = this.getElement()?.getContext("2d");
+    // if (ctx) {
+
+    //
+    //   canvas.width = width * pixelRatio;
+    //   canvas.height = height * pixelRatio;
+    //   canvas.style.width = `${width}px`;
+    //   canvas.style.height = `${height}px`;
+    //
+    //   ctx.save();
+    //   ctx.scale(pixelRatio, pixelRatio);
+    //
+    //   redraw({
+    //     width,
+    //     height,
+    //     ctx,
+    //     project: this._map.project.bind(this._map),
+    //     unproject: this._map.unproject.bind(this._map),
+    //   });
+    //
+    //   ctx.restore();
+    // }
+
+    const { props, canvasRef } = this;
+    const width = props.map.getContainer().clientWidth;
+    const height = props.map.getContainer().clientHeight;
+    const pixelRatio = (typeof window !== "undefined" && window.devicePixelRatio) || 1;
+
     return (
-      <CanvasOverlay
-        {...this.props}
-        redraw={this.onCanvasOverlayRedraw}
-      />
+        <canvas
+            ref={canvasRef}
+            width={width * pixelRatio}
+            height={height * pixelRatio}
+            style={{
+              height: `${height}px`,
+              width: `${width}px`,
+            }}
+        />
     );
   }
 
@@ -110,3 +172,11 @@ MapMarkersLayer.defaultProps = {
   // Same as browser default.
   compositeOperation: "source-over",
 };
+
+export default function (props) {
+  return (
+    <CanvasOverlay>
+      <MapMarkersLayer {...props}/>
+    </CanvasOverlay>
+  );
+}
