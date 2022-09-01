@@ -7,7 +7,7 @@ import debounce from "lodash.debounce";
 import "../styles/map-pane.css";
 
 import ZoomControls from "./ZoomControls.react";
-// import MapMarkersLayer from "../containers/MapMarkersLayer.react";
+import MapMarkersLayer from "../containers/MapMarkersLayer.react";
 // import MapLassoOverlay from "../containers/MapLassoLayer.react";
 import MapControls from "../containers/MapControls.react";
 // import MapGeojsonLayer from "../containers/MapGeojsonLayer.react";
@@ -50,9 +50,9 @@ const InteractiveMap = React.memo(
           )
         } */}
 
-        {/* <MapMarkersLayer
+        <MapMarkersLayer
           mapId={props.mapId}
-        /> */}
+        />
 
         {/* <MapLassoOverlay
           mapId={props.mapId}
