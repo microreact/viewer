@@ -80,7 +80,6 @@ InteractiveMap.propTypes = {
   mapId: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   onHover: PropTypes.func.isRequired,
-  onResize: PropTypes.func.isRequired,
   onViewportChange: PropTypes.func.isRequired,
   reactMapRef: ReactRef,
   showRegions: PropTypes.bool.isRequired,
