@@ -8,7 +8,7 @@ import "../styles/map-pane.css";
 
 import ZoomControls from "./ZoomControls.react";
 import MapMarkersLayer from "../containers/MapMarkersLayer.react";
-// import MapLassoOverlay from "../containers/MapLassoLayer.react";
+import MapLassoOverlay from "../containers/MapLassoLayer.react";
 import MapControls from "../containers/MapControls.react";
 import MapGeojsonLayer from "../containers/MapGeojsonLayer.react";
 import MapLegend from "../containers/MapLegend.react";
@@ -57,9 +57,9 @@ const InteractiveMap = React.memo(
           mapId={props.mapId}
         />
 
-        {/* <MapLassoOverlay
+        <MapLassoOverlay
           mapId={props.mapId}
-        /> */}
+        />
 
         {
           !props.hideScaleControl && (<ScaleControl />)

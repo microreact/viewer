@@ -76,7 +76,7 @@ function CustomOverlay(props) {
 }
 
 CustomOverlay.propTypes = {
-  redraw: PropTypes.func.isRequied,
+  redraw: PropTypes.func,
 };
 
 export default React.memo(CustomOverlay);
