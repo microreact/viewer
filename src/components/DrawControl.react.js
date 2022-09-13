@@ -31,17 +31,6 @@ function DrawControl(props) {
     return draw;
   }
 
-  function onMount(path) {
-    if (path) {
-      draw.add(getGeoJson(props.path));
-      setDraw(draw);
-    }
-  }
-
-  function onUnMount() {
-    setDraw(null);
-  }
-
   useControl(
     setMapBoxDrawProps,
     ({ map }) => {
@@ -58,9 +47,14 @@ function DrawControl(props) {
 
   React.useEffect(
     () => {
-      onMount(props.path);
+      if (props.path) {
+        draw.add(getGeoJson(props.path));
+        setDraw(draw);
+      }
 
-      return onUnMount;
+      return function onUnMount() {
+        setDraw(null);
+      };
     },
     [
       props.path,
