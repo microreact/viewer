@@ -56,11 +56,17 @@ function DrawControl(props) {
     },
   );
 
-  React.useEffect(() => {
-    onMount(props.path);
+  React.useEffect(
+    () => {
+      onMount(props.path);
 
-    return onUnMount;
-  }, [props.path, draw]);
+      return onUnMount;
+    },
+    [
+      props.path,
+      draw,
+    ],
+  );
 
   return null;
 }
