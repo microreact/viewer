@@ -22,17 +22,15 @@ function getGeoJson(path) {
 function DrawControl(props) {
   const [draw, setDraw] = React.useState(null);
 
-  function setMapBoxDrawProps() {
-    if (!draw) {
-      const mbd = new MapboxDraw(props);
-      setDraw(mbd);
-      return mbd;
-    }
-    return draw;
-  }
-
   useControl(
-    setMapBoxDrawProps,
+    () => {
+      if (!draw) {
+        const mbd = new MapboxDraw(props);
+        setDraw(mbd);
+        return mbd;
+      }
+      return draw;
+    },
     ({ map }) => {
       map.on("draw.create", props.onCreate);
       map.on("draw.update", props.onUpdate);
