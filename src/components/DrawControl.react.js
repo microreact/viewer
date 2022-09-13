@@ -36,10 +36,6 @@ function DrawControl(props) {
     if (path) {
       draw.add(getGeoJson(props.path));
       setDraw(draw);
-
-      return () => {
-        setDraw(null);
-      };
     }
   }
 
