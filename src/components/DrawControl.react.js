@@ -52,7 +52,7 @@ function DrawControl(props) {
         setDraw(draw);
       }
 
-      return function onUnMount() {
+      return () => {
         setDraw(null);
       };
     },
