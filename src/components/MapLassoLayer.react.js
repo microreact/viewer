@@ -67,7 +67,9 @@ MapLassoOverlay.propTypes = {
   isActive: PropTypes.bool.isRequired,
   onPathChange: PropTypes.func.isRequired,
   path: PropTypes.array,
+  pointFillStyle: PropTypes.string,
   pointSize: PropTypes.number,
+  strokeStyle: PropTypes.string,
 };
 
 MapLassoOverlay.defaultProps = {
