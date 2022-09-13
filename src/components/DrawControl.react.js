@@ -20,7 +20,7 @@ function getGeoJson(path) {
 }
 
 function DrawControl(props) {
-  const [draw, setDraw] = React.useState(null);
+  const [ draw, setDraw ] = React.useState(null);
 
   useControl(
     () => {
