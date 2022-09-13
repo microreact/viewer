@@ -20,7 +20,6 @@ function getGeoJson(path) {
 }
 
 function DrawControl(props) {
-  const { onCreate, onUpdate, onDelete, path } = props;
   const [draw, setDraw] = React.useState(null);
 
   function setMapBoxDrawProps() {
@@ -46,22 +45,22 @@ function DrawControl(props) {
   useControl(
     setMapBoxDrawProps,
     ({ map }) => {
-      map.on("draw.create", onCreate);
-      map.on("draw.update", onUpdate);
-      map.on("draw.delete", onDelete);
+      map.on("draw.create", props.onCreate);
+      map.on("draw.update", props.onUpdate);
+      map.on("draw.delete", props.onDelete);
     },
     ({ map }) => {
-      map.off("draw.create", onCreate);
-      map.off("draw.update", onUpdate);
-      map.off("draw.delete", onDelete);
+      map.off("draw.create", props.onCreate);
+      map.off("draw.update", props.onUpdate);
+      map.off("draw.delete", props.onDelete);
     },
   );
 
   React.useEffect(() => {
-    onMount(path);
+    onMount(props.path);
 
     return onUnMount;
-  }, [path, draw]);
+  }, [props.path, draw]);
 
   return null;
 }
