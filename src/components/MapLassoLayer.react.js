@@ -1,24 +1,22 @@
-
-import DrawControl from "./DrawControl.react";
 import React from "react";
 
 import PropTypes from "prop-types";
+import DrawControl from "./DrawControl.react";
 
-const handleCreate = (controls,onPathChange) =>{
-    const path = controls?.features[0]?.geometry?.coordinates;
-    console.log('controls', controls?.features);
-    onPathChange(path[0]);
-    return null;
+const handleCreate = (controls, onPathChange) => {
+  const path = controls?.features[0]?.geometry?.coordinates;
+  onPathChange(path[0]);
+  return null;
 };
 
-const handleDelete = (onPathChange)=>{
-    onPathChange(null);
-    return null;
-}
+const handleDelete = (onPathChange) => {
+  onPathChange(null);
+  return null;
+};
 
- export default function MapLassoOverlay(props) {
+export default function MapLassoOverlay(props) {
 
-  const {isActive, strokeStyle, pointFillStyle, path, pointSize} = props;
+  const { isActive, strokeStyle, pointFillStyle, path, pointSize } = props;
 
   const onCreate = React.useCallback((controls) => handleCreate(controls, props.onPathChange), []);
   const onDelete = React.useCallback(() => handleDelete(props.onPathChange), []);
