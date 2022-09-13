@@ -1,9 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
-import ReactMapGL, {
-  ScaleControl,
-} from "react-map-gl";
+import ReactMapGL, { ScaleControl } from "react-map-gl";
 import debounce from "lodash.debounce";
 
 import "../styles/map-pane.css";
@@ -20,27 +18,32 @@ import { downloadDataUrl } from "../utils/downloads";
 import { MapboxStyle, MapMarker, ReactRef } from "../utils/prop-types";
 import * as HtmlUtils from "../utils/html";
 import { subscribe } from "../utils/events";
+import { triggerWindowResize } from "../utils/browser";
+
+const interactiveLayerIds = [ "mr-geojson-layer" ];
 
 const InteractiveMap = React.memo(
   (props) => {
+    const style = React.useMemo(
+      () => ({
+        width: `${props.width}px`,
+        height: `${props.height}px`,
+      }),
+      [ props.width, props.height ]
+    );
     return (
       <ReactMapGL
         {...props.viewport}
-        mapOptions={
-          {
-            renderWorldCopies: false,
-          }
-        }
-        height={props.height}
-        mapboxApiAccessToken={props.mapboxApiAccessToken}
+        interactiveLayerIds={props.showRegions ? interactiveLayerIds : undefined}
+        mapboxAccessToken={props.mapboxApiAccessToken}
         mapId={props.mapId}
         mapStyle={props.mapboxStyle}
         onClick={props.onClick}
-        onResize={props.onResize}
-        onHover={props.onHover}
-        onViewportChange={props.onViewportChange}
+        onMouseMove={props.onHover}
+        onMove={props.onViewportChange}
         ref={props.reactMapRef}
-        width={props.width}
+        renderWorldCopies={false}
+        style={style}
       >
         {
           props.showRegions && (
@@ -58,9 +61,9 @@ const InteractiveMap = React.memo(
           mapId={props.mapId}
         />
 
-        {/* {
+        {
           !props.hideScaleControl && (<ScaleControl />)
-        } */}
+        }
 
       </ReactMapGL>
     );
@@ -77,22 +80,20 @@ InteractiveMap.propTypes = {
   mapId: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   onHover: PropTypes.func.isRequired,
-  onResize: PropTypes.func.isRequired,
   onViewportChange: PropTypes.func.isRequired,
   reactMapRef: ReactRef,
   showRegions: PropTypes.bool.isRequired,
-  viewport: ReactMapGL.propTypes.viewState,
+  viewport: PropTypes.object,
   width: PropTypes.number.isRequired,
 };
 
 class MapPane extends React.PureComponent {
 
-  state = {
-  }
+  state = {};
 
-  elementRef = React.createRef()
+  elementRef = React.createRef();
 
-  reactMapRef = React.createRef()
+  reactMapRef = React.createRef();
 
   componentDidMount() {
     this.beforeScreenshotUnsubscribe = subscribe(
@@ -124,7 +125,13 @@ class MapPane extends React.PureComponent {
   componentDidUpdate(prevProps) {
     // require("../../dev/compare-prev-props")(prevProps, this.props, "map-props");
     // require("../../dev/compare-prev-props")(prevState, this.state, "map-state");
-    if (this.props.trackViewport && this.props.trackViewport !== prevProps.trackViewport) {
+    const { props } = this;
+
+    if (props.width !== prevProps.width || props.height !== prevProps.height) {
+      triggerWindowResize();
+    }
+
+    if (props.trackViewport && props.trackViewport !== prevProps.trackViewport) {
       this.handleViewportFilter();
     }
   }
@@ -143,12 +150,13 @@ class MapPane extends React.PureComponent {
 
   getMapboxWrapper = () => {
     return this.reactMapRef.current.getMap();
-  }
+  };
 
   handleMarkerClick = (event) => {
-    const isAppend = (event.srcEvent.metaKey || event.srcEvent.ctrlKey);
+    const isAppend = (event.originalEvent.metaKey || event.originalEvent.ctrlKey);
+
     if (this.props.showMarkers) {
-      const marker = this.findMarkerAtPoint(event.offsetCenter);
+      const marker = this.findMarkerAtPoint(event.point);
       if (marker) {
         this.props.onSelectRows(
           marker.rows.map((row) => row[0]),
@@ -157,6 +165,7 @@ class MapPane extends React.PureComponent {
         return;
       }
     }
+
     if (this.props.showRegions && event.features) {
       const feature = event.features.find((x) => x.layer.id === "mr-geojson-layer");
       if (feature) {
@@ -167,21 +176,22 @@ class MapPane extends React.PureComponent {
         return;
       }
     }
+
     if (!isAppend) {
       this.props.onSelectRows();
     }
-  }
+  };
 
   handleMapHover = (event) => {
     if (this.props.showMarkers) {
-      const marker = this.findMarkerAtPoint(event.offsetCenter);
+      const marker = this.findMarkerAtPoint(event.point);
       if (marker) {
         if (marker !== this.state.hover?.marker) {
           this.setState({
             hover: {
               marker,
-              x: event.srcEvent.offsetX,
-              y: event.srcEvent.offsetY,
+              x: event.originalEvent.offsetX,
+              y: event.originalEvent.offsetY,
             },
           });
         }
@@ -196,8 +206,8 @@ class MapPane extends React.PureComponent {
           this.setState({
             hover: {
               region,
-              x: event.srcEvent.offsetX,
-              y: event.srcEvent.offsetY,
+              x: event.originalEvent.offsetX,
+              y: event.originalEvent.offsetY,
             },
           });
         }
@@ -208,54 +218,32 @@ class MapPane extends React.PureComponent {
     if (this.state.hover) {
       this.setState({ hover: null });
     }
-  }
+  };
 
-  handleViewportChange = (viewState, interactionState, oldViewState) => {
-    // Ignores the very first viewport change event by waiting for the reference to be set
-    if (oldViewState && Object.keys(oldViewState).length === 0) {
-      this.setState({ renderedAt: new Date().valueOf() });
+  handleViewportChange = (event) => {
+    const { props } = this;
+    if (
+      event.viewState
+      ||
+      event.viewState.altitude !== props.viewport.altitude
+      ||
+      event.viewState.bearing !== props.viewport.bearing
+      ||
+      event.viewState.latitude !== props.viewport.latitude
+      ||
+      event.viewState.longitude !== props.viewport.longitude
+      ||
+      event.viewState.pitch !== props.viewport.pitch
+      ||
+      event.viewState.zoom !== props.viewport.zoom
+    ) {
+      this.props.onViewportChange(event.viewState);
     }
-    else {
-      if (
-        !oldViewState
-        ||
-        oldViewState.altitude !== viewState.altitude
-        ||
-        oldViewState.bearing !== viewState.bearing
-        ||
-        oldViewState.latitude !== viewState.latitude
-        ||
-        oldViewState.longitude !== viewState.longitude
-        ||
-        oldViewState.pitch !== viewState.pitch
-        ||
-        oldViewState.zoom !== viewState.zoom
-      ) {
-        this.props.onViewportChange({
-          altitude: viewState.altitude,
-          bearing: viewState.bearing,
-          latitude: viewState.latitude,
-          longitude: viewState.longitude,
-          pitch: viewState.pitch,
-          zoom: viewState.zoom,
-        });
-      }
-      else {
-        this.setState({ renderedAt: new Date().valueOf() });
-      }
 
-      if (this.props.trackViewport) {
-        this.debouncedViewportFilter();
-      }
+    if (this.props.trackViewport) {
+      this.debouncedViewportFilter();
     }
-  }
-
-  handleResize = () => {
-    this.setState({
-      renderedWidth: this.props.width,
-      renderedHeight: this.props.height,
-    });
-  }
+  };
 
   handleZoom = (delta) => {
     this.handleViewportChange({
@@ -277,7 +265,7 @@ class MapPane extends React.PureComponent {
         );
     });
     mapboxMap.triggerRepaint();
-  }
+  };
 
   handleViewportFilter = () => {
     const mapboxMap = this.reactMapRef.current.getMap();
@@ -289,7 +277,7 @@ class MapPane extends React.PureComponent {
       bounds.getSouthWest().toArray(),
       bounds.getNorthWest().toArray(),
     ]);
-  }
+  };
 
   debouncedViewportFilter = debounce(
     this.handleViewportFilter,
@@ -316,14 +304,8 @@ class MapPane extends React.PureComponent {
 
     return (
       <div
-        className={state.hover ? "mr-map hovered" : "mr-map"}
+        className={state.hover ? "mr-map mr-hovered" : "mr-map"}
         ref={this.elementRef}
-        // style={
-        //   {
-        //     width: this.props.width,
-        //     height: this.props.height,
-        //   }
-        // }
       >
         <InteractiveMap
           height={props.height}
@@ -332,7 +314,6 @@ class MapPane extends React.PureComponent {
           mapboxStyle={props.mapboxStyle}
           onClick={this.handleMarkerClick}
           onHover={this.handleMapHover}
-          onResize={this.handleResize}
           onViewportChange={this.handleViewportChange}
           reactMapRef={this.reactMapRef}
           viewport={props.viewport}
@@ -341,9 +322,6 @@ class MapPane extends React.PureComponent {
           hideScaleControl={props.hideScaleControl}
           // markersOverlayRef={this.markersOverlayRef}
           // lassoOverlayRef={this.lassoOverlayRef}
-          renderedWidth={state.renderedWidth}
-          renderedHeight={state.renderedHeight}
-          renderedAt={state.renderedAt}
         />
 
         { this.renderTooltip() }
@@ -393,7 +371,7 @@ MapPane.propTypes = {
   tileLayerUrl: PropTypes.string,
   trackViewport: PropTypes.bool.isRequired,
   type: PropTypes.string,
-  viewport: ReactMapGL.propTypes.viewState,
+  viewport: PropTypes.object,
   width: PropTypes.number.isRequired,
   zoom: PropTypes.number,
 };

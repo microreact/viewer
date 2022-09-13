@@ -146,7 +146,7 @@ class Chart extends React.PureComponent {
                 onError={handleError}
                 // onNewView={
                 //   (x) => {
-                //     console.log(x)
+                //     console.debug(x)
                 //     // if (this.state.vegaError !== null) {
                 //     //   this.setState({ vegaError: null });
                 //     // }

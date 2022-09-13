@@ -32,7 +32,26 @@
       "coordinate-unit": "decimal-degrees",
       "latitudeField": "latitude",
       "longitudeField": "longitude",
-      "viewport": null
+      "viewport": null,
+      "lasso": true,
+      "path": [
+        [
+          -8.141422503834576,
+          7.114510612729944
+        ],
+        [
+          -12.831320163374784,
+          5.272607329235612
+        ],
+        [
+          -6.636023255094415,
+          4.407212888976176
+        ],
+        [
+          -8.141422503834576,
+          7.114510612729944
+        ]
+      ]
     }
   },
   "meta": {
