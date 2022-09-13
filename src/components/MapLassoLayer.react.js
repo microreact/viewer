@@ -42,8 +42,8 @@ const handleDelete = (onPathChange)=>{
           }
         },
         {
-          "id": "user_draw-line-vertex",
-          "type": "rect",
+            "id": "gl-draw-line-vertex",
+            "type": "circle",
           "paint": {
             "circle-radius": pointSize,
             "circle-color": pointFillStyle,
