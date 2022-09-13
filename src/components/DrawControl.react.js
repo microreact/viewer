@@ -67,8 +67,8 @@ function DrawControl(props) {
 
 DrawControl.propTypes = {
   onCreate: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
   path: PropTypes.array,
 };
 
