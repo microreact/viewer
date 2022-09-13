@@ -15,18 +15,15 @@ const handleDelete = (onPathChange) => {
 };
 
 export default function MapLassoOverlay(props) {
-
-  const { isActive, strokeStyle, pointFillStyle, path, pointSize } = props;
-
   const onCreate = React.useCallback((controls) => handleCreate(controls, props.onPathChange), []);
   const onDelete = React.useCallback(() => handleDelete(props.onPathChange), []);
 
-  if (isActive) {
+  if (props.isActive) {
     return (
       <DrawControl
         displayControlsDefault={false}
         defaultMode= 'draw_polygon'
-        path={path}
+        path={props.path}
         onCreate={onCreate}
         onUpdate={onCreate}
         onDelete={onDelete}
@@ -36,7 +33,7 @@ export default function MapLassoOverlay(props) {
             "id": "gl-draw-line",
             "type": "line",
             "paint": {
-              "line-color": strokeStyle,
+              "line-color": props.strokeStyle,
               "line-width": 2,
             },
           },
@@ -44,9 +41,9 @@ export default function MapLassoOverlay(props) {
             "id": "gl-draw-line-vertex",
             "type": "circle",
             "paint": {
-              "circle-radius": pointSize,
-              "circle-color": pointFillStyle,
-              "circle-stroke-color": strokeStyle,
+              "circle-radius": props.pointSize,
+              "circle-color": props.pointFillStyle,
+              "circle-stroke-color": props.strokeStyle,
               "circle-stroke-width": 2,
               "circle-opacity": 0.8,
             },
