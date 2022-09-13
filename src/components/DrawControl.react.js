@@ -18,7 +18,7 @@ function getGeoJson(path) {
   };
 }
 
-export default function DrawControl(props) {
+function DrawControl(props) {
   const { onCreate, onUpdate, onDelete, path } = props;
   const [draw, setDraw] = React.useState(null);
 
@@ -68,3 +68,5 @@ export default function DrawControl(props) {
 
   return null;
 }
+
+export default DrawControl;
