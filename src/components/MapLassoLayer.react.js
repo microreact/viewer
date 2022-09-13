@@ -1,6 +1,6 @@
-import React,{useCallback} from "react";
 
 import DrawControl from "./DrawControl.react";
+import React from "react";
 
 import PropTypes from "prop-types";
 
@@ -20,8 +20,8 @@ const handleDelete = (onPathChange)=>{
 
   const {isActive, strokeStyle, pointFillStyle, path, pointSize} = props;
 
-  const onCreate = useCallback((controls)=> handleCreate(controls, props.onPathChange),[]);
-  const onDelete = useCallback(()=> handleDelete(props.onPathChange),[]);
+  const onCreate = React.useCallback((controls) => handleCreate(controls, props.onPathChange), []);
+  const onDelete = React.useCallback(() => handleDelete(props.onPathChange), []);
 
   return isActive ? (
       <DrawControl
