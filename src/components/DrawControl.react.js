@@ -11,7 +11,7 @@ function getGeoJson(path) {
         "type": "Feature",
         "properties": {},
         "geometry": {
-          "coordinates": [path],
+          "coordinates": [ path ],
           "type": "Polygon",
         },
       },
