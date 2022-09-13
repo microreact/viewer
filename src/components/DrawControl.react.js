@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import { useControl } from "react-map-gl";
 
@@ -68,5 +69,12 @@ function DrawControl(props) {
 
   return null;
 }
+
+DrawControl.propTypes = {
+  onCreate: PropTypes.func.isRequired,
+  onUpdate: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  path: PropTypes.array,
+};
 
 export default DrawControl;
