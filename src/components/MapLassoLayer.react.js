@@ -73,7 +73,7 @@ MapLassoOverlay.defaultProps = {
   lineWidth: 2,
   path: null,
   pointFillStyle: "#ffffff",
-  pointSize: 14,
+  pointSize: 8,
   pointStrokeStyle: "#000000",
   strokeStyle: "#3C7383",
 };
