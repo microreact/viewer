@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React from "react";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import { useControl } from "react-map-gl";
 
@@ -20,7 +20,7 @@ function getGeoJson(path) {
 
 export default function DrawControl(props) {
   const { onCreate, onUpdate, onDelete, path } = props;
-  const [draw, setDraw] = useState(null);
+  const [draw, setDraw] = React.useState(null);
 
   function setMapBoxDrawProps() {
     if (!draw) {
@@ -60,7 +60,7 @@ export default function DrawControl(props) {
     },
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     onMount(path);
 
     return onUnMount;
