@@ -162,6 +162,7 @@ class MapPane extends React.PureComponent {
           marker.rows.map((row) => row[0]),
           isAppend,
         );
+        event.preventDefault();
         return;
       }
     }
@@ -173,6 +174,7 @@ class MapPane extends React.PureComponent {
           feature.properties["mr-region-id"],
           isAppend,
         );
+        event.preventDefault();
         return;
       }
     }

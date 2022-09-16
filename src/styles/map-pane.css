@@ -44,7 +44,6 @@
 /*#endregion*/
 
 
-
 /*#region Hovered styles */
 
 .mr-map.mr-hovered .mapboxgl-canvas-container {
@@ -53,6 +52,37 @@
 
 .mr-map.mr-hovered .overlays .mr-map-lasso {
   height: 100%;
+}
+
+/*#endregion*/
+
+
+/*#region  */
+
+.mr-map .mapboxgl-ctrl-top-right .mr-custom-overlay {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.mr-map .mr-svg-lasso {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.mr-map .mr-lasso-canvas {
+  /* cursor: crosshair; */
+  /* pointer-events: auto; */
+}
+
+.mr-map .mr-lasso-point {
+  /* cursor: move; */
+  /* pointer-events: auto; */
 }
 
 /*#endregion*/

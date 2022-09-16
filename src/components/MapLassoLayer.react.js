@@ -1,54 +1,53 @@
 import React from "react";
+import { useMap} from 'react-map-gl';
 
 import PropTypes from "prop-types";
-import DrawControl from "./DrawControl.react";
+import CustomOverlay from "./CustomOverlay";
+import Lasso from "./SvgLasso";
 
-const handleCreate = (controls, onPathChange) => {
-  const path = controls?.features[0]?.geometry?.coordinates;
-  onPathChange(path[0]);
-  return null;
-};
+function MapLasso(props) {
+  const { current: map } = useMap();
+  // const { map } = props;
 
-const handleDelete = (onPathChange) => {
-  onPathChange(null);
-  return null;
-};
+  if (map) {
+    const width = map.getContainer().clientWidth;
+    const height = map.getContainer().clientHeight;
 
-export default function MapLassoOverlay(props) {
-  const onCreate = React.useCallback((controls) => handleCreate(controls, props.onPathChange), []);
-  const onDelete = React.useCallback(() => handleDelete(props.onPathChange), []);
+    const registerClick = React.useCallback(
+      (clickHandler) => map.on("click", clickHandler),
+      [ map ],
+    );
 
-  if (props.isActive) {
+    const unregisterClick = React.useCallback(
+      (clickHandler) => map.off("click", clickHandler),
+      [ map ],
+    );
+
+    // if (props.isActive && !props.path) {
+    //   React.useEffect(
+    //     () => {
+    //       map.on("click", clickHandler);
+    //       return () => map.off("click", clickHandler);
+    //     },
+    //   );
+    // }
+
     return (
-      <DrawControl
-        displayControlsDefault={false}
-        defaultMode= 'draw_polygon'
+      <Lasso
+        height={height}
+        isActive={props.isActive}
+        onPathChange={props.onPathChange}
         path={props.path}
-        onCreate={onCreate}
-        onUpdate={onCreate}
-        onDelete={onDelete}
-        userProperties={true}
-        styles={[
-          {
-            "id": "gl-draw-line",
-            "type": "line",
-            "paint": {
-              "line-color": props.strokeStyle,
-              "line-width": 2,
-            },
-          },
-          {
-            "id": "gl-draw-line-vertex",
-            "type": "circle",
-            "paint": {
-              "circle-radius": props.pointSize,
-              "circle-color": props.pointFillStyle,
-              "circle-stroke-color": props.strokeStyle,
-              "circle-stroke-width": 2,
-              "circle-opacity": 0.8,
-            },
-          },
-        ]}
+        project={map.project.bind(map)}
+        unproject={
+          (point) => {
+            const coordinates = map.unproject.call(map, point);
+            return [ coordinates.lng, coordinates.lat ];
+          }
+        }
+        width={width}
+        registerClick={registerClick}
+        unregisterClick={unregisterClick}
       />
     );
   }
@@ -56,24 +55,29 @@ export default function MapLassoOverlay(props) {
   return null;
 }
 
-MapLassoOverlay.displayName = "MapLassoOverlay";
+MapLasso.displayName = "MapLasso";
 
-MapLassoOverlay.propTypes = {
+MapLasso.propTypes = {
+  map: PropTypes.object,
   isActive: PropTypes.bool.isRequired,
   onPathChange: PropTypes.func.isRequired,
   path: PropTypes.array,
-  pointFillStyle: PropTypes.string,
-  pointSize: PropTypes.number,
-  strokeStyle: PropTypes.string,
 };
 
-MapLassoOverlay.defaultProps = {
-  dotsStyle: "#383838",
-  isActive: false,
-  lineWidth: 2,
-  path: null,
-  pointFillStyle: "#ffffff",
-  pointSize: 8,
-  pointStrokeStyle: "#000000",
-  strokeStyle: "#3C7383",
+export default function MapLassoOverlay(props) {
+  // return <MapLasso {...props} />
+  return (
+    <CustomOverlay>
+      <MapLasso {...props} />
+    </CustomOverlay>
+  );
+}
+
+MapLassoOverlay.displayName = "MapLassoOverlay";
+
+MapLassoOverlay.propTypes = {
+  map: PropTypes.object,
+  isActive: PropTypes.bool.isRequired,
+  onPathChange: PropTypes.func.isRequired,
+  path: PropTypes.array,
 };

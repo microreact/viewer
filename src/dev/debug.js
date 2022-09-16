@@ -34,7 +34,7 @@ export default {
       "longitudeField": "longitude",
       "viewport": null,
       "lasso": true,
-      "path": [
+      "-path": [
         [
           -8.141422503834576,
           7.114510612729944,
