@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import Draggable from 'react-draggable';
-// import { Rnd } from "react-rnd";
+import Draggable from "react-draggable";
 
 class SvgLasso extends React.PureComponent {
 
@@ -37,8 +36,21 @@ class SvgLasso extends React.PureComponent {
       }
     }
 
-    const newPath = [ ...(state.path || []) ];
-    newPath.push(coordinates);
+    const newPath = [
+      ...(state.path || []),
+      coordinates,
+    ];
+    this.setState({ path: newPath });
+  };
+
+  handleDrag = (event, position) => {
+    const { props, state } = this;
+    const newPath = [
+      ...(state.path || props.path),
+    ];
+    const coordinates = props.unproject([ position.x, position.y ]);
+    // console.log(newPath[parseInt(position.node.dataset.index, 10)], coordinates)
+    newPath[parseInt(position.node.dataset.index, 10)] = coordinates;
     this.setState({ path: newPath });
   };
 
@@ -57,6 +69,43 @@ class SvgLasso extends React.PureComponent {
 
     const path = state.path || props.path;
 
+    // if (path) {
+    //   const points = [];
+    //   for (const coordinates of path) {
+    //     const pixelPoint = props.project(coordinates);
+    //     points.push(`${pixelPoint.x},${pixelPoint.y}`);
+    //   }
+
+    //   // return (
+    //   //   <React.Fragment>
+    //   //     <polyline
+    //   //       points={points.join(", ")}
+    //   //       stroke={props.lineStroke}
+    //   //       fill="none"
+    //   //       strokeWidth={props.lineWidth}
+    //   //     />
+    //   //     {
+    //   //       path.map((coordinates) => {
+    //   //         const pixelPoint = props.project(coordinates);
+    //   //         return (
+    //   //             <rect
+    //   //               className="mr-lasso-point"
+    //   //               fill={props.pointFill}
+    //   //               height={props.pointSize}
+    //   //               key={coordinates.join()}
+    //   //               stroke={props.pointStroke}
+    //   //               title="Move point"
+    //   //               width={props.pointSize}
+    //   //               x={pixelPoint.x - (props.pointSize / 2)}
+    //   //               y={pixelPoint.y - (props.pointSize / 2)}
+    //   //             />
+    //   //         );
+    //   //       })
+    //   //     }
+    //   //   </React.Fragment>
+    //   // );
+    // }
+
     if (path) {
       const points = [];
       for (const coordinates of path) {
@@ -73,77 +122,41 @@ class SvgLasso extends React.PureComponent {
             strokeWidth={props.lineWidth}
           />
           {
-            path.map((coordinates) => {
+            path.map((coordinates, index) => {
               const pixelPoint = props.project(coordinates);
               return (
+                <Draggable
+                  key={index}
+                  // handle=".handle"
+                  // defaultPosition={pixelPoint}
+                  position={pixelPoint}
+                  // grid={[25, 25]}
+                  scale={1}
+                  onStart={this.handleStart}
+                  onDrag={this.handleDrag}
+                  onStop={this.handleStop}
+                >
                   <rect
+                    key={coordinates.join()}
+                    data-index={index}
                     className="mr-lasso-point"
                     fill={props.pointFill}
                     height={props.pointSize}
-                    key={coordinates.join()}
                     stroke={props.pointStroke}
-                    title="Move point"
                     width={props.pointSize}
-                    x={pixelPoint.x - (props.pointSize / 2)}
-                    y={pixelPoint.y - (props.pointSize / 2)}
+                    x={-(props.pointSize / 2)}
+                    y={-(props.pointSize / 2)}
+                    // x={pixelPoint.x - (props.pointSize / 2)}
+                    // y={pixelPoint.y - (props.pointSize / 2)}
+                    title="Move point"
                   />
+                </Draggable>
               );
             })
           }
         </React.Fragment>
       );
     }
-
-    // if (props.isActive && props.path) {
-    //   const points = [];
-    //   for (const coordinates of props.path) {
-    //     const pixelPoint = props.project(coordinates);
-    //     points.push(`${pixelPoint.x},${pixelPoint.y}`);
-    //   }
-
-    //   return (
-    //     <React.Fragment>
-    //       <polyline
-    //         points={points.join(", ")}
-    //         stroke={props.lineStroke}
-    //         fill="none"
-    //         strokeWidth={props.lineWidth}
-    //       />
-    //       {
-    //         props.path.map((coordinates) => {
-    //           const pixelPoint = props.project(coordinates);
-    //           return (
-    //             <Draggable
-    //               key={coordinates.join()}
-    //               handle=".handle"
-    //               // defaultPosition={pixelPoint}
-    //               position={pixelPoint}
-    //               // grid={[25, 25]}
-    //               scale={1}
-    //               onStart={this.handleStart}
-    //               onDrag={this.handleDrag}
-    //               onStop={this.handleStop}
-    //             >
-    //               <rect
-    //                 key={coordinates.join()}
-    //                 className="mr-lasso-point"
-    //                 fill={props.pointFill}
-    //                 height={props.pointSize}
-    //                 stroke={props.pointStroke}
-    //                 width={props.pointSize}
-    //                 x={-(props.pointSize / 2)}
-    //                 y={-(props.pointSize / 2)}
-    //                 // x={pixelPoint.x - (props.pointSize / 2)}
-    //                 // y={pixelPoint.y - (props.pointSize / 2)}
-    //                 title="Move point"
-    //               />
-    //             </Draggable>
-    //           );
-    //         })
-    //       }
-    //     </React.Fragment>
-    //   );
-    // }
 
     return null;
   }

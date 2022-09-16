@@ -3,6 +3,7 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import ReactMapGL, { ScaleControl } from "react-map-gl";
 import debounce from "lodash.debounce";
+import Draggable from "react-draggable";
 
 import "../styles/map-pane.css";
 
@@ -301,6 +302,8 @@ class MapPane extends React.PureComponent {
     return null;
   }
 
+  nodeRef = React.createRef();
+
   render() {
     const { props, state } = this;
 
@@ -308,7 +311,7 @@ class MapPane extends React.PureComponent {
       <div
         className={state.hover ? "mr-map mr-hovered" : "mr-map"}
         ref={this.elementRef}
-      >
+      > 
         <InteractiveMap
           height={props.height}
           mapboxApiAccessToken={props.mapboxApiAccessToken}

@@ -65,6 +65,7 @@
   position: absolute;
   right: 0;
   top: 0;
+  /* pointer-events: auto; */
 }
 
 .mr-map .mr-svg-lasso {
@@ -81,8 +82,8 @@
 }
 
 .mr-map .mr-lasso-point {
-  /* cursor: move; */
-  /* pointer-events: auto; */
+  cursor: move;
+  pointer-events: auto;
 }
 
 /*#endregion*/
