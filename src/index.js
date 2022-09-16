@@ -6,7 +6,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { setFetcher } from "./utils/proxy";
 
-import projectJson from "./dev/debug.json";
+import projectJson from "./dev/debug";
 
 setFetcher(async (originalUrl) => {
   if (typeof originalUrl !== "string") {

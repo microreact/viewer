@@ -1,10 +1,10 @@
-{
+export default {
   "charts": {},
   "datasets": {
     "dataset-1": {
       "file": "data-file-1",
-      "idFieldName": "id"
-    }
+      "idFieldName": "id",
+    },
   },
   "files": {
     "data-file-1": {
@@ -13,7 +13,7 @@
       "name": "data.csv",
       "url": "https://microreact.org/api/files/raw?c30fb68591a6291b8dcd89069142f38ecddada44",
       "hash": "c30fb68591a6291b8dcd89069142f38ecddada44",
-      "size": 47603
+      "size": 47603,
     },
     "tree-file-1": {
       "id": "tree-file-1",
@@ -21,8 +21,8 @@
       "name": "tree.nwk",
       "url": "https://microreact.org/api/files/raw?9b42ef6fc1dd3be6ea3e7184ebb9a173297270db",
       "hash": "9b42ef6fc1dd3be6ea3e7184ebb9a173297270db",
-      "size": 28497
-    }
+      "size": 28497,
+    },
   },
   "filters": {},
   "maps": {
@@ -37,22 +37,22 @@
       "path": [
         [
           -8.141422503834576,
-          7.114510612729944
+          7.114510612729944,
         ],
         [
           -12.831320163374784,
-          5.272607329235612
+          5.272607329235612,
         ],
         [
           -6.636023255094415,
-          4.407212888976176
+          4.407212888976176,
         ],
         [
           -8.141422503834576,
-          7.114510612729944
-        ]
-      ]
-    }
+          7.114510612729944,
+        ],
+      ],
+    },
   },
   "meta": {
     "name": "West African Ebola epidemic (2013-2016)",
@@ -60,7 +60,7 @@
     "email": "philippe.lemey@kuleuven.be",
     "website": "https://github.com/ebov/space-time",
     "createdAt": "2017-04-13T09:14:35.415Z",
-    "updatedAt": "2017-04-13T09:14:35.415Z"
+    "updatedAt": "2017-04-13T09:14:35.415Z",
   },
   "networks": {},
   "notes": {},
@@ -73,49 +73,49 @@
       "title": "Metadata",
       "columns": [
         {
-          "field": "number"
+          "field": "number",
         },
         {
-          "field": "id"
+          "field": "id",
         },
         {
-          "field": "country"
+          "field": "country",
         },
         {
-          "field": "location"
+          "field": "location",
         },
         {
-          "field": "locImputation"
+          "field": "locImputation",
         },
         {
-          "field": "nonJitLat"
+          "field": "nonJitLat",
         },
         {
-          "field": "nonJitLong"
+          "field": "nonJitLong",
         },
         {
-          "field": "latitude"
+          "field": "latitude",
         },
         {
-          "field": "longitude"
+          "field": "longitude",
         },
         {
-          "field": "collection_date"
+          "field": "collection_date",
         },
         {
-          "field": "dateImputation"
+          "field": "dateImputation",
         },
         {
-          "field": "year"
+          "field": "year",
         },
         {
-          "field": "month"
+          "field": "month",
         },
         {
-          "field": "day"
-        }
-      ]
-    }
+          "field": "day",
+        },
+      ],
+    },
   },
   "timelines": {
     "timeline-1": {
@@ -123,15 +123,15 @@
       "dataType": "year-month-day",
       "yearField": "year",
       "monthField": "month",
-      "dayField": "day"
-    }
+      "dayField": "day",
+    },
   },
   "trees": {
     "tree-1": {
       "title": "Tree",
       "file": "tree-file-1",
-      "labelField": "id"
-    }
+      "labelField": "id",
+    },
   },
   "version": 1,
   "schema": "https://microreact.org/schema/v1.json",
@@ -139,6 +139,6 @@
     "id": "west-african-ebola-epidemic",
     "version": 1,
     "url": "https://microreact.org/project/west-african-ebola-epidemic",
-    "isOwner": false
-  }
-}
+    "isOwner": false,
+  },
+};
