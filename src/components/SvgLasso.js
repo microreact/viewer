@@ -30,7 +30,6 @@ class SvgLasso extends React.PureComponent {
           ...state.path,
           state.path[0],
         ];
-        // this.setState({ path: null });
         this.props.onPathChange(newPath);
         return;
       }
@@ -49,8 +48,18 @@ class SvgLasso extends React.PureComponent {
       ...(state.path || props.path),
     ];
     const coordinates = props.unproject([ position.x, position.y ]);
-    // console.log(newPath[parseInt(position.node.dataset.index, 10)], coordinates)
-    newPath[parseInt(position.node.dataset.index, 10)] = coordinates;
+    const pointIndex = parseInt(position.node.dataset.index, 10);
+    const isFirstPoint = (
+      pointIndex === 0
+      &&
+      coordinates[0] === newPath[0][0]
+      &&
+      coordinates[1] === newPath[0][1]
+    );
+    newPath[pointIndex] = coordinates;
+    if (isFirstPoint) {
+      newPath[newPath.length - 1] = coordinates;
+    }
     this.setState({ path: newPath });
   };
 
@@ -108,9 +117,51 @@ class SvgLasso extends React.PureComponent {
 
     if (path) {
       const points = [];
-      for (const coordinates of path) {
+      const handles = [];
+      for (let index = 0; index < path.length; index++) {
+        const coordinates = path[index];
+        const isLastPoint = (
+          index === (path.length - 1)
+          &&
+          coordinates[0] === path[0][0]
+          &&
+          coordinates[1] === path[0][1]
+        );
+
         const pixelPoint = props.project(coordinates);
-        points.push(`${pixelPoint.x},${pixelPoint.y}`);
+
+        if (isLastPoint) {
+          points.push(points[0]);
+        }
+        else {
+          points.push(`${pixelPoint.x},${pixelPoint.y}`);
+        }
+
+        if (!isLastPoint) {
+          handles.push(
+            <Draggable
+              key={index}
+              onDrag={this.handleDrag}
+              onStart={this.handleStart}
+              onStop={this.handleStop}
+              position={pixelPoint}
+            >
+              <rect
+                data-index={index}
+                className="mr-lasso-point"
+                fill={props.pointFill}
+                height={props.pointSize}
+                stroke={props.pointStroke}
+                width={props.pointSize}
+                x={-(props.pointSize / 2)}
+                y={-(props.pointSize / 2)}
+                // x={pixelPoint.x - (props.pointSize / 2)}
+                // y={pixelPoint.y - (props.pointSize / 2)}
+                title="Move point"
+              />
+            </Draggable>
+          );
+        }
       }
 
       return (
@@ -121,39 +172,7 @@ class SvgLasso extends React.PureComponent {
             fill="none"
             strokeWidth={props.lineWidth}
           />
-          {
-            path.map((coordinates, index) => {
-              const pixelPoint = props.project(coordinates);
-              return (
-                <Draggable
-                  key={index}
-                  // handle=".handle"
-                  // defaultPosition={pixelPoint}
-                  position={pixelPoint}
-                  // grid={[25, 25]}
-                  scale={1}
-                  onStart={this.handleStart}
-                  onDrag={this.handleDrag}
-                  onStop={this.handleStop}
-                >
-                  <rect
-                    key={coordinates.join()}
-                    data-index={index}
-                    className="mr-lasso-point"
-                    fill={props.pointFill}
-                    height={props.pointSize}
-                    stroke={props.pointStroke}
-                    width={props.pointSize}
-                    x={-(props.pointSize / 2)}
-                    y={-(props.pointSize / 2)}
-                    // x={pixelPoint.x - (props.pointSize / 2)}
-                    // y={pixelPoint.y - (props.pointSize / 2)}
-                    title="Move point"
-                  />
-                </Draggable>
-              );
-            })
-          }
+          { handles }
         </React.Fragment>
       );
     }
@@ -171,10 +190,8 @@ class SvgLasso extends React.PureComponent {
     return (
       <svg
         className="mr-svg-lasso"
-        width={props.width}
         height={props.height}
-        // viewBox={`${-origin.x} ${-origin.y} ${width} ${height}`}
-        title="test"
+        width={props.width}
       >
         { this.renderContent() }
       </svg>
