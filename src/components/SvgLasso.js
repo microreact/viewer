@@ -8,7 +8,7 @@ class SvgLasso extends React.PureComponent {
 
   handleClick = (e) => {
     const { props, state } = this;
-    const event = e.originalEvent || e;
+    const event = e.originalEvent ?? e;
     const coordinates = props.unproject([ event.layerX, event.layerY ]);
 
     if (state.path && state.path.length > 2) {
