@@ -121,6 +121,8 @@ class SvgLasso extends React.PureComponent {
       for (let index = 0; index < path.length; index++) {
         const coordinates = path[index];
         const isLastPoint = (
+          index > 0
+          &&
           index === (path.length - 1)
           &&
           path[path.length - 1][0] === path[0][0]
