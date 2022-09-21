@@ -147,8 +147,8 @@ class SvgLasso extends React.PureComponent {
               position={pixelPoint}
             >
               <rect
-                data-index={index}
                 className="mr-lasso-point"
+                data-index={index}
                 fill={props.pointFill}
                 height={props.pointSize}
                 stroke={props.pointStroke}
