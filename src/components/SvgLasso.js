@@ -6,7 +6,7 @@ class SvgLasso extends React.PureComponent {
 
   state = {};
 
-  handleClick = (e) => {
+  handleCanvasClick = (e) => {
     const { props, state } = this;
     const event = e.originalEvent ?? e;
     const coordinates = props.unproject([ event.layerX, event.layerY ]);
@@ -63,12 +63,12 @@ class SvgLasso extends React.PureComponent {
 
   componentDidMount() {
     const { props } = this;
-    props.registerClick(this.handleClick);
+    props.registerClick(this.handleCanvasClick);
   }
 
   componentWillUnmount() {
     const { props } = this;
-    props.unregisterClick(this.handleClick);
+    props.unregisterClick(this.handleCanvasClick);
   }
 
   renderContent() {
