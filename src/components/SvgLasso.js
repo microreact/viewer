@@ -6,6 +6,10 @@ class SvgLasso extends React.PureComponent {
 
   state = {};
 
+  handlePointClick = (e) => {
+    return this.handleCanvasClick(e.nativeEvent);
+  };
+
   handleCanvasClick = (e) => {
     const { props, state } = this;
     const event = e.originalEvent ?? e;
@@ -114,6 +118,7 @@ class SvgLasso extends React.PureComponent {
                 data-index={index}
                 fill={props.pointFill}
                 height={props.pointSize}
+                onClick={(index === 0) ? this.handlePointClick : undefined}
                 stroke={props.pointStroke}
                 title="Move point"
                 width={props.pointSize}
