@@ -229,6 +229,9 @@ SvgLasso.defaultProps = {
 
 export default React.memo(
   (props) => {
+    if (!props.isActive) {
+      return null;
+    }
     return (
       <SvgLasso
         key={props.path}
