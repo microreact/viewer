@@ -183,10 +183,6 @@ class SvgLasso extends React.PureComponent {
   render() {
     const { props } = this;
 
-    if (!props.isActive) {
-      return null;
-    }
-
     return (
       <svg
         className="mr-svg-lasso"
