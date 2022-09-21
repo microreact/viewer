@@ -52,9 +52,9 @@ class SvgLasso extends React.PureComponent {
     const isFirstPoint = (
       pointIndex === 0
       &&
-      coordinates[0] === newPath[0][0]
+      newPath[newPath.length - 1][0] === newPath[0][0]
       &&
-      coordinates[1] === newPath[0][1]
+      newPath[newPath.length - 1][1] === newPath[0][1]
     );
     newPath[pointIndex] = coordinates;
     if (isFirstPoint) {
@@ -123,9 +123,9 @@ class SvgLasso extends React.PureComponent {
         const isLastPoint = (
           index === (path.length - 1)
           &&
-          coordinates[0] === path[0][0]
+          path[path.length - 1][0] === path[0][0]
           &&
-          coordinates[1] === path[0][1]
+          path[path.length - 1][1] === path[0][1]
         );
 
         const pixelPoint = props.project(coordinates);
