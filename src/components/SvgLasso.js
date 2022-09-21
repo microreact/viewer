@@ -36,7 +36,7 @@ class SvgLasso extends React.PureComponent {
     }
 
     const newPath = [
-      ...(state.path || []),
+      ...(state.path ?? []),
       coordinates,
     ];
     this.setState({ path: newPath });
