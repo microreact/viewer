@@ -44,9 +44,7 @@ class SvgLasso extends React.PureComponent {
 
   handleDrag = (event, position) => {
     const { props, state } = this;
-    const newPath = [
-      ...(state.path || props.path),
-    ];
+    const newPath = [ ...(state.path ?? props.path) ];
     const coordinates = props.unproject([ position.x, position.y ]);
     const pointIndex = parseInt(position.node.dataset.index, 10);
     const isFirstPoint = (
