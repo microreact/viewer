@@ -152,12 +152,12 @@ class SvgLasso extends React.PureComponent {
                 fill={props.pointFill}
                 height={props.pointSize}
                 stroke={props.pointStroke}
+                title="Move point"
                 width={props.pointSize}
                 x={-(props.pointSize / 2)}
                 y={-(props.pointSize / 2)}
                 // x={pixelPoint.x - (props.pointSize / 2)}
                 // y={pixelPoint.y - (props.pointSize / 2)}
-                title="Move point"
               />
             </Draggable>
           );
