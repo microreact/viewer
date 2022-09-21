@@ -78,43 +78,6 @@ class SvgLasso extends React.PureComponent {
 
     const path = state.path || props.path;
 
-    // if (path) {
-    //   const points = [];
-    //   for (const coordinates of path) {
-    //     const pixelPoint = props.project(coordinates);
-    //     points.push(`${pixelPoint.x},${pixelPoint.y}`);
-    //   }
-
-    //   // return (
-    //   //   <React.Fragment>
-    //   //     <polyline
-    //   //       points={points.join(", ")}
-    //   //       stroke={props.lineStroke}
-    //   //       fill="none"
-    //   //       strokeWidth={props.lineWidth}
-    //   //     />
-    //   //     {
-    //   //       path.map((coordinates) => {
-    //   //         const pixelPoint = props.project(coordinates);
-    //   //         return (
-    //   //             <rect
-    //   //               className="mr-lasso-point"
-    //   //               fill={props.pointFill}
-    //   //               height={props.pointSize}
-    //   //               key={coordinates.join()}
-    //   //               stroke={props.pointStroke}
-    //   //               title="Move point"
-    //   //               width={props.pointSize}
-    //   //               x={pixelPoint.x - (props.pointSize / 2)}
-    //   //               y={pixelPoint.y - (props.pointSize / 2)}
-    //   //             />
-    //   //         );
-    //   //       })
-    //   //     }
-    //   //   </React.Fragment>
-    //   // );
-    // }
-
     if (path) {
       const points = [];
       const handles = [];
