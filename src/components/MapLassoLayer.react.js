@@ -2,7 +2,7 @@ import React from "react";
 import { useMap } from "react-map-gl";
 
 import PropTypes from "prop-types";
-import CustomOverlay from "./ReactPortalOverlay";
+import ReactPortalOverlay from "./ReactPortalOverlay";
 import Lasso from "./SvgLasso";
 
 function MapLasso(props) {
@@ -38,18 +38,20 @@ function MapLasso(props) {
     );
 
     return (
-      <Lasso
-        version={props.version}
-        height={height}
-        isActive={props.isActive}
-        onPathChange={props.onPathChange}
-        path={props.path}
-        project={project}
-        unproject={unproject}
-        width={width}
-        registerClick={registerClick}
-        unregisterClick={unregisterClick}
-      />
+      <ReactPortalOverlay>
+        <Lasso
+          version={props.version}
+          height={height}
+          isActive={props.isActive}
+          onPathChange={props.onPathChange}
+          path={props.path}
+          project={project}
+          unproject={unproject}
+          width={width}
+          registerClick={registerClick}
+          unregisterClick={unregisterClick}
+        />
+      </ReactPortalOverlay>
     );
   }
 
@@ -65,19 +67,4 @@ MapLasso.propTypes = {
   version: PropTypes.number.isRequired,
 };
 
-export default function MapLassoOverlay(props) {
-  return (
-    <CustomOverlay>
-      <MapLasso {...props} />
-    </CustomOverlay>
-  );
-}
-
-MapLassoOverlay.displayName = "MapLassoOverlay";
-
-MapLassoOverlay.propTypes = {
-  map: PropTypes.object,
-  isActive: PropTypes.bool.isRequired,
-  onPathChange: PropTypes.func.isRequired,
-  path: PropTypes.array,
-};
+export default MapLasso;
