@@ -2,7 +2,7 @@ import React from "react";
 import { useMap } from "react-map-gl";
 
 import PropTypes from "prop-types";
-import CustomOverlay from "./CustomOverlay";
+import CustomOverlay from "./ReactPortalOverlay";
 import Lasso from "./SvgLasso";
 
 function MapLasso(props) {
