@@ -351,7 +351,7 @@ const chartTypes = [
   { label: "Line Chart", value: "line" },
   { label: "Point", value: "point" },
   { label: "Tick", value: "tick" },
-  { label: "Heatmap Matrix", value: "heatmap" },
+  // { label: "Heatmap Matrix", value: "heatmap" },
   { label: "Custom", value: "custom" },
 ];
 
@@ -744,7 +744,7 @@ export default class ChartControls extends React.PureComponent {
 
 ChartControls.propTypes = {
   chartType: ChartTypes,
-  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string),
   controls: PropTypes.bool.isRequired,
   dataFileUrl: PropTypes.string,
   facetField: PropTypes.string,

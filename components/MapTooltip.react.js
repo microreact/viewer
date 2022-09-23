@@ -24,7 +24,7 @@ const MapTooltip = React.memo(
         >
           <center>Region</center>
           <hr/>
-          <div>{ numberOfRowsInRegion } { (numberOfRowsInRegion === 1) ? "row" : "rows" }.</div>
+          <div>{ numberOfRowsInRegion } { (numberOfRowsInRegion === 1) ? "entry" : "entries" }.</div>
           { properties }
         </div>
       );

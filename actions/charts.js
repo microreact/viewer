@@ -2,13 +2,45 @@ import { getPresentState } from "../utils/state";
 import { filterByQuery } from "../utils/arrays";
 
 import chartTypeSelector from "../selectors/charts/chart-type";
+import allDataColumnsSelector from "../selectors/datasets/data-columns";
 import dataColumnsByFieldMapSelector from "../selectors/datasets/data-columns-by-field-map";
 import rowsSelector from "../selectors/datasets/rows";
 import seriesFieldSelector from "../selectors/charts/series-field";
 import xAxisFieldSelector from "../selectors/charts/x-axis-field";
 import yAxisFieldSelector from "../selectors/charts/y-axis-field";
+import chartStateSelector from "../selectors/charts/chart-state";
 
-import { selectRows } from "./filters";
+import { selectRows, setChartFilter } from "./filters";
+
+const getQueryFromChartItem = (presentState, chartId, chartItem) => {
+  const fieldsMap = dataColumnsByFieldMapSelector(presentState);
+  const chartType = chartTypeSelector(presentState, chartId);
+  if (chartType === "custom") {
+    const query = {};
+    for (const key of Object.keys(chartItem)) {
+      if (fieldsMap.get(key)) {
+        query[key] = chartItem[key];
+      }
+    }
+    return query;
+  }
+  else {
+    const xAxisField = xAxisFieldSelector(presentState, chartId);
+    const yAxisField = yAxisFieldSelector(presentState, chartId);
+    const seriesField = seriesFieldSelector(presentState, chartId);
+    const query = {};
+    if (xAxisField && (xAxisField.name in chartItem)) {
+      query[xAxisField.name] = chartItem[xAxisField.name];
+    }
+    if (yAxisField && (yAxisField.name in chartItem)) {
+      query[yAxisField.name] = chartItem[yAxisField.name];
+    }
+    if (seriesField && (seriesField.name in chartItem)) {
+      query[seriesField.name] = chartItem[seriesField.name];
+    }
+    return query;
+  }
+};
 
 export const addChart = (paneId, title) => {
   return {
@@ -32,7 +64,45 @@ export function removeChart(paneId) {
   };
 }
 
-export const selectItem = (chartId, item, merge) => (
+export const selectItem = (chartId, chartItem, merge) => (
+  (dispatch, getState) => {
+    const presentState = getPresentState(getState());
+    const chartState = chartStateSelector(presentState, chartId);
+    if (!chartState.filterChart) {
+      if (chartItem) {
+        const rows = rowsSelector(presentState);
+        const fieldsMap = dataColumnsByFieldMapSelector(presentState);
+        const query = getQueryFromChartItem(presentState, chartId, chartItem);
+        const ids = filterByQuery(rows, fieldsMap, query);
+        dispatch(
+          selectRows(
+            ids,
+            merge,
+          )
+        );
+      }
+      else {
+        dispatch(
+          selectRows(
+            false,
+            merge,
+          )
+        );
+      }
+    }
+    else {
+      const query = getQueryFromChartItem(presentState, chartId, chartItem);
+      dispatch(
+        setChartFilter(
+          chartId,
+          query,
+        )
+      );
+    }
+  }
+);
+
+export const filterItem = (chartId, item) => (
   (dispatch, getState) => {
     if (item) {
       const state = getPresentState(getState());
@@ -62,7 +132,6 @@ export const selectItem = (chartId, item, merge) => (
       dispatch(
         selectRows(
           ids,
-          merge,
         )
       );
     }
@@ -70,7 +139,6 @@ export const selectItem = (chartId, item, merge) => (
       dispatch(
         selectRows(
           false,
-          merge,
         )
       );
     }

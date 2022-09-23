@@ -3,6 +3,8 @@ import dataColumnsByFieldMapSelector from "../selectors/datasets/data-columns-by
 import rowsSelector from "../selectors/datasets/rows";
 import { filterByQuery } from "../utils/arrays";
 import { getPresentState } from "../utils/state";
+import deepEqual from "fast-deep-equal";
+import dataFieldFilterSelector from "../selectors/filters/data-field-filter";
 
 export const selectRows = (ids = emptyArray, merge = false) => (
   (dispatch, getState) => {
@@ -51,6 +53,19 @@ export const selectQueryRows = (query, merge = false) => (
   }
 );
 
+export function setChartFilter(chartId, filterQuery) {
+  return {
+    delay: true,
+    label: "Filters: Change chart filter",
+    group: `Filters/chart ${chartId}`,
+    payload: {
+      chartId,
+      query: filterQuery,
+    },
+    type: "MICROREACT VIEWER/SET CHART FILTER",
+  };
+}
+
 export function setSelectionSummaryField(field) {
   return {
     delay: true,
@@ -91,6 +106,33 @@ export const setSearchValue = (value) => ({
   payload: value,
   type: "MICROREACT VIEWER/SET SEARCH VALUE",
 });
+
+export function toggleFieldFilter(field, operator, value) {
+  return (dispatch, getState) => {
+    const state = getPresentState(getState());
+    const dataFieldFilter = dataFieldFilterSelector(state, field);
+    if (
+      dataFieldFilter
+      &&
+      dataFieldFilter.operator === operator
+      &&
+      deepEqual(dataFieldFilter.value, value)
+    ) {
+      dispatch(
+        setFieldFilter(field)
+      );
+    }
+    else {
+      dispatch(
+        setFieldFilter(
+          field,
+          operator,
+          value,
+        )
+      );
+    }
+  };
+}
 
 export const resetAllFilters = () => ({
   delay: true,

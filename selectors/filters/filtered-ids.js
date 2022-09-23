@@ -2,13 +2,16 @@ import { createSelector } from "reselect";
 
 import filteredNonDataIdsSelector from "./filtered-non-data-ids";
 import filteredDataIdsSelector from "./filtered-data-ids";
+import filteredChartsIdsSelector from "./filtered-charts-ids";
 
 const filteredIdsSelector = createSelector(
   (state) => filteredNonDataIdsSelector(state),
   (state) => filteredDataIdsSelector(state),
+  (state) => filteredChartsIdsSelector(state),
   (
     nonDataIds,
     tableIds,
+    chartRowIds,
   ) => {
     let ids;
 
@@ -17,6 +20,9 @@ const filteredIdsSelector = createSelector(
     }
     if (tableIds && (ids === undefined || tableIds.size < ids.size)) {
       ids = tableIds;
+    }
+    if (chartRowIds && (ids === undefined || chartRowIds.size < ids.size)) {
+      ids = chartRowIds;
     }
 
     if (ids) {
@@ -27,6 +33,8 @@ const filteredIdsSelector = createSelector(
           (nonDataIds === undefined || nonDataIds.has(id))
           &&
           (tableIds === undefined || tableIds.has(id))
+          &&
+          (chartRowIds === undefined || chartRowIds.has(id))
         ) {
           intersection.add(id);
         }

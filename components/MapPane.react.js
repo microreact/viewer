@@ -112,6 +112,8 @@ class MapPane extends React.PureComponent {
       },
     );
 
+    this.props.onViewportChange(this.props.viewport);
+
     // const _mapbox = this.getMapboxWrapper();
     // _mapbox.setPaintProperty("water", "fill-color", "#bd0026");
   }
@@ -122,8 +124,6 @@ class MapPane extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    // require("../../dev/compare-prev-props")(prevProps, this.props, "map-props");
-    // require("../../dev/compare-prev-props")(prevState, this.state, "map-state");
     if (this.props.trackViewport && this.props.trackViewport !== prevProps.trackViewport) {
       this.handleViewportFilter();
     }
