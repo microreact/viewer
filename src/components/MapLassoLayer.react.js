@@ -29,6 +29,14 @@ function MapLasso(props) {
       [ map ],
     );
 
+    const unproject = React.useCallback(
+      (point) => {
+        const coordinates = map.unproject.call(map, point);
+        return [ coordinates.lng, coordinates.lat ];
+      },
+      [ map ],
+    );
+
     return (
       <Lasso
         version={props.version}
@@ -36,12 +44,8 @@ function MapLasso(props) {
         isActive={props.isActive}
         onPathChange={props.onPathChange}
         path={props.path}
-        unproject={
-          (point) => {
-            const coordinates = map.unproject.call(map, point);
-            return [ coordinates.lng, coordinates.lat ];
-          }
-        }
+        project={project}
+        unproject={unproject}
         width={width}
         registerClick={registerClick}
         unregisterClick={unregisterClick}
