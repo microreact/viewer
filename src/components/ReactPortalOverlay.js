@@ -43,7 +43,7 @@ class OverlayControl {
  * A custom control that rerenders arbitrary React content whenever the camera changes
  */
 function CustomOverlay(props) {
-  const [ , setVersion ] = React.useState(0);
+  const [ version, setVersion ] = React.useState(0);
 
   const ctrl = useControl(
     () => {
@@ -58,10 +58,9 @@ function CustomOverlay(props) {
     map
     &&
     createPortal(
-      // props.children,
       React.cloneElement(
         props.children,
-        // { map },
+        { map, version },
       ),
       ctrl.getElement(),
     )
