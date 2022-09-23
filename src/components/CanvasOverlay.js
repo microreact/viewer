@@ -17,7 +17,7 @@ class OverlayControl {
       if (ctx) {
         const width = this._map.getContainer().clientWidth;
         const height = this._map.getContainer().clientHeight;
-        const pixelRatio = (typeof window !== "undefined" && window.devicePixelRatio) || 1;
+        const pixelRatio = (typeof window !== "undefined" && window.devicePixelRatio) || 1; // eslint-disable-line no-undef
 
         canvas.width = width * pixelRatio;
         canvas.height = height * pixelRatio;
