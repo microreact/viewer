@@ -24,6 +24,7 @@ function MapLasso(props) {
 
     return (
       <Lasso
+        version={props.version}
         height={height}
         isActive={props.isActive}
         onPathChange={props.onPathChange}
@@ -48,7 +49,7 @@ function MapLasso(props) {
 MapLasso.displayName = "MapLasso";
 
 MapLasso.propTypes = {
-  map: PropTypes.object,
+  version: PropTypes.number.isRequired,
   isActive: PropTypes.bool.isRequired,
   onPathChange: PropTypes.func.isRequired,
   path: PropTypes.array,
