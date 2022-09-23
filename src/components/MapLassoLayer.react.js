@@ -64,7 +64,7 @@ MapLasso.propTypes = {
   isActive: PropTypes.bool.isRequired,
   onPathChange: PropTypes.func.isRequired,
   path: PropTypes.array,
-  version: PropTypes.number.isRequired,
+  version: PropTypes.number,
 };
 
 export default MapLasso;
