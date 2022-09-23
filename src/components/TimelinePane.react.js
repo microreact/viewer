@@ -44,7 +44,7 @@ class TimelinePane extends React.PureComponent {
   filteredRangeChartRef = React.createRef()
 
   signalListeners = {
-    onItemSelect: (_, [ event, item ]) => {
+    onItemSelectSignal: (_, [ event, item ]) => {
       if (item) {
         this.props.onSelectItem(item, event.metaKey || event.ctrilKey);
       }

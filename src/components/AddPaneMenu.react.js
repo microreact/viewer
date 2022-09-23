@@ -19,7 +19,7 @@ const AddPaneMenu = React.memo(
           {
             color: "inherit",
             size: "small",
-            title: "Add or edit views",
+            title: "Add or edit panels",
             children: (<EditTwoToneIcon />),
           }
         }
