@@ -22,15 +22,6 @@ function MapLasso(props) {
       [ map ],
     );
 
-    // if (props.isActive && !props.path) {
-    //   React.useEffect(
-    //     () => {
-    //       map.on("click", clickHandler);
-    //       return () => map.off("click", clickHandler);
-    //     },
-    //   );
-    // }
-
     return (
       <Lasso
         height={height}
