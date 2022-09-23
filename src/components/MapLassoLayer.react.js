@@ -45,9 +45,9 @@ function MapLasso(props) {
           onPathChange={props.onPathChange}
           path={props.path}
           project={project}
-          unproject={unproject}
           width={width}
           registerClick={registerClick}
+          unproject={unproject}
           unregisterClick={unregisterClick}
           version={props.version}
         />
