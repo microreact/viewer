@@ -45,11 +45,11 @@ function MapLasso(props) {
           onPathChange={props.onPathChange}
           path={props.path}
           project={project}
-          width={width}
           registerClick={registerClick}
           unproject={unproject}
           unregisterClick={unregisterClick}
           version={props.version}
+          width={width}
         />
       </ReactPortalOverlay>
     );
