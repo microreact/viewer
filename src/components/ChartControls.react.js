@@ -744,7 +744,7 @@ export default class ChartControls extends React.PureComponent {
 
 ChartControls.propTypes = {
   chartType: ChartTypes,
-  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string),
   controls: PropTypes.bool.isRequired,
   dataFileUrl: PropTypes.string,
   facetField: PropTypes.string,
