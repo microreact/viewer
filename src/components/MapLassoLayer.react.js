@@ -59,10 +59,10 @@ function MapLasso(props) {
 MapLasso.displayName = "MapLasso";
 
 MapLasso.propTypes = {
-  version: PropTypes.number.isRequired,
   isActive: PropTypes.bool.isRequired,
   onPathChange: PropTypes.func.isRequired,
   path: PropTypes.array,
+  version: PropTypes.number.isRequired,
 };
 
 export default function MapLassoOverlay(props) {
