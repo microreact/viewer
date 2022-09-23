@@ -39,7 +39,6 @@ function MapLasso(props) {
 
     return (
       <ReactPortalOverlay>
-          version={props.version}
         <SvgLasso
           height={height}
           isActive={props.isActive}
@@ -50,6 +49,7 @@ function MapLasso(props) {
           width={width}
           registerClick={registerClick}
           unregisterClick={unregisterClick}
+          version={props.version}
         />
       </ReactPortalOverlay>
     );
