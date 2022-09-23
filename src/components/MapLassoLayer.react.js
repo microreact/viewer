@@ -3,7 +3,7 @@ import { useMap } from "react-map-gl";
 
 import PropTypes from "prop-types";
 import ReactPortalOverlay from "./ReactPortalOverlay";
-import Lasso from "./SvgLasso";
+import SvgLasso from "./SvgLasso";
 
 function MapLasso(props) {
   const { current: map } = useMap();
@@ -39,8 +39,8 @@ function MapLasso(props) {
 
     return (
       <ReactPortalOverlay>
-        <Lasso
           version={props.version}
+        <SvgLasso
           height={height}
           isActive={props.isActive}
           onPathChange={props.onPathChange}
