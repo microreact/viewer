@@ -8,7 +8,7 @@ import React from "react";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import TextField from "@mui/material/TextField";
 
-import "../styles/ui-floating-filter.css";
+// import "../styles/ui-floating-filter.css";
 
 class UiFloatingFilter extends React.PureComponent {
 

@@ -11,7 +11,7 @@ import groupby from "lodash.groupby";
 
 import AutoSizer from "react-virtualized-auto-sizer";
 
-import "../styles/ui-list.css";
+// import "../styles/ui-list.css";
 import { fullSizeStyle } from "../constants";
 
 class UiList extends React.PureComponent {

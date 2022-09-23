@@ -12,7 +12,7 @@ import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
 import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
 import QueryBuilderRoundedIcon from '@mui/icons-material/QueryBuilderRounded';
 
-import "../styles/new-tab.css";
+// import "../styles/new-tab.css";
 
 const htmlEscapes = {
   "&": "&amp;",

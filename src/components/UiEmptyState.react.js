@@ -3,7 +3,7 @@ import React from "react";
 import Typography from "@mui/material/Typography";
 import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
 
-import "../styles/ui-empty-state.css";
+// import "../styles/ui-empty-state.css";
 
 function UiEmptyState(props) {
   return (

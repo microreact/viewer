@@ -5,7 +5,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../styles/legend-pane.css";
+// import "../styles/legend-pane.css";
 
 import UiDropdownMenu from "./UiDropdownMenu.react";
 import UiIconButton from "./UiIconButton.react";

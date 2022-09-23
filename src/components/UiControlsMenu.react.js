@@ -4,7 +4,7 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../styles/controls-menu.css";
+// import "../styles/controls-menu.css";
 import UiPopoverMenu from "./UiPopoverMenu.react";
 
 class UiControlsMenu extends React.PureComponent {

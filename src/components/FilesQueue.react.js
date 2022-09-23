@@ -13,7 +13,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 
-import "../styles/files-queue.css";
+// import "../styles/files-queue.css";
 
 import { FileKinds } from "../utils/files";
 import { generateHashId } from "../utils/hash";

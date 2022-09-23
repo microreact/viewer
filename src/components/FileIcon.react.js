@@ -1,4 +1,4 @@
-import "../styles/file-icon.css";
+// import "../styles/file-icon.css";
 
 import React from "react";
 import PropTypes from "prop-types";

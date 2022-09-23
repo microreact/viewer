@@ -4,7 +4,7 @@ import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
 
-import "../styles/timeline-pane.css";
+// import "../styles/timeline-pane.css";
 
 import * as Datetime from "../utils/datetime";
 import { downloadDataUrl } from "../utils/downloads";

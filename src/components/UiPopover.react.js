@@ -5,7 +5,7 @@ import Popover from "@mui/material/Popover";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../styles/ui-popover-menu.css";
+// import "../styles/ui-popover-menu.css";
 import { getContainerElement } from "../utils/html";
 
 class UiPopover extends React.PureComponent {

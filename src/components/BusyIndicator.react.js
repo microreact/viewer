@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import "../styles/busy-indicator.css";
+// import "../styles/busy-indicator.css";
 
 const BusyIndicator = React.memo(
   (props) => {

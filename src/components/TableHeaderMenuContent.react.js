@@ -16,7 +16,7 @@ import ToggleButtonGroup from "@mui/lab/ToggleButtonGroup";
 import { mdiArrowExpandHorizontal } from "@mdi/js";
 import Box from "@mui/material/Box";
 
-import "../styles/table-column-controls.css";
+// import "../styles/table-column-controls.css";
 
 import { DataFilter, ReactRef, TableColumn } from "../utils/prop-types";
 

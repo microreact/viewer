@@ -5,7 +5,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CropFreeOutlinedIcon from "@mui/icons-material/CropFreeOutlined";
 import Box from "@mui/material/Box";
 
-import "../styles/map-controls.css";
+// import "../styles/map-controls.css";
 
 import { DataColumn, StylePalette } from "../utils/prop-types";
 

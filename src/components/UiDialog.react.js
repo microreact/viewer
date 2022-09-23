@@ -9,7 +9,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../styles/ui-dialog.css";
+// import "../styles/ui-dialog.css";
 import { getContainerElement } from "../utils/html";
 
 class UiDialog extends React.PureComponent {

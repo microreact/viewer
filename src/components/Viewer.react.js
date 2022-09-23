@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { GlobalHotKeys } from "react-hotkeys";
 
-import "../styles/viewer.css";
+// import "../styles/viewer.css";
 
 import { keyMap } from "../utils/shortcuts";
 import { nextFrame } from "../utils/browser";

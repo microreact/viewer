@@ -8,7 +8,7 @@ import RedoRoundedIcon from "@mui/icons-material/RedoRounded";
 import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
 import { createSelector } from "reselect";
 
-import "../styles/history-pane.css";
+// import "../styles/history-pane.css";
 import { keyMap } from "../utils/shortcuts";
 import PaneIcon from "./PaneIcon.react";
 import UiIconButton from "./UiIconButton.react";

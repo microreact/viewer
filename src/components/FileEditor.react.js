@@ -12,7 +12,7 @@ import LinkTwoToneIcon from "@mui/icons-material/LinkTwoTone";
 import HighlightOffTwoToneIcon from "@mui/icons-material/HighlightOffTwoTone";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 
-import "../styles/panes-editor.css";
+// import "../styles/panes-editor.css";
 import { nextTick } from "../utils/browser";
 
 class FileEditor extends React.PureComponent {

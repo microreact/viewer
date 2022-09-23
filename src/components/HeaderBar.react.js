@@ -4,7 +4,7 @@ import React from "react";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-import "../styles/header-bar.css";
+// import "../styles/header-bar.css";
 
 import AddPaneMenu from "../containers/AddPaneMenu.react";
 import DownloadFilesMenuButton from "./DownloadFilesMenuButton.react";

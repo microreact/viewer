@@ -6,7 +6,7 @@ import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../styles/custom-colour-palette-editor.css";
+// import "../styles/custom-colour-palette-editor.css";
 
 import { fullSizeStyle } from "../constants";
 import { generateHashId } from "../utils/hash";

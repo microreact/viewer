@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../styles/table-column-menu.css";
+// import "../styles/table-column-menu.css";
 import { DataFilter, TableColumn } from "../utils/prop-types";
 import TableHeaderMenuContent from "../containers/TableColumnControls.react";
 import UiPopoverMenu from "./UiPopoverMenu.react";

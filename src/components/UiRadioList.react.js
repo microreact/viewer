@@ -6,7 +6,7 @@ import RadioGroup from "@mui/material/RadioGroup";
 import React from "react";
 import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
 
-import "../styles/ui-radio-list.css";
+// import "../styles/ui-radio-list.css";
 
 import EmptyIcon from "./EmptyIcon.react";
 

@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
-import "../styles/note-pane.css";
+// import "../styles/note-pane.css";
 import UiControlsButton from "./UiControlsButton.react";
 import * as BrowserUtils from "../utils/browser";
 

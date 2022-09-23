@@ -6,7 +6,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 
-import "../styles/ui-tabs.css";
+// import "../styles/ui-tabs.css";
 import { nextAnimation } from "../utils/browser";
 
 class UiTabs extends React.PureComponent {

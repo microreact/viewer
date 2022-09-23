@@ -3,7 +3,7 @@ import MapTwoToneIcon from "@mui/icons-material/MapTwoTone";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../styles/map-legend.css";
+// import "../styles/map-legend.css";
 import { DataColumn } from "../utils/prop-types";
 
 function toNumber(value) {
