@@ -2,7 +2,7 @@ import geojsonLayerDataSelector from "../selectors/maps/geojson-layer-data";
 import mapStateSelector from "../selectors/maps/map-state";
 import rowsByRegionSelector from "../selectors/maps/rows-by-region";
 import { getPresentState } from "../utils/state";
-import { selectRows, setFieldFilter } from "./filters";
+import { selectRows, toggleFieldFilter } from "./filters";
 
 export function addGeoData(mapId, fileId, options = {}) {
   return {
@@ -71,7 +71,7 @@ export function selectRegion(mapId, regionId, merge) {
       for (const feature of geojson.features) {
         if (feature.properties["mr-region-id"] === regionId) {
           dispatch(
-            setFieldFilter(
+            toggleFieldFilter(
               geodata.linkField,
               "equals",
               [ feature.properties[geodata.linkPropertyName] ],

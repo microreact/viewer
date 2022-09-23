@@ -351,7 +351,7 @@ const chartTypes = [
   { label: "Line Chart", value: "line" },
   { label: "Point", value: "point" },
   { label: "Tick", value: "tick" },
-  { label: "Heatmap Matrix", value: "heatmap" },
+  // { label: "Heatmap Matrix", value: "heatmap" },
   { label: "Custom", value: "custom" },
 ];
 
