@@ -1,79 +1,70 @@
 import React from "react";
+import { useMap } from "react-map-gl";
 
 import PropTypes from "prop-types";
-import DrawControl from "./DrawControl.react";
+import ReactPortalOverlay from "./ReactPortalOverlay";
+import SvgLasso from "./SvgLasso";
 
-const handleCreate = (controls, onPathChange) => {
-  const path = controls?.features[0]?.geometry?.coordinates;
-  onPathChange(path[0]);
-  return null;
-};
+function MapLasso(props) {
+  const { current: map } = useMap();
 
-const handleDelete = (onPathChange) => {
-  onPathChange(null);
-  return null;
-};
+  if (map) {
+    const width = map.getContainer().clientWidth;
+    const height = map.getContainer().clientHeight;
 
-export default function MapLassoOverlay(props) {
-  const onCreate = React.useCallback((controls) => handleCreate(controls, props.onPathChange), []);
-  const onDelete = React.useCallback(() => handleDelete(props.onPathChange), []);
+    const registerClick = React.useCallback(
+      (clickHandler) => map.on("click", clickHandler),
+      [ map ],
+    );
 
-  if (props.isActive) {
+    const unregisterClick = React.useCallback(
+      (clickHandler) => map.off("click", clickHandler),
+      [ map ],
+    );
+
+    const project = React.useCallback(
+      (point) => {
+        return map.project.call(map, point);
+      },
+      [ map ],
+    );
+
+    const unproject = React.useCallback(
+      (point) => {
+        const coordinates = map.unproject.call(map, point);
+        return [ coordinates.lng, coordinates.lat ];
+      },
+      [ map ],
+    );
+
     return (
-      <DrawControl
-        displayControlsDefault={false}
-        defaultMode= 'draw_polygon'
-        path={props.path}
-        onCreate={onCreate}
-        onUpdate={onCreate}
-        onDelete={onDelete}
-        userProperties={true}
-        styles={[
-          {
-            "id": "gl-draw-line",
-            "type": "line",
-            "paint": {
-              "line-color": props.strokeStyle,
-              "line-width": 2,
-            },
-          },
-          {
-            "id": "gl-draw-line-vertex",
-            "type": "circle",
-            "paint": {
-              "circle-radius": props.pointSize,
-              "circle-color": props.pointFillStyle,
-              "circle-stroke-color": props.strokeStyle,
-              "circle-stroke-width": 2,
-              "circle-opacity": 0.8,
-            },
-          },
-        ]}
-      />
+      <ReactPortalOverlay>
+        <SvgLasso
+          height={height}
+          isActive={props.isActive}
+          onPathChange={props.onPathChange}
+          path={props.path}
+          project={project}
+          registerClick={registerClick}
+          unproject={unproject}
+          unregisterClick={unregisterClick}
+          version={props.version}
+          width={width}
+        />
+      </ReactPortalOverlay>
     );
   }
 
   return null;
 }
 
-MapLassoOverlay.displayName = "MapLassoOverlay";
+MapLasso.displayName = "MapLasso";
 
-MapLassoOverlay.propTypes = {
+MapLasso.propTypes = {
   isActive: PropTypes.bool.isRequired,
   onPathChange: PropTypes.func.isRequired,
   path: PropTypes.array,
-  pointFillStyle: PropTypes.string,
-  pointSize: PropTypes.number,
-  strokeStyle: PropTypes.string,
+  version: PropTypes.number.isRequired,
 };
 
-MapLassoOverlay.defaultProps = {
-  dotsStyle: "#383838",
-  isActive: false,
-  lineWidth: 2,
-  path: null,
-  pointFillStyle: "#ffffff",
-  pointSize: 8,
-  pointStrokeStyle: "#000000",
-  strokeStyle: "#3C7383",
-};
+export default MapLasso;
