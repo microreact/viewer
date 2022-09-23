@@ -191,8 +191,6 @@ const MapControls = React.memo(
                       {
                         (props.regionsColourMethod === "value")
                         &&
-                        (props.regionsColourField)
-                        &&
                         (
                           <DataColumnValuesCombobox
                             multiple
