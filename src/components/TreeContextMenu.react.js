@@ -7,7 +7,7 @@ import ZoomOutRoundedIcon from "@mui/icons-material/ZoomOutRounded";
 
 import { downloadDataUrl } from "../utils/downloads";
 
-import "../styles/ui-context-menu.css";
+// import "../styles/ui-context-menu.css";
 
 const Link = (
   <div className="mr-ui-context-menu-item single-action">

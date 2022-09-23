@@ -3,9 +3,8 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import ReactMapGL, { ScaleControl } from "react-map-gl";
 import debounce from "lodash.debounce";
-import Draggable from "react-draggable";
 
-import "../styles/map-pane.css";
+// import "../styles/map-pane.css";
 
 import ZoomControls from "./ZoomControls.react";
 import MapMarkersLayer from "../containers/MapMarkersLayer.react";

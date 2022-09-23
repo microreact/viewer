@@ -4,7 +4,7 @@ import * as FlexLayout from "flexlayout-react";
 import classnames from "classnames";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
-import "../styles/panes.css";
+// import "../styles/panes.css";
 
 import { componentLoader } from "../utils/components";
 import { nextTick, nextFrame } from "../utils/browser";

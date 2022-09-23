@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import TextField from "@mui/material/TextField";
 
-import "../styles/ui-slider.css";
+// import "../styles/ui-slider.css";
 
 const UiTextfield = React.memo(
   (props) => {

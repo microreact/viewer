@@ -3,6 +3,8 @@ import React from "react";
 
 import MicroreactViewer, { Theme, store, actions } from "./viewer";
 
+import "./styles/index.css";
+
 class Viewer extends React.PureComponent {
 
   state = {

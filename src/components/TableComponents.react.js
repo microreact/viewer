@@ -6,7 +6,7 @@ import DragIndicatorOutlinedIcon from "@mui/icons-material/DragIndicatorOutlined
 import CheckBoxTwoToneIcon from "@mui/icons-material/CheckBoxTwoTone";
 import CheckBoxOutlineBlankTwoToneIcon from "@mui/icons-material/CheckBoxOutlineBlankTwoTone";
 
-import "../styles/table.css";
+// import "../styles/table.css";
 import TableHeaderMenu from "../containers/TableColumnMenu.react";
 
 const SortableItem = sortableElement(

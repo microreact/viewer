@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import Switch from "@mui/material/Switch";
 
-import "../styles/ui-switch.css";
+// import "../styles/ui-switch.css";
 
 const UiToggleSwitch = React.memo(
   (props) => (

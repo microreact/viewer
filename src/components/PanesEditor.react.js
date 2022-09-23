@@ -10,7 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import { createSelector } from "reselect";
 
-import "../styles/panes-editor.css";
+// import "../styles/panes-editor.css";
 
 import MapPaneEditor from "../containers/MapPaneEditor.react";
 import NetworkPaneEditor from "../containers/NetworkPaneEditor.react";

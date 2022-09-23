@@ -5,7 +5,7 @@ import React from "react";
 import ListSubheader from "@mui/material/ListSubheader";
 import { Vega } from "react-vega";
 
-import "../styles/selection-pane.css";
+// import "../styles/selection-pane.css";
 
 import { vegaLiteToVega } from "../utils/charts";
 

@@ -4,7 +4,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../styles/colour-palette-list.css";
+// import "../styles/colour-palette-list.css";
 
 import ColourPalette from "./ColourPalette.react";
 import { StylePalette } from "../utils/prop-types";

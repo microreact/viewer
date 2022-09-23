@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import clsx from "clsx";
 
-import "../styles/ui-select.css";
+// import "../styles/ui-select.css";
 
 function formatOptions(props) {
   if (props.children) {

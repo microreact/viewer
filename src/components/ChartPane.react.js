@@ -4,7 +4,7 @@ import { Handler } from "vega-tooltip";
 import { Vega } from "react-vega";
 // import debounce from "lodash.debounce";
 
-import "../styles/chart-pane.css";
+// import "../styles/chart-pane.css";
 import ChartControls from "../containers/ChartControls.react";
 import { ChartTypes } from "../utils/prop-types";
 import { exportPNG, exportSVG } from "../utils/charts";

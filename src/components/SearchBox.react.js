@@ -7,7 +7,7 @@ import React from "react";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 import UiDropdownMenu from "./UiDropdownMenu.react";
-import "../styles/search-box.css";
+// import "../styles/search-box.css";
 
 const resetFiltersMenuButtonProps = {
   // color: "primary",

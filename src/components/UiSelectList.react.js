@@ -9,7 +9,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
 
-import "../styles/ui-select-list.css";
+// import "../styles/ui-select-list.css";
 import UiToggleSwitch from "./UiToggleSwitch.react";
 import UiList from "./UiList.react";
 import EmptyIcon from "./EmptyIcon.react";

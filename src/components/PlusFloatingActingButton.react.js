@@ -7,7 +7,7 @@ import SpeedDialIcon from "@mui/lab/SpeedDialIcon";
 import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 import { mdiLinkVariantPlus } from "@mdi/js";
 
-import "../styles/plus-actions.css";
+// import "../styles/plus-actions.css";
 import UiSvgIcon from "./UiSvgIcon.react";
 
 class PlusFloatingActingButton extends React.PureComponent {

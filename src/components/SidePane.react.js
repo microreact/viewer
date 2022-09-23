@@ -1,4 +1,4 @@
-import "../styles/side-pane.css";
+// import "../styles/side-pane.css";
 
 import React from "react";
 import PropTypes from "prop-types";

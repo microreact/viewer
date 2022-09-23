@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import Slider from "@mui/material/Slider";
 
-import "../styles/ui-slider.css";
+// import "../styles/ui-slider.css";
 
 const UiSlider = React.memo(
   (props) => {

@@ -3,7 +3,7 @@ import ListSubheader from "@mui/material/ListSubheader";
 import React from "react";
 // import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
-import "../styles/ui-side-pane-header.css";
+// import "../styles/ui-side-pane-header.css";
 
 // import UiIconButton from "./UiIconButton.react";
 

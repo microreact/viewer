@@ -4,7 +4,7 @@ import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../styles/header-bar.css";
+// import "../styles/header-bar.css";
 import { createNewTab } from "../utils/panes";
 import PaneIcon from "./PaneIcon.react";
 import UiDropdownMenu from "./UiDropdownMenu.react";

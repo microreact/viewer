@@ -2,7 +2,7 @@ import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../styles/pane-placeholder.css";
+// import "../styles/pane-placeholder.css";
 import { FileDescriptor } from "../utils/prop-types";
 
 import PaneIcon from "./PaneIcon.react";

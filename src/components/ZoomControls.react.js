@@ -6,7 +6,7 @@ import ZoomInRoundedIcon from "@mui/icons-material/ZoomInRounded";
 import ZoomOutMapRoundedIcon from "@mui/icons-material/ZoomOutMapRounded";
 import ZoomOutRoundedIcon from "@mui/icons-material/ZoomOutRounded";
 
-import "../styles/zoom-controls.css";
+// import "../styles/zoom-controls.css";
 
 const ZoomControls = (props) => (
   <div

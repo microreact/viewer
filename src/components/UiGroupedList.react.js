@@ -10,7 +10,7 @@ import { FixedSizeList } from "react-window";
 
 import AutoSizer from "react-virtualized-auto-sizer";
 
-import "../styles/ui-list.css";
+// import "../styles/ui-list.css";
 
 const UiGroupedList = React.memo(
   (props) => {
