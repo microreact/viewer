@@ -7,7 +7,6 @@ import Lasso from "./SvgLasso";
 
 function MapLasso(props) {
   const { current: map } = useMap();
-  // const { map } = props;
 
   if (map) {
     const width = map.getContainer().clientWidth;
@@ -65,7 +64,6 @@ MapLasso.propTypes = {
 };
 
 export default function MapLassoOverlay(props) {
-  // return <MapLasso {...props} />
   return (
     <CustomOverlay>
       <MapLasso {...props} />
