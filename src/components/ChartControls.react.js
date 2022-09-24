@@ -366,6 +366,8 @@ const stackingTypes = [
 const interpolateTypes = [
   { label: "Linear", value: "linear" },
   { label: "Step", value: "step" },
+  { label: "Step before", value: "step-before" },
+  { label: "Step after", value: "step-after" },
   { label: "Basis", value: "basis" },
   { label: "Cardinal", value: "cardinal" },
   { label: "Monotone", value: "monotone" },
