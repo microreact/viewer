@@ -34,9 +34,6 @@
 .mr-panes .flexlayout__tab_button_overflow,
 .mr-panes .flexlayout__tab_button_trailing {
   background-image: none !important;
-  /* background-image: url(data:image/svg+xml;charset=utf-8;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0Ij48cGF0aCBkPSJNMCAwaDI0djI0SDBWMHoiIGZpbGw9Im5vbmUiLz48cGF0aCBkPSJNMTguMyA1LjcxYy0uMzktLjM5LTEuMDItLjM5LTEuNDEgMEwxMiAxMC41OSA3LjExIDUuN2MtLjM5LS4zOS0xLjAyLS4zOS0xLjQxIDAtLjM5LjM5LS4zOSAxLjAyIDAgMS40MUwxMC41OSAxMiA1LjcgMTYuODljLS4zOS4zOS0uMzkgMS4wMiAwIDEuNDEuMzkuMzkgMS4wMi4zOSAxLjQxIDBMMTIgMTMuNDFsNC44OSA0Ljg5Yy4zOS4zOSAxLjAyLjM5IDEuNDEgMCAuMzktLjM5LjM5LTEuMDIgMC0xLjQxTDEzLjQxIDEybDQuODktNC44OWMuMzgtLjM4LjM4LTEuMDIgMC0xLjR6IiBmaWxsPSIjZmZmIiAvPjwvc3ZnPg==) !important;
-  margin-left: 4px;
-  filter: brightness(0); */
 } 
 
 .mr-panes .flexlayout__tab_button_trailing {
@@ -58,12 +55,17 @@
   opacity: 1;
 }
 
+.mr-panes .flexlayout__tabset_tab_divider{
+  width: 0;
+}
+
 /*#endregion*/
 
 /*#region Move max/restore buttons to the left */
 .mr-panes .flexlayout__tab_toolbar {
   margin-top: 5px;
   flex-grow: 1;
+  padding-left: 0;
 }
 
 .mr-panes .flexlayout__tabset_tabbar_inner {
