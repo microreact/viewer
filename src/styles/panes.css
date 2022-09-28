@@ -63,8 +63,8 @@
 
 /*#region Move max/restore buttons to the left */
 .mr-panes .flexlayout__tab_toolbar {
-  margin-top: 5px;
   flex-grow: 1;
+  margin-top: 5px;
   padding-left: 0;
 }
 
