@@ -45,19 +45,6 @@ const filterChartDataSelector = createKeyedStateSelector(
       }
     }
 
-    // const set = new Set();
-    // for (const row of allRows) {
-    //   const key = [ 
-    //     row["--mr-filtered"],
-    //     row["CARBAPENEM"],
-    //   ]
-    //   set.add(key.join(" "))
-    // }
-    // console.log(Array.from(set))
-    // console.log(allRows.filter(x => x["--mr-filtered"]))
-    // console.log(allRows.filter(x => !x["--mr-filtered"]))
-    // window.allRows = allRows;
-
     return { table: rows };
   },
 );
