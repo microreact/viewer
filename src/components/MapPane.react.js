@@ -18,7 +18,6 @@ import { downloadDataUrl } from "../utils/downloads";
 import { MapboxStyle, MapMarker, ReactRef } from "../utils/prop-types";
 import * as HtmlUtils from "../utils/html";
 import { subscribe } from "../utils/events";
-import { triggerWindowResize } from "../utils/browser";
 
 const interactiveLayerIds = [ "mr-geojson-layer" ];
 
@@ -128,7 +127,7 @@ class MapPane extends React.PureComponent {
     const { props } = this;
 
     if (props.width !== prevProps.width || props.height !== prevProps.height) {
-      triggerWindowResize();
+      this.getMapboxWrapper().resize();
     }
 
     if (props.trackViewport && props.trackViewport !== prevProps.trackViewport) {
