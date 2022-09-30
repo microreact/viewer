@@ -124,6 +124,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         dataFilters: initialState.dataFilters,
+        chartFilters: initialState.chartFilters,
         searchValue: initialState.searchValue,
         selection: initialState.selection,
       };
