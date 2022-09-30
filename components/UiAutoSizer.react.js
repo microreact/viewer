@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import debounce from "lodash.debounce";
-import { AutoSizer } from "react-virtualized";
+import AutoSizer from "react-virtualized-auto-sizer";
 
 import { DELAY, MIN_WIDTH, MIN_HEIGHT } from "../defaults";
 

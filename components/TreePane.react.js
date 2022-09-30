@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Menu from "@material-ui/core/Menu";
+import Menu from "@mui/material/Menu";
 
 import phylocanvasPlugin from "../plugins/phylocanvas";
 import { downloadDataUrl } from "../utils/downloads";
 import { GeometricPoint, TreeType } from "../utils/prop-types";
 
-import "../css/tree.css";
+// import "../styles/tree.css";
 import TreeControls from "../containers/TreeControls.react";
 import ZoomControls from "./TreeZoomControls.react";
 import TreeContextMenu from "./TreeContextMenu.react";

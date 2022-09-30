@@ -1,19 +1,19 @@
 import { createSelector } from "reselect";
-import Box from "@material-ui/core/Box";
-import MenuItem from "@material-ui/core/MenuItem";
+import Box from "@mui/material/Box";
+import MenuItem from "@mui/material/MenuItem";
 import PropTypes from "prop-types";
 import React from "react";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import AddCircleOutlineRoundedIcon from "@material-ui/icons/AddCircleOutlineRounded";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button";
+import AddCircleOutlineRoundedIcon from "@mui/icons-material/AddCircleOutlineRounded";
 
-import "../css/files-queue.css";
+// import "../styles/files-queue.css";
 
 import { FileKinds } from "../utils/files";
 import { generateHashId } from "../utils/hash";

@@ -1,12 +1,12 @@
 /* eslint-disable class-methods-use-this */
 
 import BaseTable from "react-base-table/lib";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../css/custom-colour-palette-editor.css";
+// import "../styles/custom-colour-palette-editor.css";
 
 import { fullSizeStyle } from "../constants";
 import { generateHashId } from "../utils/hash";

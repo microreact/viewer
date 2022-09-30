@@ -1,11 +1,11 @@
 /* eslint-disable class-methods-use-this */
 
 import { createSelector } from "reselect";
-import InfoTwoToneIcon from '@material-ui/icons/InfoTwoTone';
-import IconButton from "@material-ui/core/IconButton";
+import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
+import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import React from "react";
-import Typography from "@material-ui/core/Typography";
+import Typography from "@mui/material/Typography";
 
 import UiDropdownMenu from "./UiDropdownMenu.react";
 

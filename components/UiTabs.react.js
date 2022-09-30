@@ -1,12 +1,12 @@
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
-import Tab from "@material-ui/core/Tab";
-import TabContext from "@material-ui/lab/TabContext";
-import TabList from "@material-ui/lab/TabList";
-import TabPanel from "@material-ui/lab/TabPanel";
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
+import TabPanel from "@mui/lab/TabPanel";
 
-import "../css/ui-tabs.css";
+// import "../styles/ui-tabs.css";
 import { nextAnimation } from "../utils/browser";
 
 class UiTabs extends React.PureComponent {

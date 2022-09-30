@@ -5,7 +5,7 @@ import clsx from "clsx";
 import ColourSettingsContent from "../containers/ColourSettingsContent.react";
 import UiPopoverMenu from "./UiPopoverMenu.react";
 
-import "../css/colour-settings-menu.css";
+// import "../styles/colour-settings-menu.css";
 import { ColourModes } from "../utils/prop-types";
 
 const DataColumnColourSettingsButton = React.forwardRef(

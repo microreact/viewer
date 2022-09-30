@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import debounce from "lodash.debounce";
 import classnames from "classnames";
 
-import "../css/timeline-slider.css";
+// import "../styles/timeline-slider.css";
 import * as Datetime from "../utils/datetime";
 
 import { nextFrame } from "../utils/browser";

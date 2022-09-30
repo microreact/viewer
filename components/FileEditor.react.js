@@ -1,18 +1,18 @@
-import FormControl from "@material-ui/core/FormControl";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import InputLabel from "@material-ui/core/InputLabel";
-import OutlinedInput from "@material-ui/core/OutlinedInput";
+import FormControl from "@mui/material/FormControl";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import InputLabel from "@mui/material/InputLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
 import PropTypes from "prop-types";
 import React from "react";
 import validUrl from "valid-url";
-import SaveTwoToneIcon from "@material-ui/icons/SaveTwoTone";
-import InsertDriveFileTwoToneIcon from "@material-ui/icons/InsertDriveFileTwoTone";
-import LinkTwoToneIcon from "@material-ui/icons/LinkTwoTone";
-import HighlightOffTwoToneIcon from "@material-ui/icons/HighlightOffTwoTone";
-import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
+import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
+import InsertDriveFileTwoToneIcon from "@mui/icons-material/InsertDriveFileTwoTone";
+import LinkTwoToneIcon from "@mui/icons-material/LinkTwoTone";
+import HighlightOffTwoToneIcon from "@mui/icons-material/HighlightOffTwoTone";
+import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 
-import "../css/panes-editor.css";
+// import "../styles/panes-editor.css";
 import { nextTick } from "../utils/browser";
 
 class FileEditor extends React.PureComponent {

@@ -1,4 +1,4 @@
-import filesize from "filesize";
+import { filesize } from "filesize";
 
 import { generateHashId } from "./hash";
 import { loadCsvFile } from "./loaders/data";

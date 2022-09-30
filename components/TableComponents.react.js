@@ -2,11 +2,11 @@
 
 import React from "react";
 import { sortableContainer, sortableElement, sortableHandle } from "react-sortable-hoc";
-import DragIndicatorOutlinedIcon from "@material-ui/icons/DragIndicatorOutlined";
-import CheckBoxTwoToneIcon from "@material-ui/icons/CheckBoxTwoTone";
-import CheckBoxOutlineBlankTwoToneIcon from "@material-ui/icons/CheckBoxOutlineBlankTwoTone";
+import DragIndicatorOutlinedIcon from "@mui/icons-material/DragIndicatorOutlined";
+import CheckBoxTwoToneIcon from "@mui/icons-material/CheckBoxTwoTone";
+import CheckBoxOutlineBlankTwoToneIcon from "@mui/icons-material/CheckBoxOutlineBlankTwoTone";
 
-import "../css/table.css";
+// import "../styles/table.css";
 import TableHeaderMenu from "../containers/TableColumnMenu.react";
 
 const SortableItem = sortableElement(

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../css/legend-pane.css";
+// import "../styles/legend-pane.css";
 
 import ShapeSvgImage from "./ShapeSvgImage.react";
 

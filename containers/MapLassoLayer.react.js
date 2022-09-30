@@ -1,7 +1,7 @@
 import { setFilter } from "../actions/maps";
+import { connectToPresentState } from "../utils/state";
 
 import MapLassoLayer from "../components/MapLassoLayer.react";
-import { connectToPresentStateWithRef } from "../utils/state";
 
 const mapStateToProps = (state, { mapId }) => {
   const mapState = state.maps[mapId];
@@ -15,4 +15,4 @@ const mapDispatchToProps = (dispatch, { mapId }) => ({
   onPathChange: (path) => dispatch(setFilter(mapId, path)),
 });
 
-export default connectToPresentStateWithRef(MapLassoLayer, mapStateToProps, mapDispatchToProps);
+export default connectToPresentState(MapLassoLayer, mapStateToProps, mapDispatchToProps);

@@ -1,10 +1,10 @@
-import "../css/file-icon.css";
+// import "../styles/file-icon.css";
 
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import Badge from "@material-ui/core/Badge";
-import InsertDriveFileTwoToneIcon from "@material-ui/icons/InsertDriveFileTwoTone";
+import Badge from "@mui/material/Badge";
+import InsertDriveFileTwoToneIcon from "@mui/icons-material/InsertDriveFileTwoTone";
 
 const FileIcon = (props) => (
   <Badge

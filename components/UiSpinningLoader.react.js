@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import "../css/ui-spinning-loader.css";
+// import "../styles/ui-spinning-loader.css";
 
 const UiSpinningLoader = React.memo(
   (props) => (

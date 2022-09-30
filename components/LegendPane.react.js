@@ -1,11 +1,11 @@
 import clsx from "clsx";
-import Divider from "@material-ui/core/Divider";
+import Divider from "@mui/material/Divider";
 import htmlToSvg from "htmlsvg";
-import ListSubheader from "@material-ui/core/ListSubheader";
+import ListSubheader from "@mui/material/ListSubheader";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../css/legend-pane.css";
+// import "../styles/legend-pane.css";
 
 import UiDropdownMenu from "./UiDropdownMenu.react";
 import UiIconButton from "./UiIconButton.react";

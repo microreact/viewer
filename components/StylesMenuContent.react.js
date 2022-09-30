@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Divider from "@material-ui/core/Divider";
+import Divider from "@mui/material/Divider";
 
-import "../css/styles-menu-content.css";
+// import "../styles/styles-menu-content.css";
 
 import UiCombobox from "./UiCombobox.react";
 import DefaultColourPicker from "./DefaultColourPicker.react";

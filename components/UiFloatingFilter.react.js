@@ -1,14 +1,14 @@
 import { createSelector } from "reselect";
-import BackspaceIcon from "@material-ui/icons/Backspace";
+import BackspaceIcon from "@mui/icons-material/Backspace";
 import classnames from "classnames";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
 import PropTypes from "prop-types";
 import React from "react";
-import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
-import TextField from "@material-ui/core/TextField";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import TextField from "@mui/material/TextField";
 
-import "../css/ui-floating-filter.css";
+// import "../styles/ui-floating-filter.css";
 
 class UiFloatingFilter extends React.PureComponent {
 

@@ -1,10 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Paper from "@material-ui/core/Paper";
-import InputBase from "@material-ui/core/InputBase";
-import Divider from "@material-ui/core/Divider";
+import Paper from "@mui/material/Paper";
+import InputBase from "@mui/material/InputBase";
+import Divider from "@mui/material/Divider";
 
-import "../css/timeline-pane.css";
+// import "../styles/timeline-pane.css";
 
 import * as Datetime from "../utils/datetime";
 import { downloadDataUrl } from "../utils/downloads";
@@ -44,7 +44,7 @@ class TimelinePane extends React.PureComponent {
   filteredRangeChartRef = React.createRef()
 
   signalListeners = {
-    onItemSelect: (_, [ event, item ]) => {
+    onItemSelectSignal: (_, [ event, item ]) => {
       if (item) {
         this.props.onSelectItem(item, event.metaKey || event.ctrilKey);
       }

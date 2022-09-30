@@ -1,11 +1,11 @@
 import { createSelector } from "reselect";
-import DonutSmallIcon from "@material-ui/icons/DonutSmall";
+import DonutSmallIcon from "@mui/icons-material/DonutSmall";
 import PropTypes from "prop-types";
 import React from "react";
-import ListSubheader from "@material-ui/core/ListSubheader";
+import ListSubheader from "@mui/material/ListSubheader";
 import { Vega } from "react-vega";
 
-import "../css/selection-pane.css";
+// import "../styles/selection-pane.css";
 
 import { vegaLiteToVega } from "../utils/charts";
 

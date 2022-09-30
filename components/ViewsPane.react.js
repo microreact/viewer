@@ -1,17 +1,17 @@
 import PropTypes from "prop-types";
 import React from "react";
-import AddCircleTwoToneIcon from "@material-ui/icons/AddCircleTwoTone";
-import CircularProgress from "@material-ui/core/CircularProgress";
-import ViewCompactIcon from "@material-ui/icons/ViewCompact";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import HashChange from "react-hashchange";
+import AddCircleTwoToneIcon from "@mui/icons-material/AddCircleTwoTone";
+import CircularProgress from "@mui/material/CircularProgress";
+import ViewCompactIcon from "@mui/icons-material/ViewCompact";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+// import HashChange from "react-hashchange";
 import { sortableContainer, sortableElement } from "react-sortable-hoc";
 import Swal from "sweetalert2";
 // import withReactContent from "sweetalert2-react-content";
 
-import "@sweetalert2/theme-material-ui/material-ui.css";
+// import "@sweetalert2/theme-material-ui/material-ui.css";
 
-import "../css/views-pane.css";
+// import "../styles/views-pane.css";
 
 import * as BrowserUtils from "../utils/browser";
 
@@ -169,7 +169,7 @@ class ViewsPane extends React.PureComponent {
       { isSaving: true },
       props.onCreateView,
     );
-  }
+  };
 
   handleRenameView = async (item) => {
     const { props } = this;
@@ -186,7 +186,7 @@ class ViewsPane extends React.PureComponent {
     if (value) {
       props.onRenameView(item, value);
     }
-  }
+  };
 
   handleSortEnd = ({ oldIndex, newIndex }) => {
     this.props.onEntriesListChange(
@@ -198,10 +198,10 @@ class ViewsPane extends React.PureComponent {
     );
   };
 
-  renderList = ({ hash }) => {
+  renderList = () => {
     const { props, state } = this;
 
-    const currentViewId = BrowserUtils.getPageHash(hash);
+    const currentViewId = BrowserUtils.getPageHash();
 
     return (
       <ul>
@@ -231,7 +231,7 @@ class ViewsPane extends React.PureComponent {
         />
       </ul>
     );
-  }
+  };
 
   renderContent = () => {
     const { props, state } = this;
@@ -246,12 +246,8 @@ class ViewsPane extends React.PureComponent {
       );
     }
 
-    return (
-      <HashChange
-        render={this.renderList}
-      />
-    );
-  }
+    return this.renderList();
+  };
 
   render() {
     const { props, state } = this;

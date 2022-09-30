@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { createSelector } from "reselect";
 import BaseTable from "react-base-table/lib";
 
-import "../css/table.css";
+// import "../styles/table.css";
 import { nextTick } from "../utils/browser";
 import * as TextUtils from "../utils/text";
 import tableComponents, { HeaderCellComponent, SortableContainer } from "./TableComponents.react";

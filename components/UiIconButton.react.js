@@ -1,4 +1,4 @@
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import React from "react";
 

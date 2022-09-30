@@ -1,9 +1,9 @@
-import GridOnIcon from "@material-ui/icons/GridOn";
+import GridOnIcon from "@mui/icons-material/GridOn";
 import PropTypes from "prop-types";
 import React from "react";
-import ShareTwoToneIcon from "@material-ui/icons/ShareTwoTone";
+import ShareTwoToneIcon from "@mui/icons-material/ShareTwoTone";
 
-import "../css/drop-files-graphics.css";
+// import "../styles/drop-files-graphics.css";
 import FileIcon from "./FileIcon.react";
 import RectangularTreeIcon from "./RectangularTreeIcon.react";
 import { FileKind } from "../utils/prop-types";

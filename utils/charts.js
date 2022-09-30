@@ -52,24 +52,6 @@ export function vegaLiteToVega(vlSpec) {
   if (isVegaLiteSpec(vlSpec)) {
     try {
       vgSpec = compile(vlSpec, {}).spec;
-
-      vgSpec.signals = [
-        ...(vgSpec.signals || []),
-        // {
-        //   name: 'tooltip',
-        //   value: {},
-        //   on: [
-        //     { events: 'rect:mousedown', update: 'datum' },
-        //   ],
-        // },
-        {
-          name: "onItemSelect",
-          value: {},
-          on: [
-            { events: "click", update: "[ event, datum ]" },
-          ],
-        },
-      ];
     }
     catch (error) {
       console.error(vgSpec, vlSpec);
@@ -79,6 +61,24 @@ export function vegaLiteToVega(vlSpec) {
   else {
     vgSpec = vlSpec;
   }
+
+  vgSpec.signals = [
+    ...(vgSpec.signals || []),
+    // {
+    //   name: 'tooltip',
+    //   value: {},
+    //   on: [
+    //     { events: 'rect:mousedown', update: 'datum' },
+    //   ],
+    // },
+    {
+      name: "onItemSelectSignal",
+      value: {},
+      on: [
+        { events: "click", update: "[ event, datum ]" },
+      ],
+    },
+  ];
 
   return vgSpec;
 }

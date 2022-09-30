@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { scaleLinear } from "d3-scale";
 
-import "../css/colour-palette.css";
+// import "../styles/colour-palette.css";
 import { StylePalette } from "../utils/prop-types";
 
 const ColourPalette = React.memo((props) => {

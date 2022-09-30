@@ -2,11 +2,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import classnames from "classnames";
-import ZoomInRoundedIcon from "@material-ui/icons/ZoomInRounded";
-import ZoomOutMapRoundedIcon from "@material-ui/icons/ZoomOutMapRounded";
-import ZoomOutRoundedIcon from "@material-ui/icons/ZoomOutRounded";
+import ZoomInRoundedIcon from "@mui/icons-material/ZoomInRounded";
+import ZoomOutMapRoundedIcon from "@mui/icons-material/ZoomOutMapRounded";
+import ZoomOutRoundedIcon from "@mui/icons-material/ZoomOutRounded";
 
-import "../css/zoom-controls.css";
+// import "../styles/zoom-controls.css";
 
 const ZoomControls = (props) => (
   <div

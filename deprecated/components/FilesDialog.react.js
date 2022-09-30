@@ -11,7 +11,7 @@ import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
 import PropTypes from "prop-types";
 import React from "react";
-import filesize from "filesize";
+import { filesize } from "filesize";
 import TextField from "@material-ui/core/TextField";
 import WebAssetTwoToneIcon from "@material-ui/icons/WebAssetTwoTone";
 import EditRoundedIcon from "@material-ui/icons/EditRounded";

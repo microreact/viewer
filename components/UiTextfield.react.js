@@ -1,11 +1,11 @@
-import ClearRoundedIcon from "@material-ui/icons/ClearRounded";
-import IconButton from "@material-ui/core/IconButton";
-import InputAdornment from "@material-ui/core/InputAdornment";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
 import PropTypes from "prop-types";
 import React from "react";
-import TextField from "@material-ui/core/TextField";
+import TextField from "@mui/material/TextField";
 
-import "../css/ui-slider.css";
+// import "../styles/ui-slider.css";
 
 const UiTextfield = React.memo(
   (props) => {

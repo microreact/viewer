@@ -1,7 +1,7 @@
-import Box from "@material-ui/core/Box";
-import EditRoundedIcon from "@material-ui/icons/EditRounded";
-import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import Box from "@mui/material/Box";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
 import PropTypes from "prop-types";
 import React from "react";
 
@@ -351,7 +351,7 @@ const chartTypes = [
   { label: "Line Chart", value: "line" },
   { label: "Point", value: "point" },
   { label: "Tick", value: "tick" },
-  { label: "Heatmap Matrix", value: "heatmap" },
+  // { label: "Heatmap Matrix", value: "heatmap" },
   { label: "Custom", value: "custom" },
 ];
 
@@ -366,6 +366,8 @@ const stackingTypes = [
 const interpolateTypes = [
   { label: "Linear", value: "linear" },
   { label: "Step", value: "step" },
+  { label: "Step before", value: "step-before" },
+  { label: "Step after", value: "step-after" },
   { label: "Basis", value: "basis" },
   { label: "Cardinal", value: "cardinal" },
   { label: "Monotone", value: "monotone" },
@@ -744,7 +746,7 @@ export default class ChartControls extends React.PureComponent {
 
 ChartControls.propTypes = {
   chartType: ChartTypes,
-  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.string),
   controls: PropTypes.bool.isRequired,
   dataFileUrl: PropTypes.string,
   facetField: PropTypes.string,

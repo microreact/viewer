@@ -1,13 +1,13 @@
 import classnames from "classnames";
 import { DebounceInput } from "react-debounce-input";
-import ExplicitRoundedIcon from "@material-ui/icons/ExplicitRounded";
-import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
+import ExplicitRoundedIcon from "@mui/icons-material/ExplicitRounded";
+import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 import PropTypes from "prop-types";
 import React from "react";
-import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 import UiDropdownMenu from "./UiDropdownMenu.react";
-import "../css/search-box.css";
+// import "../styles/search-box.css";
 
 const resetFiltersMenuButtonProps = {
   // color: "primary",

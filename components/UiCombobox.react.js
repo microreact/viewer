@@ -2,15 +2,15 @@ import React from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 
-import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import Checkbox from "@material-ui/core/Checkbox";
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import Paper from "@mui/material/Paper";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/lab/Autocomplete";
+import Checkbox from "@mui/material/Checkbox";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { emptyArray, fullWithStyle } from "../constants";
 
-import "../css/ui-combobox.css";
+// import "../styles/ui-combobox.css";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;

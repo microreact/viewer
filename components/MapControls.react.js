@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Divider from "@material-ui/core/Divider";
-import MenuIcon from "@material-ui/icons/Menu";
-import CropFreeOutlinedIcon from "@material-ui/icons/CropFreeOutlined";
-import Box from "@material-ui/core/Box";
+import Divider from "@mui/material/Divider";
+import MenuIcon from "@mui/icons-material/Menu";
+import CropFreeOutlinedIcon from "@mui/icons-material/CropFreeOutlined";
+import Box from "@mui/material/Box";
 
-import "../css/map-controls.css";
+// import "../styles/map-controls.css";
 
 import { DataColumn, StylePalette } from "../utils/prop-types";
 
