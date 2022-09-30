@@ -1,9 +1,10 @@
+import deepEqual from "fast-deep-equal";
+
 import { emptyArray } from "../constants";
 import dataColumnsByFieldMapSelector from "../selectors/datasets/data-columns-by-field-map";
 import rowsSelector from "../selectors/datasets/rows";
 import { filterByQuery } from "../utils/arrays";
 import { getPresentState } from "../utils/state";
-import deepEqual from "fast-deep-equal";
 import dataFieldFilterSelector from "../selectors/filters/data-field-filter";
 
 export const selectRows = (ids = emptyArray, merge = false) => (
