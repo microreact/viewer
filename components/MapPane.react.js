@@ -126,6 +126,7 @@ class MapPane extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const { props } = this;
 
+    // https://github.com/visgl/react-map-gl/issues/1984#issuecomment-1244534396
     if (props.width !== prevProps.width || props.height !== prevProps.height) {
       this.getMapboxWrapper().resize();
     }
