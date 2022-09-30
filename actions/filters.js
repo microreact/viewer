@@ -1,7 +1,6 @@
 import deepEqual from "fast-deep-equal";
 
 import { emptyArray } from "../constants";
-import dataColumnsByFieldMapSelector from "../selectors/datasets/data-columns-by-field-map";
 import rowsSelector from "../selectors/datasets/rows";
 import { filterByQuery } from "../utils/arrays";
 import { getPresentState } from "../utils/state";
@@ -34,8 +33,7 @@ export const selectQueryRows = (query, merge = false) => (
     if (query) {
       const state = getPresentState(getState());
       const rows = rowsSelector(state);
-      const dataColumnsByFieldMap = dataColumnsByFieldMapSelector(state);
-      const ids = filterByQuery(rows, dataColumnsByFieldMap, query);
+      const ids = filterByQuery(rows, query);
       dispatch(
         selectRows(
           ids,
