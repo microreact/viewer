@@ -211,6 +211,13 @@
 
 /*#region Border tabs */
 
+.mr-panes.flexlayout__layout .flexlayout__border_inner_tab_container {
+  padding: 0;
+}
+.mr-panes.flexlayout__layout .flexlayout__border_tab_divider {
+  display: none;
+}
+
 .mr-panes.flexlayout__layout .flexlayout__border_button {
   background: var(--background-main);
   border-radius: 0;
