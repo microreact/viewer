@@ -127,9 +127,9 @@ class MapPane extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const { props } = this;
 
-    // if (props.width !== prevProps.width || props.height !== prevProps.height) {
-    //   triggerWindowResize();
-    // }
+    if (props.width !== prevProps.width || props.height !== prevProps.height) {
+      triggerWindowResize();
+    }
 
     if (props.trackViewport && props.trackViewport !== prevProps.trackViewport) {
       this.handleViewportFilter();

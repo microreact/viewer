@@ -26,7 +26,7 @@ function MapLasso(props) {
       (point) => {
         return map.project.call(map, point);
       },
-      [ map ],
+      [ map, props.version ],
     );
 
     const unproject = React.useCallback(
@@ -34,11 +34,11 @@ function MapLasso(props) {
         const coordinates = map.unproject.call(map, point);
         return [ coordinates.lng, coordinates.lat ];
       },
-      [ map ],
+      [ map, props.version ],
     );
 
     return (
-      <ReactPortalOverlay>
+      // <ReactPortalOverlay>
         <SvgLasso
           height={height}
           isActive={props.isActive}
@@ -51,7 +51,7 @@ function MapLasso(props) {
           version={props.version}
           width={width}
         />
-      </ReactPortalOverlay>
+      // </ReactPortalOverlay>
     );
   }
 
@@ -67,4 +67,18 @@ MapLasso.propTypes = {
   version: PropTypes.number,
 };
 
-export default MapLasso;
+export default function MapLassoLayer(props) {
+  const { current: map } = useMap();
+
+  if (map) {
+    return (
+      <ReactPortalOverlay>
+        <MapLasso
+          {...props}
+        />
+      </ReactPortalOverlay>
+    );
+  }
+
+  return null;
+};

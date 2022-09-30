@@ -2,48 +2,72 @@ import React from "react";
 import PropTypes from "prop-types";
 import Draggable from "react-draggable";
 
+function isClosedPath(newPath) {
+  return (
+    newPath.length > 3
+    &&
+    newPath[0][0] === newPath[newPath.length - 1][0]
+    &&
+    newPath[0][1] === newPath[newPath.length - 1][1]
+  );
+}
+
 class SvgLasso extends React.PureComponent {
 
   state = {};
 
-  handlePointClick = (e) => {
-    return this.handleCanvasClick(e.nativeEvent);
-  };
-
   handleCanvasClick = (e) => {
     const { props, state } = this;
-    const event = e.originalEvent ?? e;
-    const coordinates = props.unproject([ event.layerX, event.layerY ]);
 
-    if (state.path && state.path.length > 2) {
-      const padding = this.props.pointSize;
-      const pointTopLeft = props.unproject([ event.layerX - padding, event.layerY - padding ]);
-      const pointBottomRight = props.unproject([ event.layerX + padding, event.layerY + padding ]);
-      if (
-        (pointBottomRight[0] >= state.path[0][0] && pointTopLeft[0] <= state.path[0][0])
-        &&
-        (
-          (pointBottomRight[1] >= state.path[0][1] && pointTopLeft[1] <= state.path[0][1])
-          ||
-          (pointBottomRight[1] <= state.path[0][1] && pointTopLeft[1] >= state.path[0][1])
-        )
-      ) {
-        // push the first point to the end of the path to close the polygon
-        // and mark the path as finished
-        const newPath = [
-          ...state.path,
-          state.path[0],
-        ];
-        this.props.onPathChange(newPath);
-        return;
-      }
+    // if (state.path && state.path.length > 2) {
+    //   const padding = this.props.pointSize;
+    //   const pointTopLeft = props.unproject([ event.layerX - padding, event.layerY - padding ]);
+    //   const pointBottomRight = props.unproject([ event.layerX + padding, event.layerY + padding ]);
+    //   if (
+    //     (pointBottomRight[0] >= state.path[0][0] && pointTopLeft[0] <= state.path[0][0])
+    //     &&
+    //     (
+    //       (pointBottomRight[1] >= state.path[0][1] && pointTopLeft[1] <= state.path[0][1])
+    //       ||
+    //       (pointBottomRight[1] <= state.path[0][1] && pointTopLeft[1] >= state.path[0][1])
+    //     )
+    //   ) {
+    //     // push the first point to the end of the path to close the polygon
+    //     // and mark the path as finished
+    //     const newPath = [
+    //       ...state.path,
+    //       state.path[0],
+    //     ];
+    //     this.props.onPathChange(newPath);
+    //     return;
+    //   }
+    // }
+
+    if (!props.path) {
+      const event = e.originalEvent ?? e;
+      const coordinates = props.unproject([ event.layerX, event.layerY ]);
+      const newPath = [
+        ...(state.path ?? []),
+        coordinates,
+      ];
+      this.setState({ path: newPath });
     }
+  };
 
-    const newPath = [
-      ...(state.path ?? []),
-      coordinates,
-    ];
-    this.setState({ path: newPath });
+  handleFinishPath = () => {
+    const { props, state } = this;
+    const newPath = [ ...(state.path ?? props.path) ];
+    const closedPath = isClosedPath(newPath);
+    if (
+      !closedPath
+      &&
+      (state.path?.length > 2)
+    ) {
+      // push the first point to the end of the path to close the polygon
+      // and mark the path as finished
+      newPath.push(newPath[0]);
+      props.onPathChange(newPath);
+    }
   };
 
   handleDrag = (event, position) => {
@@ -51,18 +75,35 @@ class SvgLasso extends React.PureComponent {
     const newPath = [ ...(state.path ?? props.path) ];
     const coordinates = props.unproject([ position.x, position.y ]);
     const pointIndex = parseInt(position.node.dataset.index, 10);
-    const isFirstPoint = (
-      pointIndex === 0
-      &&
-      newPath[newPath.length - 1][0] === newPath[0][0]
-      &&
-      newPath[newPath.length - 1][1] === newPath[0][1]
-    );
+    const isFirstPoint = (pointIndex === 0);
+    const closedPath = isClosedPath(newPath);
     newPath[pointIndex] = coordinates;
-    if (isFirstPoint) {
+    if (isFirstPoint && closedPath) {
       newPath[newPath.length - 1] = coordinates;
     }
     this.setState({ path: newPath });
+  };
+
+  handleDragStop = (event, position) => {
+    const { props, state } = this;
+    const newPath = [ ...(state.path ?? props.path) ];
+    const pointIndex = parseInt(position.node.dataset.index, 10);
+    const isFirstPoint = (pointIndex === 0);
+    const closedPath = isClosedPath(newPath);
+    if (
+      isFirstPoint
+      &&
+      !closedPath
+      &&
+      (state.path?.length > 2)
+      &&
+      (position.deltaX + position.deltaY === 0)
+    ) {
+      this.handleFinishPath();
+    }
+    else {
+      props.onPathChange(state.path);
+    }
   };
 
   componentDidMount() {
@@ -81,27 +122,31 @@ class SvgLasso extends React.PureComponent {
     const path = state.path || props.path;
 
     if (path) {
-      const points = [];
+      const polylinePoints = [];
       const handles = [];
+      const closedPath = isClosedPath(path);
       for (let index = 0; index < path.length; index++) {
         const coordinates = path[index];
+        // const isFirstPoint = (
+        //   index === 0
+        //   &&
+        //   !closedPath
+        // );
         const isLastPoint = (
-          index > 0
+          path.length > 1
           &&
           index === (path.length - 1)
           &&
-          path[path.length - 1][0] === path[0][0]
-          &&
-          path[path.length - 1][1] === path[0][1]
+          closedPath
         );
 
         const pixelPoint = props.project(coordinates);
 
         if (isLastPoint) {
-          points.push(points[0]);
+          polylinePoints.push(polylinePoints[0]);
         }
         else {
-          points.push(`${pixelPoint.x},${pixelPoint.y}`);
+          polylinePoints.push(`${pixelPoint.x},${pixelPoint.y}`);
         }
 
         if (!isLastPoint) {
@@ -109,8 +154,7 @@ class SvgLasso extends React.PureComponent {
             <Draggable
               key={index}
               onDrag={this.handleDrag}
-              onStart={this.handleStart}
-              onStop={this.handleStop}
+              onStop={this.handleDragStop}
               position={pixelPoint}
             >
               <rect
@@ -118,7 +162,7 @@ class SvgLasso extends React.PureComponent {
                 data-index={index}
                 fill={props.pointFill}
                 height={props.pointSize}
-                onClick={(index === 0) ? this.handlePointClick : undefined}
+                // onClick={isFirstPoint ? this.handleFinishPath : undefined}
                 stroke={props.pointStroke}
                 title="Move point"
                 width={props.pointSize}
@@ -133,9 +177,9 @@ class SvgLasso extends React.PureComponent {
       return (
         <React.Fragment>
           <polyline
-            points={points.join(", ")}
-            stroke={props.lineStroke}
             fill="none"
+            points={polylinePoints.join(", ")}
+            stroke={props.lineStroke}
             strokeWidth={props.lineWidth}
           />
           { handles }
