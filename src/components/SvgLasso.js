@@ -133,9 +133,9 @@ class SvgLasso extends React.PureComponent {
       return (
         <React.Fragment>
           <polyline
-            stroke={props.lineStroke}
             fill="none"
             points={polylinePoints.join(", ")}
+            stroke={props.lineStroke}
             strokeWidth={props.lineWidth}
           />
           { handles }
