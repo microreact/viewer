@@ -91,6 +91,7 @@ function applyQueryToState(currentState, query) {
   return currentState;
 }
 
+// eslint-disable-next-line default-param-last
 const reducer = (state = initialState, action) => {
   switch (action.type) {
 
