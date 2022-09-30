@@ -1,14 +1,14 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import InputLabel from "@material-ui/core/InputLabel";
-import FormControl from "@material-ui/core/FormControl";
-import Box from "@material-ui/core/Box";
-import Typography from "@material-ui/core/Typography";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import clsx from "clsx";
 
-import "../css/ui-select.css";
+// import "../styles/ui-select.css";
 
 function formatOptions(props) {
   if (props.children) {

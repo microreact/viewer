@@ -2,16 +2,16 @@
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListSubheader from "@material-ui/core/ListSubheader";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListSubheader from "@mui/material/ListSubheader";
 import { FixedSizeList } from "react-window";
 import { createSelector } from "reselect";
 import groupby from "lodash.groupby";
 
-import { AutoSizer } from "react-virtualized";
+import AutoSizer from "react-virtualized-auto-sizer";
 
-import "../css/ui-list.css";
+// import "../styles/ui-list.css";
 import { fullSizeStyle } from "../constants";
 
 class UiList extends React.PureComponent {

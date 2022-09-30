@@ -2,7 +2,7 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../css/default-colour-picker.css";
+// import "../styles/default-colour-picker.css";
 
 import { fullWithStyle } from "../constants";
 

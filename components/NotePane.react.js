@@ -1,10 +1,10 @@
-import DoneOutlineRoundedIcon from "@material-ui/icons/DoneOutlineRounded";
-import EditRoundedIcon from "@material-ui/icons/EditRounded";
+import DoneOutlineRoundedIcon from "@mui/icons-material/DoneOutlineRounded";
+import EditRoundedIcon from "@mui/icons-material/EditRounded";
 import PropTypes from "prop-types";
 import React from "react";
 import ReactMarkdown from "react-markdown";
 
-import "../css/note-pane.css";
+// import "../styles/note-pane.css";
 import UiControlsButton from "./UiControlsButton.react";
 import * as BrowserUtils from "../utils/browser";
 

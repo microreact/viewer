@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
 import React from "react";
-import ShuffleRoundedIcon from "@material-ui/icons/ShuffleRounded";
-import Slider from "@material-ui/core/Slider";
-import MenuIcon from "@material-ui/icons/Menu";
-import Divider from "@material-ui/core/Divider";
+import ShuffleRoundedIcon from "@mui/icons-material/ShuffleRounded";
+import Slider from "@mui/material/Slider";
+import MenuIcon from "@mui/icons-material/Menu";
+import Divider from "@mui/material/Divider";
 
 import UiAnimation from "./UiAnimation.react";
 import UiControlsMenu from "./UiControlsMenu.react";

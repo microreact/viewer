@@ -1,15 +1,15 @@
 import classnames from "classnames";
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import IconButton from "@material-ui/core/IconButton";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import IconButton from "@mui/material/IconButton";
+import LinearProgress from "@mui/material/LinearProgress";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../css/ui-dialog.css";
+// import "../styles/ui-dialog.css";
 import { getContainerElement } from "../utils/html";
 
 class UiDialog extends React.PureComponent {

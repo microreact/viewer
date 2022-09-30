@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 import { SketchPicker } from "react-color";
 
-import "../css/colour-picker.css";
+// import "../styles/colour-picker.css";
 import UiPopover from "./UiPopover.react";
 
 class ColourPicker extends React.PureComponent {

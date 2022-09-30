@@ -11,7 +11,9 @@
 
 .mr-map .mapboxgl-ctrl.mapboxgl-ctrl-scale {
   bottom: 28px;
-  left: 4px;
+  left: 0px;
+  margin-left: 4px;
+  margin-bottom: 0;
   position: absolute;
 }
 .mr-map .mapboxgl-ctrl-attrib-button {
@@ -42,15 +44,46 @@
 /*#endregion*/
 
 
-
 /*#region Hovered styles */
 
-.mr-map.hovered .overlays {
+.mr-map.mr-hovered .mapboxgl-canvas-container {
   cursor: pointer !important;
 }
 
-.mr-map.hovered .overlays .mr-map-lasso {
+.mr-map.mr-hovered .overlays .mr-map-lasso {
   height: 100%;
+}
+
+/*#endregion*/
+
+
+/*#region  */
+
+.mr-map .mapboxgl-ctrl-top-right .mr-custom-overlay {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  /* pointer-events: auto; */
+}
+
+.mr-map .mr-svg-lasso {
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.mr-map .mr-lasso-canvas {
+  /* cursor: crosshair; */
+  /* pointer-events: auto; */
+}
+
+.mr-map .mr-lasso-point {
+  cursor: move;
+  pointer-events: auto;
 }
 
 /*#endregion*/

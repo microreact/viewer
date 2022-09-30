@@ -1,8 +1,8 @@
-import IconButton from "@material-ui/core/Button";
+import IconButton from "@mui/material/Button";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
-import TuneRoundedIcon from "@material-ui/icons/TuneRounded";
+import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
 
 const UiControlsButton = React.forwardRef(
   (props, ref) => {
@@ -22,7 +22,7 @@ const UiControlsButton = React.forwardRef(
             className,
           )
         }
-        color={active ? "primary" : undefined}
+        color={active ? "primary" : "inherit"}
         size="small"
         variant="contained"
         ref={ref}

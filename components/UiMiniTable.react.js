@@ -2,7 +2,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
+import AutoSizer from "react-virtualized-auto-sizer";
 import BaseTable from "react-base-table/lib";
 
 export default class extends React.PureComponent {

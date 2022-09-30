@@ -4,13 +4,12 @@ export function firstElement(array) {
   return array.length ? array[0] : undefined;
 }
 
-export function filterByQuery(rows, fieldsMap, query) {
-  const queryFieldNames = Object.keys(query).filter((x) => fieldsMap.has(x));
+export function filterByQuery(rows, query) {
   const ids = [];
   for (const row of rows) {
     let match = true;
-    for (const field of queryFieldNames) {
-      if (Array.isArray(query[field]) ? (!query[field].includes(row[field])) : (row[field] !== query[field])) {
+    for (const [ field, value ] of Object.entries(query)) {
+      if (Array.isArray(value) ? (!value.includes(row[field])) : (row[field] !== value)) {
         match = false;
         break;
       }

@@ -1,5 +1,5 @@
 import { mdiFilter } from "@mdi/js";
-import CheckBoxRoundedIcon from "@material-ui/icons/CheckBoxRounded";
+import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import PropTypes from "prop-types";
 import React from "react";
 

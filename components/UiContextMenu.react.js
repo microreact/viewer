@@ -2,10 +2,10 @@
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
-import Menu from "@material-ui/core/Menu";
-import Popover from "@material-ui/core/Popover";
+import Menu from "@mui/material/Menu";
+import Popover from "@mui/material/Popover";
 
-import "../css/ui-context-menu.css";
+// import "../styles/ui-context-menu.css";
 import { getContainerElement } from "../utils/html";
 
 class UiContextMenu extends React.PureComponent {

@@ -1,4 +1,4 @@
-import "../css/tour.css";
+// import "../styles/tour.css";
 
 import React from "react";
 import PropTypes from "prop-types";

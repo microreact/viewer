@@ -1,5 +1,5 @@
 import { createSelector } from "reselect";
-import FlexLayout from "flexlayout-react";
+import * as FlexLayout from "flexlayout-react";
 import { relayoutModel } from "../../utils/panes";
 
 const borders = [

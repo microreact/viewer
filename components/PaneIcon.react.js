@@ -1,14 +1,14 @@
-import AccessTimeTwoToneIcon from "@material-ui/icons/AccessTimeTwoTone";
-import EqualizerRoundedIcon from "@material-ui/icons/EqualizerRounded";
-import NoteTwoToneIcon from "@material-ui/icons/NoteTwoTone";
+import AccessTimeTwoToneIcon from "@mui/icons-material/AccessTimeTwoTone";
+import EqualizerRoundedIcon from "@mui/icons-material/EqualizerRounded";
+import NoteTwoToneIcon from "@mui/icons-material/NoteTwoTone";
 import PropTypes from "prop-types";
-import PublicTwoToneIcon from "@material-ui/icons/PublicTwoTone";
+import PublicTwoToneIcon from "@mui/icons-material/PublicTwoTone";
 import React from "react";
-import ShareTwoToneIcon from "@material-ui/icons/ShareTwoTone";
-import TableChartTwoToneIcon from "@material-ui/icons/TableChartTwoTone";
-import VisibilityTwoToneIcon from "@material-ui/icons/VisibilityTwoTone";
-import DescriptionTwoToneIcon from "@material-ui/icons/DescriptionTwoTone";
-import UndoRoundedIcon from "@material-ui/icons/UndoRounded";
+import ShareTwoToneIcon from "@mui/icons-material/ShareTwoTone";
+import TableChartTwoToneIcon from "@mui/icons-material/TableChartTwoTone";
+import VisibilityTwoToneIcon from "@mui/icons-material/VisibilityTwoTone";
+import DescriptionTwoToneIcon from "@mui/icons-material/DescriptionTwoTone";
+import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
 
 import {
   mdiGraphql,

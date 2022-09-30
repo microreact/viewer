@@ -1,10 +1,10 @@
-import AppBar from "@material-ui/core/AppBar";
+import AppBar from "@mui/material/AppBar";
 import PropTypes from "prop-types";
 import React from "react";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 
-import "../css/header-bar.css";
+// import "../styles/header-bar.css";
 
 import AddPaneMenu from "../containers/AddPaneMenu.react";
 import DownloadFilesMenuButton from "./DownloadFilesMenuButton.react";

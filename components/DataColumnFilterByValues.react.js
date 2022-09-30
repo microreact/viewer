@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Button from "@material-ui/core/Button";
-import Box from "@material-ui/core/Box";
-import Divider from "@material-ui/core/Divider";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import Divider from "@mui/material/Divider";
 
 import { DataFilter } from "../utils/prop-types";
 import UiSelectList from "./UiSelectList.react";

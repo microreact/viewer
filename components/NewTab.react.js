@@ -7,12 +7,12 @@ import PropTypes from "prop-types";
 import RectangularTreeIcon from "./RectangularTreeIcon.react";
 import NetworkIcon from "./NetworkIcon.react";
 import FileIcon from "./FileIcon.react";
-import GridOnIcon from "@material-ui/icons/GridOn";
-import BarChartRoundedIcon from '@material-ui/icons/BarChartRounded';
-import PublicRoundedIcon from '@material-ui/icons/PublicRounded';
-import QueryBuilderRoundedIcon from '@material-ui/icons/QueryBuilderRounded';
+import GridOnIcon from "@mui/icons-material/GridOn";
+import BarChartRoundedIcon from '@mui/icons-material/BarChartRounded';
+import PublicRoundedIcon from '@mui/icons-material/PublicRounded';
+import QueryBuilderRoundedIcon from '@mui/icons-material/QueryBuilderRounded';
 
-import "../css/new-tab.css";
+// import "../styles/new-tab.css";
 
 const htmlEscapes = {
   "&": "&amp;",

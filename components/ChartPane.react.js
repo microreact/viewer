@@ -4,7 +4,7 @@ import { Handler } from "vega-tooltip";
 import { Vega } from "react-vega";
 // import debounce from "lodash.debounce";
 
-import "../css/chart-pane.css";
+// import "../styles/chart-pane.css";
 import ChartControls from "../containers/ChartControls.react";
 import { ChartTypes } from "../utils/prop-types";
 import { exportPNG, exportSVG } from "../utils/charts";
@@ -14,7 +14,7 @@ const noScrollStyle = {
   overflowX: "hidden",
   overflowY: "auto",
 };
-const scrollStyle = {
+const autoScrollStyle = {
   overflow: "auto",
 };
 
@@ -59,44 +59,40 @@ class Chart extends React.PureComponent {
   // );
 
   signalListeners = {
-    onItemSelect: (_, [ event, item ] = []) => {
+    onItemSelectSignal: (_, [ event, item ] = []) => {
       event?.stopPropagation();
-      if (!this.lastItemSelect) {
-        this.lastItemSelect = 1;
-        setTimeout(
-          () => {
-            if (this.lastItemSelect) {
-              if (item) {
-                this.props.onSelectItem(item, event.metaKey || event.ctrilKey);
-              }
-              else {
-                this.props.onSelectItem(false);
-              }
-            }
-            this.lastItemSelect = 0;
-          },
-          300,
-        );
-      }
-      else {
-        this.lastItemSelect = 0;
-        if (item && this.props.seriesDataColumn) {
-          this.lastSeriesSelect = new Date();
-          const series = { ...item };
-          delete series[this.props.seriesDataColumn.name];
-          this.props.onSelectItem(series, event.metaKey || event.ctrilKey);
-        }
-      }
+
+      this.props.onSelectItem(
+        (item?.datum) || item || false,
+        event?.metaKey || event?.ctrilKey,
+      );
+      // if (!this.lastItemSelect) {
+      //   this.lastItemSelect = 1;
+      //   setTimeout(
+      //     () => {
+      //       if (this.lastItemSelect) {
+      //         if (item) {
+      //           this.props.onSelectItem(item, event.metaKey || event.ctrilKey);
+      //         }
+      //         else {
+      //           this.props.onSelectItem(false);
+      //         }
+      //       }
+      //       this.lastItemSelect = 0;
+      //     },
+      //     300,
+      //   );
+      // }
+      // else {
+      //   this.lastItemSelect = 0;
+      //   if (item && this.props.seriesDataColumn) {
+      //     this.lastSeriesSelect = new Date();
+      //     const series = { ...item };
+      //     delete series[this.props.seriesDataColumn.name];
+      //     this.props.onSelectItem(series, event.metaKey || event.ctrilKey);
+      //   }
+      // }
     },
-    // brush: (_, item) => {
-    //   const keys = Object.keys(item);
-    //   if (keys.length === 0) {
-    //     this.debouncedSelectItem(false);
-    //   }
-    //   else {
-    //     this.debouncedSelectItem(item);
-    //   }
-    // },
   }
 
   downloadPNG = async () => {
@@ -124,12 +120,12 @@ class Chart extends React.PureComponent {
       <div
         className="mr-chart"
         style={
-          props.chartType === "custom" ? scrollStyle : noScrollStyle
+          props.chartType === "custom" ? autoScrollStyle : noScrollStyle
         }
       >
         <div
           className="mr-chart"
-          onClick={this.signalListeners.onItemSelect}
+          onClick={this.signalListeners.onItemSelectSignal}
         >
           {
             (props.vegaSpec instanceof Error) && (
@@ -146,7 +142,7 @@ class Chart extends React.PureComponent {
                 onError={handleError}
                 // onNewView={
                 //   (x) => {
-                //     console.log(x)
+                //     console.debug(x)
                 //     // if (this.state.vegaError !== null) {
                 //     //   this.setState({ vegaError: null });
                 //     // }

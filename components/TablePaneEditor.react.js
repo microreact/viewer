@@ -1,8 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Paper from "@material-ui/core/Paper";
+import Paper from "@mui/material/Paper";
 import { createSelector } from "reselect";
-import Box from "@material-ui/core/Box";
+import Box from "@mui/material/Box";
 
 import UiCombobox from "./UiCombobox.react";
 import DataColumnsEditor from "./DataColumnsEditor.react";

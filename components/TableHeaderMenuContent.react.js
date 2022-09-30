@@ -1,22 +1,22 @@
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import React from "react";
-import SortByAlphaRoundedIcon from "@material-ui/icons/SortByAlphaRounded";
-import VisibilityOffTwoToneIcon from "@material-ui/icons/VisibilityOffTwoTone";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import Typography from "@material-ui/core/Typography";
-import PlayArrowIcon from "@material-ui/icons/PlayArrow";
-import TextField from "@material-ui/core/TextField";
-import MenuItem from "@material-ui/core/MenuItem";
-import ToggleButton from "@material-ui/lab/ToggleButton";
-import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
+import SortByAlphaRoundedIcon from "@mui/icons-material/SortByAlphaRounded";
+import VisibilityOffTwoToneIcon from "@mui/icons-material/VisibilityOffTwoTone";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import TextField from "@mui/material/TextField";
+import MenuItem from "@mui/material/MenuItem";
+import ToggleButton from "@mui/lab/ToggleButton";
+import ToggleButtonGroup from "@mui/lab/ToggleButtonGroup";
 import { mdiArrowExpandHorizontal } from "@mdi/js";
-import Box from "@material-ui/core/Box";
+import Box from "@mui/material/Box";
 
-import "../css/table-column-controls.css";
+// import "../styles/table-column-controls.css";
 
 import { DataFilter, ReactRef, TableColumn } from "../utils/prop-types";
 

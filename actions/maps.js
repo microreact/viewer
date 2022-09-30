@@ -1,7 +1,8 @@
+import geojsonLayerDataSelector from "../selectors/maps/geojson-layer-data";
 import mapStateSelector from "../selectors/maps/map-state";
 import rowsByRegionSelector from "../selectors/maps/rows-by-region";
 import { getPresentState } from "../utils/state";
-import { selectRows } from "./filters";
+import { selectRows, toggleFieldFilter } from "./filters";
 
 export function addGeoData(mapId, fileId, options = {}) {
   return {
@@ -63,13 +64,31 @@ export function removeMap(paneId) {
 export function selectRegion(mapId, regionId, merge) {
   return (dispatch, getState) => {
     const state = getPresentState(getState());
-    const rowsByRegion = rowsByRegionSelector(state, mapId);
-    dispatch(
-      selectRows(
-        rowsByRegion[regionId].map((x) => x[0]),
-        merge,
-      )
-    );
+    const mapState = mapStateSelector(state, mapId);
+    const geodata = mapState.geodata;
+    if (mapState.filterMap && geodata.linkType === "field-property" && geodata.linkField && geodata.linkPropertyName) {
+      const geojson = geojsonLayerDataSelector(state, mapId);
+      for (const feature of geojson.features) {
+        if (feature.properties["mr-region-id"] === regionId) {
+          dispatch(
+            toggleFieldFilter(
+              geodata.linkField,
+              "equals",
+              [ feature.properties[geodata.linkPropertyName] ],
+            )
+          );
+        }
+      }
+    }
+    else {
+      const rowsByRegion = rowsByRegionSelector(state, mapId);
+      dispatch(
+        selectRows(
+          rowsByRegion[regionId].map((x) => x[0]),
+          merge,
+        )
+      );
+    }
   };
 }
 

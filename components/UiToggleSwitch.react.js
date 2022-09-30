@@ -1,10 +1,10 @@
 import classnames from "classnames";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControlLabel from "@mui/material/FormControlLabel";
 import PropTypes from "prop-types";
 import React from "react";
-import Switch from "@material-ui/core/Switch";
+import Switch from "@mui/material/Switch";
 
-import "../css/ui-switch.css";
+// import "../styles/ui-switch.css";
 
 const UiToggleSwitch = React.memo(
   (props) => (

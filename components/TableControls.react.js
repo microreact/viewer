@@ -1,5 +1,5 @@
-import Divider from "@material-ui/core/Divider";
-import MenuIcon from "@material-ui/icons/Menu";
+import Divider from "@mui/material/Divider";
+import MenuIcon from "@mui/icons-material/Menu";
 import PropTypes from "prop-types";
 import React from "react";
 

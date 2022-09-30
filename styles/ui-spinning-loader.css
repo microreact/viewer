@@ -1,7 +1,7 @@
 .mr-ui-spinning-loader {
   width: 100vw;
   height: 100vh;
-  background-image: url("/images/spinner.png");
+  background-image: url("../images/spinner.png");
   background-repeat: no-repeat;
   background-position: center;
   position: relative;

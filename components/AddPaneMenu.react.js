@@ -1,10 +1,10 @@
-import Divider from "@material-ui/core/Divider";
-import EditTwoToneIcon from "@material-ui/icons/EditTwoTone";
-import IconButton from "@material-ui/core/IconButton";
+import Divider from "@mui/material/Divider";
+import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
+import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../css/header-bar.css";
+// import "../styles/header-bar.css";
 import { createNewTab } from "../utils/panes";
 import PaneIcon from "./PaneIcon.react";
 import UiDropdownMenu from "./UiDropdownMenu.react";
@@ -19,7 +19,7 @@ const AddPaneMenu = React.memo(
           {
             color: "inherit",
             size: "small",
-            title: "Add or edit views",
+            title: "Add or edit panels",
             children: (<EditTwoToneIcon />),
           }
         }

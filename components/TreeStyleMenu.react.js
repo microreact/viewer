@@ -1,8 +1,8 @@
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
-import TextField from "@material-ui/core/TextField";
-import Box from "@material-ui/core/Box";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
 
 import UiControlsMenu from "./UiControlsMenu.react";
 import UiToggleSwitch from "./UiToggleSwitch.react";

@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import MenuIcon from "@material-ui/icons/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
 
 import UiDropdownMenu from "./UiDropdownMenu.react";
 import UiControlsButton from "./UiControlsButton.react";

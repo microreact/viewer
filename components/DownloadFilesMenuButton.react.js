@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 
-import GetAppRoundedIcon from "@material-ui/icons/GetAppRounded";
-import IconButton from "@material-ui/core/IconButton";
+import GetAppRoundedIcon from "@mui/icons-material/GetAppRounded";
+import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import React from "react";
 

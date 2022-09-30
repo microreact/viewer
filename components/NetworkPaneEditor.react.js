@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Paper from "@material-ui/core/Paper";
+import Paper from "@mui/material/Paper";
 import { createSelector } from "reselect";
 
 import { fullSizeStyle } from "../constants";

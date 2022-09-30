@@ -1,10 +1,10 @@
 import classnames from "classnames";
-import FilterListRoundedIcon from "@material-ui/icons/FilterListRounded";
-import IconButton from "@material-ui/core/IconButton";
+import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
+import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../css/table-column-menu.css";
+// import "../styles/table-column-menu.css";
 import { DataFilter, TableColumn } from "../utils/prop-types";
 import TableHeaderMenuContent from "../containers/TableColumnControls.react";
 import UiPopoverMenu from "./UiPopoverMenu.react";

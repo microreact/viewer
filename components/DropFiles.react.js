@@ -3,7 +3,7 @@ import classnames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../css/drop-files.css";
+// import "../styles/drop-files.css";
 
 import { FileDescriptor, FileExtension, FileKind } from "../utils/prop-types";
 

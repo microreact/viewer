@@ -1,10 +1,10 @@
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListSubheader from "@material-ui/core/ListSubheader";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListSubheader from "@mui/material/ListSubheader";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../css/colour-palette-list.css";
+// import "../styles/colour-palette-list.css";
 
 import ColourPalette from "./ColourPalette.react";
 import { StylePalette } from "../utils/prop-types";

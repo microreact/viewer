@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-import ListSubheader from "@material-ui/core/ListSubheader";
+import ListSubheader from "@mui/material/ListSubheader";
 import React from "react";
-// import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+// import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
-import "../css/ui-side-pane-header.css";
+// import "../styles/ui-side-pane-header.css";
 
 // import UiIconButton from "./UiIconButton.react";
 

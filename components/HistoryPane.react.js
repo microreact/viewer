@@ -1,14 +1,14 @@
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import PropTypes from "prop-types";
 import React from "react";
-import RedoRoundedIcon from "@material-ui/icons/RedoRounded";
-import UndoRoundedIcon from "@material-ui/icons/UndoRounded";
+import RedoRoundedIcon from "@mui/icons-material/RedoRounded";
+import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
 import { createSelector } from "reselect";
 
-import "../css/history-pane.css";
+// import "../styles/history-pane.css";
 import { keyMap } from "../utils/shortcuts";
 import PaneIcon from "./PaneIcon.react";
 import UiIconButton from "./UiIconButton.react";

@@ -1,9 +1,9 @@
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
-import MapTwoToneIcon from "@material-ui/icons/MapTwoTone";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import MapTwoToneIcon from "@mui/icons-material/MapTwoTone";
 import PropTypes from "prop-types";
 import React from "react";
 
-import "../css/map-legend.css";
+// import "../styles/map-legend.css";
 import { DataColumn } from "../utils/prop-types";
 
 function toNumber(value) {

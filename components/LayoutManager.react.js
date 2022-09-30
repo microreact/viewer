@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import FlexLayout from "flexlayout-react";
+import * as FlexLayout from "flexlayout-react";
 import classnames from "classnames";
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 
-import "../css/panes.css";
+// import "../styles/panes.css";
 
 import { componentLoader } from "../utils/components";
 import { nextTick, nextFrame } from "../utils/browser";

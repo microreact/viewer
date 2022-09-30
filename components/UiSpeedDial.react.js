@@ -1,10 +1,10 @@
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
-import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
+import SpeedDial from '@mui/lab/SpeedDial';
+import SpeedDialAction from '@mui/lab/SpeedDialAction';
 
-import "../css/ui-speed-dial.css";
+// import "../styles/ui-speed-dial.css";
 
 const floatingActingButtonProps = {
   className: "mr-controls-button",

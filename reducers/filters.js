@@ -1,8 +1,11 @@
+import deepEqual from "fast-deep-equal";
+
 import { emptyArray, emptyObject } from "../constants";
 import * as Arrays from "../utils/arrays";
 
 const initialState = {
   dataFilters: [],
+  chartFilters: [],
   searchOperator: "includes",
   searchValue: "",
   selection: emptyArray,
@@ -88,6 +91,7 @@ function applyQueryToState(currentState, query) {
   return currentState;
 }
 
+// eslint-disable-next-line default-param-last
 const reducer = (state = initialState, action) => {
   switch (action.type) {
 
@@ -121,6 +125,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         dataFilters: initialState.dataFilters,
+        chartFilters: initialState.chartFilters,
         searchValue: initialState.searchValue,
         selection: initialState.selection,
       };
@@ -135,6 +140,31 @@ const reducer = (state = initialState, action) => {
 
     case "MICROREACT VIEWER/SELECT ROWS": {
       return addRowsToSelection(state, action.payload);
+    }
+
+    case "MICROREACT VIEWER/SET CHART FILTER": {
+      const currentFilter = state.chartFilters.find((x) => x.chartId === action.payload.chartId);
+      if (action.payload.query && !deepEqual(action.payload, currentFilter)) {
+        const chartFilters = Arrays.update(
+          state.chartFilters,
+          (x) => x.chartId === action.payload.chartId,
+          action.payload,
+        );
+        return {
+          ...state,
+          chartFilters,
+        };
+      }
+      else {
+        const chartFilters = Arrays.remove(
+          state.chartFilters,
+          (x) => x.chartId === action.payload.chartId,
+        );
+        return {
+          ...state,
+          chartFilters,
+        };
+      }
     }
 
     case "MICROREACT VIEWER/SET FIELD FILTER": {

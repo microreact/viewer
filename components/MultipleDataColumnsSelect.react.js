@@ -5,7 +5,7 @@ import React from "react";
 import UiFloatingFilter from "./UiFloatingFilter.react";
 import UiSelectList from "./UiSelectList.react";
 
-import "../css/multiple-data-columns-select.css";
+// import "../styles/multiple-data-columns-select.css";
 import { DataColumn } from "../utils/prop-types";
 
 const groupBy = (item) => (item.group ?? "");

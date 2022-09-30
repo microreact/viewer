@@ -14,13 +14,18 @@ const activeRowsWithStyleFieldsSelector = createSelector(
     if (filteredIds) {
       const rows = [];
       for (const row of styledRows) {
-        if (filteredIds.has(row[0])) {
+        const filtered = filteredIds.has(row[0]);
+        row["--mr-filtered"] = filtered ? 1 : 0;
+        if (filtered) {
           rows.push(row);
         }
       }
       return { rows };
     }
     else {
+      for (const row of styledRows) {
+        row["--mr-filtered"] = 1;
+      }
       return { rows: styledRows };
     }
   },

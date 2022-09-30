@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-no-target-blank */
 import PropTypes from "prop-types";
 import React from "react";
-import ZoomInRoundedIcon from "@material-ui/icons/ZoomInRounded";
-import ZoomOutMapRoundedIcon from "@material-ui/icons/ZoomOutMapRounded";
-import ZoomOutRoundedIcon from "@material-ui/icons/ZoomOutRounded";
+import ZoomInRoundedIcon from "@mui/icons-material/ZoomInRounded";
+import ZoomOutMapRoundedIcon from "@mui/icons-material/ZoomOutMapRounded";
+import ZoomOutRoundedIcon from "@mui/icons-material/ZoomOutRounded";
 
 import { downloadDataUrl } from "../utils/downloads";
 
-import "../css/ui-context-menu.css";
+// import "../styles/ui-context-menu.css";
 
 const Link = (
   <div className="mr-ui-context-menu-item single-action">

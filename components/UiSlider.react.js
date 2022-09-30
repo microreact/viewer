@@ -1,9 +1,9 @@
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import React from "react";
-import Slider from "@material-ui/core/Slider";
+import Slider from "@mui/material/Slider";
 
-import "../css/ui-slider.css";
+// import "../styles/ui-slider.css";
 
 const UiSlider = React.memo(
   (props) => {

@@ -1,4 +1,3 @@
-import { selectRows } from "../actions/filters";
 import { setSidePane } from "../actions/panes";
 import { setLegendDirection } from "../actions/styles";
 
@@ -17,7 +16,6 @@ function mapDispatchToProps(dispatch) {
   return {
     onClose: () => dispatch(setSidePane()),
     onDirectionChange: (direction) => dispatch(setLegendDirection(direction)),
-    onSelectRows: (ids, merge) => dispatch(selectRows(ids, merge)),
   };
 }
 

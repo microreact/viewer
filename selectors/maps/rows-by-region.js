@@ -58,7 +58,7 @@ const rowsByRegionSelector = createKeyedStateSelector(
     }
     else if (geodata.linkType === "field-property") {
       for (const feature of geojson.features) {
-        const propertyValue = feature[geodata.linkPropertyName];
+        const propertyValue = feature.properties[geodata.linkPropertyName];
         const regionRows = rowsByRegion[feature.properties["mr-region-id"]];
         if (propertyValue !== undefined) {
           for (const datum of markersLayerData) {

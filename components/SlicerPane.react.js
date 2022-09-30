@@ -3,7 +3,7 @@ import React from "react";
 import { createSelector } from "reselect";
 import { scaleLog } from "d3-scale";
 
-import "../css/slicer-pane.css";
+// import "../styles/slicer-pane.css";
 
 import SlicerControls from "./SlicerControls.react";
 import { DataColumn, DataFilter } from "../utils/prop-types";

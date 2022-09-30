@@ -2,11 +2,11 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import AutoSizer from "react-virtualized/dist/commonjs/AutoSizer";
+import AutoSizer from "react-virtualized-auto-sizer";
 import BaseTable from "react-base-table/lib";
 import DataColumnColourSettingsMenu from "../containers/ColourSettingsMenu.react";
 
-import "../css/data-columns-editor.css";
+// import "../styles/data-columns-editor.css";
 import { DataColumn } from "../utils/prop-types";
 import UiTextfield from "./UiTextfield.react";
 
