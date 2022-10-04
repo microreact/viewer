@@ -61,7 +61,7 @@ class App extends React.PureComponent {
       );
       if (props.files) {
         store.dispatch(
-          addFiles(props.files)
+          actions.addFiles(props.files)
         );
       }
       this.setState({ ready: true });
