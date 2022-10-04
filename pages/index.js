@@ -3,6 +3,13 @@ import dynamic from "next/dynamic";
 
 import projectJson from "../public/data/ebola";
 
+let data;
+let files;
+
+// data = projectJson;
+
+files = [{ url: "https://microreact.org/api/projects/json?project=6D42Y7TKsxWSQnyo375EYy", format: "application/json" } ];
+
 const App = dynamic(
   () => import("../dev/App"),
   {
@@ -13,7 +20,8 @@ const App = dynamic(
 export default function Viewer() {
   return (
     <App
-      data={projectJson}
+      data={data}
+      files={files}
     />
   );
 }
