@@ -38,6 +38,10 @@ setFetcher(async (originalUrl) => {
   }
 });
 
+const defaultConfig = {
+  mapboxApiAccessToken: "pk.eyJ1IjoiY2dwc2Rldi1hbXJ3YXRjaCIsImEiOiJjbDZvd2d0cXMwMHBsM2Ntdmw1N3hrcG01In0.Epc_uol4lu4FtlHdJ0i2Hw",
+};
+
 class App extends React.PureComponent {
 
   state = {
@@ -45,12 +49,23 @@ class App extends React.PureComponent {
   };
 
   componentDidMount() {
-    const { data } = this.props;
-    data.config = {
-      mapboxApiAccessToken: "pk.eyJ1IjoiY2dwc2Rldi1hbXJ3YXRjaCIsImEiOiJjbDZvd2d0cXMwMHBsM2Ntdmw1N3hrcG01In0.Epc_uol4lu4FtlHdJ0i2Hw",
-    };
-    store.dispatch(actions.load(data));
-    this.setState({ ready: true });
+    const { props } = this;
+    if (props.data) {
+      data.config = defaultConfig;
+      store.dispatch(actions.load(data));
+      this.setState({ ready: true });
+    }
+    else {
+      store.dispatch(
+        config(defaultConfig)
+      );
+      if (props.files) {
+        store.dispatch(
+          addFiles(props.files)
+        );
+      }
+      this.setState({ ready: true });
+    }
   }
 
   render() {
