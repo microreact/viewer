@@ -14,13 +14,13 @@
 }
 
 .mr-data-columns-editor .BaseTable__row:not(:hover) .BaseTable__row-cell .MuiInputBase-root.MuiInputBase-formControl fieldset,
-.mr-data-columns-editor .BaseTable__row:not(:hover) .BaseTable__row-cell .mr-colour-settings-button:not(.is-open) fieldset {
+.mr-data-columns-editor .BaseTable__row:not(:hover) .BaseTable__row-cell .mr-colour-settings-button:not(.is-open) {
   border-color: transparent;
 }
 .mr-data-columns-editor .BaseTable__row:not(:hover) .BaseTable__row-cell .mr-colour-settings-button:not(.is-open) .MuiSelect-icon {
   visibility: hidden;
 }
-.mr-data-columns-editor .BaseTable__row:not(:hover) .BaseTable__row-cell .mr-colour-settings-button.is-open fieldset {
+.mr-data-columns-editor .BaseTable__row:not(:hover) .BaseTable__row-cell .mr-colour-settings-button.is-open {
   border-color: var(--text-primary);
 }
 
