@@ -57,7 +57,7 @@ class App extends React.PureComponent {
     }
     else {
       store.dispatch(
-        config(defaultConfig)
+        actions.config(defaultConfig)
       );
       if (props.files) {
         store.dispatch(
