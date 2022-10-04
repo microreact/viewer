@@ -129,10 +129,13 @@ function guessFileFormat(fileName) {
 export async function loadFile(input, onProgress) {
   const loadedFile = {
     id: input.id ?? generateHashId(),
-    name: normaliseFilename(input.name || input.url),
     size: input.size,
     settings: input.settings,
   };
+
+  if (!input.url) {
+    loadedFile.name = normaliseFilename(input.name);
+  }
 
   // const fileKind = FileKinds.find((x) => x.format === loadedFile.format);
 
