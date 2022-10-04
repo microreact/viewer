@@ -6,57 +6,15 @@
   align-items: stretch;
 }
 
-.mr-colour-settings-button .MuiInputBase-root {
-  cursor: pointer;
-}
-
-.mr-colour-settings-button .MuiOutlinedInput-input {
-  padding-left: 12px;
-  padding-right: 12px;
-}
-
-.mr-colour-settings-button .MuiInputBase-root svg {
-  top: calc(50% - 12px);
+.mr-colour-settings-button svg {
+  /* top: calc(50% - 12px); */
   color: rgba(0, 0, 0, 0.54);
-  position: absolute;
+  /* position: absolute; */
   pointer-events: none;
-  right: 7px;
+  /* right: 7px; */
+  width: 24px;
+  height: 24px;
 }
-
-.mr-colour-settings-button fieldset {
-  top: -5px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: 0;
-  padding: 0 8px;
-  overflow: hidden;
-  position: absolute;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: inherit;
-  pointer-events: none;
-  padding-left: 8px;
-}
-
-.mr-colour-settings-button fieldset legend {
-  padding: 0;
-  text-align: left;
-  transition: width 150ms cubic-bezier(0.0, 0, 0.2, 1) 0ms;
-  line-height: 11px;
-  width: auto;
-  height: 11px;
-  display: block;
-  padding: 0;
-  font-size: 0.75em;
-  text-align: left;
-}
-
-/* .mr-colour-settings-button fieldset legend > span {
-  display: inline-block;
-  padding-left: 5px;
-  padding-right: 5px;
-} */
 
 /*#endregion*/
 
@@ -112,23 +70,3 @@
 }
 
 /*#endregion*/
-
-
-/* 
-.mr-colour-settings-menu .MuiTabs-root {
-
-  background-color: var(--background-main);
-}
-
-.mr-colour-settings-menu .mr-floating-filter .mr-filter {
-  position: sticky;
-  top: 32px;
-  background-color: var(--background-main);
-  z-index: 1000;
-  margin-top: -8px;
-  padding-top: 8px;
-}
-
-.mr-colour-settings-menu .mr-ui-tabs {
-  height: 100%;
-} */
