@@ -270,6 +270,7 @@ class PaneEditor extends React.PureComponent {
             {
               height: "100%",
               maxHeight: "100%",
+              paddingTop: 8,
             }
           }
         >
