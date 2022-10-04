@@ -1,6 +1,8 @@
 import PropTypes from "prop-types";
 import React from "react";
 import clsx from "clsx";
+import Button from "@mui/material/Button";
+import ButtonBase from "@mui/material/ButtonBase";
 
 import ColourSettingsContent from "../containers/ColourSettingsContent.react";
 import UiPopoverMenu from "./UiPopoverMenu.react";
@@ -12,44 +14,32 @@ const DataColumnColourSettingsButton = React.forwardRef(
   (props, ref) => {
 
     return (
-      <button
+      <Button
+        variant="outlined"
+        // size="small"
+        color="inherit"
         onClick={props.onClick}
         className={
           clsx(
             props.className,
             "mr-colour-settings-button",
-            "MuiFormControl-root"
           )
         }
         ref={ref}
       >
-        <div
-          className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl MuiInputBase-marginDense MuiOutlinedInput-marginDense"
-        >
-          <div
-            className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
-            role="button"
-          >
-            {
-              (props.colourMode === "categorical") ? "Categorical" :
-                (props.colourMode === "gradient") ? "Gradient" :
-                  (props.colourMode === "field") ? `Reuse ${props.colourSettings?.field}` :
-                    null
-            }
-          </div>
-          <svg
-            className="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined" focusable="false" viewBox="0 0 24 24"
-            aria-hidden="true">
-            <path d="M7 10l5 5 5-5z"></path>
-          </svg>
-          <fieldset aria-hidden="true"
-            className="MuiOutlinedInput-notchedOutline">
-            <legend>
-               { props.label && (<span>​{ props.label }</span>) }
-            </legend>
-          </fieldset>
-        </div>
-      </button>
+        {
+          (props.colourMode === "categorical") ? "Categorical" :
+            (props.colourMode === "gradient") ? "Gradient" :
+              (props.colourMode === "field") ? `Reuse ${props.colourSettings?.field}` :
+                null
+        }
+        <svg
+          className="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined" focusable="false" viewBox="0 0 24 24"
+          aria-hidden="true">
+          <path d="M7 10l5 5 5-5z"></path>
+        </svg>
+        { props.label && (<span>​{ props.label }</span>) }
+      </Button>
     );
   }
 );
