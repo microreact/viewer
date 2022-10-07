@@ -92,7 +92,7 @@ class TreePane extends React.PureComponent {
 
   canvasRef = React.createRef();
 
-  lassoRef = React.createRef()
+  lassoRef = React.createRef();
 
   // scalebarRef = React.createRef()
 
