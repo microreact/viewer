@@ -32,4 +32,4 @@ const mapDispatchToProps = (dispatch, { treeId }) => ({
   onShowLeafLabelsChange: (value) => dispatch(update(treeId, "showLeafLabels", value)),
 });
 
-export default connectToPresentState(TreePane, mapStateToProps, mapDispatchToProps)();
+export default connectToPresentState(TreePane, mapStateToProps, mapDispatchToProps);
