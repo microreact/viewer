@@ -122,7 +122,7 @@ class TreePane extends React.PureComponent {
       "tree.nwk",
       "plain/text",
     );
-  }
+  };
 
   handleDownloadPNG = () => {
     downloadDataUrl(
