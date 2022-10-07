@@ -1,7 +1,6 @@
 import { selectRows } from "../actions/filters";
 import {
   setPhylocanvasProps,
-  setTreeFilter,
   update,
 } from "../actions/trees";
 import selectedIdsListSelector from "../selectors/filters/selected-ids-list";
@@ -15,8 +14,6 @@ const mapStateToProps = (state, { treeId }) => {
   const treeState = state.trees[treeId];
   return {
     controls: treeState.controls,
-    isLassoActive: treeState.lasso,
-    lassoPath: treeState.path || null,
     phylocanvasProps: phylocanvasPropsSelector(state, treeId),
     selectedIds: selectedIdsListSelector(state),
     treeType: state.trees[treeId].type,
@@ -26,7 +23,6 @@ const mapStateToProps = (state, { treeId }) => {
 const mapDispatchToProps = (dispatch, { treeId }) => ({
   onAddHistoryEntry: (label) => dispatch(addHistoryEntry("Tree", label)),
   onAlignLabelsChange: (value) => dispatch(update(treeId, "alignLabels", value)),
-  onFilterChange: (ids, path) => dispatch(setTreeFilter(treeId, ids, path)),
   onPhylocanvasPropsChange: (updater, event) => dispatch(setPhylocanvasProps(treeId, updater, event)),
   onSelectRows: (ids, merge) => dispatch(selectRows(ids, merge)),
   onShowLeafLabelsChange: (value) => dispatch(update(treeId, "showLeafLabels", value)),
