@@ -5,16 +5,12 @@ import Menu from "@mui/material/Menu";
 import phylocanvasPlugin from "../plugins/phylocanvas";
 import { downloadDataUrl } from "../utils/downloads";
 import { GeometricPoint, TreeType } from "../utils/prop-types";
-
-// import "../styles/tree.css";
+import TreeLasso from '../containers/TreeLassoLayer.react'
 import TreeControls from "../containers/TreeControls.react";
 import ZoomControls from "./TreeZoomControls.react";
 import TreeContextMenu from "./TreeContextMenu.react";
 import { nextTick } from "../utils/browser";
 import { subscribe } from "../utils/events";
-
-// import { triggerEvent } from "../utils/browser";
-// import UiContextMenu from "./UiContextMenu.react";
 
 class TreePane extends React.PureComponent {
 
@@ -27,7 +23,7 @@ class TreePane extends React.PureComponent {
       this.props.phylocanvasProps,
     );
 
-    this.tree.renderLasso();
+    //this.tree.renderLasso();
 
     this.tree.setProps = this.props.onPhylocanvasPropsChange;
 
@@ -156,6 +152,7 @@ class TreePane extends React.PureComponent {
 
   render() {
     const size = this.props.phylocanvasProps.size;
+    console.log("tree props", this.props);
     return (
       <div
         className="mr-tree"
@@ -181,15 +178,18 @@ class TreePane extends React.PureComponent {
               />
           </div>
         </Menu>
-        <div
-        >
-          <canvas
-            className="mr-lasso-canvas"
-            height={size.height}
-            width={size.width}
-            ref={this.lassoRef}
-          />
-        </div>
+        <canvas ref={this.lassoRef} className="mr-lasso-canvas" height={size.height} width={size.width}>
+          {this.props.isLassoActive ? (
+            <TreeLasso
+              height={size.height}
+              width={size.width}
+              lassoRef={this.lassoRef.current}
+              tree={this.tree}
+              treeId={this.props.treeId}
+              treeType={this.props.treeType}
+            />
+          ) : null}
+        </canvas>
         {/* <ContextMenu
           id={this.props.treeId}
           className="mr-ui-context-menu"
