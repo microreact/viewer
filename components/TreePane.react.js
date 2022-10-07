@@ -114,7 +114,7 @@ class TreePane extends React.PureComponent {
 
   handleTreeTypeChange = (type) => {
     this.tree.setTreeType(type);
-  }
+  };
 
   handleDownloadNewick = () => {
     downloadDataUrl(
