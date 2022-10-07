@@ -126,7 +126,6 @@ class MapPane extends React.PureComponent {
   componentDidUpdate(prevProps) {
     const { props } = this;
 
-    // https://github.com/visgl/react-map-gl/issues/1984#issuecomment-1244534396
     if (props.width !== prevProps.width || props.height !== prevProps.height) {
       this.getMapboxWrapper().resize();
     }
@@ -225,21 +224,21 @@ class MapPane extends React.PureComponent {
   handleViewportChange = (event) => {
     const { props } = this;
     if (
-      event.viewState
+      event
       ||
-      event.viewState.altitude !== props.viewport.altitude
+      event.altitude !== props.viewport.altitude
       ||
-      event.viewState.bearing !== props.viewport.bearing
+      event.bearing !== props.viewport.bearing
       ||
-      event.viewState.latitude !== props.viewport.latitude
+      event.latitude !== props.viewport.latitude
       ||
-      event.viewState.longitude !== props.viewport.longitude
+      event.longitude !== props.viewport.longitude
       ||
-      event.viewState.pitch !== props.viewport.pitch
+      event.pitch !== props.viewport.pitch
       ||
-      event.viewState.zoom !== props.viewport.zoom
+      event.zoom !== props.viewport.zoom
     ) {
-      this.props.onViewportChange(event.viewState);
+      this.props.onViewportChange(event);
     }
 
     if (this.props.trackViewport) {

@@ -39,7 +39,7 @@ class TreePane extends React.PureComponent {
     // width: PropTypes.number.isRequired,
   };
 
-  state = {}
+  state = {};
 
   componentDidMount() {
     const PhylocanvasGL = phylocanvasPlugin(this);
@@ -111,9 +111,9 @@ class TreePane extends React.PureComponent {
     this.afterScreenshotUnsubscribe?.();
   }
 
-  canvasRef = React.createRef()
+  canvasRef = React.createRef();
 
-  lassoRef = React.createRef()
+  lassoRef = React.createRef();
 
   // scalebarRef = React.createRef()
 
@@ -135,7 +135,7 @@ class TreePane extends React.PureComponent {
 
   handleTreeTypeChange = (type) => {
     this.tree.setTreeType(type);
-  }
+  };
 
   handleDownloadNewick = () => {
     downloadDataUrl(
@@ -143,7 +143,7 @@ class TreePane extends React.PureComponent {
       "tree.nwk",
       "plain/text",
     );
-  }
+  };
 
   handleDownloadPNG = () => {
     downloadDataUrl(
@@ -165,7 +165,7 @@ class TreePane extends React.PureComponent {
     //     this.tree.render();
     //   }
     // );
-  }
+  };
 
   handleDownloadSVG = () => {
     downloadDataUrl(
@@ -173,7 +173,7 @@ class TreePane extends React.PureComponent {
       "tree.svg",
       "image/svg+xml",
     );
-  }
+  };
 
   render() {
     const size = this.props.phylocanvasProps.size;
@@ -215,7 +215,7 @@ class TreePane extends React.PureComponent {
           id={this.props.treeId}
           className="mr-ui-context-menu"
         >
-          
+
         </ContextMenu> */}
         <TreeControls
           // className={this.props.controls ? "visible" : ""}

@@ -16,7 +16,7 @@ const modes = [
 
 export default class extends React.PureComponent {
 
-  static displayName = "TreeZoomControls"
+  static displayName = "TreeZoomControls";
 
   static propTypes = {
     className: PropTypes.string,
@@ -27,11 +27,11 @@ export default class extends React.PureComponent {
     onZoomIn: PropTypes.func.isRequired,
     onZoomOut: PropTypes.func.isRequired,
     treeType: TreeType.isRequired,
-  }
+  };
 
   state = {
     mode: 0,
-  }
+  };
 
   getMode = () => {
     switch (this.props.treeType) {
@@ -44,7 +44,7 @@ export default class extends React.PureComponent {
       case TreeTypes.Radial:
         return modes[(this.state.mode === 2) ? 0 : this.state.mode];
     }
-  }
+  };
 
   getIconClass = () => {
     const mode = this.getMode();
@@ -58,7 +58,7 @@ export default class extends React.PureComponent {
       case "step":
         return (this.props.treeType === TreeTypes.Hierarchical) ? "mr-horizontal" : "mr-vertical";
     }
-  }
+  };
 
   toggleMode = () => {
     const mode = this.getMode();
@@ -72,7 +72,7 @@ export default class extends React.PureComponent {
       case "step":
         return this.setState({ mode: 0 });
     }
-  }
+  };
 
   handleZoomIn = () => {
     const mode = this.getMode();
@@ -84,7 +84,7 @@ export default class extends React.PureComponent {
       case "step":
         return this.props.onStepZoomIn();
     }
-  }
+  };
 
   handleZoomOut = () => {
     const mode = this.getMode();
@@ -96,7 +96,7 @@ export default class extends React.PureComponent {
       case "step":
         return this.props.onStepZoomOut();
     }
-  }
+  };
 
   render() {
     return (
