@@ -152,7 +152,7 @@ class TreePane extends React.PureComponent {
       "tree.svg",
       "image/svg+xml",
     );
-  }
+  };
 
   render() {
     const size = this.props.phylocanvasProps.size;
