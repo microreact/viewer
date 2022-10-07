@@ -194,7 +194,7 @@ class TreePane extends React.PureComponent {
           id={this.props.treeId}
           className="mr-ui-context-menu"
         >
-          
+
         </ContextMenu> */}
         <TreeControls
           // className={this.props.controls ? "visible" : ""}
