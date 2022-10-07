@@ -90,7 +90,7 @@ class TreePane extends React.PureComponent {
     this.afterScreenshotUnsubscribe?.();
   }
 
-  canvasRef = React.createRef()
+  canvasRef = React.createRef();
 
   lassoRef = React.createRef()
 
