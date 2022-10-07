@@ -45,7 +45,7 @@ class SvgLasso extends React.PureComponent {
     // }
 
     if (!props.path) {
-      const event = e.originalEvent ?? e;
+      const event = e.originalEvent ?? e.srcEvent ?? e;
       const coordinates = props.unproject([ event.layerX, event.layerY ]);
       const newPath = [
         ...(state.path ?? []),
