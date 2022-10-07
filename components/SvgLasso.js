@@ -18,31 +18,7 @@ class SvgLasso extends React.PureComponent {
 
   handleCanvasClick = (e) => {
     const { props, state } = this;
-
-    // if (state.path && state.path.length > 2) {
-    //   const padding = this.props.pointSize;
-    //   const pointTopLeft = props.unproject([ event.layerX - padding, event.layerY - padding ]);
-    //   const pointBottomRight = props.unproject([ event.layerX + padding, event.layerY + padding ]);
-    //   if (
-    //     (pointBottomRight[0] >= state.path[0][0] && pointTopLeft[0] <= state.path[0][0])
-    //     &&
-    //     (
-    //       (pointBottomRight[1] >= state.path[0][1] && pointTopLeft[1] <= state.path[0][1])
-    //       ||
-    //       (pointBottomRight[1] <= state.path[0][1] && pointTopLeft[1] >= state.path[0][1])
-    //     )
-    //   ) {
-    //     // push the first point to the end of the path to close the polygon
-    //     // and mark the path as finished
-    //     const newPath = [
-    //       ...state.path,
-    //       state.path[0],
-    //     ];
-    //     this.props.onPathChange(newPath);
-    //     return;
-    //   }
-    // }
-
+    console.log("e svg", e);
     if (!props.path) {
       const event = e.originalEvent ?? e;
       const coordinates = props.unproject([ event.layerX, event.layerY ]);
@@ -193,6 +169,7 @@ class SvgLasso extends React.PureComponent {
   render() {
     const { props } = this;
 
+    console.log('svgProps', this.props);
     return (
       <svg
         className="mr-svg-lasso"
