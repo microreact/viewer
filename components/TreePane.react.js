@@ -18,8 +18,6 @@ import { subscribe } from "../utils/events";
 
 class TreePane extends React.PureComponent {
 
-  static displayName = "TreePane";
-
   static propTypes = {
     controls: PropTypes.bool.isRequired,
     // height: PropTypes.number.isRequired,
@@ -255,4 +253,5 @@ class TreePane extends React.PureComponent {
 
 }
 
+TreePane.displayName = "TreePane";
 export default TreePane;
