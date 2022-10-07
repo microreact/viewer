@@ -1,5 +1,3 @@
-import { connect } from "react-redux";
-
 import { selectRows } from "../actions/filters";
 import {
   setPhylocanvasProps,
@@ -11,6 +9,7 @@ import phylocanvasPropsSelector from "../selectors/trees/phylocanvas-props";
 
 import TreePane from "../components/TreePane.react";
 import { addHistoryEntry } from "../actions/ui";
+import { connectToPresentState } from "../utils/state";
 
 const mapStateToProps = (state, { treeId }) => {
   const treeState = state.trees[treeId];
@@ -33,4 +32,4 @@ const mapDispatchToProps = (dispatch, { treeId }) => ({
   onShowLeafLabelsChange: (value) => dispatch(update(treeId, "showLeafLabels", value)),
 });
 
-export default connect((state, props) => mapStateToProps(state.present, props), mapDispatchToProps)(TreePane);
+export default connectToPresentState(TreePane, mapStateToProps, mapDispatchToProps)();
