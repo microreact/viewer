@@ -18,25 +18,6 @@ import { subscribe } from "../utils/events";
 
 class TreePane extends React.PureComponent {
 
-  static propTypes = {
-    controls: PropTypes.bool.isRequired,
-    // height: PropTypes.number.isRequired,
-    isLassoActive: PropTypes.bool.isRequired,
-    lassoPath: PropTypes.arrayOf(GeometricPoint),
-    onAddHistoryEntry: PropTypes.func.isRequired,
-    onAlignLabelsChange: PropTypes.func.isRequired,
-    onFilterChange: PropTypes.func.isRequired,
-    // onPhylocanvasInitialise: PropTypes.func.isRequired,
-    onPhylocanvasPropsChange: PropTypes.func.isRequired,
-    onSelectRows: PropTypes.func.isRequired,
-    onShowLeafLabelsChange: PropTypes.func.isRequired,
-    phylocanvasProps: PropTypes.object,
-    selectedIds: PropTypes.array.isRequired,
-    treeId: PropTypes.string.isRequired,
-    treeType: TreeType.isRequired,
-    // width: PropTypes.number.isRequired,
-  };
-
   state = {}
 
   componentDidMount() {
@@ -254,4 +235,24 @@ class TreePane extends React.PureComponent {
 }
 
 TreePane.displayName = "TreePane";
+
+TreePane.propTypes = {
+  controls: PropTypes.bool.isRequired,
+  // height: PropTypes.number.isRequired,
+  isLassoActive: PropTypes.bool.isRequired,
+  lassoPath: PropTypes.arrayOf(GeometricPoint),
+  onAddHistoryEntry: PropTypes.func.isRequired,
+  onAlignLabelsChange: PropTypes.func.isRequired,
+  onFilterChange: PropTypes.func.isRequired,
+  // onPhylocanvasInitialise: PropTypes.func.isRequired,
+  onPhylocanvasPropsChange: PropTypes.func.isRequired,
+  onSelectRows: PropTypes.func.isRequired,
+  onShowLeafLabelsChange: PropTypes.func.isRequired,
+  phylocanvasProps: PropTypes.object,
+  selectedIds: PropTypes.array.isRequired,
+  treeId: PropTypes.string.isRequired,
+  treeType: TreeType.isRequired,
+  // width: PropTypes.number.isRequired,
+};
+
 export default TreePane;
