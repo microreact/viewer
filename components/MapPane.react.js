@@ -225,8 +225,6 @@ class MapPane extends React.PureComponent {
   handleViewportChange = (event) => {
     const { props } = this;
     if (
-      event.viewState
-      ||
       event.viewState.altitude !== props.viewport.altitude
       ||
       event.viewState.bearing !== props.viewport.bearing
@@ -249,8 +247,10 @@ class MapPane extends React.PureComponent {
 
   handleZoom = (delta) => {
     this.handleViewportChange({
-      ...this.props.viewport,
-      zoom: this.props.viewport.zoom + delta,
+      viewState: {
+        ...this.props.viewport,
+        zoom: this.props.viewport.zoom + delta,
+      },
     });
   };
 
