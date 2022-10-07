@@ -125,6 +125,7 @@ export function updateAll(state, updater) {
   return nextState;
 }
 
+// TODO: add areStatesEqual https://react-redux.js.org/api/connect#arestatesequal-next-object-prev-object-nextownprops-object-prevownprops-object--boolean
 export function connectToPresentState(
   component,
   mapStateToProps,
