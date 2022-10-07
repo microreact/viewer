@@ -1,18 +1,6 @@
 import PhylocanvasGL, { TreeTypes, plugins } from "@phylocanvas/phylocanvas.gl";
 
-import createCanvasLasso from "../canvas-lasso";
 import convertState from "./convert-state";
-
-import { isPointInPolygon } from "../../utils/geometry";
-
-function zoomToScale(zoom) {
-  return Math.pow(2, zoom); // eslint-disable-line no-restricted-properties
-}
-
-const displayModes = {
-  Visible: "",
-  Hidden: "none",
-};
 
 const treeTypeLabels = Object.entries(TreeTypes).reduce(
   (prev, [ label, value ]) => {
@@ -33,44 +21,6 @@ export default function (treePane) {
         ]
       );
       const tree = this;
-      tree.lasso = createCanvasLasso(
-        tree.view,
-        treePane.lassoRef.current,
-        {
-          isActive: treePane.props.isLassoActive,
-          clearBeforeDraw: true,
-          path: treePane.props.lassoPath,
-          onPathChange: (path) => {
-            if (path === null && treePane.props.selectedIds.length) {
-              return;
-            }
-            let ids = null;
-            if (path) {
-              ids = [];
-              const graph = tree.getGraphAfterLayout();
-              for (const leaf of graph.leaves) {
-                if (isPointInPolygon(tree.absolutePointToRelativePoint([ leaf.x, leaf.y ]), path)) {
-                  ids.push(leaf.id);
-                }
-              }
-            }
-            treePane.props.onFilterChange(ids, path);
-          },
-          onRedrawRequested: () => {
-            tree.render();
-          },
-          translateToCanvas: (points) => {
-            const scale = zoomToScale(tree.getZoom());
-            return points.map(
-              (x) => tree.projectPoint(
-                tree.relativePointToAbsolutePoint(x),
-                scale,
-              )
-            );
-          },
-          translateFromCanvas: (x, y) => tree.absolutePointToRelativePoint(tree.unprojectPoint([ x, y ])),
-        },
-      );
 
       tree.deck.setProps({
         // _onMetrics: (metrics) => {
@@ -79,7 +29,7 @@ export default function (treePane) {
         //   }
         // },
         getCursor: (info) => {
-          if (treePane.props.isLassoActive && !Array.isArray(tree.lasso.path)) {
+          if (treePane.props.isLassoActive && !Array.isArray(tree?.lasso?.path)) {
             return null;
           }
           else {
@@ -98,6 +48,10 @@ export default function (treePane) {
 
     handleClick(info, event) {
       const tree = this;
+      if (tree.lassoClickHandler) {
+        tree.lassoClickHandler(event);
+        return;
+      }
       const node = tree.pickNodeFromLayer(info);
       if (event.rightButton) {
         event.preventDefault();
@@ -143,28 +97,6 @@ export default function (treePane) {
       return leafNodes;
     }
 
-    render() {
-      super.render();
-
-      this.renderLasso();
-
-      // this.renderScalebar();
-    }
-
-    renderLasso() {
-      const tree = this;
-      if (tree.lasso && tree.lasso.isActive) {
-        treePane.lassoRef.current.style.display = displayModes.Visible;
-        // tree.layers.lasso.ctx.save();
-        // tree.layers.lasso.ctx.scale(tree.pixelRatio, tree.pixelRatio);
-        tree.lasso.draw();
-        // tree.layers.lasso.ctx.restore();
-        tree.lasso.updateCanvas();
-      }
-      else {
-        treePane.lassoRef.current.style.display = displayModes.Hidden;
-      }
-    }
     rerootNode(node) {
       super.rerootNode(node);
       treePane.props.onAddHistoryEntry("Re-root tree");
