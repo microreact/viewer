@@ -18,7 +18,7 @@ import { subscribe } from "../utils/events";
 
 class TreePane extends React.PureComponent {
 
-  state = {}
+  state = {};
 
   componentDidMount() {
     const PhylocanvasGL = phylocanvasPlugin(this);
