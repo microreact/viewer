@@ -15,6 +15,7 @@
 .mr-controls-menu-trigger.MuiChip-root
 {
   flex-direction: row-reverse;
+  background-color: rgba(224, 224, 224);
 }
 
 .mr-controls-menu-trigger.MuiChip-root .MuiChip-label
