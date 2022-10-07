@@ -144,7 +144,7 @@ class TreePane extends React.PureComponent {
     //     this.tree.render();
     //   }
     // );
-  }
+  };
 
   handleDownloadSVG = () => {
     downloadDataUrl(
