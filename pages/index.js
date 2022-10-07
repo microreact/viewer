@@ -6,9 +6,9 @@ import projectJson from "../public/data/ebola";
 let data;
 let files;
 
-// data = projectJson;
+data = projectJson;
 
-files = [{ url: "https://microreact.org/api/projects/json?project=6D42Y7TKsxWSQnyo375EYy", format: "application/json" } ];
+// files = [{ url: "https://microreact.org/api/projects/json?project=6D42Y7TKsxWSQnyo375EYy", format: "application/json" } ];
 
 const App = dynamic(
   () => import("../dev/App"),
