@@ -165,16 +165,6 @@ export default function (treePane) {
         treePane.lassoRef.current.style.display = displayModes.Hidden;
       }
     }
-
-    // renderScalebar() {
-    //   const tree = this;
-    //   if (treePane?.scalebarRef?.current) {
-    //     const scaleValue = 88 / tree.getBranchScale() / tree.getScale();
-    //     const minDigitis = parseInt(Math.abs(Math.log(scaleValue) / Math.log(10)), 10);
-    //     treePane.scalebarRef.current.innerHTML = scaleValue.toFixed(minDigitis + 2);
-    //   }
-    // }
-
     rerootNode(node) {
       super.rerootNode(node);
       treePane.props.onAddHistoryEntry("Re-root tree");
