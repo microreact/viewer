@@ -1,6 +1,6 @@
-import React from "react";
-import PropTypes from "prop-types";
 import Draggable from "react-draggable";
+import PropTypes from "prop-types";
+import React from "react";
 
 function isClosedPath(newPath) {
   return (
