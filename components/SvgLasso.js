@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import Draggable from "react-draggable";
 import PropTypes from "prop-types";
 import React from "react";
@@ -195,7 +196,12 @@ class SvgLasso extends React.PureComponent {
 
     return (
       <svg
-        className="mr-svg-lasso"
+        className={
+          clsx(
+            "mr-svg-lasso",
+            props.className,
+          )
+        }
         height={props.height}
         width={props.width}
       >
@@ -209,6 +215,7 @@ class SvgLasso extends React.PureComponent {
 SvgLasso.displayName = "SvgLasso";
 
 SvgLasso.propTypes = {
+  className: PropTypes.string,
   height: PropTypes.number.isRequired,
   isActive: PropTypes.bool.isRequired,
   lineStroke: PropTypes.string,
