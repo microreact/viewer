@@ -1,19 +1,17 @@
 /*#region Trigger button */
 
-.mr-colour-settings-button {
-  background-color: inherit;
-  text-align: inherit;
-  align-items: stretch;
+.mr-colour-settings-button,
+.mr-colour-settings-button .MuiInputAdornment-root,
+.mr-colour-settings-button input {
+  cursor: pointer;
 }
 
-.mr-colour-settings-button svg {
-  /* top: calc(50% - 12px); */
-  color: rgba(0, 0, 0, 0.54);
-  /* position: absolute; */
-  pointer-events: none;
-  /* right: 7px; */
-  width: 24px;
-  height: 24px;
+.mr-colour-settings-button .MuiInputBase-root {
+  padding-right: 10px;
+}
+
+.mr-colour-settings-button .MuiFormLabel-root {
+  background-color: var(--background-main);
 }
 
 /*#endregion*/
