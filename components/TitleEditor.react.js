@@ -32,8 +32,6 @@ function TitleEditor(props) {
     }
   }
 
-  console.log("props", props);
-
   return (
     <div className={styles.container}>
         { editMode
