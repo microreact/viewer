@@ -1,0 +1,29 @@
+.container{
+    display: inline-block;
+}
+
+.title{
+    border: 2px solid transparent;
+    cursor: pointer;
+    padding: 0px 2px;
+}
+
+.title:hover{
+    border: 2px solid white;
+}
+
+.editTextInput{
+    height: 29px;
+    border: 2px solid white;
+    color: #fff;
+    background-color: #5c8a97;
+    border-radius: 2px;
+    width:370px;
+    font-weight: 500;
+    font-size: 1.15rem;
+    padding: 0 8px;
+}
+
+.editTextInput:focus{
+    outline: 0;
+}
