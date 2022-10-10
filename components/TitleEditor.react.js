@@ -18,10 +18,7 @@ function TitleEditor(props) {
   function onKeyDown(e) {
     // on pressing enter key the text gets updated in the redux-state
     if (e.keyCode === KeyCode.ENTER) {
-      onSaveText({
-        ...props.meta,
-        name: text,
-      });
+      onSaveText(text);
       setEditMode(false);
     }
 

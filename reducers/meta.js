@@ -14,6 +14,7 @@ const reducer = (state = initialState, action) => {
     case "MICROREACT VIEWER/UPDATE META": {
       return {
         ...initialState,
+        ...state,
         ...action.payload,
       };
     }
