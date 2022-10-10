@@ -9,19 +9,20 @@
 }
 
 .title:hover{
-    border: 2px solid white;
+    border: 2px solid #fff;
 }
 
 .editTextInput{
-    height: 29px;
-    border: 2px solid white;
-    color: #fff;
+    
     background-color: #5c8a97;
     border-radius: 2px;
-    width:370px;
+    border: 2px solid #fff;
+    color: #fff;
     font-weight: 500;
     font-size: 1.15rem;
+    height: 29px;
     padding: 0 8px;
+    width:370px;
 }
 
 .editTextInput:focus{
