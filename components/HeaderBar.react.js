@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 // import "../styles/header-bar.css";
 
 import AddPaneMenu from "../containers/AddPaneMenu.react";
-import TextEditor from "../containers/TitleEditor.react";
+import TitleEditor from "../containers/TitleEditor.react";
 import DownloadFilesMenuButton from "./DownloadFilesMenuButton.react";
 import InfoMenu from "../containers/InfoMenu.react";
 import SearchBox from "../containers/SearchBox.react";
@@ -27,7 +27,7 @@ class HeaderBar extends React.PureComponent {
           { props.drawerButton }
 
           <Typography component="h1" variant="h6" color="inherit" noWrap style={{ flexGrow: 1 }}>
-            <TextEditor />
+            <TitleEditor />
 
             <InfoMenu />
 
