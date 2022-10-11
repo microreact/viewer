@@ -14,7 +14,7 @@ const mapStateToProps = (state, { treeId }) => {
     colourFields: dataColumnsSelector(state),
     fontSize: treeState.fontSize,
     maxBlockSize: 160,
-    maxBlockPadding: 16,
+    maxBlockPadding: 160,
     maxFontSize: 64,
     minBlockSize: 1,
     minBlockPadding: 0,
