@@ -56,7 +56,7 @@ export default {
   },
   "meta": {
     "name": "West African Ebola epidemic (2013-2016)",
-    "description": "Phylogeographic reconstruction of the West African Ebola epidemic based 1610 complete genomes (Dudas et al., Nature, 2017, doi:10.1038/nature22040).",
+    "description": "**Phylogeographic reconstruction of the West African Ebola epidemic based 1610 complete genomes (Dudas et al., Nature, 2017, doi:10.1038/nature22040).**",
     "email": "philippe.lemey@kuleuven.be",
     "website": "https://github.com/ebov/space-time",
     "createdAt": "2017-04-13T09:14:35.415Z",
