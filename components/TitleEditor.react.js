@@ -9,39 +9,33 @@ const KeyCode = {
 };
 
 function TitleEditor(props) {
-  const { meta, onSaveText } = props;
-  const defaultTitle = meta.name;
-  const [editMode, setEditMode] = React.useState(false);
+  const defaultTitle = props.meta.name;
+  const inputRef = React.useRef();
   const [text, setText] = React.useState(defaultTitle);
 
   function onKeyDown(e) {
     // on pressing enter key the text gets updated in the redux-state
     if (e.keyCode === KeyCode.ENTER) {
-      onSaveText(text);
-      setEditMode(false);
+      inputRef.current.blur();
+      props.onSaveText(text);
     }
 
     // on pressing esc updates to the previous stored redux state and default mode.
     if (e.keyCode === KeyCode.ESC) {
-      setEditMode(false);
+      inputRef.current.blur();
       setText(defaultTitle);
     }
   }
 
   return (
     <div className={styles.container}>
-        { editMode
-          ? <DebounceInput
-                className={styles.editTextInput}
-                value={text}
-                onKeyDown={onKeyDown}
-                onChange={(e) => setText(e.target.value)}
-                autoFocus={true}
-                />
-          : <div className={styles.title} onClick={() => setEditMode(!editMode)}>
-            {defaultTitle}
-            </div>
-            }
+     <DebounceInput
+      className={styles.editTextInput}
+      value={text}
+      onKeyDown={onKeyDown}
+      inputRef={inputRef}
+      onChange={(e) => setText(e.target.value)}
+      />
     </div>
   );
 }
