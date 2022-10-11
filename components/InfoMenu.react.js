@@ -1,11 +1,12 @@
 /* eslint-disable class-methods-use-this */
 
 import { createSelector } from "reselect";
-import InfoTwoToneIcon from '@mui/icons-material/InfoTwoTone';
+import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
 import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
 import React from "react";
 import Typography from "@mui/material/Typography";
+import ReactMarkdown from "react-markdown";
 
 import UiDropdownMenu from "./UiDropdownMenu.react";
 
@@ -63,9 +64,9 @@ class DownloadFilesMenu extends React.PureComponent {
             { props.name }
           </Typography>
 
-          <p>
+          <ReactMarkdown>
             { props.description || "(no description)" }
-          </p>
+          </ReactMarkdown>
 
           {
             (props.createdAt) && (
