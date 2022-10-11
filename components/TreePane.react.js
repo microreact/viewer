@@ -12,6 +12,7 @@ import ZoomControls from "./TreeZoomControls.react";
 import TreeContextMenu from "./TreeContextMenu.react";
 import { nextTick } from "../utils/browser";
 import { subscribe } from "../utils/events";
+import TreeLasso from "../containers/TreeLasso";
 
 // import { triggerEvent } from "../utils/browser";
 // import UiContextMenu from "./UiContextMenu.react";
@@ -26,8 +27,6 @@ class TreePane extends React.PureComponent {
       this.canvasRef.current,
       this.props.phylocanvasProps,
     );
-
-    this.tree.renderLasso();
 
     this.tree.setProps = this.props.onPhylocanvasPropsChange;
 
@@ -60,14 +59,6 @@ class TreePane extends React.PureComponent {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.isLassoActive !== this.props.isLassoActive) {
-      this.tree.lasso.setActive(this.props.isLassoActive);
-    }
-
-    if (prevProps.lassoPath !== this.props.lassoPath) {
-      this.tree.lasso.setPath(this.props.lassoPath);
-    }
-
     if (prevProps.phylocanvasProps !== this.props.phylocanvasProps) {
       this.tree.props = this.props.phylocanvasProps;
     }
@@ -77,9 +68,6 @@ class TreePane extends React.PureComponent {
 
   componentWillUnmount() {
     if (this.tree) {
-      if (this.tree.lasso) {
-        this.tree.lasso.destroy();
-      }
       this.tree.destroy();
 
       this.tree = undefined;
@@ -91,8 +79,6 @@ class TreePane extends React.PureComponent {
   }
 
   canvasRef = React.createRef();
-
-  lassoRef = React.createRef();
 
   // scalebarRef = React.createRef()
 
@@ -155,7 +141,7 @@ class TreePane extends React.PureComponent {
   };
 
   render() {
-    const size = this.props.phylocanvasProps.size;
+    const { props } = this;
     return (
       <div
         className="mr-tree"
@@ -181,15 +167,12 @@ class TreePane extends React.PureComponent {
               />
           </div>
         </Menu>
-        <div
-        >
-          <canvas
-            className="mr-lasso-canvas"
-            height={size.height}
-            width={size.width}
-            ref={this.lassoRef}
-          />
-        </div>
+
+        <TreeLasso
+          tree={this.tree}
+          treeId={props.treeId}
+        />
+
         {/* <ContextMenu
           id={this.props.treeId}
           className="mr-ui-context-menu"
