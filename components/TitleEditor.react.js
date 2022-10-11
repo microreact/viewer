@@ -11,7 +11,6 @@ const KeyCode = {
 function TitleEditor(props) {
   const { meta, onSaveText } = props;
   const defaultTitle = meta.name;
-  const textInputRef = React.useRef();
   const [editMode, setEditMode] = React.useState(false);
   const [text, setText] = React.useState(defaultTitle);
 
@@ -37,7 +36,6 @@ function TitleEditor(props) {
                 value={text}
                 onKeyDown={onKeyDown}
                 onChange={(e) => setText(e.target.value)}
-                inputRef={textInputRef}
                 autoFocus={true}
                 />
           : <div className={styles.title} onClick={() => setEditMode(!editMode)}>
