@@ -10,24 +10,24 @@ import * as BrowserUtils from "../utils/browser";
 
 class NotePane extends React.PureComponent {
 
-  static displayName = "NotePane"
+  static displayName = "NotePane";
 
   static propTypes = {
     source: PropTypes.string,
     onSourceChange: PropTypes.func.isRequired,
-  }
+  };
 
   state = {
     isEditing: !this.props.source,
     markdown: "",
-  }
+  };
 
   handleLinkClick = (event) => {
     event.preventDefault();
     BrowserUtils.changeLocation(event.target.href);
     const query = BrowserUtils.parseQueryString(event.target.href);
     this.props.onQueryChange(query);
-  }
+  };
 
   renderers = {
     link: (args) => {
@@ -46,7 +46,7 @@ class NotePane extends React.PureComponent {
         <a {...args} />
       );
     },
-  }
+  };
 
   componentDidMount() {
     if (this.state.isEditing) {
@@ -67,7 +67,7 @@ class NotePane extends React.PureComponent {
     this.setState({
       isEditing: false,
     });
-  }
+  };
 
   render() {
     if (this.state.isEditing) {
@@ -93,12 +93,14 @@ class NotePane extends React.PureComponent {
       );
     }
 
+    console.log("props", this.props.source);
     return (
       <div className="mr-note-pane">
         <ReactMarkdown
           renderers={this.renderers}
-          source={this.props.source || ""}
-        />
+        >
+          {this.props.source || ""}
+        </ReactMarkdown>
         <div className="mr-main-controls">
           <UiControlsButton
             aria-label="Edit note"
