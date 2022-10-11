@@ -17,7 +17,6 @@ class HeaderBar extends React.PureComponent {
 
   render() {
     const { props } = this;
-    console.log("header props", props);
 
     return (
       <AppBar
