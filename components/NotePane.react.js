@@ -93,7 +93,6 @@ class NotePane extends React.PureComponent {
       );
     }
 
-    console.log("props", this.props.source);
     return (
       <div className="mr-note-pane">
         <ReactMarkdown
