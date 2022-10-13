@@ -83,7 +83,7 @@ export default function (state, action) {
 
   const nextState = undoableReducer(currentState, action);
 
-  if (action.type.startsWith("@@redux-undo/")) {
+  if (nextState.present.panes.model && action.type.startsWith("@@redux-undo/")) {
     return {
       ...nextState,
       present: {
