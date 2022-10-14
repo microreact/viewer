@@ -84,21 +84,27 @@ export default function (state, action) {
   const nextState = undoableReducer(currentState, action);
 
   if (action.type.startsWith("@@redux-undo/")) {
+    let nextPanes = {};
+    if (nextState.present.panes.model) {
+      nextPanes = {
+        model: {
+          ...(nextState.present?.panes?.model || {}),
+          borders: [
+            {
+              ...nextState.present.panes.model.borders[0],
+              selected: state.present.panes.model.borders[0].selected,
+            },
+          ],
+        },
+      };
+    }
     return {
       ...nextState,
       present: {
         ...nextState.present,
         panes: {
           ...nextState.present.panes,
-          model: {
-            ...nextState.present.panes.model,
-            borders: [
-              {
-                ...nextState.present.panes.model.borders[0],
-                selected: state.present.panes.model.borders[0].selected,
-              },
-            ],
-          },
+          ...nextPanes,
         },
       },
     };
