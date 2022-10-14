@@ -4,7 +4,7 @@
 }
 .editTextInput{
     background-color: #3d7383;
-    border: 2px solid transparent;
+    border: 1px solid transparent;
     border-radius: 4px;
     color: #fff;
     cursor: pointer;
@@ -20,7 +20,7 @@
 }
 
 .editTextInput:hover{
-   border: 2px solid #ffffffa8;
+   border: 1px solid #ffffffa8;
 }
 
 .editTextInput:focus{
