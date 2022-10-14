@@ -27,8 +27,9 @@ class HeaderBar extends React.PureComponent {
           { props.drawerButton }
 
           <Typography component="h1" variant="h6" color="inherit" noWrap style={{ flexGrow: 1 }}>
-            <InfoMenu />
             <TitleEditor />
+
+            <InfoMenu />
 
           </Typography>
 
