@@ -16,6 +16,11 @@
   padding: 0 12px;
 }
 
+.mr-header-bar .MuiToolbar-root h1 {
+  display: flex;
+  align-items: center;
+}
+
 .mr-header-bar .MuiToolbar-root h1,
 .mr-header-bar .MuiToolbar-root nav
 {
