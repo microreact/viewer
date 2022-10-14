@@ -1,9 +1,8 @@
-.container{
 .container {
   display: inline-block;
   padding-left: 1px;
 }
-.editTextInput{
+.editTextInput {
   background-color: #3d7383;
   border: 1px solid transparent;
   border-radius: 4px;
@@ -20,11 +19,11 @@
   text-overflow: ellipsis;
 }
 
-.editTextInput:hover{
+.editTextInput:hover {
    border: 1px solid #ffffffa8;
 }
 
-.editTextInput:focus{
+.editTextInput:focus {
   margin: -1px;
   background-color: #5c8a97;
   border: 2px solid #fff;
