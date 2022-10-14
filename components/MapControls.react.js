@@ -25,7 +25,7 @@ import UiToggleSlider from "./UiToggleSlider.react";
 import UiToggleSwitch from "./UiToggleSwitch.react";
 
 const mapStyles = [
-  { value: "microreact", label: "Microreact" },
+  // { value: "microreact", label: "Microreact" },
   { value: "light", label: "Light" },
   { value: "dark", label: "Dark" },
   { value: "streets", label: "Streets" },
