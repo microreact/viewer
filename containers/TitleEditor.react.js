@@ -4,13 +4,13 @@ import { update } from "../actions/meta";
 
 function mapStateToProps(state) {
   return {
-    meta: state.meta,
+    value: state.meta.name,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onSaveText: (value) => dispatch(update(undefined, "name", value)),
+    onChange: (value) => dispatch(update("name", value)),
   };
 }
 

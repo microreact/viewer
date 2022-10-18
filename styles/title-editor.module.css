@@ -1,7 +1,11 @@
 .container {
   display: inline-block;
+  /* justify-content: center;
+  align-items: center;
+  height: 100%; */
   padding-left: 1px;
 }
+
 .editTextInput {
   background-color: #3d7383;
   border: 1px solid transparent;
@@ -11,8 +15,8 @@
   font-weight: 500;
   font-size: 1.15rem;
   font-variant-ligatures: no-contextual;
-  height: 26px;
-  max-width: 49ch;
+  height: 28px;
+  /* max-width: 49ch; */
   padding: 0 8px;
   text-transform: capitalize;
   text-overflow: ellipsis;
