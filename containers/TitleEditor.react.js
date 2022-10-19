@@ -4,7 +4,7 @@ import { update } from "../actions/meta";
 
 function mapStateToProps(state) {
   return {
-    meta: state.meta,
+    value: state.meta.name,
   };
 }
 
