@@ -19,6 +19,7 @@
 .mr-header-bar .MuiToolbar-root h1 {
   display: flex;
   align-items: center;
+  padding-left: 2px;
 }
 
 .mr-header-bar .MuiToolbar-root h1,
