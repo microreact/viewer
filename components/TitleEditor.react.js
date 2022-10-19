@@ -27,11 +27,9 @@ function TitleEditor(props) {
     }
   }
 
-  const titleWidth = text?.length || 10;
   return (
      <DebounceInput
       className={styles.editTextInput}
-      style={{ width: `${titleWidth}ch` }}
       value={text}
       onKeyDown={onKeyDown}
       inputRef={inputRef}
