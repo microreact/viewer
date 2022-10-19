@@ -1,12 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { DebounceInput } from "react-debounce-input";
-import styles from "../styles/title-editor.module.css";
 
 const KeyCode = {
   "ESC": 27,
   "ENTER": 13,
 };
+import styles from "../styles/title-editor.module.css";
 
 function TitleEditor(props) {
   const defaultTitle = props.meta.name;
