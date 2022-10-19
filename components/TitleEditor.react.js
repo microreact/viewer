@@ -30,20 +30,19 @@ function TitleEditor(props) {
   return (
      <DebounceInput
       className={styles.editTextInput}
-      value={text}
       onKeyDown={onKeyDown}
       inputRef={inputRef}
       onChange={(e) => setText(e.target.value)}
       dir={"ltr"}
       />
+      value={props.value}
       onChange={(e) => props.onChange(e.target.value)}
   );
 }
 
 TitleEditor.propTypes = {
-  title: PropTypes.string.isRequired,
-  meta: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default TitleEditor;
