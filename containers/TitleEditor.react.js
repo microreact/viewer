@@ -10,7 +10,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onSaveText: (value) => dispatch(update(undefined, "name", value)),
+    onChange: (value) => dispatch(update("name", value)),
   };
 }
 

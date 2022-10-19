@@ -36,13 +36,14 @@ function TitleEditor(props) {
       onChange={(e) => setText(e.target.value)}
       dir={"ltr"}
       />
+      onChange={(e) => props.onChange(e.target.value)}
   );
 }
 
 TitleEditor.propTypes = {
-  onSaveText: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
   meta: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 export default TitleEditor;
