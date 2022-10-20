@@ -28,6 +28,7 @@ export async function loadCsvFile(fileBlobOrUrl, settings, onProgress) {
       // header: header ?? "auto",
       header: true, // If true, the first row of parsed data will be interpreted as field names
       rowFormat: "object",
+      delimitersToGuess: ["\t"],
       skipEmptyLines: true,
       // transform: cleanUpFalsyCsvValue,
       transformHeader(x) {
