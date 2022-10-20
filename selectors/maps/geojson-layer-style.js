@@ -27,13 +27,15 @@ const geojsonLayerStyleSelector = createKeyedStateSelector(
       ]);
     }
 
+    const fillOpacity = regionsColourOpacity / 100;
+
     const style = {
       "fill-color": color,
-      "fill-opacity": regionsColourOpacity / 100,
+      "fill-opacity": fillOpacity,
       "fill-outline-color": showRegionOutlines ? "rgba(0, 0, 0, 1)" : color,
     };
 
-    if (regionsColourOpacity < 0.1) {
+    if (fillOpacity < 0.1) {
       style["fill-opacity"] = 1;
       style["fill-color"] = "rgba(0, 0, 0, 0)";
     }
