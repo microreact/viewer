@@ -1,5 +1,4 @@
-export const update = (chartId, key, value) => ({
+export const update = (key, value) => ({
   type: "MICROREACT VIEWER/UPDATE META",
-  chartId,
   payload: { [key]: value },
 });

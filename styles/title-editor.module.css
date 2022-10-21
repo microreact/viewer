@@ -1,0 +1,27 @@
+.editTextInput {
+  background-color: #3d7383;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1.15rem;
+  font-variant-ligatures: no-contextual;
+  height: 28px;
+  padding: 0 8px;
+  text-transform: capitalize;
+  text-overflow: ellipsis;
+}
+
+.editTextInput:hover {
+   border: 1px solid #ffffffa8;
+}
+
+.editTextInput:focus {
+  margin: -1px;
+  background-color: #5c8a97;
+  border: 2px solid #fff;
+  color: #fff;
+  cursor: text;
+  outline: 0;
+}
