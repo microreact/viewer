@@ -34,7 +34,7 @@ const geojsonLayerStyleSelector = createKeyedStateSelector(
     };
 
     if (regionsColourOpacity === 0) {
-      style["fill-opacity"] = 100;
+      style["fill-opacity"] = 1;
       style["fill-color"] = "rgba(0, 0, 0, 0)";
     }
 
