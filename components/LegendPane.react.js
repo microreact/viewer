@@ -18,7 +18,7 @@ import UiSidePaneHeader from "./UiSidePaneHeader.react";
 
 class LegendPane extends React.PureComponent {
 
-  elRef = React.createRef()
+  elRef = React.createRef();
 
   downloadSvg = async (legendId) => {
     const htmlElement = this.elRef.current.querySelector(`[id="${legendId}"]`);
@@ -31,7 +31,7 @@ class LegendPane extends React.PureComponent {
         filename: legendId,
       },
     );
-  }
+  };
 
   downloadPng = (legendId,) => {
     const htmlElement = this.elRef.current.querySelector(`[id="${legendId}"]`);
@@ -43,7 +43,7 @@ class LegendPane extends React.PureComponent {
           "image/png",
         )
       );
-  }
+  };
 
   renderExportMenu() {
     const { props } = this;
