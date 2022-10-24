@@ -1,3 +1,5 @@
+import naturalCompare from "natural-compare";
+
 /* eslint-disable no-plusplus */
 
 export function firstElement(array) {
@@ -112,16 +114,10 @@ export function summarise(array) {
 
 export function sortComparator(property) {
   return (a, b) => {
-    return a?.[property]?.toString()?.toLowerCase()?.localeCompare(
+    return naturalCompare(
+      a?.[property]?.toString()?.toLowerCase(),
       b?.[property]?.toString()?.toLowerCase()
     );
-    // if (a[property] > b[property]) {
-    //   return 1;
-    // }
-    // if (a[property] < b[property]) {
-    //   return -1;
-    // }
-    // return 0;
   };
 }
 
