@@ -33,6 +33,10 @@
 
 /*#region Menu popover  */
 
+.mr-table-column-menu.mr-ui-popover-menu.MuiPopover-paper {
+  padding-bottom: 0;
+}
+
 .mr-table-column-menu.MuiPopover-paper {
   color: rgba(0, 0, 0, 0.87);
   cursor: default;
