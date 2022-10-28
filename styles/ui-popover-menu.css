@@ -1,6 +1,6 @@
 .mr-ui-popover-menu.MuiPopover-paper {
   border-radius: 8px;
-  padding: 8px 16px 0px 16px;
+  padding: 8px 16px 16px 16px;
   box-shadow: 0 1px 3px rgba(60,64,67, 0.3), 0 4px 8px 3px rgba(60,64,67, 0.15) !important;
   min-width: 200px;
   max-height: calc(100% - 96px);
