@@ -15,7 +15,6 @@
 .mr-controls-menu-trigger.MuiChip-root
 {
   flex-direction: row-reverse;
-  background-color: rgba(224, 224, 224);
 }
 
 .mr-controls-menu-trigger.MuiChip-root .MuiChip-label
@@ -40,6 +39,11 @@
 
 
 /*#region Reset border and background of chip menu trigger to match control buttons */
+
+.mr-controls-menu-trigger.MuiChip-root:not(.MuiChip-filledPrimary)
+{
+  background-color: rgba(224, 224, 224);
+}
 
 .mr-controls-menu-trigger.MuiChip-root
 {
