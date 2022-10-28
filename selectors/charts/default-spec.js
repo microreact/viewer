@@ -392,6 +392,7 @@ const defaultSpecSelector = createKeyedStateSelector(
         columns: facetGridColumns,
         sort: facetOrder,
       };
+      vlSpec.resolve = { "axis": { "x": "independent", "y": "independent" } };
     }
     //#endregion
 
@@ -419,7 +420,7 @@ const vlSpecSelector = createKeyedStateSelector(
     size,
   ) => {
     if (vlSpec) {
-      vlSpec.bounds = "flush";
+      vlSpec.bounds = "full";
       vlSpec.autosize = {
         type: "fit",
         contains: "padding",
@@ -447,8 +448,8 @@ const vlSpecSelector = createKeyedStateSelector(
       }
 
       if (vlSpec.encoding.facet) {
-        vlSpec.width = (size.width - yAxisLabelLimit - 16 /* padding */ - 32/* title */) / facetGridColumns;
-        vlSpec.height = ((size.height - xAxisLabelLimit - 40 /* padding */ - 32 /* title */) / facetGridRows) - 16;
+        vlSpec.width = (size.width / facetGridColumns) - yAxisLabelLimit - 16/* padding */ - 32/* title */;
+        vlSpec.height = (size.height / facetGridRows) - xAxisLabelLimit - 40/* padding */ - 32/* title */;
       }
 
       return { ...vlSpec };
