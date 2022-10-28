@@ -50,6 +50,12 @@
 
 /*#region Buttons  */
 
+.mr-ui-context-menu-item.multi-action {
+  line-height: 32px;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+}
 .mr-ui-context-menu-item > button {
   color: inherit;
   text-decoration: none;
