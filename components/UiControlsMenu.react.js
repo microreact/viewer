@@ -52,7 +52,6 @@ class UiControlsMenu extends React.PureComponent {
           )
         }
         direction="right"
-        // hideOnClick={props.hideOnClick}
         disableCloseButton={props.disableHeader}
         disableHeader={props.disableHeader}
         onClose={props.onClose}
