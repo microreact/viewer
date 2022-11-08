@@ -222,8 +222,6 @@ TreePane.displayName = "TreePane";
 TreePane.propTypes = {
   controls: PropTypes.bool.isRequired,
   // height: PropTypes.number.isRequired,
-  isLassoActive: PropTypes.bool.isRequired,
-  lassoPath: PropTypes.arrayOf(GeometricPoint),
   onAddHistoryEntry: PropTypes.func.isRequired,
   onAlignLabelsChange: PropTypes.func.isRequired,
   onFilterChange: PropTypes.func.isRequired,
