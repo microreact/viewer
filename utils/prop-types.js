@@ -57,7 +57,7 @@ export const DataFilter = PropTypes.shape({
 export const FileDescriptor = PropTypes.shape({
   id: PropTypes.string.isRequired,
   format: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   url: PropTypes.string,
   blob: PropTypes.oneOfType([
     PropTypes.string,
