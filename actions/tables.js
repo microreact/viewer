@@ -28,7 +28,11 @@ export function downloadAsCsv(tableId) {
     const state = getPresentState(getState());
     const [rows] = tableDataSelector(state, tableId);
     const name = paneNameSelector(state, tableId);
-    const tableColumns = state.tables[tableId].columns.map((x) => x.field);
+    const tableColumns = (
+      state.tables[tableId].columns
+        .filter((x) => !x.hidden)
+        .map((x) => x.field)
+    );
     const csv = Papaparse.unparse(
       rows,
       {
