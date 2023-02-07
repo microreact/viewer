@@ -7,11 +7,14 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 // import HashChange from "react-hashchange";
 import { sortableContainer, sortableElement } from "react-sortable-hoc";
 import Swal from "sweetalert2";
+
 // import withReactContent from "sweetalert2-react-content";
 
 // import "@sweetalert2/theme-material-ui/material-ui.css";
 
 // import "../styles/views-pane.css";
+
+import HashChange from "./HashChange";
 
 import * as BrowserUtils from "../utils/browser";
 
@@ -161,7 +164,7 @@ class ViewsPane extends React.PureComponent {
 
   state = {
     isSaving: false,
-  }
+  };
 
   handleCreateView = () => {
     const { props } = this;
@@ -293,4 +296,4 @@ ViewsPane.propTypes = {
   onResaveView: PropTypes.func.isRequired,
 };
 
-export default ViewsPane;
+export default HashChange(ViewsPane);
