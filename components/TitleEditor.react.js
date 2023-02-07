@@ -6,12 +6,19 @@ import styles from "../styles/title-editor.module.css";
 
 function TitleEditor(props) {
   return (
-    <DebounceInput
-      className={styles.editTextInput}
-      value={props.value}
-      debounceTimeout={1000}
-      onChange={(e) => props.onChange(e.target.value)}
-    />
+    <React.Fragment>
+      <span
+        className={styles.root}
+      >
+        {props.value}
+        <DebounceInput
+          className={styles.input}
+          value={props.value}
+          debounceTimeout={1000}
+          onChange={(e) => props.onChange(e.target.value)}
+        />
+      </span>
+    </React.Fragment>
   );
 }
 
