@@ -30,7 +30,6 @@ class HeaderBar extends React.PureComponent {
             <TitleEditor />
 
             <InfoMenu />
-
           </Typography>
 
           <SearchBox />
