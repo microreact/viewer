@@ -12,23 +12,14 @@ import UiDropdownMenu from "./UiDropdownMenu.react";
 
 const MenuIcon = <InfoTwoToneIcon />;
 
-class DownloadFilesMenu extends React.PureComponent {
+const buttonProps = {
+  color: "inherit",
+  size: "small",
+  title: "Project Info",
+  children: MenuIcon,
+};
 
-  filesSelector = createSelector(
-    (props) => props.files,
-    (filesState) => {
-      const items = [];
-
-      for (const file of Object.values(filesState)) {
-        items.push({
-          ...file,
-          label: file.name || `${file.type} file`,
-        });
-      }
-
-      return items;
-    }
-  );
+class InfoMenu extends React.PureComponent {
 
   render() {
     const { props } = this;
@@ -36,14 +27,7 @@ class DownloadFilesMenu extends React.PureComponent {
     return (
       <UiDropdownMenu
         button={IconButton}
-        buttonProps={
-          {
-            color: "inherit",
-            size: "small",
-            title: "Project Info",
-            children: MenuIcon,
-          }
-        }
+        buttonProps={buttonProps}
       >
         <div
           className="mr-content"
@@ -118,13 +102,13 @@ class DownloadFilesMenu extends React.PureComponent {
 
 }
 
-DownloadFilesMenu.displayName = "DownloadFilesMenu";
+InfoMenu.displayName = "InfoMenu";
 
-DownloadFilesMenu.propTypes = {
+InfoMenu.propTypes = {
   name: PropTypes.string,
   description: PropTypes.string,
   email: PropTypes.string,
   website: PropTypes.string,
 };
 
-export default DownloadFilesMenu;
+export default InfoMenu;
