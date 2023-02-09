@@ -4,6 +4,8 @@
 import { Provider } from "react-redux";
 import React from "react";
 import { fetchFile } from "@loaders.gl/core";
+import IconButton from "@mui/material/IconButton";
+import MenuIcon from "@mui/icons-material/Menu";
 
 import MicroreactViewer, { Theme, store, actions } from "../index";
 import { setFetcher } from "../utils/proxy";
@@ -68,12 +70,36 @@ class App extends React.PureComponent {
     }
   }
 
+  renderViewerComponents = () => {
+    return {
+      drawerButton: (
+        <IconButton
+          edge="start"
+          color="inherit"
+        >
+          <MenuIcon />
+        </IconButton>
+      ),
+      appendNavButtons: (
+        <React.Fragment>
+          <IconButton
+            edge="start"
+            color="inherit"
+          >
+            <MenuIcon />
+          </IconButton>
+        </React.Fragment>
+      ),
+    };
+  };
+
   render() {
     return (
       <Provider store={store}>
         <Theme>
-          <MicroreactViewer>
-          </MicroreactViewer>
+          <MicroreactViewer
+            components={this.renderViewerComponents()}
+          />
         </Theme>
       </Provider>
     );
