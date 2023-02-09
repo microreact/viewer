@@ -1,7 +1,7 @@
 import { filesize } from "filesize";
 
 import { generateHashId } from "./hash";
-import { loadCsvFile } from "./loaders/data";
+import { loadCsvFile, loadDataArray } from "./loaders/data";
 import { loadGeoJsonFile, loadJsonFile } from "./loaders/json";
 import { loadTextFile } from "./loaders/text";
 import { loadSpeadsheetFile } from "./loaders/xlsx";
@@ -137,13 +137,15 @@ export async function loadFile(input, onProgress) {
     loadedFile.name = normaliseFilename(input.name);
   }
 
-  // const fileKind = FileKinds.find((x) => x.format === loadedFile.format);
-
   // The format of local files can be guessed from file extension
   loadedFile.format = input.format ?? guessFileFormat(input.name);
 
   let loader;
-  if (loadedFile.format === "application/json") {
+  if (loadedFile.format === "data") {
+    loadedFile.type = "data";
+    loader = loadDataArray;
+  }
+  else if (loadedFile.format === "application/json") {
     loadedFile.type = "microreact";
     loader = loadJsonFile;
   }
