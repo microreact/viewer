@@ -94,3 +94,19 @@ export async function loadCsvFile(fileBlobOrUrl, settings, onProgress) {
 
   return createBasicDataset(rows);
 }
+
+export async function loadDataArray(fileBlobOrUrl, settings, onProgress) {
+  const rows = [];
+
+  let index = 1;
+  for (const row of fileBlobOrUrl) {
+    row["--mr-index"] = (index).toString();
+    for (const key of Object.keys(row)) {
+      row[key] = cleanUpFalsyCsvValue(row[key]);
+    }
+    rows.push(row);
+    index += 1;
+  }
+
+  return createBasicDataset(rows);
+}
