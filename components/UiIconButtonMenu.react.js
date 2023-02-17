@@ -8,7 +8,7 @@ import UiPopoverMenu from "./UiPopoverMenu.react";
 
 const UiIconButtonMenu = React.memo(
   (props) => {
-    const { icon, title, content, ...rest } = props;
+    const { icon, title, content, className, ...rest } = props;
     return (
       <UiPopoverMenu
         {...rest}
@@ -16,6 +16,7 @@ const UiIconButtonMenu = React.memo(
         buttonProps={
           {
             children: icon,
+            className,
             color: "inherit",
             size: "small",
             title,
@@ -31,6 +32,7 @@ const UiIconButtonMenu = React.memo(
 UiIconButtonMenu.displayName = "UiIconButtonMenu";
 
 UiIconButtonMenu.propTypes = {
+  className: PropTypes.string,
   content: PropTypes.elementType,
   icon: PropTypes.element,
   title: PropTypes.string,
