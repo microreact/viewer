@@ -15,10 +15,10 @@ const UiIconButtonMenu = React.memo(
         button={IconButton}
         buttonProps={
           {
-            title,
             color: "inherit",
             size: "small",
             children: icon,
+            title,
           }
         }
         title={title}
