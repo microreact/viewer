@@ -1,6 +1,5 @@
 /* eslint-disable class-methods-use-this */
 
-import { createSelector } from "reselect";
 import InfoTwoToneIcon from "@mui/icons-material/InfoTwoTone";
 import IconButton from "@mui/material/IconButton";
 import PropTypes from "prop-types";
