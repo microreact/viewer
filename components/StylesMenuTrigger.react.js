@@ -17,6 +17,7 @@ const StylesMenu = React.memo(
         hideOnClick={false}
         icon={StylesPaneIcon}
         title="Labels, Colours, and Shapes"
+        className={"mr-styles-menu-button"}
       />
     );
   }
