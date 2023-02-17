@@ -14,6 +14,7 @@ const MenuIcon = <InfoTwoToneIcon />;
 
 const buttonProps = {
   children: MenuIcon,
+  className: "mr-project-info",
   color: "inherit",
   size: "small",
   title: "Project Info",
