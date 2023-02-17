@@ -38,13 +38,6 @@ class InfoMenu extends React.PureComponent {
             variant="h6"
             color="primary"
           >
-            About Project
-          </Typography>
-          <Typography
-            component="h3"
-            variant="subtitle1"
-            color="primary"
-          >
             { props.name }
           </Typography>
 
