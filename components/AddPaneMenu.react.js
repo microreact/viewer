@@ -17,6 +17,7 @@ const AddPaneMenu = React.memo(
         button={IconButton}
         buttonProps={
           {
+            className: "mr-add-pane-menu-button",
             color: "inherit",
             size: "small",
             title: "Add or edit panels",
