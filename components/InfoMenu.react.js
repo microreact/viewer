@@ -13,10 +13,10 @@ import UiDropdownMenu from "./UiDropdownMenu.react";
 const MenuIcon = <InfoTwoToneIcon />;
 
 const buttonProps = {
+  children: MenuIcon,
   color: "inherit",
   size: "small",
   title: "Project Info",
-  children: MenuIcon,
 };
 
 class InfoMenu extends React.PureComponent {
