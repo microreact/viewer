@@ -13,8 +13,7 @@
   color: #fff;
   cursor: pointer;
   font-family: inherit;
-  font-size: 1.15rem;
-  font-size: inherit;
+  font-size: 0.9em;
   font-variant-ligatures: no-contextual;
   font-weight: 500;
   height: 28px;
@@ -23,6 +22,7 @@
   position: absolute;
   text-overflow: ellipsis;
   top: 3px;
+  padding-left: 2px;
   visibility: visible;
   width: calc(100% - 2px);
 }
