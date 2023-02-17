@@ -21,6 +21,7 @@ const DownloadFilesMenuButton = React.memo(
             size: "small",
             title: "Download Project Files",
             children: Icon,
+            className: "mr-download-menu-button",
           }
         }
       >
