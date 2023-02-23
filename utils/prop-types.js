@@ -62,6 +62,7 @@ export const FileDescriptor = PropTypes.shape({
   blob: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.instanceOf(Blob),
+    PropTypes.array,
   ]),
 });
 
