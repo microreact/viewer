@@ -59,11 +59,11 @@ export const FileDescriptor = PropTypes.shape({
   format: PropTypes.string.isRequired,
   name: PropTypes.string,
   url: PropTypes.string,
-  blob: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.instanceOf(Blob),
-    PropTypes.array,
-  ]),
+  // blob: PropTypes.oneOfType([
+  //   PropTypes.string,
+  //   PropTypes.instanceOf(Blob),
+  //   PropTypes.array,
+  // ]),
 });
 
 export const FileKind = PropTypes.oneOf([
