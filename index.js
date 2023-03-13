@@ -10,8 +10,8 @@ export { default as store } from "./store";
 export { default as defaults } from "./defaults";
 export * as constants from "./constants";
 
-import * as ui from "./actions/ui";
-export const actions = ui;
+import * as uiActions from "./actions/ui";
+export const actions = uiActions;
 
 export * from "./components";
 
