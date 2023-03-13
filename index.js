@@ -3,6 +3,7 @@
 
 import Index from "./containers/Viewer.react";
 import store from "./store";
+import presentStateSelector from "./selectors/index";
 
 export { default as Theme } from "./containers/Theme.react";
 
@@ -36,6 +37,11 @@ export * as schema from "./schema";
 
 export function dispatchMrAction(action) {
   return store.dispatch(action);
+}
+
+export function getMrDocument(action) {
+  const rootState = store.getState();
+  return presentStateSelector(rootState);
 }
 
 export default Index;
