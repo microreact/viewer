@@ -12,6 +12,7 @@ export * as constants from "./constants";
 
 import * as uiActions from "./actions/ui";
 export const actions = uiActions;
+export const mrActions = uiActions;
 
 export * from "./components";
 
