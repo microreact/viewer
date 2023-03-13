@@ -82,7 +82,7 @@ class Viewer extends React.PureComponent {
     // Makes sure that all dataset files have been loaded (i.e. has a _content property)
     for (const dataset of Object.values(props.datasets || emptyObject)) {
       const datasetFileDescriptor = props.files[dataset.file];
-      if (!datasetFileDescriptor._content) {
+      if (dataset.file && !datasetFileDescriptor._content) {
         return (
           <FileLoader
             key={datasetFileDescriptor.id}

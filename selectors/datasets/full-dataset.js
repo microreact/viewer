@@ -44,9 +44,15 @@ const fullDatasetSelector = createSelector(
   ) => {
     const allDatasetConfigs = Object.values(datasetConfigs);
 
-    if (mainDatasetConfig?.file && files[mainDatasetConfig?.file]?._content) {
-      let mergedDataset = files[mainDatasetConfig.file]._content;
+    let mergedDataset;
+    if (mainDatasetConfig?.data) {
+      mergedDataset = mainDatasetConfig.data;
+    }
+    else if (mainDatasetConfig?.file && files[mainDatasetConfig?.file]?._content) {
+      mergedDataset = files[mainDatasetConfig.file]._content;
+    }
 
+    if (mergedDataset) {
       const otherDatasets = allDatasetConfigs.filter((x) => x.idFieldName === undefined);
       for (const datasetConfig of otherDatasets) {
         if (datasetConfig.masterFieldName && datasetConfig.linkFieldName && files[datasetConfig?.file]?._content) {
