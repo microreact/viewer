@@ -2,6 +2,7 @@
 /* eslint-disable import/first */
 
 import Index from "./containers/Viewer.react";
+import store from "./store";
 
 export { default as Theme } from "./containers/Theme.react";
 
@@ -32,5 +33,9 @@ export const utils = {
 export * as selectors from "./selectors";
 
 export * as schema from "./schema";
+
+export function dispatchMrAction(action) {
+  return store.dispatch(action);
+}
 
 export default Index;
