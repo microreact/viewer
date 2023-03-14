@@ -9,6 +9,8 @@ import CheckBoxOutlineBlankTwoToneIcon from "@mui/icons-material/CheckBoxOutline
 // import "../styles/table.css";
 import TableHeaderMenu from "../containers/TableColumnMenu.react";
 
+const cursorStyle = { cursor: "pointer" };
+
 const SortableItem = sortableElement(
   ({ children }) => children
 );
@@ -91,9 +93,13 @@ const HeaderTextComponent = (args) => {
       <div className={args.className}>
         { args.column.title }
       </div>
-      <TableHeaderMenu
-        tableColumn={args.column}
-      />
+      {
+        args.column.controls && (
+          <TableHeaderMenu
+            tableColumn={args.column}
+          />
+        )
+      }
     </React.Fragment>
   );
 };
@@ -103,7 +109,7 @@ const CellContent = (attributes) => {
     return (
       <div
         className={attributes.className}
-        style={{ cursor: "pointer" }}
+        style={cursorStyle}
         onClick={
           (event) => attributes.container.props.onSelectRows(
             [ attributes.rowData[0] ],
@@ -119,6 +125,12 @@ const CellContent = (attributes) => {
             <CheckBoxOutlineBlankTwoToneIcon />
         }
       </div>
+    );
+  }
+
+  if (attributes.column.renderer) {
+    return (
+      attributes.container.props.componentsLookup[attributes.column.renderer](attributes)
     );
   }
 

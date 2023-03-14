@@ -1,4 +1,5 @@
 import { newId, updateKeyedState, replaceKeyedState } from "../utils/state";
+import { update } from "../utils/arrays";
 
 const initialState = {
 };
@@ -45,6 +46,23 @@ const reducer = (state = initialState, action) => {
         state,
         action.datasetId,
         action.payload,
+      );
+    }
+
+    case "MICROREACT VIEWER/UPDATE INLINE DATASET": {
+      return updateKeyedState(
+        state,
+        action.datasetId,
+        {
+          data: {
+            ...state[action.datasetId].data,
+            rows: update(
+              state[action.datasetId].data.rows,
+              (x) => x[action.payload.column] === action.payload.value,
+              action.payload.updater,
+            ),
+          },
+        },
       );
     }
 

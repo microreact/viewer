@@ -64,7 +64,9 @@ class Viewer extends React.PureComponent {
           elevation={0}
           square
         >
-          <LayoutManager />
+          <LayoutManager
+            components={props.components}
+          />
         </Paper>
         { props.children }
 
