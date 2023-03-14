@@ -20,3 +20,13 @@ export const updateDataset = (datasetId, options) => ({
   datasetId,
   payload: options,
 });
+
+export const updateInlineDataset = (datasetId, column, value, updater) => ({
+  type: "MICROREACT VIEWER/UPDATE INLINE DATASET",
+  datasetId,
+  payload: {
+    column,
+    value,
+    updater,
+  },
+});

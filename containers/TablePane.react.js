@@ -29,6 +29,7 @@ const mapStateToProps = (state, { tableId }) => {
     selectedIds,
     displayMode: tableState.displayMode,
     columns: tableState.columns,
+    hasSelectionColumn: tableState.hasSelectionColumn,
     fieldsMap: dataColumnsByFieldMapSelector(state),
     dataColumns: dataColumnsSelector(state),
   };

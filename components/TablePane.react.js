@@ -82,6 +82,8 @@ class TablePane extends React.PureComponent {
             dataType: dataColumn.dataType,
             field: dataColumn.name,
             frozen: col.fixed,
+            controls: col.controls ?? true,
+            renderer: col.renderer,
             hidden: col.hidden || false,
             key: `data-${col.field}`,
             minWidth: 40,
@@ -125,26 +127,33 @@ class TablePane extends React.PureComponent {
   tableColumnsSelector = createSelector(
     this.dataColumnsSelector,
     (props) => props.selectedIds,
+    (props) => props.hasSelectionColumn,
     (
       dataColumns,
       selectedIds,
+      hasSelectionColumn,
     ) => {
-      return [
-        {
-          key: "--microreact-selection-cell",
-          dataKey: "--microreact-selection-cell",
-          field: "--microreact-selection-cell",
-          title: "--microreact-selection-cell",
-          width: 40,
-          tableId: this.props.tableId,
-          hidden: false,
-          minWidth: 40,
-          resizable: false,
-          selectedIds,
-          frozen: true,
-        },
-        ...dataColumns,
-      ];
+      if (!hasSelectionColumn) {
+        return dataColumns;
+      }
+      else {
+        return [
+          {
+            key: "--microreact-selection-cell",
+            dataKey: "--microreact-selection-cell",
+            field: "--microreact-selection-cell",
+            title: "--microreact-selection-cell",
+            width: 40,
+            tableId: this.props.tableId,
+            hidden: false,
+            minWidth: 40,
+            resizable: false,
+            selectedIds,
+            frozen: true,
+          },
+          ...dataColumns,
+        ];
+      }
     },
   );
 
@@ -310,6 +319,7 @@ class TablePane extends React.PureComponent {
           rowKey={0}
           sortState={props.sort}
           width={props.width}
+          componentsLookup={props.componentsLookup}
         />
       </div>
     );
@@ -321,8 +331,10 @@ TablePane.displayName = "TablePane";
 
 TablePane.propTypes = {
   columns: PropTypes.array.isRequired,
+  componentsLookup: PropTypes.object,
   data: PropTypes.array.isRequired,
   displayMode: PropTypes.string.isRequired,
+  hasSelectionColumn: PropTypes.bool,
   height: PropTypes.number.isRequired,
   onColumnExpand: PropTypes.func.isRequired,
   onColumnMove: PropTypes.func.isRequired,
@@ -337,6 +349,7 @@ TablePane.propTypes = {
 
 TablePane.defaultProps = {
   rowKey: 0,
+  hasSelectionColumn: true,
 };
 
 export default TablePane;

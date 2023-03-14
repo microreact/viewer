@@ -3,7 +3,7 @@
 
 import Index from "./containers/Viewer.react";
 import store from "./store";
-import presentStateSelector from "./selectors/index";
+import { presentStateSelector } from "./selectors/index";
 
 export { default as Theme } from "./containers/Theme.react";
 
