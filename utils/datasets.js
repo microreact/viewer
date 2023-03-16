@@ -91,7 +91,7 @@ export function detectAnnotationFields(datasetColumns) {
 }
 
 export function createBasicDataset(rows, headers) {
-  const headerRow = headers || Object.keys(rows[0]);
+  const headerRow = (headers && headers.length) ? headers : Object.keys(rows[0]);
   return createTypedDataset(rows, headerRow);
 }
 
