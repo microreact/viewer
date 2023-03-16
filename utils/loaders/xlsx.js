@@ -29,7 +29,7 @@ const XlsxLoader = {
 };
 
 export async function loadSpeadsheetFile(input) {
-  const { default: XLSX } = await import("xlsx");
+  const XLSX = await import("xlsx");
 
   const data = await load(
     input,
