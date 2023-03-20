@@ -71,9 +71,8 @@ export const selectItem = (chartId, chartItem, merge) => (
     if (!chartState.filterChart) {
       if (chartItem) {
         const rows = rowsSelector(presentState);
-        const fieldsMap = dataColumnsByFieldMapSelector(presentState);
         const query = getQueryFromChartItem(presentState, chartId, chartItem);
-        const ids = filterByQuery(rows, fieldsMap, query);
+        const ids = filterByQuery(rows, query);
         dispatch(
           selectRows(
             ids,
@@ -107,11 +106,10 @@ export const filterItem = (chartId, item) => (
     if (item) {
       const state = getPresentState(getState());
       const rows = rowsSelector(state);
-      const fieldsMap = dataColumnsByFieldMapSelector(state);
       const chartType = chartTypeSelector(state, chartId);
       let ids = [];
       if (chartType === "custom") {
-        ids = filterByQuery(rows, fieldsMap, item);
+        ids = filterByQuery(rows, item);
       }
       else {
         const xAxisField = xAxisFieldSelector(state, chartId);
@@ -127,7 +125,7 @@ export const filterItem = (chartId, item) => (
         if (seriesField && (seriesField.name in item)) {
           query[seriesField.name] = item[seriesField.name];
         }
-        ids = filterByQuery(rows, fieldsMap, query);
+        ids = filterByQuery(rows, query);
       }
       dispatch(
         selectRows(
