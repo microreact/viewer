@@ -133,9 +133,7 @@ export async function loadFile(input, onProgress) {
     settings: input.settings,
   };
 
-  if (!input.url) {
-    loadedFile.name = normaliseFilename(input.name);
-  }
+  loadedFile.name = normaliseFilename(input.name);
 
   // The format of local files can be guessed from file extension
   loadedFile.format = input.format ?? guessFileFormat(input.name);
