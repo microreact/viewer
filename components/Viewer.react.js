@@ -2,6 +2,7 @@ import Paper from "@mui/material/Paper";
 import PropTypes from "prop-types";
 import React from "react";
 import { GlobalHotKeys } from "react-hotkeys";
+import clsx from "clsx";
 
 // import "../styles/viewer.css";
 
@@ -16,7 +17,6 @@ import FileLoader from "../containers/FileLoader.react";
 import HeaderBar from "../containers/HeaderBar.react";
 import LayoutManager from "../containers/LayoutManager.react";
 import PanesEditor from "../containers/PanesEditor.react";
-import clsx from "clsx";
 
 import { invertedSpinnerPng } from "../utils/inline";
 
