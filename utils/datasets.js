@@ -115,10 +115,9 @@ export function mergeBasicDatasets(masterDataset, linkedDataset, masterFieldName
   const mergedRows = leftJoin(
     masterDataset.rows,
     linkedDataset.rows,
-    {
-      key1: leftDataField.name,
-      key2: rightDataField.name,
-    },
+    (x) => x[leftDataField.name],
+    (x) => x[rightDataField.name],
+    (left, right) => ({ ...left, ...right })
   );
 
   const mergedFields = [
