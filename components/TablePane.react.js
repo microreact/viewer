@@ -102,6 +102,7 @@ class TablePane extends React.PureComponent {
       for (const dataColumn of dataColumns) {
         if (!fields.has(dataColumn.name)) {
           tableColumns.push({
+            controls: true,
             dataColumn,
             dataKey: dataColumn.name,
             dataType: dataColumn.dataType,
