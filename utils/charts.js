@@ -83,6 +83,42 @@ export function vegaLiteToVega(vlSpec) {
   return vgSpec;
 }
 
+export function convertChartSpec(
+  spec,
+  width,
+  height,
+) {
+  if (!spec) {
+    return undefined;
+  }
+
+  const vlSpec = {
+    ...spec,
+  };
+
+  if (isVegaLiteSpec(vlSpec)) {
+    vlSpec.data = { name: "table" };
+  }
+  else if (!vlSpec.data) {
+    vlSpec.data = [ { name: "table" } ];
+  }
+
+  if (!vlSpec.padding) {
+    vlSpec.padding = { left: 8, top: 32, right: 8, bottom: 8 };
+  }
+
+  if (vlSpec.width === "auto") {
+    vlSpec.width = width;
+  }
+  if (vlSpec.height === "auto") {
+    vlSpec.height = height;
+  }
+
+  const vgSpec = vegaLiteToVega(vlSpec);
+
+  return vgSpec;
+}
+
 export function vegaEditorDataUrlToSpec(value) {
   const match = value?.match(vegaEditorDataUrlRegex);
   if (match && match[1]) {
