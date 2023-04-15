@@ -45,13 +45,13 @@ class Chart extends React.PureComponent {
     className: PropTypes.string,
     onSelectItem: PropTypes.func.isRequired,
     vegaSpec: PropTypes.object,
-  }
+  };
 
   state = {
     vegaError: null,
-  }
+  };
 
-  vegaRef = React.createRef()
+  vegaRef = React.createRef();
 
   // debouncedSelectItem = debounce(
   //   this.props.onSelectItem,
@@ -93,7 +93,7 @@ class Chart extends React.PureComponent {
       //   }
       // }
     },
-  }
+  };
 
   downloadPNG = async () => {
     const dataUrl = await exportPNG(this.vegaRef.current);
@@ -102,7 +102,7 @@ class Chart extends React.PureComponent {
       "chart.png",
       "image/png",
     );
-  }
+  };
 
   downloadSVG = async () => {
     const dataUrl = await exportSVG(this.vegaRef.current);
@@ -111,7 +111,7 @@ class Chart extends React.PureComponent {
       "chart.svg",
       "image/svg+xml",
     );
-  }
+  };
 
   render() {
     const { props } = this;
