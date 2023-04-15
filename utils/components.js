@@ -51,5 +51,6 @@ export function componentLoader(componentName) {
   if (componentName === "Tree") { return import(/* webpackChunkName: "tree" */ "../containers/TreePlaceholder.react").then((x) => x.default); }
   if (componentName === "Views") { return import(/* webpackChunkName: "views" */ "../containers/ViewsPane.react").then((x) => x.default); }
   if (componentName === "Selection") { return import(/* webpackChunkName: "views" */ "../containers/SelectionPane.react").then((x) => x.default); }
+  if (componentName === "Empty") { return Promise.resolve(() => "null"); }
   throw new Error(`Unknown component ${componentName}`);
 }
