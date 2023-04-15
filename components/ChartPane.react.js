@@ -1,22 +1,16 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { Handler } from "vega-tooltip";
-import { Vega } from "react-vega";
-// import debounce from "lodash.debounce";
+import { createSelector } from "reselect";
 
-// import "../styles/chart-pane.css";
-import ChartControls from "../containers/ChartControls.react";
 import { ChartTypes } from "../utils/prop-types";
-import { exportPNG, exportSVG } from "../utils/charts";
+import { exportPNG, exportSVG, isVegaLiteSpec, vegaLiteToVega } from "../utils/charts";
 import { downloadDataUrl } from "../utils/downloads";
 
-const noScrollStyle = {
-  overflowX: "hidden",
-  overflowY: "auto",
-};
-const autoScrollStyle = {
-  overflow: "auto",
-};
+import ChartControls from "../containers/ChartControls.react";
+import ChartCustomEmbed from "../containers/ChartCustomEmbed";
+import ChartDefaultEmbed from "../containers/ChartDefaultEmbed";
+
+// import "../styles/chart-pane.css";
 
 const handleError = (err) => {
   // if (this.state.vegaError !== err.message) {
@@ -32,31 +26,13 @@ const handleParseError = (err) => {
   console.error("vega parse error", err);
 };
 
-class Chart extends React.PureComponent {
-
-  static propTypes = {
-    chartData: PropTypes.shape({
-      table: PropTypes.arrayOf(
-        PropTypes.object.isRequired,
-      ).isRequired,
-    }).isRequired,
-    chartId: PropTypes.string.isRequired,
-    chartType: ChartTypes,
-    className: PropTypes.string,
-    onSelectItem: PropTypes.func.isRequired,
-    vegaSpec: PropTypes.object,
-  };
+class ChartPane extends React.PureComponent {
 
   state = {
     vegaError: null,
   };
 
   vegaRef = React.createRef();
-
-  // debouncedSelectItem = debounce(
-  //   this.props.onSelectItem,
-  //   200,
-  // );
 
   signalListeners = {
     onItemSelectSignal: (_, [ event, item ] = []) => {
@@ -95,6 +71,33 @@ class Chart extends React.PureComponent {
     },
   };
 
+  styleSelector = createSelector(
+    (props) => props.chartType,
+    (props) => props.width,
+    (props) => props.height,
+    (
+      chartType,
+      width,
+      height,
+    ) => {
+      if (chartType === "custom") {
+        return {
+          height,
+          overflow: "auto",
+          width,
+        };
+      }
+      else {
+        return {
+          height,
+          overflowX: "hidden",
+          overflowY: "auto",
+          width,
+        };
+      }
+    },
+  );
+
   downloadPNG = async () => {
     const dataUrl = await exportPNG(this.vegaRef.current);
     downloadDataUrl(
@@ -113,49 +116,54 @@ class Chart extends React.PureComponent {
     );
   };
 
+  renderChartEmbed() {
+    const { props } = this;
+
+    if (props.chartType === "custom") {
+      return (
+        <ChartCustomEmbed
+          chartId={props.chartId}
+          chartRef={this.vegaRef}
+          height={props.height}
+          onError={handleError}
+          onParseError={handleParseError}
+          signalListeners={this.signalListeners}
+          width={props.width}
+        />
+      );
+    }
+
+    if (props.chartType) {
+      return (
+        <ChartDefaultEmbed
+          chartId={props.chartId}
+          chartRef={this.vegaRef}
+          height={props.height}
+          onError={handleError}
+          onParseError={handleParseError}
+          signalListeners={this.signalListeners}
+          width={props.width}
+        />
+      );
+    }
+
+    return undefined;
+
+  }
+
   render() {
     const { props } = this;
 
     return (
       <div
         className="mr-chart"
-        style={
-          props.chartType === "custom" ? autoScrollStyle : noScrollStyle
-        }
+        style={this.styleSelector(props)}
       >
         <div
           className="mr-chart"
           onClick={this.signalListeners.onItemSelectSignal}
         >
-          {
-            (props.vegaSpec instanceof Error) && (
-              <div className="mr-error">
-                { props.vegaSpec.message }
-              </div>
-            )
-          }
-          {
-            props.vegaSpec && (
-              <Vega
-                data={this.props.chartData}
-                logLevel={2}
-                onError={handleError}
-                // onNewView={
-                //   (x) => {
-                //     console.debug(x)
-                //     // if (this.state.vegaError !== null) {
-                //     //   this.setState({ vegaError: null });
-                //     // }
-                //   }
-                // }
-                onParseError={handleParseError}
-                ref={this.vegaRef}
-                signalListeners={this.signalListeners}
-                spec={props.vegaSpec}
-                tooltip={new Handler().call}
-              />
-            )
-          }
+          { this.renderChartEmbed() }
         </div>
 
         <ChartControls
@@ -168,4 +176,11 @@ class Chart extends React.PureComponent {
   }
 }
 
-export default Chart;
+ChartPane.propTypes = {
+  chartId: PropTypes.string.isRequired,
+  chartType: ChartTypes,
+  className: PropTypes.string,
+  onSelectItem: PropTypes.func.isRequired,
+};
+
+export default ChartPane;

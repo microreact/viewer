@@ -1,19 +1,18 @@
-import { connect } from "react-redux";
+import { selectItem } from "../actions/charts";
+
+import chartTypeSelector from "../selectors/charts/chart-type";
+import chartStateSelector from "../selectors/charts/chart-state";
+
+import { connectToPresentState } from "../utils/state";
 
 import ChartPane from "../components/ChartPane.react";
 
-import { selectItem } from "../actions/charts";
-import chartDataSelector from "../selectors/charts/chart-data";
-import vegaSpecSelector from "../selectors/charts/vega-spec";
-import chartTypeSelector from "../selectors/charts/chart-type";
-// import seriesFieldSelector from "../selectors/charts/series-field";
-
 const mapStateToProps = (state, { chartId }) => {
+  const chartState = chartStateSelector(state, chartId);
+
   return {
-    chartData: chartDataSelector(state, chartId),
     chartType: chartTypeSelector(state, chartId),
-    vegaSpec: vegaSpecSelector(state, chartId),
-    // seriesDataColumn: seriesFieldSelector(state, chartId),
+    spec: chartState.spec,
   };
 };
 
@@ -21,4 +20,8 @@ const mapDispatchToProps = (dispatch, { chartId }) => ({
   onSelectItem: (item, merge) => dispatch(selectItem(chartId, item, merge)),
 });
 
-export default connect((state, props) => mapStateToProps(state.present, props), mapDispatchToProps)(ChartPane);
+export default connectToPresentState(
+  ChartPane,
+  mapStateToProps,
+  mapDispatchToProps,
+);
