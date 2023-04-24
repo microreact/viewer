@@ -25,7 +25,7 @@ class Viewer extends React.PureComponent {
   handlers = {
     undo: () => this.props.onUndo(),
     redo: () => this.props.onRedo(),
-  }
+  };
 
   // eslint-disable-next-line class-methods-use-this
   componentWillUnmount() {
