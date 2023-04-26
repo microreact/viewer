@@ -55,6 +55,7 @@ class ChartCustomEmbed extends React.PureComponent {
           signalListeners={props.signalListeners}
           spec={vegaSpec}
           tooltip={new Handler().call}
+          // onNewView={console.debug}
         />
       );
     }
