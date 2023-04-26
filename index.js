@@ -1,7 +1,7 @@
 /* eslint-disable import/newline-after-import */
 /* eslint-disable import/first */
 
-import Index from "./containers/Viewer.react";
+import ViewerWithProvider from "./components/ViewerWithProvider.js";
 import store from "./store";
 import { presentStateSelector } from "./selectors/index";
 
@@ -44,4 +44,4 @@ export function getMrDocument(action) {
   return presentStateSelector(rootState);
 }
 
-export default Index;
+export default ViewerWithProvider;

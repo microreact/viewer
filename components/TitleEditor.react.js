@@ -1,4 +1,5 @@
 import React from "react";
+import clsx from "clsx";
 import PropTypes from "prop-types";
 import { DebounceInput } from "react-debounce-input";
 
@@ -8,7 +9,12 @@ function TitleEditor(props) {
   return (
     <React.Fragment>
       <span
-        className={styles.root}
+        className={
+          clsx(
+            "mr-title-editor",
+            styles.root,
+          )
+        }
       >
         {props.value}
         <DebounceInput
