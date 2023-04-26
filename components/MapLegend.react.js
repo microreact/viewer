@@ -17,7 +17,7 @@ class MapLegend extends React.PureComponent {
 
   state = {
     isExpanded: true,
-  }
+  };
 
   selectRows = (value, event) => {
     const append = event.metaKey || event.ctrlKey;
@@ -32,11 +32,11 @@ class MapLegend extends React.PureComponent {
     }
 
     this.props.onSelectRows(rowIds, append);
-  }
+  };
 
   toggleLegend = () => {
     this.setState({ isExpanded: !this.state.isExpanded });
-  }
+  };
 
   render() {
     const { props } = this;
@@ -164,9 +164,9 @@ class MapLegend extends React.PureComponent {
                         <tr>
                           <td
                             colSpan="2"
-                            title={props.scaleMarkersDataField ? props.scaleMarkersDataField.name : "# entries"}
+                            title="Region Colour"
                           >
-                            Region<br/>Colour
+                            { props.scaleMarkersDataField ? props.scaleMarkersDataField.name : "# entries" }
                           </td>
                         </tr>
                       </thead>

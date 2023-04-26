@@ -310,7 +310,7 @@ class MapPane extends React.PureComponent {
       <div
         className={state.hover ? "mr-map mr-hovered" : "mr-map"}
         ref={this.elementRef}
-      > 
+      >
         <InteractiveMap
           height={props.height}
           mapboxApiAccessToken={props.mapboxApiAccessToken}
