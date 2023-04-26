@@ -125,6 +125,7 @@ class ChartPane extends React.PureComponent {
           chartId={props.chartId}
           chartRef={this.vegaRef}
           height={props.height}
+          onClick={this.signalListeners.onItemSelectSignal}
           onError={handleError}
           onParseError={handleParseError}
           signalListeners={this.signalListeners}
@@ -139,6 +140,7 @@ class ChartPane extends React.PureComponent {
           chartId={props.chartId}
           chartRef={this.vegaRef}
           height={props.height}
+          onClick={this.signalListeners.onItemSelectSignal}
           onError={handleError}
           onParseError={handleParseError}
           signalListeners={this.signalListeners}
@@ -159,12 +161,7 @@ class ChartPane extends React.PureComponent {
         className="mr-chart"
         style={this.styleSelector(props)}
       >
-        <div
-          className="mr-chart"
-          onClick={this.signalListeners.onItemSelectSignal}
-        >
-          { this.renderChartEmbed() }
-        </div>
+        { this.renderChartEmbed() }
 
         <ChartControls
           chartId={this.props.chartId}
