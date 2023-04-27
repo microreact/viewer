@@ -14,6 +14,14 @@ export const colourRanges = [
     name: "microreact colour palette",
     type: "qualitative",
   },
+  {
+    entries: [
+      "#f0feff", "#00282e",
+    ],
+    label: "Microreact Teals-2",
+    name: "microreact teal-2",
+    type: "singlehue",
+  },
 ];
 
 for (const x of COLOR_RANGES) {
