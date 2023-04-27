@@ -320,7 +320,7 @@ class TablePane extends React.PureComponent {
           rowKey={0}
           sortState={props.sort}
           width={props.width}
-          componentsLookup={props.componentsLookup}
+          componentsDictionary={props.componentsDictionary}
         />
       </div>
     );
@@ -332,7 +332,7 @@ TablePane.displayName = "TablePane";
 
 TablePane.propTypes = {
   columns: PropTypes.array.isRequired,
-  componentsLookup: PropTypes.object,
+  componentsDictionary: PropTypes.object,
   data: PropTypes.array.isRequired,
   displayMode: PropTypes.string.isRequired,
   hasSelectionColumn: PropTypes.bool,
