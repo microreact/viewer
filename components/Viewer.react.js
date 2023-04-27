@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Paper from "@mui/material/Paper";
 import PropTypes from "prop-types";
 import React from "react";
@@ -53,9 +54,9 @@ class Viewer extends React.PureComponent {
         />
 
         <HeaderBar
-          appendNavButtons={props.components.appendNavButtons}
-          drawerButton={props.components.drawerButton}
-          prependNavButtons={props.components.prependNavButtons}
+          appendNavButtons={props.slots.appendNavButtons}
+          drawerButton={props.slots.drawerButton}
+          prependNavButtons={props.slots.prependNavButtons}
         />
 
         <Paper
@@ -65,12 +66,13 @@ class Viewer extends React.PureComponent {
           square
         >
           <LayoutManager
-            components={props.components}
+            componentsDictionary={props.components}
           />
         </Paper>
         { props.children }
 
         <img
+          alt="loading spinner"
           className="mr-spinner"
           src={invertedSpinnerPng}
         />
@@ -137,10 +139,16 @@ Viewer.propTypes = {
   isEmpty: PropTypes.bool.isRequired,
   onRedo: PropTypes.func,
   onUndo: PropTypes.func,
+  slots: PropTypes.shape({
+    appendNavButtons: PropTypes.node,
+    drawerButton: PropTypes.node,
+    prependNavButtons: PropTypes.node,
+  }),
 };
 
 Viewer.defaultProps = {
   components: emptyObject,
+  slots: emptyObject,
 };
 
 export default Viewer;

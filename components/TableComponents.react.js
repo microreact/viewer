@@ -130,7 +130,7 @@ const CellContent = (attributes) => {
 
   if (attributes.column.renderer) {
     return (
-      attributes.container.props.componentsLookup[attributes.column.renderer](attributes)
+      attributes.container.props.componentsDictionary[attributes.column.renderer](attributes)
     );
   }
 

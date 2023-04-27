@@ -60,7 +60,7 @@ class DynamicPane extends React.PureComponent {
       return (
         <PaneComponent
           { ...{ [paneId]: props.node._attributes.id } }
-          componentsLookup={props.components}
+          componentsDictionary={props.componentsDictionary}
           height={rect.height}
           width={rect.width}
         />
@@ -77,7 +77,7 @@ class DynamicPane extends React.PureComponent {
 
 DynamicPane.propTypes = {
   fetchComponent: PropTypes.func.isRequired,
-  components: PropTypes.object,
+  componentsDictionary: PropTypes.object,
   node: PropTypes.object.isRequired,
 };
 
@@ -120,7 +120,7 @@ class LayoutManager extends React.PureComponent {
     return (
       <DynamicPane
         fetchComponent={this.fetchComponent}
-        components={this.props.components}
+        componentsDictionary={this.props.componentsDictionary}
         node={node}
       />
     );
@@ -235,11 +235,11 @@ class LayoutManager extends React.PureComponent {
 LayoutManager.displayName = "Panes";
 
 LayoutManager.propTypes = {
+  componentsDictionary: PropTypes.object,
   layoutModel: PropTypes.object.isRequired,
   onAddView: PropTypes.func.isRequired,
   onEditPane: PropTypes.func.isRequired,
   onLayoutModelChange: PropTypes.func.isRequired,
-  components: PropTypes.object,
 };
 
 export default LayoutManager;
