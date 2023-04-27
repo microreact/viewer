@@ -177,7 +177,9 @@ ChartPane.propTypes = {
   chartId: PropTypes.string.isRequired,
   chartType: ChartTypes,
   className: PropTypes.string,
+  height: PropTypes.number.isRequired,
   onSelectItem: PropTypes.func.isRequired,
+  width: PropTypes.number.isRequired,
 };
 
 export default ChartPane;

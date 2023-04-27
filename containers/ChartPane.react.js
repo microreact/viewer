@@ -12,7 +12,6 @@ const mapStateToProps = (state, { chartId }) => {
 
   return {
     chartType: chartTypeSelector(state, chartId),
-    spec: chartState.spec,
   };
 };
 

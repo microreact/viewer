@@ -8,146 +8,31 @@ import { Vega } from "react-vega";
 import { createSelector } from "reselect";
 import ChartControls from "../containers/ChartControls.react";
 import { ChartTypes } from "../utils/prop-types";
-import { exportPNG, exportSVG, isVegaLiteSpec, vegaLiteToVega } from "../utils/charts";
+import { exportPNG, exportSVG, isVegaLiteSpec, vegaLiteToVega, convertChartSpec } from "../utils/charts";
 import { downloadDataUrl } from "../utils/downloads";
 
-const noScrollStyle = {
-  overflowX: "hidden",
-  overflowY: "auto",
-};
-const autoScrollStyle = {
-  overflow: "auto",
-};
+class ChartDefaultEmbed extends React.PureComponent {
 
-const handleError = (err) => {
-  // if (this.state.vegaError !== err.message) {
-  //   this.setState({ vegaError: err.message });
-  // }
-  console.error("vega error", err);
-};
-
-const handleParseError = (err) => {
-  // if (this.state.vegaError !== err.message) {
-  //   this.setState({ vegaError: err.message });
-  // }
-  console.error("vega parse error", err);
-};
-
-class ChartPane extends React.PureComponent {
-
-  state = {
-    vegaError: null,
-  };
-
-  vegaRef = React.createRef();
-
-  signalListeners = {
-    onItemSelectSignal: (_, [ event, item ] = []) => {
-      event?.stopPropagation();
-
-      this.props.onSelectItem(
-        (item?.datum) || item || false,
-        event?.metaKey || event?.ctrilKey,
-      );
-      // if (!this.lastItemSelect) {
-      //   this.lastItemSelect = 1;
-      //   setTimeout(
-      //     () => {
-      //       if (this.lastItemSelect) {
-      //         if (item) {
-      //           this.props.onSelectItem(item, event.metaKey || event.ctrilKey);
-      //         }
-      //         else {
-      //           this.props.onSelectItem(false);
-      //         }
-      //       }
-      //       this.lastItemSelect = 0;
-      //     },
-      //     300,
-      //   );
-      // }
-      // else {
-      //   this.lastItemSelect = 0;
-      //   if (item && this.props.seriesDataColumn) {
-      //     this.lastSeriesSelect = new Date();
-      //     const series = { ...item };
-      //     delete series[this.props.seriesDataColumn.name];
-      //     this.props.onSelectItem(series, event.metaKey || event.ctrilKey);
-      //   }
-      // }
-    },
-  };
-
-  customChartSpecSelector = createSelector(
-    (props) => props.spec,
+  vegaSpecSelector = createSelector(
+    (props) => props.defaultSpec,
+    (props) => props.width,
+    (props) => props.height,
     (
-      spec,
+      vlSpec,
+      width,
+      height,
     ) => {
-      if (spec) {
-        const vlSpec = JSON.parse(spec);
-        return vlSpec;
+      if (vlSpec) {
+        return convertChartSpec(
+          vlSpec,
+          width,
+          height,
+        );
       }
       else {
         return undefined;
       }
     },
-  );
-
-  vegaLiteSpecSelector = (props) => {
-    if (props.chartType === "custom") {
-      return this.customChartSpecSelector(props);
-    }
-
-    // if (props.chartType === "heatmap") {
-    //   return heatmapSpecSelector(state, chartId);
-    // }
-
-    if (props.chartType) {
-      return defaultSpecSelector(state, chartId);
-    }
-
-    return undefined;
-  };
-
-  vegaSpecSelector = createSelector(
-    (props) => this.vegaLiteSpecSelector(props),
-    (props) => props.width,
-    (props) => props.height,
-    (
-      spec,
-      width,
-      height,
-    ) => {
-      if (!spec) {
-        return undefined;
-      }
-
-      const vlSpec = {
-        ...spec,
-      };
-
-      if (isVegaLiteSpec(vlSpec)) {
-        vlSpec.data = { name: "table" };
-      }
-      else if (!vlSpec.data) {
-        vlSpec.data = [ { name: "table" } ];
-      }
-
-      if (!vlSpec.padding) {
-        vlSpec.padding = { left: 8, top: 32, right: 8, bottom: 8 };
-      }
-
-      if (vlSpec.width === "auto") {
-        vlSpec.width = width;
-      }
-      if (vlSpec.height === "auto") {
-        vlSpec.height = height;
-      }
-
-      const vgSpec = vegaLiteToVega(vlSpec);
-
-      return vgSpec;
-    }
   );
 
   render() {
@@ -166,14 +51,15 @@ class ChartPane extends React.PureComponent {
     if (vegaSpec) {
       return (
         <Vega
-          logLevel={2}
-          onError={handleError}
-          onParseError={handleParseError}
-          // ref={this.vegaRef}
-          signalListeners={props.signalListeners}
-          tooltip={new Handler().call}
           data={props.chartData}
+          logLevel={2}
+          onError={props.onError}
+          onParseError={props.onParseError}
+          ref={props.chartRef}
+          signalListeners={props.signalListeners}
           spec={vegaSpec}
+          tooltip={new Handler().call}
+          // onNewView={console.debug}
         />
       );
     }
@@ -182,15 +68,20 @@ class ChartPane extends React.PureComponent {
   }
 }
 
-ChartPane.propTypes = {
+ChartDefaultEmbed.propTypes = {
   chartData: PropTypes.shape({
     table: PropTypes.arrayOf(
       PropTypes.object.isRequired,
     ).isRequired,
   }).isRequired,
   chartId: PropTypes.string.isRequired,
+  chartRef: PropTypes.object,
   chartType: ChartTypes,
+  height: PropTypes.number.isRequired,
+  onError: PropTypes.func,
+  onParseError: PropTypes.func,
   signalListeners: PropTypes.object,
+  width: PropTypes.number.isRequired,
 };
 
-export default ChartPane;
+export default ChartDefaultEmbed;

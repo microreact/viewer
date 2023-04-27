@@ -49,8 +49,8 @@ class ChartCustomEmbed extends React.PureComponent {
         <Vega
           data={props.chartData}
           logLevel={2}
-          onError={props.handleError}
-          onParseError={props.handleParseError}
+          onError={props.onError}
+          onParseError={props.onParseError}
           ref={props.chartRef}
           signalListeners={props.signalListeners}
           spec={vegaSpec}
@@ -70,9 +70,12 @@ ChartCustomEmbed.propTypes = {
       PropTypes.object.isRequired,
     ).isRequired,
   }).isRequired,
-  handleError: PropTypes.func,
-  handleParseError: PropTypes.func,
+  chartRef: PropTypes.object,
+  height: PropTypes.number.isRequired,
+  onError: PropTypes.func,
+  onParseError: PropTypes.func,
   signalListeners: PropTypes.object,
+  width: PropTypes.number.isRequired,
 };
 
 export default ChartCustomEmbed;

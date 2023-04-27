@@ -5,13 +5,13 @@ import { connectToPresentState } from "../utils/state";
 
 import chartDataSelector from "../selectors/charts/chart-data";
 import chartStateSelector from "../selectors/charts/chart-state";
+import defaultSpecSelector from "../selectors/charts/default-spec";
 
 function mapStateToProps(state, { chartId }) {
   const chartState = chartStateSelector(state, chartId);
-
   return {
-    spec: chartState.spec,
     chartData: chartDataSelector(state, chartId),
+    defaultSpec: defaultSpecSelector(state, chartId),
   };
 }
 
