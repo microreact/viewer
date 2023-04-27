@@ -9,9 +9,9 @@ import projectJson from "../public/data/json";
 let data;
 let files;
 
-// data = projectJson;
+data = projectJson;
 // files = [{ url: "https://microreact.org/api/projects/json?project=rcL4EAqWx7LfhnsUyFnPSX", format: "application/json" } ];
-files = [{ url: "https://microreact.org/api/projects/json?project=dw4UAy2YoxGTvGTemCZY9K", format: "application/json" } ];
+// files = [{ url: "https://microreact.org/api/projects/json?project=dw4UAy2YoxGTvGTemCZY9K", format: "application/json" } ];
 
 const App = dynamic(
   () => import("../dev/App"),
