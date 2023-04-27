@@ -5,7 +5,6 @@ import { connectToPresentState } from "../utils/state";
 
 import chartDataSelector from "../selectors/charts/chart-data";
 import chartStateSelector from "../selectors/charts/chart-state";
-import defaultSpecSelector from "../selectors/charts/default-spec";
 import seriesStackingSelector from "../selectors/charts/series-stacking";
 import seriesScaleSelector from "../selectors/charts/series-scale-selector";
 
@@ -23,37 +22,33 @@ import mainAxisEncodingSelector from "../selectors/charts/main-axis-encoding";
 function mapStateToProps(state, { chartId }) {
   const chartState = chartStateSelector(state, chartId);
   return {
-    interpolate: chartState.interpolate,
-    xAxisOrder: chartState.xAxisOrder,
-    xAxisLabelAngle: chartState.xAxisLabelAngle,
-    xAxisLabelLimit: chartState.xAxisLabelLimit,
-    xAxisBins: chartState.xAxisBins,
-    yAxisOrder: chartState.yAxisOrder,
-    yAxisLabelAngle: chartState.yAxisLabelAngle,
-    yAxisLabelLimit: chartState.yAxisLabelLimit,
-    yAxisBins: chartState.yAxisBins,
-    seriesOrder: chartState.seriesOrder ?? "ascending",
+    chartData: chartDataSelector(state, chartId),
+    chartType: chartTypeSelector(state, chartId),
     facetField: chartState.facetField,
-    facetOrder: chartState.facetOrder,
     facetGridColumns: chartState.facetGridColumns,
     facetGridRows: chartState.facetGridRows,
-
-    chartType: chartTypeSelector(state, chartId),
+    facetOrder: chartState.facetOrder,
+    interpolate: chartState.interpolate,
     mainAxisEncoding: mainAxisEncodingSelector(state, chartId),
-    xAxisMode: xAxisModeSelector(state, chartId),
-    xAxisField: xAxisFieldSelector(state, chartId),
-    xAxisType: xAxisTypeSelector(state, chartId),
-    yAxisMode: yAxisModeSelector(state, chartId),
-    yAxisField: yAxisFieldSelector(state, chartId),
-    yAxisType: yAxisTypeSelector(state, chartId),
     seriesField: seriesFieldSelector(state, chartId),
-    seriesType: seriesTypeSelector(state, chartId),
-
+    seriesOrder: chartState.seriesOrder ?? "ascending",
     seriesScale: seriesScaleSelector(state, chartId),
     seriesStacking: seriesStackingSelector(state, chartId),
-
-    chartData: chartDataSelector(state, chartId),
-    defaultSpec: defaultSpecSelector(state, chartId),
+    seriesType: seriesTypeSelector(state, chartId),
+    xAxisBins: chartState.xAxisBins,
+    xAxisField: xAxisFieldSelector(state, chartId),
+    xAxisLabelAngle: chartState.xAxisLabelAngle,
+    xAxisLabelLimit: chartState.xAxisLabelLimit,
+    xAxisMode: xAxisModeSelector(state, chartId),
+    xAxisOrder: chartState.xAxisOrder,
+    xAxisType: xAxisTypeSelector(state, chartId),
+    yAxisBins: chartState.yAxisBins,
+    yAxisField: yAxisFieldSelector(state, chartId),
+    yAxisLabelAngle: chartState.yAxisLabelAngle,
+    yAxisLabelLimit: chartState.yAxisLabelLimit,
+    yAxisMode: yAxisModeSelector(state, chartId),
+    yAxisOrder: chartState.yAxisOrder,
+    yAxisType: yAxisTypeSelector(state, chartId),
   };
 }
 
