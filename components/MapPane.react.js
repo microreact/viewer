@@ -41,7 +41,7 @@ const InteractiveMap = React.memo(
         onMouseMove={props.onHover}
         onMove={props.onViewportChange}
         ref={props.reactMapRef}
-        renderWorldCopies={false}
+        renderWorldCopies={props.renderWorldCopies}
         style={style}
       >
         {
@@ -72,8 +72,8 @@ const InteractiveMap = React.memo(
 InteractiveMap.displayName = "InteractiveMap";
 
 InteractiveMap.propTypes = {
-  hideScaleControl: PropTypes.bool,
   height: PropTypes.number.isRequired,
+  hideScaleControl: PropTypes.bool,
   mapboxApiAccessToken: PropTypes.string.isRequired,
   mapboxStyle: MapboxStyle.isRequired,
   mapId: PropTypes.string.isRequired,
@@ -81,6 +81,7 @@ InteractiveMap.propTypes = {
   onHover: PropTypes.func.isRequired,
   onViewportChange: PropTypes.func.isRequired,
   reactMapRef: ReactRef,
+  renderWorldCopies: PropTypes.bool.isRequired,
   showRegions: PropTypes.bool.isRequired,
   viewport: PropTypes.object,
   width: PropTypes.number.isRequired,
@@ -313,17 +314,18 @@ class MapPane extends React.PureComponent {
       >
         <InteractiveMap
           height={props.height}
+          hideScaleControl={props.hideScaleControl}
           mapboxApiAccessToken={props.mapboxApiAccessToken}
-          mapId={props.mapId}
           mapboxStyle={props.mapboxStyle}
+          mapId={props.mapId}
           onClick={this.handleMarkerClick}
           onHover={this.handleMapHover}
           onViewportChange={this.handleViewportChange}
           reactMapRef={this.reactMapRef}
+          renderWorldCopies={props.renderWorldCopies}
+          showRegions={props.showRegions}
           viewport={props.viewport}
           width={props.width}
-          showRegions={props.showRegions}
-          hideScaleControl={props.hideScaleControl}
           // markersOverlayRef={this.markersOverlayRef}
           // lassoOverlayRef={this.lassoOverlayRef}
         />
@@ -369,6 +371,7 @@ MapPane.propTypes = {
   onSelectRegion: PropTypes.func.isRequired,
   onSelectRows: PropTypes.func.isRequired,
   onViewportChange: PropTypes.func.isRequired,
+  renderWorldCopies: PropTypes.bool.isRequired,
   showMarkers: PropTypes.bool.isRequired,
   showRegions: PropTypes.bool.isRequired,
   tileLayerOpts: PropTypes.string,
@@ -378,6 +381,10 @@ MapPane.propTypes = {
   viewport: PropTypes.object,
   width: PropTypes.number.isRequired,
   zoom: PropTypes.number,
+};
+
+MapPane.defaultProps = {
+  renderWorldCopies: false,
 };
 
 export default MapPane;
