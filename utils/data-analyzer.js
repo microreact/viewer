@@ -258,9 +258,9 @@ function parseCsvRowsByFieldType(rows, geoFieldIdx, field) {
 }
 
 function guessDataColumnsFromRows(rows, headerRow) {
-  const sample = getSampleForTypeAnalyze(rows, headerRow);
+  // const sample = getSampleForTypeAnalyze(rows, headerRow);
 
-  const columns = getFieldsFromData(sample, headerRow);
+  const columns = getFieldsFromData(rows, headerRow);
 
   return columns;
 }
