@@ -92,7 +92,10 @@ export function detectAnnotationFields(datasetColumns) {
 
 export function createBasicDataset(rows, headers) {
   const headerRow = (headers && headers.length) ? headers : Object.keys(rows[0]);
-  return createTypedDataset(rows, headerRow);
+  return createTypedDataset(
+    rows,
+    headerRow,
+  );
 }
 
 export function createFullDataset(baseDataset) {
