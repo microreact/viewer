@@ -356,7 +356,7 @@ const chartTypes = [
 ];
 
 const stackingTypes = [
-  // { label: "None", value: "off" },
+  { label: "None", value: "off" },
   { label: "Stacked view", value: "stacked" },
   { label: "Normalised stacked view", value: "normalised" },
   { label: "Row view", value: "facet" },
