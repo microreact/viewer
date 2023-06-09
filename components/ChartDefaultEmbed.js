@@ -262,7 +262,7 @@ class ChartDefaultEmbed extends React.PureComponent {
           vlSpec.encoding[secondaryAxis.encoding].stack = true;
         }
         else {
-          vlSpec.encoding[secondaryAxis.encoding].stack = true;
+          vlSpec.encoding[secondaryAxis.encoding].stack = false;
         }
       }
       //#endregion
