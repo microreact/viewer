@@ -1,9 +1,22 @@
+.ag-theme-alpine {
+  --ag-foreground-color: var(--text-primary);
+  --ag-background-color: var(--background-main);
+  --ag-header-foreground-color: var(--primary-main);
+  /* --ag-header-background-color: rgb(209, 64, 129); */
+  --ag-odd-row-background-color: var(--background-highlight);
+  /* --ag-header-column-resize-handle-color: var(--text-secondary); */
+
+  --ag-font-size: 13px;
+  --ag-font-family: inherit;
+}
+
 /*#region Top padding for main table */
 .mr-table {
   padding-top: 24px;
   overflow: hidden;
   box-sizing: border-box;
 }
+
 /*#endregion*/
 
 
@@ -16,14 +29,17 @@
 .mr-table .BaseTable__header-cell:hover {
   background-color: var(--background-hover);
 }
+
 /*#endregion*/
 
 
 /*#region Reset padding of header cells and row cells */
 .mr-table .BaseTable__header-cell,
 .mr-table .BaseTable__row-cell {
-  padding: 0 8px !important; /* to override first and last cell paddings */
+  padding: 0 8px !important;
+  /* to override first and last cell paddings */
 }
+
 /*#endregion*/
 
 
@@ -44,12 +60,13 @@
   text-align: left;
 }
 
-  /*#region Style sort indicator in header cells */
-  .mr-table .BaseTable__sort-indicator {
-    margin-top: -4px;
-    display: none !important;
-  }
-  /*#endregion*/
+/*#region Style sort indicator in header cells */
+.mr-table .BaseTable__sort-indicator {
+  margin-top: -4px;
+  display: none !important;
+}
+
+/*#endregion*/
 
 /*#endregion*/
 
@@ -60,9 +77,11 @@
   border: none;
   background: var(--background-main);
 }
+
 .mr-table .BaseTable__row:nth-child(even) {
   background-color: var(--background-highlight);
 }
+
 .mr-table .BaseTable__row:hover {
   background-color: var(--background-hover);
 }
@@ -92,6 +111,7 @@
   display: none;
   color: rgba(0, 0, 0, 0.56);
 }
+
 .mr-table .draggable-handle svg {
   margin-left: -6px;
 }
@@ -103,16 +123,19 @@
 .mr-table .BaseTable__header-row .draggable-handle:hover {
   cursor: grab;
 }
+
 /*#endregion*/
 
 
 /*#region Dragging column headers */
-.mr-table > .BaseTable__header-cell {
+.mr-table>.BaseTable__header-cell {
   background-color: #5f6368;
   pointer-events: all !important;
 }
-.mr-table > .BaseTable__header-cell,
-.mr-table > .BaseTable__header-cell .draggable-handle {
+
+.mr-table>.BaseTable__header-cell,
+.mr-table>.BaseTable__header-cell .draggable-handle {
   cursor: grabbing !important;
 }
+
 /*#endregion*/
