@@ -24,6 +24,8 @@
     "@phylocanvas/phylocanvas.gl": "^1.49.0",
     "@sweetalert2/theme-material-ui": "^5.0.11",
     "@turf/centroid": "^6.5.0",
+    "ag-grid-community": "^30.0.2",
+    "ag-grid-react": "^30.0.2",
     "array-join": "^3.1.1",
     "canvas2svg": "github:gliffy/canvas2svg#eaab317a36a57421711a297d996bc80318185e44",
     "colorbrewer": "^1.5.2",
