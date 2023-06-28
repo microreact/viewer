@@ -188,21 +188,25 @@ class TablePane extends React.PureComponent {
   }
 
   getColumnDefs() {
-    const selectedColumns = this.tableColumnsSelector(this.props)
+    const selectedColumns = this.tableColumnsSelector(this.props);
+
+    const mappedColumns = selectedColumns
       .map(({ hidden, ...item }) => {
-        console.log({ item });
         return {
           ...item,
           hide: hidden,
           headerName: item.title,
           field: item.field,
           cellRenderer: item.renderer,
-          // WHY(james): Need to modify the props the cellRenderers receive to maintain backwards compatibility
+          // WHY(james): Need to modify the props the any cellRenderer components receive for backwards compatibility
           cellRendererParams: (params) => {
-            // console.log({ params });
-            // TODO(james): Match all props passed to existing renderers
             return {
+              ...params,
               cellData: params.value,
+              // NOTE(james):  This collides with param.column passed by ag-grid, so mapped to another key (columnProps) providing an upgrade path
+              column: params.column.userProvidedColDef,
+              columnProps: params.column,
+              columns: selectedColumns,
               rowData: params.data,
             };
           },
@@ -210,7 +214,7 @@ class TablePane extends React.PureComponent {
       })
       .filter((item) => !item.hide); // WHY: Stops tables without groups having a tall heading
 
-    const grouped = groupBy(selectedColumns, (item) => item.dataColumn.group || "ungrouped");
+    const grouped = groupBy(mappedColumns, (item) => item.dataColumn.group || "ungrouped");
 
     const columnDefs = Object.entries(grouped).reduce((all, [groupName, children]) => {
       if (groupName === "ungrouped") {
