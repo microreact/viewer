@@ -176,6 +176,25 @@ const TreeContextMenu = React.memo((props) => {
         </button>
       </div>
 
+      <div className="mr-ui-context-menu-item single-action">
+        <button
+          onClick={
+            () => tree.ascendingNodeOrder()
+          }
+        >
+          Increasing node order
+        </button>
+      </div>
+      <div className="mr-ui-context-menu-item single-action">
+        <button
+          onClick={
+            () => tree.descendingNodeOrder()
+          }
+        >
+          Decreasing node order
+        </button>
+      </div>
+
       {/*
       <div className="mr-ui-context-menu-divider" />
 

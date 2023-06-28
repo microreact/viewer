@@ -19,11 +19,12 @@ function mapStateToProps(state, { mapId }) {
   const mapState = state.maps[mapId];
   return {
     controls: mapState.controls,
-    hideScaleControl: mapState.hideScaleControl,
     hasLegend: hasMarkerSizeLegendSelector(state, mapId) || hasRegionColourLegendSelector(state, mapId),
+    hideScaleControl: mapState.hideScaleControl,
     mapboxApiAccessToken: mapState.mapboxApiAccessToken || configSelector(state).mapboxApiAccessToken,
     mapboxStyle: mapboxStyleSelector(state, mapId),
     markers: markersLayerDataSelector(state, mapId),
+    renderWorldCopies: mapState.renderWorldCopies,
     showMarkers: mapState.showMarkers,
     showRegions: !!mapState.geodata && mapState.showRegions,
     trackViewport: mapState.trackViewport,
