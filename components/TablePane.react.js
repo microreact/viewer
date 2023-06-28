@@ -6,11 +6,12 @@ import { createSelector } from "reselect";
 import BaseTable from "react-base-table/lib";
 
 // import "../styles/table.css";
+import { AgGridReact } from "ag-grid-react";
+import groupBy from "lodash.groupby";
 import { nextTick } from "../utils/browser";
 import * as TextUtils from "../utils/text";
-import tableComponents, { HeaderCellComponent, SortableContainer } from "./TableComponents.react";
-
 import TableControls from "../containers/TableControls.react";
+import tableComponents, { HeaderCellComponent, SortableContainer } from "./TableComponents.react";
 
 const dataGetter = (args) => {
   if (args.column.dataColumn.urlField) {
@@ -20,7 +21,7 @@ const dataGetter = (args) => {
         target="_blank"
         rel="noreferrer"
       >
-        { args.rowData[args.column.field] }
+        {args.rowData[args.column.field]}
       </a>
     );
   }
@@ -93,7 +94,7 @@ class TablePane extends React.PureComponent {
             sortable: true,
             tableId: this.props.tableId,
             title: col.label || dataColumn.label || dataColumn.name,
-            width: col.width || 100,
+            width: col.width || "auto",
             dataGetter,
           });
         }
@@ -167,76 +168,6 @@ class TablePane extends React.PureComponent {
   }
 
   renderTableHeaderRow = ({ cells, columns }) => {
-    // if (columns?.length === 1 && columns?.[0]?.frozen) {
-    //   return null;
-    // }
-
-    // if (headerIndex === 0) {
-    //   if (columns?.length === 1) {
-    //     return null;
-    //   }
-
-    //   // return (
-    //   //   columns.map(
-    //   //     (x) => (
-    //   //       <div
-    //   //         role="gridcell"
-    //   //         className="BaseTable__header-cell"
-    //   //         key={x.dataKey}
-    //   //         style={
-    //   //           { width: x.width }
-    //   //         }
-    //   //       >
-    //   //         <div
-    //   //           className="BaseTable__header-cell-text">
-    //   //             { x.group || null }
-    //   //         </div>
-    //   //       </div>
-    //   //     )
-    //   //   )
-    //   // );
-
-    //   const groupCells = [];
-    //   groupCells.push(
-    //     <div
-    //       role="gridcell"
-    //       className="BaseTable__header-cell"
-    //       key={columns[0].dataKey}
-    //       style={
-    //         { width: columns[0].width }
-    //       }
-    //     >
-    //       <div className="BaseTable__header-cell-text" />
-    //     </div>
-    //   );
-    //   let previousColumn = columns[1];
-    //   let width = 0;
-    //   for (let index = 1; index < columns.length; index++) {
-    //     const column = columns[index];
-    //     if (column.group !== previousColumn.group) {
-    //       groupCells.push(
-    //         <div
-    //           role="gridcell"
-    //           className="BaseTable__header-cell mr-group-cell"
-    //           key={previousColumn.dataKey}
-    //           style={
-    //             { width }
-    //           }
-    //         >
-    //           <div
-    //             className="BaseTable__header-cell-text">
-    //               { previousColumn.group || null }
-    //           </div>
-    //         </div>
-    //       );
-    //       width = 0;
-    //     }
-    //     width += column.width;
-    //     previousColumn = column;
-    //   }
-    //   return groupCells;
-    // }
-
     return (
       <SortableContainer
         axis="x"
@@ -250,31 +181,85 @@ class TablePane extends React.PureComponent {
           () => this.tableRef.current.tableNode
         }
       >
-        { cells }
+        {cells}
       </SortableContainer>
     );
+  }
+
+  getColumnDefs() {
+    const selectedColumns = this.tableColumnsSelector(this.props)
+      .map(({ hidden, ...item }) => {
+        console.log({ item });
+        return {
+          ...item,
+          hide: hidden,
+          headerName: item.title,
+          field: item.field,
+          cellRenderer: item.renderer,
+        };
+      })
+      .filter((item) => !item.hide); // WHY: Stops tables without groups having a tall heading
+
+    const grouped = groupBy(selectedColumns, (item) => item.dataColumn.group || "ungrouped");
+
+    const columnDefs = Object.entries(grouped).reduce((all, [groupName, children]) => {
+      if (groupName === "ungrouped") {
+        return [
+          ...all,
+          ...children,
+        ];
+      }
+      return [
+        ...all,
+        {
+          headerName: groupName,
+          children,
+        },
+      ];
+    }, []);
+
+    return columnDefs;
   }
 
   render() {
     const { props } = this;
 
-    const columns = this.tableColumnsSelector(props);
+    const columnDefs = this.getColumnDefs();
+    const rowData = props.data[0]; // QUESTION(james): Why do we only use a single dataset?
+    const rowHeight = displayModeToRowHeight[props.displayMode]; // FIXME(james): Not changing the height
+
+    console.log({ rowData, columnDefs, rowHeight });
+
+    const gridOptions = {
+      getRowClass: (params) => "full-width-row",
+    };
 
     return (
       <div
         className="mr-table"
-        style={
-          {
-            height: props.height,
-            width: props.width,
-          }
-        }
+        style={{
+          height: props.height,
+          // width: "100%",
+        }}
       >
         <TableControls
           tableId={props.tableId}
         />
 
-        <BaseTable
+        <AgGridReact
+          style={{
+            height: props.height,
+            minWidth: "100%",
+          }}
+          className="ag-theme-alpine"
+          columnDefs={columnDefs}
+          components={props.componentsDictionary}
+          gridOptions={gridOptions}
+          rowData={rowData}
+          rowHeight={rowHeight}
+          suppressFieldDotNotation={true} // WHY: For backwards compatibility with previous table lib and Microreact JSON
+        />
+        {/* <BaseTable
           columns={columns}
           components={tableComponents}
           data={props.data[0]}
@@ -321,7 +306,7 @@ class TablePane extends React.PureComponent {
           sortState={props.sort}
           width={props.width}
           componentsDictionary={props.componentsDictionary}
-        />
+        /> */}
       </div>
     );
   }
