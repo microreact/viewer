@@ -87,7 +87,7 @@ class TablePane extends React.PureComponent {
             renderer: col.renderer,
             hidden: col.hidden || false,
             key: `data-${col.field}`,
-            minWidth: 40,
+            minWidth: col.minWidth || 40,
             resizable: true,
             sort: col.sort,
             group: dataColumn.group,
@@ -100,6 +100,7 @@ class TablePane extends React.PureComponent {
         }
       }
 
+      // QUESTION(james): Why do we have
       for (const dataColumn of dataColumns) {
         if (!fields.has(dataColumn.name)) {
           tableColumns.push({
@@ -110,13 +111,13 @@ class TablePane extends React.PureComponent {
             field: dataColumn.name,
             hidden: false,
             key: `data-${dataColumn.name}`,
-            minWidth: 40,
+            minWidth: dataColumn.minWidth || 40,
             resizable: true,
             group: dataColumn.group,
             sortable: true,
             tableId: this.props.tableId,
             title: dataColumn.label || dataColumn.name,
-            width: 100,
+            width: dataColumn.width || "auto",
             dataGetter,
           });
         }
@@ -196,6 +197,15 @@ class TablePane extends React.PureComponent {
           headerName: item.title,
           field: item.field,
           cellRenderer: item.renderer,
+          // WHY(james): Need to modify the props the cellRenderers receive to maintain backwards compatibility
+          cellRendererParams: (params) => {
+            // console.log({ params });
+            // TODO(james): Match all props passed to existing renderers
+            return {
+              cellData: params.value,
+              rowData: params.data,
+            };
+          },
         };
       })
       .filter((item) => !item.hide); // WHY: Stops tables without groups having a tall heading
