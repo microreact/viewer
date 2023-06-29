@@ -137,8 +137,7 @@ class TablePane extends React.Component {
       .filter((item) => !item.hide); // WHY: Stops tables without groups having a tall heading
 
     // WHY: Adds a checkbox column that can be used for selected/selecting columns
-    // const selectionColumn = this.props.hasSelectionColumn && [{
-    const selectionColumn = true && [{
+    const selectionColumn = this.props.hasSelectionColumn && [{
       field: "",
       width: 40,
       checkboxSelection: true,
