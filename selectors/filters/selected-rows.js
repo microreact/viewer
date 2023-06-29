@@ -8,12 +8,12 @@ const selectedRowsSelector = createSelector(
   (state) => selectedIdsSetSelector(state),
   (
     allRows,
-    selectedId,
+    selectedIds,
   ) => {
-    if (selectedId && selectedId.size) {
+    if (selectedIds && selectedIds.size) {
       const rows = [];
       for (const row of allRows) {
-        if (selectedId.has(row[0])) {
+        if (selectedIds.has(row[0])) {
           rows.push(row);
         }
       }
