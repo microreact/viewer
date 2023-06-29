@@ -1,14 +1,44 @@
+/*#region Customisation of ag-grid theme */
+
+/* https: //www.ag-grid.com/react-data-grid/global-style-customisation/ */
 .ag-theme-alpine {
   --ag-foreground-color: var(--text-primary);
   --ag-background-color: var(--background-main);
+
   --ag-header-foreground-color: var(--primary-main);
-  /* --ag-header-background-color: rgb(209, 64, 129); */
-  --ag-odd-row-background-color: var(--background-highlight);
-  /* --ag-header-column-resize-handle-color: var(--text-secondary); */
+  --ag-header-background-color: var(--background-main);
+
+  --ag-odd-row-background-color: rgba(0, 0, 0, 0.03);
+  --ag-selected-row-background-color: rgba(0, 0, 0, 0.10);
+  --ag-row-hover-color: rgba(0, 0, 0, 0.05);
+  --ag-range-selection-border-color: var(--primary-main);
+
+  --ag-checkbox-background-color: var(--background-main);
+  --ag-checkbox-checked-color: var(--primary-main);
+  --ag-checkbox-unchecked-color: var(--text-primary);
+  --ag-checkbox-indeterminate-color: var(--background-main);
 
   --ag-font-size: 13px;
   --ag-font-family: inherit;
+  --ag-grid-size: 5px;
+
+  padding-top: 24px;
+
 }
+
+.ag-theme-alpine.comfortable {
+  --ag-row-height: 40px;
+}
+
+.ag-theme-alpine.cosy {
+  --ag-row-height: 32px;
+}
+
+.ag-theme-alpine.compact {
+  --ag-row-height: 24px;
+}
+
+/*#endregion*/
 
 /*#region Top padding for main table */
 .mr-table {
