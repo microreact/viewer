@@ -474,6 +474,7 @@ export default class ChartControls extends React.PureComponent {
           ref={this.vegaSpecMenu}
           title="Vega Spec"
         >
+          {/*
           <Box
             alignItems="center"
             display="flex"
@@ -490,6 +491,7 @@ export default class ChartControls extends React.PureComponent {
               <EditRoundedIcon />
             </IconButton>
           </Box>
+          */}
 
           <textarea
             value={this.state.spec}
