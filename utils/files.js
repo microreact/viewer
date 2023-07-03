@@ -179,6 +179,9 @@ export async function loadFile(input, onProgress) {
     if (!loader) {
       throw new Error("Unsupported file type");
     }
+    if (input.size === 0) {
+      throw new Error("File is empty");
+    }
 
     if (!input._content) {
       if (input.url) {
