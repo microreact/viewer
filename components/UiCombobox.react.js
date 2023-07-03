@@ -15,25 +15,6 @@ import { emptyArray, fullWithStyle } from "../constants";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-/*
-// getOptionLabel={(option) => typeof option === "string" ? option : option.label || option.name}
-//
-// getOptionLabel={(option) => ((typeof option === "string") ? option : (option.label || option.name))}
-//
-// if the type of option is string, then return it, otherwsie return the option's label or name
-//
-// if (the type of option is string) then
-//   return it,
-//  otherwsie
-//    return the option's label or name
-//
-// if (typeof option === "string") {
-//   return option;
-// }
-// else {
-//   return option.label || option.name;
-// }
-*/
 function getOptionLabel(option) {
   if (typeof option === "string" || typeof option === "number") {
     return option.toString();
