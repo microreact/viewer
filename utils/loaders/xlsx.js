@@ -30,6 +30,33 @@ const XlsxLoader = {
   parseSync: readSpeadsheetFile,
 };
 
+function renameDuplicateFields(fieldOrder) {
+  return fieldOrder.reduce(
+    (accu, field, i) => {
+      const { allNames } = accu;
+      let fieldName = field;
+
+      // add a counter to duplicated names
+      if (allNames.includes(field)) {
+        let counter = 0;
+        while (allNames.includes(`${field}-${counter}`)) {
+          counter++;
+        }
+        fieldName = `${field}-${counter}`;
+      }
+
+      accu.fieldByIndex[i] = fieldName;
+      accu.allNames.push(fieldName);
+
+      return accu;
+    },
+    {
+      allNames: [],
+      fieldByIndex: {},
+    }
+  );
+}
+
 export async function loadSpeadsheetFile(input) {
   const XLSX = await import("xlsx");
 
@@ -43,7 +70,7 @@ export async function loadSpeadsheetFile(input) {
   );
 
   const rows = [];
-  const headers = data[0];
+  const { allNames: headers } = renameDuplicateFields(data[0].filter((x) => !!x));
   for (let rowIndex = 1; rowIndex < data.length; rowIndex++) {
     const rawRow = data[rowIndex];
     const row = {
@@ -58,6 +85,9 @@ export async function loadSpeadsheetFile(input) {
 
   return createBasicDataset(
     rows,
-    headers,
+    [
+      ...headers,
+      "--mr-index",
+    ],
   );
 }
