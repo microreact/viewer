@@ -84,12 +84,12 @@ export function hideColumn(tableId, field) {
   };
 }
 
-export function moveColumn(tableId, oldIndex, newIndex) {
+export function moveColumn(tableId, field, newIndex) {
   return {
     delay: true,
     label: "Table: Move column",
     payload: {
-      oldIndex,
+      field,
       newIndex,
     },
     tableId,

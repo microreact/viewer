@@ -84,11 +84,12 @@ const reducer = (state = {}, action) => {
     }
 
     case "MICROREACT VIEWER/MOVE COLUMN": {
-      action.label = `Table: Move ${state[action.tableId].columns[action.payload.oldIndex].field} column`;
+      action.label = `Table: Move ${action.payload.field} column`;
+      const oldIndex = state[action.tableId].columns.findIndex((column) => column.field === action.payload.field)
       const updater = {
         columns: swap(
           state[action.tableId].columns,
-          action.payload.oldIndex,
+          oldIndex,
           action.payload.newIndex,
         ),
       };
@@ -109,7 +110,7 @@ const reducer = (state = {}, action) => {
     }
 
     case "MICROREACT VIEWER/SET VISIBLE COLUMNS": {
-      const columns = [ ...state[action.tableId].columns ];
+      const columns = [...state[action.tableId].columns];
       for (let index = 0; index < columns.length; index++) {
         const tableColumn = columns[index];
         columns[index] = {
