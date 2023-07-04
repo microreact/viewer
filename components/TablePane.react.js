@@ -24,7 +24,7 @@ function DefaultRenderer(props) {
     );
   }
 
-  return props.value;
+  return props.valueFormatted;
 }
 
 DefaultRenderer.propTypes = {
