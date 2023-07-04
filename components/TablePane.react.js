@@ -54,6 +54,13 @@ const components = {
 class TablePane extends React.Component {
   tableRef = React.createRef();
 
+  defaultColDef = {
+    editable: false,
+    sortable: false,
+    filter: false,
+    resizable: false,
+  };
+
   dataColumnsSelector = createSelector(
     (props) => props.columns,
     (props) => props.fieldsMap,
@@ -134,9 +141,11 @@ class TablePane extends React.Component {
         ...firstColumnCheckboxProps,
       }));
 
-      const hasGroups = columnsWithCheckbox.some((item) => !item.hide && !!item.group);
+      const hasVisibleGroups = columnsWithCheckbox.some((item) => !item.hide && !!item.group);
 
-      if (!hasGroups) {
+      // WHY: If we're not showing any groups, we don't need to configure ag-grid to display them
+      // It also stops the column headers appearing taller than necessary
+      if (!hasVisibleGroups) {
         return columnsWithCheckbox;
       }
 
@@ -161,23 +170,9 @@ class TablePane extends React.Component {
     },
   );
 
-  /**
-  * Creates columnDefs in the shape required by ag-grid-react
-  *
-  * We could do it within the selector dataColumnsSelector,
-  * but we need to pass that shape back to renderer components for backwards compatibility
-  *
-  * @returns {Array}
-  */
-  getColumnDefs() {
-    return this.dataColumnsSelector(this.props);
-
-  }
-
   componentDidUpdate(prevProps) {
-    const { props } = this;
-    if (prevProps.selectedIds !== props.selectedIds) {
-      if (props.selectedIds?.length) {
+    if (prevProps.selectedIds !== this.props.selectedIds) {
+      if (this.props.selectedIds?.length) {
         this.scrollToFirstSelected();
       }
       this.setSelectedRows();
@@ -194,7 +189,7 @@ class TablePane extends React.Component {
    *
    * As we persist the selected rows in a parent/redux, we need to set the selected rows when a table is mounted
    *
-   * Also, ag-grid doesn't provide a data-driven way to do this so need to be done via methods
+   * Also, ag-grid doesn't provide a data-driven way to do this so needs to be done via methods
    *
    * @see https://www.ag-grid.com/react-data-grid/row-selection/#example-using-foreachnode
    */
@@ -236,7 +231,6 @@ class TablePane extends React.Component {
   };
 
   onRowDataUpdated = (evt) => {
-
     this.setSelectedRows();
   };
 
@@ -256,14 +250,7 @@ class TablePane extends React.Component {
   render() {
     const { props } = this;
 
-    const defaultColDef = {
-      editable: false,
-      sortable: false,
-      filter: false,
-      resizable: false,
-    };
-
-    const columnDefs = this.getColumnDefs();
+    const columnDefs = this.dataColumnsSelector(this.props);
     const rowData = props.dataTable;
 
     return (
@@ -279,7 +266,7 @@ class TablePane extends React.Component {
             ...props.componentsDictionary || {},
           }}
 
-          defaultColDef={defaultColDef}
+          defaultColDef={this.defaultColDef}
           onGridReady={this.onGridReady}
           onRowDataUpdated={this.onRowDataUpdated}
           onRowSelected={this.onRowSelected}
