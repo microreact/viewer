@@ -93,6 +93,7 @@ class TablePane extends React.Component {
             minWidth: col.minWidth || 40,
             frozen: false,
             suppressMovable: false,
+            pinned: col.pinned,
             sort: col.sort,
             sortable: true,
             resizable: true,
@@ -118,6 +119,7 @@ class TablePane extends React.Component {
             headerName: dataColumn.label || dataColumn.name,
             hide: false,
             hidden: false,
+            pinned: dataColumn.pinned,
             key: `data-${dataColumn.name}`,
             minWidth: dataColumn.minWidth || 40,
             tableId: this.props.tableId,
@@ -230,7 +232,7 @@ class TablePane extends React.Component {
     this.setSelectedRows();
   };
 
-  onRowDataUpdated = (evt) => {
+  onRowDataUpdated = () => {
     this.setSelectedRows();
   };
 
