@@ -319,7 +319,7 @@ TablePane.propTypes = {
   hasSelectionColumn: PropTypes.bool,
   onSelectRows: PropTypes.func.isRequired,
   onColumnResize: PropTypes.func.isRequired,
-  selectedIds: PropTypes.arrayOf(PropTypes.number),
+  selectedIds: PropTypes.arrayOf(PropTypes.string),
   tableId: PropTypes.string.isRequired,
   // height: PropTypes.number.isRequired,
   // width: PropTypes.number.isRequired,
