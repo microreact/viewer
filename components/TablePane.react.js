@@ -10,7 +10,6 @@ import * as TextUtils from "../utils/text";
 import TableControls from "../containers/TableControls.react";
 import { HeaderTextComponent } from "./TableComponents.react";
 
-
 // TODO(james): Figure out how to test this
 function DefaultRenderer(props) {
   if (props.column.colDef.urlField) {
@@ -26,6 +25,17 @@ function DefaultRenderer(props) {
   }
 
   return props.value;
+}
+
+DefaultRenderer.propTypes = {
+  column: PropTypes.shape({
+    colDef: PropTypes.shape({
+      urlField: PropTypes.string,
+      field: PropTypes.string,
+    }),
+  }),
+  data: PropTypes.any, // Row data
+  value: PropTypes.any, // Field value
 };
 
 const valueFormatter = (args) => {
@@ -38,11 +48,11 @@ const valueFormatter = (args) => {
 
 const components = {
   DefaultRenderer,
-  agColumnHeader: HeaderTextComponent
-}
+  agColumnHeader: HeaderTextComponent,
+};
 
 class TablePane extends React.Component {
-  tableRef = React.createRef()
+  tableRef = React.createRef();
 
   dataColumnsSelector = createSelector(
     (props) => props.columns,
@@ -53,12 +63,9 @@ class TablePane extends React.Component {
       fieldsMap,
       dataColumns,
     ) => {
-
-      console.log({ columns });
       const tableColumns = [];
 
       const fields = new Set();
-
 
       for (const col of columns) {
         const dataColumn = fieldsMap.get(col.field);
@@ -116,11 +123,41 @@ class TablePane extends React.Component {
         }
       }
 
-      console.log({ tableColumns })
+      // WHY: Adds a checkbox column that can be used for selected/selecting columns
+      const firstColumnCheckboxProps = {
+        checkboxSelection: this.props.hasSelectionColumn,
+        headerCheckboxSelection: this.props.hasSelectionColumn,
+      };
 
-      return tableColumns
-      // Can't filter these out as it messes with the calcs when moving columns
-      // .filter((item) => !item.hide); // WHY: Stops tables without groups having a tall heading;
+      const columnsWithCheckbox = tableColumns.map((column, index) => (index ? column : {
+        ...column,
+        ...firstColumnCheckboxProps,
+      }));
+
+      const hasGroups = columnsWithCheckbox.some((item) => !item.hide && !!item.group);
+
+      if (!hasGroups) {
+        return columnsWithCheckbox;
+      }
+
+      const grouped = groupBy(columnsWithCheckbox, (item) => item.dataColumn.group || "ungrouped");
+      const columnDefs = Object.entries(grouped).reduce((all, [groupName, children]) => {
+        if (groupName === "ungrouped") {
+          return [
+            ...all,
+            ...children,
+          ];
+        }
+        return [
+          ...all,
+          {
+            headerName: groupName,
+            children,
+          },
+        ];
+      }, []);
+
+      return columnDefs;
     },
   );
 
@@ -133,56 +170,17 @@ class TablePane extends React.Component {
   * @returns {Array}
   */
   getColumnDefs() {
-    const dataColumns = this.dataColumnsSelector(this.props);
+    return this.dataColumnsSelector(this.props);
 
-    // WHY: Adds a checkbox column that can be used for selected/selecting columns
-    const firstColumnCheckboxProps = {
-      checkboxSelection: this.props.hasSelectionColumn,
-      headerCheckboxSelection: this.props.hasSelectionColumn,
-    };
-
-
-    const columnsWithCheckbox = dataColumns.map((column, index) => index ? column : {
-      ...column,
-      ...firstColumnCheckboxProps
-    })
-
-    const hasGroups = columnsWithCheckbox.some((item) => !item.hide && !!item.group)
-
-    if (!hasGroups) {
-      return columnsWithCheckbox
-    }
-
-    console.log(hasGroups, columnsWithCheckbox)
-
-    const grouped = groupBy(columnsWithCheckbox, (item) => item.dataColumn.group || "ungrouped");
-    const columnDefs = Object.entries(grouped).reduce((all, [groupName, children]) => {
-      if (groupName === "ungrouped") {
-        return [
-          ...all,
-          ...children,
-        ];
-      }
-      return [
-        ...all,
-        {
-          headerName: groupName,
-          children,
-        },
-      ];
-    }, []);
-
-    return columnDefs;
   }
 
   componentDidUpdate(prevProps) {
     const { props } = this;
-    if (
-      prevProps.selectedIds !== props.selectedIds
-      && props.selectedIds
-      && props.selectedIds.length
-    ) {
-      this.scrollToFirstSelected();
+    if (prevProps.selectedIds !== props.selectedIds) {
+      if (props.selectedIds?.length) {
+        this.scrollToFirstSelected();
+      }
+      this.setSelectedRows();
     }
   }
 
@@ -226,33 +224,34 @@ class TablePane extends React.Component {
     return selectedIds;
   }
 
-  onRowSelected = () => {
+  onRowSelected = (evt) => {
     const ids = this.getSelectedNodeIds();
-    if (!isEqual(ids, this.props.selectedIds)) {
+    if (!isEqual(ids, this.props.selectedIds) && evt.source !== "api") {
       this.props.onSelectRows(ids);
     }
-  }
+  };
 
   onGridReady = () => {
     this.setSelectedRows();
-  }
+  };
 
-  onRowDataUpdated = () => {
+  onRowDataUpdated = (evt) => {
+
     this.setSelectedRows();
-  }
+  };
 
   onColumnResized = (evt) => {
     if (evt.finished) {
-      this.props.onColumnResize(evt.column.colId, evt.column.actualWidth)
+      this.props.onColumnResize(evt.column.colId, evt.column.actualWidth);
     }
-  }
+  };
+
   onColumnMoved = (evt) => {
     if (evt.finished && evt.source === "uiColumnMoved") {
-      console.log("onColumnMoved", { evt })
-      const [column] = evt.columns
-      this.props.onColumnMove(column.colId, evt.toIndex)
+      const [column] = evt.columns;
+      this.props.onColumnMove(column.colId, evt.toIndex);
     }
-  }
+  };
 
   render() {
     const { props } = this;
@@ -277,7 +276,7 @@ class TablePane extends React.Component {
           columnDefs={columnDefs}
           components={{
             ...components,
-            ...props.componentsDictionary || {}
+            ...props.componentsDictionary || {},
           }}
 
           defaultColDef={defaultColDef}
@@ -317,12 +316,11 @@ TablePane.propTypes = {
   ]).isRequired,
   fieldsMap: PropTypes.object.isRequired,
   hasSelectionColumn: PropTypes.bool,
-  onSelectRows: PropTypes.func.isRequired,
+  onColumnMove: PropTypes.func.isRequired,
   onColumnResize: PropTypes.func.isRequired,
-  selectedIds: PropTypes.arrayOf(PropTypes.string),
+  onSelectRows: PropTypes.func.isRequired,
+  selectedIds: PropTypes.arrayOf(PropTypes.number),
   tableId: PropTypes.string.isRequired,
-  // height: PropTypes.number.isRequired,
-  // width: PropTypes.number.isRequired,
 };
 
 TablePane.defaultProps = {
