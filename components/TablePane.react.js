@@ -8,26 +8,38 @@ import { AgGridReact } from "ag-grid-react";
 import * as TextUtils from "../utils/text";
 
 import TableControls from "../containers/TableControls.react";
+import { HeaderTextComponent } from "./TableComponents.react";
 
-const dataGetter = (args) => {
-  if (args.column.dataColumn.urlField) {
+
+// TODO(james): Figure out how to test this
+function DefaultRenderer(props) {
+  if (props.column.colDef.urlField) {
     return (
       <a
-        href={args.rowData[args.column.dataColumn.urlField]}
+        href={props.data[props.column.colDef.urlField]}
         target="_blank"
         rel="noreferrer"
       >
-        {args.rowData[args.column.field]}
+        {props.data[props.column.colDef.field]}
       </a>
     );
   }
 
+  return props.value;
+};
+
+const valueFormatter = (args) => {
   return TextUtils.toText(
-    args.column.dataType,
-    args.rowData[args.column.field],
+    args.column.colDef.dataType,
+    args.data[args.column.colDef.field],
     false /* convertBlanks */,
   );
 };
+
+const components = {
+  DefaultRenderer,
+  agColumnHeader: HeaderTextComponent
+}
 
 class TablePane extends React.Component {
   tableRef = React.createRef()
@@ -41,36 +53,39 @@ class TablePane extends React.Component {
       fieldsMap,
       dataColumns,
     ) => {
+
+      console.log({ columns });
       const tableColumns = [];
 
       const fields = new Set();
+
 
       for (const col of columns) {
         const dataColumn = fieldsMap.get(col.field);
         if (dataColumn) {
           fields.add(col.field);
           tableColumns.push({
+            cellRenderer: col.renderer || "DefaultRenderer",
             controls: col.controls ?? true,
             dataColumn,
             dataKey: col.field,
             dataType: dataColumn.dataType,
             field: dataColumn.name,
-            frozen: col.fixed,
             group: dataColumn.group,
-            hidden: col.hidden || false,
+            headerName: col.label || dataColumn.label || dataColumn.name,
+            hide: col.hidden || false,
+            hidden: col.hidden || false, // Used by TableHeaderMenuContent
             key: `data-${col.field}`,
             minWidth: col.minWidth || 40,
-            renderer: col.renderer,
-            resizable: true,
+            frozen: false,
+            suppressMovable: false,
             sort: col.sort,
             sortable: true,
-            selected: true,
-
+            resizable: true,
             tableId: this.props.tableId,
             title: col.label || dataColumn.label || dataColumn.name,
-            width: col.width || "auto",
-
-            dataGetter,
+            valueFormatter,
+            width: col.width,
           });
         }
       }
@@ -79,27 +94,33 @@ class TablePane extends React.Component {
       for (const dataColumn of dataColumns) {
         if (!fields.has(dataColumn.name)) {
           tableColumns.push({
+            cellRenderer: dataColumn.cellRenderer || "DefaultRenderer",
             controls: true,
             dataColumn,
             dataKey: dataColumn.name,
             dataType: dataColumn.dataType,
             field: dataColumn.name,
             group: dataColumn.group,
+            headerName: dataColumn.label || dataColumn.name,
+            hide: false,
             hidden: false,
             key: `data-${dataColumn.name}`,
             minWidth: dataColumn.minWidth || 40,
-            resizable: true,
-            sortable: true,
-            selected: true,
             tableId: this.props.tableId,
+            sortable: true,
+            resizable: true,
             title: dataColumn.label || dataColumn.name,
-            width: dataColumn.width || "auto",
-            dataGetter,
+            valueFormatter,
+            width: dataColumn.width,
           });
         }
       }
 
-      return tableColumns;
+      console.log({ tableColumns })
+
+      return tableColumns
+      // Can't filter these out as it messes with the calcs when moving columns
+      // .filter((item) => !item.hide); // WHY: Stops tables without groups having a tall heading;
     },
   );
 
@@ -112,41 +133,30 @@ class TablePane extends React.Component {
   * @returns {Array}
   */
   getColumnDefs() {
-    const selectedColumns = this.dataColumnsSelector(this.props);
-
-    const mappedColumns = selectedColumns
-      .map(({ hidden, ...item }) => ({
-        ...item,
-        hide: hidden,
-        headerName: item.title,
-        field: item.field,
-        cellRenderer: item.renderer,
-        // WHY(james): Need to modify the props any cellRenderer components receive for backwards compatibility
-        cellRendererParams: (params) => {
-          return {
-            ...params,
-            cellData: params.value,
-            // NOTE(james):  This collides with param.column passed by ag-grid, so mapped to another key (columnProps), providing an upgrade path
-            column: params.column.userProvidedColDef,
-            columnProps: params.column,
-            columns: selectedColumns,
-            rowData: params.data,
-          };
-        },
-      }))
-      .filter((item) => !item.hide); // WHY: Stops tables without groups having a tall heading
+    const dataColumns = this.dataColumnsSelector(this.props);
 
     // WHY: Adds a checkbox column that can be used for selected/selecting columns
-    const selectionColumn = this.props.hasSelectionColumn && [{
-      field: "",
-      width: 40,
-      checkboxSelection: true,
-      headerCheckboxSelection: true,
-    }];
+    const firstColumnCheckboxProps = {
+      checkboxSelection: this.props.hasSelectionColumn,
+      headerCheckboxSelection: this.props.hasSelectionColumn,
+    };
 
-    // TODO(james): This is a bit of a clunky way to handle this, needs revisting
-    const grouped = groupBy(mappedColumns, (item) => item.dataColumn.group || "ungrouped");
-    const columnDefs = Object.entries(grouped).reduce((all, [groupName, children], index) => {
+
+    const columnsWithCheckbox = dataColumns.map((column, index) => index ? column : {
+      ...column,
+      ...firstColumnCheckboxProps
+    })
+
+    const hasGroups = columnsWithCheckbox.some((item) => !item.hide && !!item.group)
+
+    if (!hasGroups) {
+      return columnsWithCheckbox
+    }
+
+    console.log(hasGroups, columnsWithCheckbox)
+
+    const grouped = groupBy(columnsWithCheckbox, (item) => item.dataColumn.group || "ungrouped");
+    const columnDefs = Object.entries(grouped).reduce((all, [groupName, children]) => {
       if (groupName === "ungrouped") {
         return [
           ...all,
@@ -160,7 +170,7 @@ class TablePane extends React.Component {
           children,
         },
       ];
-    }, selectionColumn || []);
+    }, []);
 
     return columnDefs;
   }
@@ -231,37 +241,58 @@ class TablePane extends React.Component {
     this.setSelectedRows();
   }
 
+  onColumnResized = (evt) => {
+    if (evt.finished) {
+      this.props.onColumnResize(evt.column.colId, evt.column.actualWidth)
+    }
+  }
+  onColumnMoved = (evt) => {
+    if (evt.finished && evt.source === "uiColumnMoved") {
+      console.log("onColumnMoved", { evt })
+      const [column] = evt.columns
+      this.props.onColumnMove(column.colId, evt.toIndex)
+    }
+  }
+
   render() {
     const { props } = this;
 
     const defaultColDef = {
       editable: false,
-      sortable: true,
-      filter: true,
-      resizable: true,
+      sortable: false,
+      filter: false,
+      resizable: false,
     };
 
     const columnDefs = this.getColumnDefs();
     const rowData = props.dataTable;
 
     return (
-      <div style={{ width: "100%", height: "100%" }}>
+      <div style={{ width: "100%", height: "100%" }} className="mr-table">
         <TableControls
           tableId={props.tableId}
         />
         <AgGridReact
           className={`ag-theme-alpine ${props.displayMode}`}
           columnDefs={columnDefs}
-          components={props.componentsDictionary}
+          components={{
+            ...components,
+            ...props.componentsDictionary || {}
+          }}
+
           defaultColDef={defaultColDef}
           onGridReady={this.onGridReady}
           onRowDataUpdated={this.onRowDataUpdated}
           onRowSelected={this.onRowSelected}
+          onColumnResized={this.onColumnResized}
+          onColumnMoved={this.onColumnMoved}
           ref={this.tableRef}
           rowData={rowData}
           rowMultiSelectWithClick={false}
           rowSelection="multiple"
           suppressRowClickSelection={true}
+          suppressMovableColumns={false}
+          suppressDragLeaveHidesColumns={true}
           // WHY: For backwards compatibility with Microreact JSON passed to previous table library.
           // There may be keys with dots in that would break if this was enabled
           suppressFieldDotNotation={true}
@@ -284,9 +315,10 @@ TablePane.propTypes = {
     "comfortable",
     "compact",
   ]).isRequired,
-  fieldsMap: PropTypes.array.isRequired,
+  fieldsMap: PropTypes.object.isRequired,
   hasSelectionColumn: PropTypes.bool,
   onSelectRows: PropTypes.func.isRequired,
+  onColumnResize: PropTypes.func.isRequired,
   selectedIds: PropTypes.arrayOf(PropTypes.number),
   tableId: PropTypes.string.isRequired,
   // height: PropTypes.number.isRequired,

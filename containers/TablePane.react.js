@@ -8,6 +8,7 @@ import dataColumnsSelector from "../selectors/datasets/data-columns";
 import { connectToPresentState } from "../utils/state";
 
 import TablePane from "../components/TablePane.react";
+import { moveColumn, resizeColumn } from "../actions/tables";
 
 const mapStateToProps = (state, { tableId }) => {
   const tableState = state.tables[tableId];
@@ -24,9 +25,11 @@ const mapStateToProps = (state, { tableId }) => {
   };
 };
 
-const mapDispatchToProps = {
-  onSelectRows: selectRows,
-};
+const mapDispatchToProps = (dispatch, { tableId }) => ({
+  onColumnMove: (field, newIndex) => dispatch(moveColumn(tableId, field, newIndex)),
+  onColumnResize: (field, width) => dispatch(resizeColumn(tableId, field, width)),
+  onSelectRows: (ids, merge) => dispatch(selectRows(ids, merge)),
+});
 
 export default connectToPresentState(
   TablePane,
