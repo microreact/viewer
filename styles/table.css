@@ -46,6 +46,8 @@
   padding-top: 24px;
   overflow: hidden;
   box-sizing: border-box;
+  height: 100%;
+  width: 100%;
 }
 
 /*#endregion*/
