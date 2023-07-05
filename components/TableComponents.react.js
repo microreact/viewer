@@ -26,7 +26,7 @@ export function HeaderTextComponent(props) {
 
   return (
     <React.Fragment>
-      {!props.column.colDef.supressMovable && (
+      {!props.column.colDef.suppressMovable && (
         <DraggableHandle />
       )}
 
