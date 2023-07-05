@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { createSelector } from "reselect";
-import groupBy from "lodash.groupby";
 import isEqual from "lodash.isequal";
 import { AgGridReact } from "ag-grid-react";
 
@@ -94,6 +93,9 @@ class TablePane extends React.Component {
             minWidth: col.minWidth || 20, // TODO: Revert
             frozen: false, // TODO: Revert
             pinned: col.pinned,
+            lockPosition: !!col.pinned,
+            lockPinned: true,
+            suppressMovable: !!dataColumn.group,
             sort: col.sort,
             sortable: true,
             resizable: true,
@@ -120,6 +122,9 @@ class TablePane extends React.Component {
             hide: false,
             hidden: false,
             pinned: dataColumn.pinned,
+            lockPosition: dataColumn.lockPosition,
+            lockPinned: dataColumn.lockPinned,
+            suppressMovable: dataColumn.suppressMovable,
             key: `data-${dataColumn.name}`,
             minWidth: dataColumn.minWidth,
             tableId: this.props.tableId,
@@ -132,26 +137,15 @@ class TablePane extends React.Component {
         }
       }
 
-      // WHY: Adds a checkbox column that can be used for selected/selecting columns
-      const firstColumnCheckboxProps = {
-        checkboxSelection: this.props.hasSelectionColumn,
-        headerCheckboxSelection: this.props.hasSelectionColumn,
-      };
-
-      const columnsWithCheckbox = tableColumns.map((column, index) => (index ? column : {
-        ...column,
-        ...firstColumnCheckboxProps,
-      }));
-
-      const hasVisibleGroups = columnsWithCheckbox.some((item) => !item.hide && !!item.group);
+      const hasVisibleGroups = tableColumns.some((item) => !item.hide && !!item.group);
 
       // WHY: If we're not showing any groups, we don't need to configure ag-grid to display them
       // It also stops the column headers appearing taller than necessary
       if (!hasVisibleGroups) {
-        return columnsWithCheckbox;
+        return this.addSelectionCheckbox(tableColumns);
       }
 
-      return this.getGroupedColumns(columnsWithCheckbox);
+      return this.addSelectionCheckbox(this.getGroupedColumns(tableColumns));
     },
   );
 
@@ -170,35 +164,58 @@ class TablePane extends React.Component {
   }
 
   /**
-   * Groups columns, sorts the headings alpabetically and disables moving
+   * Groups columns, sorts the childrens headings alpabetically and disables moving
    * @param {*} columns
    * @returns
    */
   getGroupedColumns = (columns) => {
-    const grouped = groupBy(columns, (item) => item.dataColumn.group || "ungrouped");
-    const columnDefs = Object
-      .entries(grouped)
-      .sort(([a], [b]) => (a > b ? 1 : -1))
-      .reduce((all, [groupName, children]) => {
-        if (groupName === "ungrouped") {
-          return [
+    const grouped = columns
+      .reduce((all, column) => {
+        if (!column.group) {
+          return {
             ...all,
-            ...children,
-          ];
+            [column.headerName]: column,
+          };
         }
-        return [
+        return {
           ...all,
-          {
-            headerName: groupName,
-            children: children
-              .sort((a, b) => (a.headerName > b.headerName ? 1 : -1))
-              .map((child) => ({ ...child, suppressMovable: true })),
+          [column.group]: {
+            marryChildren: true, // Stops a groups children being split
+            suppressMovable: true,
+            children: [
+              ...(all[column.group]?.children || []),
+              column,
+            ],
           },
-        ];
-      }, []);
+        };
+      }, {});
 
-    console.log({ columnDefs });
-    return columnDefs;
+    return Object
+      .entries(grouped)
+      .map(([headerName, column]) => ({
+        headerName,
+        ...column,
+      }));
+  };
+
+  /**
+   * Adds a selection checkbox to the first column in the grid
+   * @param {*} columns
+   * @returns
+   */
+  addSelectionCheckbox(columns) {
+    const firstColumnCheckboxProps = {
+      checkboxSelection: this.props.hasSelectionColumn,
+      headerCheckboxSelection: this.props.hasSelectionColumn,
+    };
+
+    return columns.map((column, index) => (index
+      ? column
+      : {
+        ...column,
+        ...firstColumnCheckboxProps,
+      }
+    ));
   }
 
   /**
@@ -265,8 +282,9 @@ class TablePane extends React.Component {
 
   onColumnMoved = (evt) => {
     if (evt.finished && evt.source === "uiColumnMoved") {
-      const [column] = evt.columns;
-      this.props.onColumnMove(column.colId, evt.toIndex);
+      evt.columns.forEach((column) => {
+        this.props.onColumnMove(column.colId, evt.toIndex);
+      });
     }
   };
 
