@@ -51,6 +51,16 @@ const defaultRenderersDictionary = {
   agColumnHeader: HeaderTextComponent,
 };
 
+/**
+ * This class now uses ag-grid-react
+ *
+ * We don't want to push a major release yet, so have made it backwards compatible with exisiting microreact json
+ *
+ * Also some extra props are passed due to a propType of TableColumn that is used by a child component that is also used
+ * by other parents that still use the old table lib and so can't confidently be changed at the moment
+ *
+ * @see https://www.ag-grid.com/react-data-grid/
+ */
 class TablePane extends React.Component {
   tableRef = React.createRef();
 
@@ -90,12 +100,11 @@ class TablePane extends React.Component {
             hide: col.hidden || false,
             hidden: col.hidden || false, // Used by TableHeaderMenuContent
             key: `data-${col.field}`,
-            minWidth: col.minWidth || 20, // TODO: Revert
-            frozen: false, // TODO: Revert
-            pinned: col.pinned,
-            lockPosition: !!col.pinned,
-            lockPinned: true,
-            suppressMovable: !!dataColumn.group,
+            minWidth: col.minWidth || 40,
+            pinned: col.pinned, // Handles fixed columns
+            lockPosition: !!col.pinned, // Stops fixed columns being movable
+            lockPinned: true, // Stops movable columns being added to the fixed ones
+            suppressMovable: !!dataColumn.group || col.fixed,
             sort: col.sort,
             sortable: true,
             resizable: true,
@@ -107,7 +116,6 @@ class TablePane extends React.Component {
         }
       }
 
-      // QUESTION(james): Why do we have the data nested in this way? Seems like duplication and extra complexity.
       for (const dataColumn of dataColumns) {
         if (!fields.has(dataColumn.name)) {
           tableColumns.push({
@@ -119,17 +127,17 @@ class TablePane extends React.Component {
             field: dataColumn.name,
             group: dataColumn.group,
             headerName: dataColumn.label || dataColumn.name,
-            hide: false,
             hidden: false,
-            pinned: dataColumn.pinned,
-            lockPosition: dataColumn.lockPosition,
-            lockPinned: dataColumn.lockPinned,
-            suppressMovable: dataColumn.suppressMovable,
+            hide: false,
             key: `data-${dataColumn.name}`,
+            lockPinned: dataColumn.lockPinned,
+            lockPosition: dataColumn.lockPosition,
             minWidth: dataColumn.minWidth,
-            tableId: this.props.tableId,
-            sortable: true,
+            pinned: dataColumn.pinned,
             resizable: true,
+            sortable: true,
+            suppressMovable: dataColumn.suppressMovable,
+            tableId: this.props.tableId,
             title: dataColumn.label || dataColumn.name,
             valueFormatter,
             width: dataColumn.width,
@@ -164,7 +172,7 @@ class TablePane extends React.Component {
   }
 
   /**
-   * Groups columns, sorts the childrens headings alpabetically and disables moving
+   * Groups columns and disables moving/splitting of groups
    * @param {*} columns
    * @returns
    */
@@ -180,7 +188,7 @@ class TablePane extends React.Component {
         return {
           ...all,
           [column.group]: {
-            marryChildren: true, // Stops a groups children being split
+            marryChildren: true, // Stops a groups children being split by moved columns
             suppressMovable: true,
             children: [
               ...(all[column.group]?.children || []),
@@ -295,7 +303,7 @@ class TablePane extends React.Component {
     const rowData = props.dataTable;
 
     return (
-      <div style={{ width: "100%", height: "100%" }} className="mr-table">
+      <div className="mr-table">
         <TableControls
           tableId={props.tableId}
         />
@@ -304,22 +312,20 @@ class TablePane extends React.Component {
           columnDefs={columnDefs}
           components={{
             ...defaultRenderersDictionary,
-            ...props.componentsDictionary || {}, // Passed via json
+            ...props.componentsDictionary || {}, // Passed via microreact json
           }}
-
           defaultColDef={this.defaultColDef}
+          onColumnMoved={this.onColumnMoved}
+          onColumnResized={this.onColumnResized}
           onGridReady={this.onGridReady}
           onRowDataUpdated={this.onRowDataUpdated}
           onRowSelected={this.onRowSelected}
-          onColumnResized={this.onColumnResized}
-          onColumnMoved={this.onColumnMoved}
           ref={this.tableRef}
           rowData={rowData}
-          rowMultiSelectWithClick={false}
-          rowSelection="multiple"
-          suppressRowClickSelection={true}
-          suppressMovableColumns={false}
-          suppressDragLeaveHidesColumns={true}
+          rowMultiSelectWithClick={false} // Stops a user selecting a row by clicking it
+          rowSelection="multiple" // Allows more than one row to be selected
+          suppressDragLeaveHidesColumns={true} // Stops a column disappering if dragged out of the grid
+          suppressRowClickSelection={true} // Stops a user selecting a row by clicking it
           // WHY: For backwards compatibility with Microreact JSON passed to previous table library.
           // There may be keys with dots in that would break if this was enabled
           suppressFieldDotNotation={true}
