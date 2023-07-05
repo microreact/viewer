@@ -41,6 +41,4 @@ export function HeaderTextComponent(props) {
       )}
     </React.Fragment>
   );
-};
-
-
+}

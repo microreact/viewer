@@ -5,10 +5,10 @@ import groupBy from "lodash.groupby";
 import isEqual from "lodash.isequal";
 import { AgGridReact } from "ag-grid-react";
 
-import * as TextUtils from "../utils/text";
+import * as TextUtils from "../utils/text.js";
 
-import TableControls from "../containers/TableControls.react";
-import { HeaderTextComponent } from "./TableComponents.react";
+import TableControls from "../containers/TableControls.react.js";
+import { HeaderTextComponent } from "./TableComponents.react.js";
 
 // TODO(james): Figure out how to test this
 function DefaultRenderer(props) {
@@ -36,6 +36,7 @@ DefaultRenderer.propTypes = {
   }),
   data: PropTypes.any, // Row data
   value: PropTypes.any, // Field value
+  valueFormatted: PropTypes.any, // Field value
 };
 
 const valueFormatter = (args) => {
@@ -46,7 +47,7 @@ const valueFormatter = (args) => {
   );
 };
 
-const components = {
+const defaultRenderersDictionary = {
   DefaultRenderer,
   agColumnHeader: HeaderTextComponent,
 };
@@ -90,9 +91,8 @@ class TablePane extends React.Component {
             hide: col.hidden || false,
             hidden: col.hidden || false, // Used by TableHeaderMenuContent
             key: `data-${col.field}`,
-            minWidth: col.minWidth || 40,
-            frozen: false,
-            suppressMovable: false,
+            minWidth: col.minWidth || 20, // TODO: Revert
+            frozen: false, // TODO: Revert
             pinned: col.pinned,
             sort: col.sort,
             sortable: true,
@@ -121,7 +121,7 @@ class TablePane extends React.Component {
             hidden: false,
             pinned: dataColumn.pinned,
             key: `data-${dataColumn.name}`,
-            minWidth: dataColumn.minWidth || 40,
+            minWidth: dataColumn.minWidth,
             tableId: this.props.tableId,
             sortable: true,
             resizable: true,
@@ -151,24 +151,7 @@ class TablePane extends React.Component {
         return columnsWithCheckbox;
       }
 
-      const grouped = groupBy(columnsWithCheckbox, (item) => item.dataColumn.group || "ungrouped");
-      const columnDefs = Object.entries(grouped).reduce((all, [groupName, children]) => {
-        if (groupName === "ungrouped") {
-          return [
-            ...all,
-            ...children,
-          ];
-        }
-        return [
-          ...all,
-          {
-            headerName: groupName,
-            children,
-          },
-        ];
-      }, []);
-
-      return columnDefs;
+      return this.getGroupedColumns(columnsWithCheckbox);
     },
   );
 
@@ -184,6 +167,38 @@ class TablePane extends React.Component {
   scrollToFirstSelected() {
     const rowIndex = this.props.dataTable.findIndex((x) => x[0] === this.props.selectedIds[0]);
     this.tableRef.current.api.ensureIndexVisible(rowIndex);
+  }
+
+  /**
+   * Groups columns, sorts the headings alpabetically and disables moving
+   * @param {*} columns
+   * @returns
+   */
+  getGroupedColumns = (columns) => {
+    const grouped = groupBy(columns, (item) => item.dataColumn.group || "ungrouped");
+    const columnDefs = Object
+      .entries(grouped)
+      .sort(([a], [b]) => (a > b ? 1 : -1))
+      .reduce((all, [groupName, children]) => {
+        if (groupName === "ungrouped") {
+          return [
+            ...all,
+            ...children,
+          ];
+        }
+        return [
+          ...all,
+          {
+            headerName: groupName,
+            children: children
+              .sort((a, b) => (a.headerName > b.headerName ? 1 : -1))
+              .map((child) => ({ ...child, suppressMovable: true })),
+          },
+        ];
+      }, []);
+
+    console.log({ columnDefs });
+    return columnDefs;
   }
 
   /**
@@ -232,12 +247,18 @@ class TablePane extends React.Component {
     this.setSelectedRows();
   };
 
+  // NOTE(james): This is how autosizing is meant to work but,
+  // it's causing a flash each time we swap tables
+  // onFirstDataRendered = () => {
+  //   this.tableRef.current.columnApi.autoSizeAllColumns();
+  // }
+
   onRowDataUpdated = () => {
     this.setSelectedRows();
   };
 
   onColumnResized = (evt) => {
-    if (evt.finished) {
+    if (evt.finished && evt.source !== "autosizeColumns") {
       this.props.onColumnResize(evt.column.colId, evt.column.actualWidth);
     }
   };
@@ -264,8 +285,8 @@ class TablePane extends React.Component {
           className={`ag-theme-alpine ${props.displayMode}`}
           columnDefs={columnDefs}
           components={{
-            ...components,
-            ...props.componentsDictionary || {},
+            ...defaultRenderersDictionary,
+            ...props.componentsDictionary || {}, // Passed via json
           }}
 
           defaultColDef={this.defaultColDef}
