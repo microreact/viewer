@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable react/prop-types */
+/* eslint-disable no-console */
 
 import { Provider } from "react-redux";
 import React from "react";
