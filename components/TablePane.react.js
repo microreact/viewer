@@ -217,20 +217,15 @@ class TablePane extends React.Component {
       headerCheckboxSelection: this.props.hasSelectionColumn,
     };
 
-    return (
-      columns.map(
-        (column, index) => (
-          index
-            ?
-            column
-            :
-            {
-              ...column,
-              ...firstColumnCheckboxProps,
-            }
-        )
-      )
-    );
+    const [ firstColumn, ...rest ] = columns;
+
+    return [
+      {
+        ...firstColumn,
+        ...firstColumnCheckboxProps,
+      },
+      ...rest,
+    ];
   }
 
   /**
