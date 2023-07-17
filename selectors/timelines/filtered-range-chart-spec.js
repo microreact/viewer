@@ -111,10 +111,10 @@ const chartSpecSelector = createKeyedStateSelector(
           },
         ],
       },
-      height: size.height - 48 - 12,
+      height: Math.max(136, size.height) - 48 - 8,
       padding: { left: 16, top: 32, right: 16, bottom: 2 },
 
-      width: size.width,
+      width: size.width - 16,
     };
 
     if (style === "normalised-bar") {
