@@ -9,9 +9,7 @@ import filteredRangeUnitSelector from "../selectors/timelines/filtered-range-uni
 // import chartSpecSelector from "../selectors/timelines/chart-spec";
 
 const mapStateToProps = (state, { timelineId }) => {
-  const timelineState = state.timelines[timelineId];
   return {
-    silderOnly: timelineState.silderOnly,
     bounds: filteredRangeExtentSelector(state, timelineId),
     unit: filteredRangeUnitSelector(state, timelineId),
   };
