@@ -48,6 +48,10 @@
 
 /*#region Chart */
 
+.mr-timeline-full-range-chart.vega-embed.has-actions {
+  padding-right: unset;
+}
+
 .mr-timeline-full-range-chart.vega-embed {
   padding: 0 16px;
   position: absolute;
