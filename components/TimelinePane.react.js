@@ -108,15 +108,11 @@ class TimelinePane extends React.PureComponent {
         }
       >
 
-        {
-          (!props.silderOnly) && (
             <TimelineFilteredRangeChart
               timelineId={props.timelineId}
               signalListeners={this.signalListeners}
               ref={this.filteredRangeChartRef}
             />
-          )
-        }
 
         <TimelineFullRangeChart
           timelineId={props.timelineId}
@@ -128,31 +124,27 @@ class TimelinePane extends React.PureComponent {
           height={48}
         />
 
-        {
-          (!props.silderOnly) && (
-            <div className="mr-time-range">
-              <Paper
-                // className="mr-time-bounds"
-              >
-                <InputBase
-                  onChange={this.handleMinBoundChange}
-                  type="date"
-                  value={Datetime.timestampToISODate(props.bounds[0])}
-                />
-                <Divider orientation="vertical" />
-                <span>
-                  { formatRange(props.bounds, props.unit) }
-                </span>
-                <Divider orientation="vertical" />
-                <InputBase
-                  onChange={this.handleMaxBoundChange}
-                  type="date"
-                  value={Datetime.timestampToISODate(props.bounds[1])}
-                />
-              </Paper>
-            </div>
-          )
-        }
+        <div className="mr-time-range">
+          <Paper
+            // className="mr-time-bounds"
+          >
+            <InputBase
+              onChange={this.handleMinBoundChange}
+              type="date"
+              value={Datetime.timestampToISODate(props.bounds[0])}
+            />
+            <Divider orientation="vertical" />
+            <span>
+              { formatRange(props.bounds, props.unit) }
+            </span>
+            <Divider orientation="vertical" />
+            <InputBase
+              onChange={this.handleMaxBoundChange}
+              type="date"
+              value={Datetime.timestampToISODate(props.bounds[1])}
+            />
+          </Paper>
+        </div>
 
         <TimelineControls
           onDownloadPNG={this.downloadPNG}
