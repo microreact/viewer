@@ -56,6 +56,10 @@
   left: 0;
 }
 
+.mr-timeline-filtered-range-chart .chart-wrapper canvas {
+  background-color: #f9f9fa;
+}
+
 .mr-timeline-pane .vega-embed details {
   display: none;
 }

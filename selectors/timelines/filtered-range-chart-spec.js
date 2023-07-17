@@ -37,7 +37,7 @@ const chartSpecSelector = createKeyedStateSelector(
       // },
       bounds: "flush",
       config: {
-        background: "#f9f9fa",
+        background: "transparent",
         axis: {
           labelFont: fontFamily,
           labelFontSize: 11,
