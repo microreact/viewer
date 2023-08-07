@@ -66,7 +66,7 @@ const chartSpecSelector = createKeyedStateSelector(
         },
 
         y: {
-          // aggregate: "sum",
+          aggregate: "sum",
           field: "groupCount",
           type: "quantitative",
           axis: {
