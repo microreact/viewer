@@ -1,6 +1,6 @@
-import React from "react";
 import DragIndicatorOutlinedIcon from "@mui/icons-material/DragIndicatorOutlined";
 import PropTypes from "prop-types";
+import React from "react";
 
 import TableHeaderMenu from "../containers/TableColumnMenu.react";
 
