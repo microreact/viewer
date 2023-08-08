@@ -112,6 +112,7 @@ class TablePane extends React.Component {
             title: col.label || dataColumn.label || dataColumn.name,
             valueFormatter,
             width: col.width,
+            onColourByFieldChange: this.props.onColourByFieldChange,
           });
         }
       }
@@ -141,6 +142,7 @@ class TablePane extends React.Component {
             title: dataColumn.label || dataColumn.name,
             valueFormatter,
             width: dataColumn.width,
+            onColourByFieldChange: this.props.onColourByFieldChange,
           });
         }
       }
@@ -347,6 +349,7 @@ TablePane.propTypes = {
   ]).isRequired,
   fieldsMap: PropTypes.object.isRequired,
   hasSelectionColumn: PropTypes.bool,
+  onColourByFieldChange: PropTypes.func.isRequired,
   onColumnMove: PropTypes.func.isRequired,
   onColumnResize: PropTypes.func.isRequired,
   onSelectRows: PropTypes.func.isRequired,

@@ -9,6 +9,7 @@ import { connectToPresentState } from "../utils/state";
 
 import TablePane from "../components/TablePane.react";
 import { moveColumn, resizeColumn } from "../actions/tables";
+import { setColourByField } from "../actions/styles";
 
 const mapStateToProps = (state, { tableId }) => {
   const tableState = state.tables[tableId];
@@ -26,6 +27,7 @@ const mapStateToProps = (state, { tableId }) => {
 };
 
 const mapDispatchToProps = (dispatch, { tableId }) => ({
+  onColourByFieldChange: (field) => dispatch(setColourByField(field)),
   onColumnMove: (field, newIndex) => dispatch(moveColumn(tableId, field, newIndex)),
   onColumnResize: (field, width) => dispatch(resizeColumn(tableId, field, width)),
   onSelectRows: (ids, merge) => dispatch(selectRows(ids, merge)),
