@@ -17,6 +17,7 @@ const DraggableHandle = () => (
 );
 
 export function HeaderTextComponent(props) {
+
   if (props.column.colDef.dataKey === "--microreact-selection-cell") {
     return null;
   }
@@ -29,9 +30,12 @@ export function HeaderTextComponent(props) {
         )
       }
 
-      <div className={props.className}>
+      <button
+        onClick={() => props.column.colDef.onColourByFieldChange(props.column.colDef.dataKey)}
+        title={`Set colour by column to ${props.displayName}`}
+      >
         {props.displayName}
-      </div>
+      </button>
 
       {
         props.column.colDef.controls && (
