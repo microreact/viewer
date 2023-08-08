@@ -298,7 +298,6 @@ class TablePane extends React.Component {
     const { props } = this;
 
     const columnDefs = this.dataColumnsSelector(this.props);
-    const rowData = props.dataTable;
 
     return (
       <div className="mr-table">
@@ -319,7 +318,7 @@ class TablePane extends React.Component {
           onRowDataUpdated={this.onRowDataUpdated}
           onRowSelected={this.onRowSelected}
           ref={this.tableRef}
-          rowData={rowData}
+          rowData={props.dataTable}
           rowMultiSelectWithClick={false} // Stops a user selecting a row by clicking it
           rowSelection="multiple" // Allows more than one row to be selected
           suppressDragLeaveHidesColumns={true} // Stops a column disappering if dragged out of the grid
