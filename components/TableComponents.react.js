@@ -26,19 +26,23 @@ export function HeaderTextComponent(props) {
 
   return (
     <React.Fragment>
-      {!props.column.colDef.suppressMovable && (
-        <DraggableHandle />
-      )}
+      {
+        !props.column.colDef.suppressMovable && (
+          <DraggableHandle />
+        )
+      }
 
       <div className={props.className}>
         {props.displayName}
       </div>
 
-      {props.column.colDef.controls && (
-        <TableHeaderMenu
-          tableColumn={props.column.colDef}
-        />
-      )}
+      {
+        props.column.colDef.controls && (
+          <TableHeaderMenu
+            tableColumn={props.column.colDef}
+          />
+        )
+      }
     </React.Fragment>
   );
 }
