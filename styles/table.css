@@ -83,6 +83,7 @@
   left: 4px;
   display: none;
   color: rgba(0, 0, 0, 0.56);
+  margin-top: 2px;
 }
 
 .mr-table .draggable-handle svg {
