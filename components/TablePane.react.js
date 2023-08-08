@@ -207,27 +207,23 @@ class TablePane extends React.Component {
   };
 
   /**
-   * Adds a selection checkbox to the first visible column in the grid
-   * @param {*} allColumns
+   * Adds a selection checkbox to the first column in the grid
+   * @param {*} columns
    * @returns
    */
-  addSelectionCheckbox(allColumns) {
-    const columns = [];
-    let isAdded = false;
-    for (const column of allColumns) {
-      if (!isAdded && !column.hidden) {
-        columns.push({
-          ...column,
-          checkboxSelection: this.props.hasSelectionColumn,
-          headerCheckboxSelection: this.props.hasSelectionColumn,
-        });
-        isAdded = true;
-      } else {
-        columns.push(column);
-      }
-    }
+  addSelectionCheckbox(columns) {
+    const firstColumnCheckboxProps = {
+      checkboxSelection: this.props.hasSelectionColumn,
+      headerCheckboxSelection: this.props.hasSelectionColumn,
+    };
 
-    return columns;
+    return columns.map((column, index) => (index
+      ? column
+      : {
+        ...column,
+        ...firstColumnCheckboxProps,
+      }
+    ));
   }
 
   /**
