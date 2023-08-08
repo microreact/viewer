@@ -12,7 +12,7 @@
 }
 
 .mr-table .mr-table-column-menu-trigger.mr-has-filters,
-.mr-table .ag-header-cell-comp-wrapper:hover .mr-table-column-menu-trigger {
+.mr-table .ag-header-cell:hover .mr-table-column-menu-trigger {
   display: unset;
 }
 
