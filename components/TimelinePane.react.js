@@ -108,11 +108,11 @@ class TimelinePane extends React.PureComponent {
         }
       >
 
-            <TimelineFilteredRangeChart
-              timelineId={props.timelineId}
-              signalListeners={this.signalListeners}
-              ref={this.filteredRangeChartRef}
-            />
+        <TimelineFilteredRangeChart
+          timelineId={props.timelineId}
+          signalListeners={this.signalListeners}
+          ref={this.filteredRangeChartRef}
+        />
 
         <TimelineFullRangeChart
           timelineId={props.timelineId}
