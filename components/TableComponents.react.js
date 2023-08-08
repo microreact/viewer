@@ -1,7 +1,6 @@
-/* eslint "react/prop-types": 0 */
-
 import React from "react";
 import DragIndicatorOutlinedIcon from "@mui/icons-material/DragIndicatorOutlined";
+import PropTypes from "prop-types";
 
 import TableHeaderMenu from "../containers/TableColumnMenu.react";
 
@@ -47,3 +46,8 @@ export function HeaderTextComponent(props) {
     </React.Fragment>
   );
 }
+
+HeaderTextComponent.propTypes = {
+  column: PropTypes.object,
+  displayName: PropTypes.string,
+};
