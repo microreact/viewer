@@ -3,6 +3,10 @@ import React from "react";
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 // import "../styles/timeline-pane.css";
 
@@ -20,14 +24,60 @@ function formatRange(bounds, unit) {
   return `${length} ${unit}${length !== 1 ? "s" : ""}`;
 }
 
+function FilterMenu(props) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const handleFilter = (filter) => {
+    handleClose();
+    props.onTimelineFilter(filter);
+  };
+
+  return (
+    <div>
+      <Button
+        aria-controls={open ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+        color="inherit"
+        style={{ minWidth: 0, padding: 0 }}
+      >
+        <ArrowDropDownIcon />
+      </Button>
+      <Menu
+        anchorEl={anchorEl}
+        dense
+        onClose={handleClose}
+        open={open}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <MenuItem onClick={() => handleFilter("7-days")}>Last 7 days</MenuItem>
+        <MenuItem onClick={() => handleFilter("14-days")}>Last 14 days</MenuItem>
+        <MenuItem onClick={() => handleFilter("30-days")}>Last 30 days</MenuItem>
+        <MenuItem onClick={() => handleFilter("3-months")}>Last 3 months</MenuItem>
+        <MenuItem onClick={() => handleFilter("6-months")}>Last 6 months</MenuItem>
+        <MenuItem onClick={() => handleFilter("12-months")}>Last 12 months</MenuItem>
+      </Menu>
+    </div>
+  );
+}
+
 class TimelinePane extends React.PureComponent {
 
   static propTypes = {
-    // chartData: PropTypes.shape({
-    //   dataset: PropTypes.arrayOf(
-    //     PropTypes.object.isRequired,
-    //   ).isRequired,
-    // }).isRequired,
     timelineId: PropTypes.string.isRequired,
     className: PropTypes.string,
     controls: PropTypes.bool,
@@ -142,6 +192,9 @@ class TimelinePane extends React.PureComponent {
               onChange={this.handleMaxBoundChange}
               type="date"
               value={Datetime.timestampToISODate(props.bounds[1])}
+            />
+            <FilterMenu
+              onTimelineFilter={props.onTimelineFilter}
             />
           </Paper>
         </div>

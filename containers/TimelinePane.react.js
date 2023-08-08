@@ -1,6 +1,6 @@
 import TimelinePane from "../components/TimelinePane.react";
 
-import { selectItem, setFilter } from "../actions/timelines";
+import { applyTimelineFilter, selectItem, setFilter } from "../actions/timelines";
 import filteredRangeExtentSelector from "../selectors/timelines/filtered-range-extent";
 import filteredRangeUnitSelector from "../selectors/timelines/filtered-range-unit";
 import { connectToPresentState } from "../utils/state";
@@ -15,6 +15,7 @@ const mapStateToProps = (state, { timelineId }) => {
 };
 
 const mapDispatchToProps = (dispatch, { timelineId }) => ({
+  onTimelineFilter: (filter) => dispatch(applyTimelineFilter(timelineId, filter)),
   onSelectItem: (item, merge) => dispatch(selectItem(timelineId, item, merge)),
   onChange: (bounds) => dispatch(setFilter(timelineId, bounds)),
 });
