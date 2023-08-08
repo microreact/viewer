@@ -66,13 +66,22 @@
 /*#endregion*/
 
 
-/*#region Reset padding of header cells and row cells */
-.mr-table .BaseTable__header-cell,
-.mr-table .BaseTable__row-cell {
-  padding: 0 8px !important;
-  /* to override first and last cell paddings */
+/*#region Reset styles of header cell labels */
+.mr-table .ag-header-cell-sortable {
+  cursor: grab;
+}
+.mr-table .mr-table-header-cell-label {
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  min-width: unset;
+  padding-left: 2px;
+  padding-right: 2px;
+  text-transform: unset;
 }
 
+/*#endregion*/
 
 
 /*#region Draggable column handle */

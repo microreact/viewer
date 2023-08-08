@@ -1,3 +1,4 @@
+import Button from "@mui/material/Button";
 import DragIndicatorOutlinedIcon from "@mui/icons-material/DragIndicatorOutlined";
 import PropTypes from "prop-types";
 import React from "react";
@@ -29,12 +30,14 @@ export function HeaderTextComponent(props) {
         )
       }
 
-      <button
+      <Button
+        className="mr-table-header-cell-label"
         onClick={() => props.column.colDef.onColourByFieldChange(props.column.colDef.dataKey)}
         title={`Set colour by column to ${props.displayName}`}
+        variant="text"
       >
         {props.displayName}
-      </button>
+      </Button>
 
       {
         props.column.colDef.controls && (
