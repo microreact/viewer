@@ -6,6 +6,8 @@ import { selectRows } from "./filters";
 import styleSelector from "../selectors/timelines/style";
 import rowsWithDateFieldSelector from "../selectors/timelines/rows-with-date-field";
 import rowsWithStyleFieldsSelector from "../selectors/styles/rows-with-style-fields";
+import fullRangeExtentSelector from "../selectors/timelines/full-range-extent";
+import { addDays, addMonths } from "date-fns";
 
 export function addYearMonthDayTimeline(title, yearFieldName, monthFieldName, dayFieldName) {
   return {
@@ -31,6 +33,44 @@ export function addTimeline(paneId, title) {
   };
 }
 
+export const applyTimelineFilter = (timelineId, filter) => (
+  (dispatch, getState) => {
+
+    const state = getPresentState(getState());
+    const fullRangeExtent = fullRangeExtentSelector(state, timelineId);
+    if (fullRangeExtent) {
+      let upperTimestamp;
+      if (filter === "7-days") {
+        upperTimestamp = addDays(fullRangeExtent[1], -7);
+      }
+      else if (filter === "14-days") {
+        upperTimestamp = addDays(fullRangeExtent[1], -14);
+      }
+      else if (filter === "30-days") {
+        upperTimestamp = addDays(fullRangeExtent[1], -30);
+      }
+      else if (filter === "3-months") {
+        upperTimestamp = addMonths(fullRangeExtent[1], -3);
+      }
+      else if (filter === "6-months") {
+        upperTimestamp = addMonths(fullRangeExtent[1], -6);
+      }
+      else if (filter === "12-months") {
+        upperTimestamp = addMonths(fullRangeExtent[1], -12);
+      }
+      dispatch(
+        setFilter(
+          timelineId,
+          [
+            upperTimestamp,
+            fullRangeExtent[1],
+          ],
+        )
+      );
+    }
+  }
+);
+
 export function removeTimeline(paneId) {
   return {
     delay: true,
@@ -55,7 +95,7 @@ export const selectItem = (timelineId, item, merge) => (
       }
       else {
         const { dateFieldName } = rowsWithDateFieldSelector(state, timelineId);
-        const [ rows ] = rowsWithStyleFieldsSelector(state);
+        const [rows] = rowsWithStyleFieldsSelector(state);
         const lowerTimestamp = item.unitStartDate.valueOf();
         const upperTimestamp = item.unitEndDate.valueOf();
         ids = [];
