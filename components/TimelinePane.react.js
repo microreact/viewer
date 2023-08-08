@@ -35,13 +35,13 @@ class TimelinePane extends React.PureComponent {
     onSelectItem: PropTypes.func.isRequired,
     chartSpec: PropTypes.object,
     width: PropTypes.number.isRequired,
-  }
+  };
 
   state = {
     vegaError: null,
-  }
+  };
 
-  filteredRangeChartRef = React.createRef()
+  filteredRangeChartRef = React.createRef();
 
   signalListeners = {
     onItemSelectSignal: (_, [ event, item ]) => {
@@ -52,7 +52,7 @@ class TimelinePane extends React.PureComponent {
         this.props.onSelectItem(false);
       }
     },
-  }
+  };
 
   downloadPNG = async () => {
     const dataUrl = await exportPNG(this.filteredRangeChartRef.current);
@@ -61,7 +61,7 @@ class TimelinePane extends React.PureComponent {
       "timeline.png",
       "image/png",
     );
-  }
+  };
 
   downloadSVG = async () => {
     const dataUrl = await exportSVG(this.filteredRangeChartRef.current);
@@ -70,7 +70,7 @@ class TimelinePane extends React.PureComponent {
       "timeline.svg",
       "image/svg+xml",
     );
-  }
+  };
 
   handleMinBoundChange = (event) => {
     const timestamp = Datetime.ISODateToTimestamp(event.target.value);
@@ -79,7 +79,7 @@ class TimelinePane extends React.PureComponent {
       bounds[0] = timestamp;
       this.props.onChange(bounds);
     }
-  }
+  };
 
   handleMaxBoundChange = (event) => {
     const timestamp = Datetime.ISODateToTimestamp(event.target.value);
@@ -88,7 +88,7 @@ class TimelinePane extends React.PureComponent {
       bounds[1] = timestamp;
       this.props.onChange(bounds);
     }
-  }
+  };
 
   render() {
     const { props } = this;
