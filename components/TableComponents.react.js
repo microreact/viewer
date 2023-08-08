@@ -1,22 +1,19 @@
 /* eslint "react/prop-types": 0 */
 
 import React from "react";
-import { sortableHandle } from "react-sortable-hoc";
 import DragIndicatorOutlinedIcon from "@mui/icons-material/DragIndicatorOutlined";
 
 import TableHeaderMenu from "../containers/TableColumnMenu.react";
 
-const DraggableHandle = sortableHandle(
-  () => (
-    <div
-      className="draggable-handle"
-      title="Drag to move column"
-    >
-      <DragIndicatorOutlinedIcon
-        fontSize="small"
-      />
-    </div>
-  )
+const DraggableHandle = () => (
+  <div
+    className="draggable-handle"
+    title="Drag to move column"
+  >
+    <DragIndicatorOutlinedIcon
+      fontSize="small"
+    />
+  </div>
 );
 
 export function HeaderTextComponent(props) {
