@@ -1,10 +1,9 @@
-import { connect } from "react-redux";
-
 import TimelinePane from "../components/TimelinePane.react";
 
 import { selectItem, setFilter } from "../actions/timelines";
 import filteredRangeExtentSelector from "../selectors/timelines/filtered-range-extent";
 import filteredRangeUnitSelector from "../selectors/timelines/filtered-range-unit";
+import { connectToPresentState } from "../utils/state";
 // import chartDataSelector from "../selectors/timelines/chart-data";
 // import chartSpecSelector from "../selectors/timelines/chart-spec";
 
@@ -20,4 +19,8 @@ const mapDispatchToProps = (dispatch, { timelineId }) => ({
   onChange: (bounds) => dispatch(setFilter(timelineId, bounds)),
 });
 
-export default connect((state, props) => mapStateToProps(state.present, props), mapDispatchToProps)(TimelinePane);
+export default connectToPresentState(
+  TimelinePane,
+  mapStateToProps,
+  mapDispatchToProps,
+);
