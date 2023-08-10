@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Paper from "@mui/material/Paper";
 import PropTypes from "prop-types";
-import React from "react";
+import React, { Fragment } from "react";
 import { GlobalHotKeys } from "react-hotkeys";
 import clsx from "clsx";
 
@@ -39,15 +39,26 @@ class Viewer extends React.PureComponent {
     );
   }
 
-  renderViewerContent() {
-    const { props } = this;
+  renderDropFiles(children) {
+    if (this.props.isDropFilesDisabled) {
+      return children;
+    }
 
-    if (props.isEmpty) {
+    if (this.props.isEmpty) {
       return (<DropFiles key="empty" />);
     }
 
     return (
       <DropFiles key="non-empty" >
+        {children}
+      </DropFiles>
+    );
+  }
+
+  renderViewerContent() {
+    const { props } = this;
+    return (
+      <Fragment>
         <GlobalHotKeys
           keyMap={keyMap}
           handlers={this.handlers}
@@ -69,14 +80,14 @@ class Viewer extends React.PureComponent {
             componentsDictionary={props.components}
           />
         </Paper>
-        { props.children }
+        {props.children}
 
         <img
           alt="loading spinner"
           className="mr-spinner"
           src={invertedSpinnerPng}
         />
-      </DropFiles>
+      </Fragment>
     );
   }
 
@@ -98,7 +109,7 @@ class Viewer extends React.PureComponent {
 
     return (
       <React.Fragment>
-        { this.renderViewerContent() }
+        {this.renderDropFiles(this.renderViewerContent())}
 
         <BusyIndicator />
 
@@ -121,7 +132,7 @@ class Viewer extends React.PureComponent {
         }
         id="microreact-viewer"
       >
-        { this.renderDataFileLoaders() }
+        {this.renderDataFileLoaders()}
       </div>
     );
   }
@@ -136,6 +147,7 @@ Viewer.propTypes = {
   components: PropTypes.object,
   datasets: PropTypes.object,
   files: PropTypes.object,
+  isDropFilesDisabled: PropTypes.bool,
   isEmpty: PropTypes.bool.isRequired,
   onRedo: PropTypes.func,
   onUndo: PropTypes.func,
