@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Paper from "@mui/material/Paper";
 import PropTypes from "prop-types";
-import React, { Fragment } from "react";
+import React from "react";
 import { GlobalHotKeys } from "react-hotkeys";
 import clsx from "clsx";
 
@@ -39,9 +39,13 @@ class Viewer extends React.PureComponent {
     );
   }
 
-  renderDropFiles(children) {
+  renderDropFiles() {
+    console.log({ props: this.props });
     if (this.props.isDropFilesDisabled) {
-      return children;
+      if (this.props.isEmpty) {
+        return null;
+      }
+      return this.renderViewerContent();
     }
 
     if (this.props.isEmpty) {
@@ -50,7 +54,7 @@ class Viewer extends React.PureComponent {
 
     return (
       <DropFiles key="non-empty" >
-        {children}
+        {this.renderViewerContent()}
       </DropFiles>
     );
   }
@@ -58,7 +62,7 @@ class Viewer extends React.PureComponent {
   renderViewerContent() {
     const { props } = this;
     return (
-      <Fragment>
+      <React.Fragment>
         <GlobalHotKeys
           keyMap={keyMap}
           handlers={this.handlers}
@@ -87,7 +91,7 @@ class Viewer extends React.PureComponent {
           className="mr-spinner"
           src={invertedSpinnerPng}
         />
-      </Fragment>
+      </React.Fragment>
     );
   }
 
@@ -109,7 +113,7 @@ class Viewer extends React.PureComponent {
 
     return (
       <React.Fragment>
-        {this.renderDropFiles(this.renderViewerContent())}
+        {this.renderDropFiles()}
 
         <BusyIndicator />
 
