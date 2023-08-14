@@ -4,6 +4,7 @@
   position: relative;
   text-overflow: ellipsis;
   white-space: nowrap;
+  width: 90%;
 }
 
 .input {
@@ -28,7 +29,7 @@
 }
 
 .input:hover {
-   border: 1px solid #ffffffa8;
+  border: 1px solid #ffffffa8;
 }
 
 .input:focus {
