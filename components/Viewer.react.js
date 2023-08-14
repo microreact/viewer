@@ -40,7 +40,6 @@ class Viewer extends React.PureComponent {
   }
 
   renderDropFiles() {
-    console.log({ props: this.props });
     if (this.props.isDropFilesDisabled) {
       if (this.props.isEmpty) {
         return null;
