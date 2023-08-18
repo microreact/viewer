@@ -4,7 +4,7 @@
   position: relative;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 90%;
+  padding: 0 4px;
 }
 
 .input {
@@ -14,28 +14,28 @@
   color: #fff;
   cursor: pointer;
   font-family: inherit;
-  font-size: 0.9em;
+  font-size: inherit;
   font-variant-ligatures: no-contextual;
   font-weight: 500;
   height: 28px;
   left: 1px;
-  padding: 0;
   position: absolute;
   text-overflow: ellipsis;
   top: 3px;
-  padding-left: 2px;
   visibility: visible;
   width: calc(100% - 2px);
 }
 
 .input:hover {
   border: 1px solid #ffffffa8;
+  width: calc(100% - 2px);
 }
 
 .input:focus {
   margin: 0 -1px;
   background-color: #5c8a97;
   border: 2px solid #fff;
+  width: calc(100% - 1px);
   color: #fff;
   cursor: text;
   outline: 0;
