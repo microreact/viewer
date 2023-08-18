@@ -39,15 +39,29 @@ class Viewer extends React.PureComponent {
     );
   }
 
-  renderViewerContent() {
-    const { props } = this;
+  renderDropFiles() {
+    if (this.props.isDropFilesDisabled) {
+      if (this.props.isEmpty) {
+        return null;
+      }
+      return this.renderViewerContent();
+    }
 
-    if (props.isEmpty) {
+    if (this.props.isEmpty) {
       return (<DropFiles key="empty" />);
     }
 
     return (
       <DropFiles key="non-empty" >
+        {this.renderViewerContent()}
+      </DropFiles>
+    );
+  }
+
+  renderViewerContent() {
+    const { props } = this;
+    return (
+      <React.Fragment>
         <GlobalHotKeys
           keyMap={keyMap}
           handlers={this.handlers}
@@ -69,14 +83,14 @@ class Viewer extends React.PureComponent {
             componentsDictionary={props.components}
           />
         </Paper>
-        { props.children }
+        {props.children}
 
         <img
           alt="loading spinner"
           className="mr-spinner"
           src={invertedSpinnerPng}
         />
-      </DropFiles>
+      </React.Fragment>
     );
   }
 
@@ -98,7 +112,7 @@ class Viewer extends React.PureComponent {
 
     return (
       <React.Fragment>
-        { this.renderViewerContent() }
+        {this.renderDropFiles()}
 
         <BusyIndicator />
 
@@ -121,7 +135,7 @@ class Viewer extends React.PureComponent {
         }
         id="microreact-viewer"
       >
-        { this.renderDataFileLoaders() }
+        {this.renderDataFileLoaders()}
       </div>
     );
   }
@@ -136,6 +150,7 @@ Viewer.propTypes = {
   components: PropTypes.object,
   datasets: PropTypes.object,
   files: PropTypes.object,
+  isDropFilesDisabled: PropTypes.bool,
   isEmpty: PropTypes.bool.isRequired,
   onRedo: PropTypes.func,
   onUndo: PropTypes.func,
