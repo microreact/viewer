@@ -1,19 +1,9 @@
 import { createCombinedStateSelector, createKeyedStateSelector } from "../../utils/state";
 import { intersect } from "../../utils/sets";
-import { newickLabels } from "../../utils/trees";
+import { labelsToRowIds, newickLabels } from "../../utils/trees";
 
 import rowsByLabelSelector from "../trees/rows-by-label";
 import treeFileSelector from "../trees/tree-file";
-
-function labelsToRowIds(labels, rowsByLabel) {
-  const ids = new Set();
-  for (const label of labels) {
-    for (const row of (rowsByLabel.get(label) || [])) {
-      ids.add(row[0]);
-    }
-  }
-  return ids;
-}
 
 const treeIdsSelector = createKeyedStateSelector(
   (state, treeId) => state.trees[treeId].ids,
