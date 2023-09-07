@@ -1,5 +1,6 @@
 import { selectRows } from "../actions/filters";
 import {
+  selectTreeRows,
   setPhylocanvasProps,
   setTreeFilter,
   update,
@@ -26,7 +27,7 @@ const mapDispatchToProps = (dispatch, { treeId }) => ({
   onAlignLabelsChange: (value) => dispatch(update(treeId, "alignLabels", value)),
   onFilterChange: (ids, path) => dispatch(setTreeFilter(treeId, ids, path)),
   onPhylocanvasPropsChange: (updater, event) => dispatch(setPhylocanvasProps(treeId, updater, event)),
-  onSelectRows: (ids, merge) => dispatch(selectRows(ids, merge)),
+  onSelectRows: (ids, merge) => dispatch(selectTreeRows(treeId, ids, merge)),
   onShowLeafLabelsChange: (value) => dispatch(update(treeId, "showLeafLabels", value)),
 });
 
