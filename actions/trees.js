@@ -69,14 +69,24 @@ export function selectTreeRows(
 ) {
   return (dispatch, getState) => {
     const state = getPresentState(getState());
-    const rowsByLabel = rowsByLabelSelector(state, treeId);
-    const labelsSet = labelsToRowIds(leadIds, rowsByLabel)
-    dispatch(
-      selectRows(
-        Array.from(labelsSet),
-        merge,
-      )
-    );
+    if (leadIds) {
+      const rowsByLabel = rowsByLabelSelector(state, treeId);
+      const labelsSet = labelsToRowIds(leadIds, rowsByLabel);
+      dispatch(
+        selectRows(
+          Array.from(labelsSet),
+          merge,
+        )
+      );
+    }
+    else {
+      dispatch(
+        selectRows(
+          undefined,
+          merge,
+        )
+      );
+    }
   };
 }
 
