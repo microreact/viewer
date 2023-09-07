@@ -1,9 +1,12 @@
 /* eslint-disable indent */
 
+import rowsByLabelSelector from "../selectors/trees/rows-by-label";
 import treeStateSelector from "../selectors/trees/tree-state";
 
 import * as Arrays from "../utils/arrays";
 import { getPresentState } from "../utils/state";
+import { labelsToRowIds } from "../utils/trees";
+import { selectRows } from "./filters";
 
 export function addTree(paneId, title, file, labelFieldName) {
   return {
@@ -56,6 +59,24 @@ export function setTreeLasso(treeId, lasso) {
     payload: lasso,
     treeId,
     type: "MICROREACT VIEWER/SET TREE LASSO",
+  };
+}
+
+export function selectTreeRows(
+  treeId,
+  leadIds,
+  merge,
+) {
+  return (dispatch, getState) => {
+    const state = getPresentState(getState());
+    const rowsByLabel = rowsByLabelSelector(state, treeId);
+    const labelsSet = labelsToRowIds(leadIds, rowsByLabel)
+    dispatch(
+      selectRows(
+        Array.from(labelsSet),
+        merge,
+      )
+    );
   };
 }
 
