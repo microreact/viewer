@@ -8,7 +8,7 @@ function generateColourPalette(rows, valueField, colourField) {
     const value = row[valueField.name];
     const colour = row[colourField.name];
     if (value !== null && value !== undefined && value !== "" && colour !== null && colour !== undefined && colour !== "") {
-      valueToColour.set(value, colour.toLowerCase());
+      valueToColour.set(value, colour.toString().toLowerCase?.());
     }
   }
 
