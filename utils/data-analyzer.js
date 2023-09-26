@@ -266,10 +266,7 @@ function guessDataColumnsFromRows(rows, headerRow) {
 }
 
 function parseRowsByDataColumns(rows, fields) {
-  // Edit rows in place
-  const geojsonFieldIdx = fields.findIndex((f) => f.name === "_geojson");
-
-  fields.forEach(parseCsvRowsByFieldType.bind(null, rows, geojsonFieldIdx));
+  fields.forEach(parseCsvRowsByFieldType.bind(null, rows));
 
   return rows;
 }
