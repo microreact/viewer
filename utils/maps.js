@@ -3,15 +3,14 @@ import iso3166Codes from "microreact-data/iso-3166-codes";
 const codes = new Map();
 
 for (const row of iso3166Codes) {
-  const code = row.shift();
   codes.set(
-    code,
+    row[0],
     [
       [
-        row[0],
         row[1],
+        row[2],
       ],
-      row[2],
+      row[3],
     ]
   );
 }
