@@ -262,7 +262,7 @@ function guessDataColumnsFromRows(rows, headerRow) {
 
   const columns = getFieldsFromData(rows, headerRow);
 
-  return columns;
+  return columns.filter((x) => !!x);
 }
 
 function parseRowsByDataColumns(rows, fields) {
