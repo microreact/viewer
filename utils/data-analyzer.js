@@ -234,7 +234,7 @@ function analyzerTypeToFieldType(aType) {
   }
 }
 
-function parseCsvRowsByFieldType(rows, geoFieldIdx, field) {
+function parseCsvRowsByFieldType(rows, field) {
   const parser = PARSE_FIELD_VALUE_FROM_STRING[field.type];
   if (parser) {
     // check first not null value of it's already parsed
