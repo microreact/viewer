@@ -91,9 +91,19 @@ class LayoutManager extends React.PureComponent {
   queue = []
 
   fetchComponent = (componentName) => {
+    const { props } = this;
+
     return new Promise((resolve) => {
-      const componentPromise = componentLoader(componentName);
+      const componentPromise = (
+        (componentName in props.componentsDictionary)
+          ?
+          Promise.resolve(props.componentsDictionary[componentName])
+          :
+          componentLoader(componentName)
+      );
+
       this.queue.push({ promise: componentPromise, callback: resolve });
+
       if (this.queue.length === 1) {
         nextTick(this.dequeue);
       }
@@ -110,6 +120,7 @@ class LayoutManager extends React.PureComponent {
   }
 
   componentFactory = (node) => {
+    const { props } = this;
     if (
       // node._attributes.enableDrag === false
       // &&
@@ -117,10 +128,11 @@ class LayoutManager extends React.PureComponent {
     ) {
       return null;
     }
+
     return (
       <DynamicPane
         fetchComponent={this.fetchComponent}
-        componentsDictionary={this.props.componentsDictionary}
+        componentsDictionary={props.componentsDictionary}
         node={node}
       />
     );
