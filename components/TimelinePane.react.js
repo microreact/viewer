@@ -1,92 +1,18 @@
 import PropTypes from "prop-types";
 import React from "react";
+
 import Paper from "@mui/material/Paper";
-import InputBase from "@mui/material/InputBase";
-import Divider from "@mui/material/Divider";
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import TimelineSlider from "../containers/TimelineSlider.react.js";
+import TimelineControls from "../containers/TimelineControls.react.js";
+import TimelineFullRangeChart from "../containers/TimelineFullRangeChart.react.js";
+import TimelineFilteredRangeChart from "../containers/TimelineFilteredRangeChart.react.js";
 
-// import "../styles/timeline-pane.css";
+import { downloadDataUrl } from "../utils/downloads.js";
+import { exportPNG, exportSVG } from "../utils/charts.js";
 
-import * as Datetime from "../utils/datetime";
-import { downloadDataUrl } from "../utils/downloads";
-
-import TimelineSlider from "../containers/TimelineSlider.react";
-import TimelineControls from "../containers/TimelineControls.react";
-import TimelineFullRangeChart from "../containers/TimelineFullRangeChart.react";
-import TimelineFilteredRangeChart from "../containers/TimelineFilteredRangeChart.react";
-import { exportPNG, exportSVG } from "../utils/charts";
-
-function formatRange(bounds, unit) {
-  const length = Datetime.rangeLength(bounds, unit);
-  return `${length} ${unit}${length !== 1 ? "s" : ""}`;
-}
-
-function FilterMenu(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  const handleFilter = (filter) => {
-    handleClose();
-    props.onTimelineFilter(filter);
-  };
-
-  return (
-    <div>
-      <Button
-        aria-controls={open ? "basic-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-        color="inherit"
-        style={{ minWidth: 0, padding: 0 }}
-      >
-        <ArrowDropDownIcon />
-      </Button>
-      <Menu
-        anchorEl={anchorEl}
-        dense
-        onClose={handleClose}
-        open={open}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-      >
-        <MenuItem onClick={() => handleFilter("7-days")}>Last 7 days</MenuItem>
-        <MenuItem onClick={() => handleFilter("14-days")}>Last 14 days</MenuItem>
-        <MenuItem onClick={() => handleFilter("30-days")}>Last 30 days</MenuItem>
-        <MenuItem onClick={() => handleFilter("3-months")}>Last 3 months</MenuItem>
-        <MenuItem onClick={() => handleFilter("6-months")}>Last 6 months</MenuItem>
-        <MenuItem onClick={() => handleFilter("12-months")}>Last 12 months</MenuItem>
-      </Menu>
-    </div>
-  );
-}
+import TimeLineRange from "./TimelineRange.react.js";
 
 class TimelinePane extends React.PureComponent {
-
-  static propTypes = {
-    timelineId: PropTypes.string.isRequired,
-    className: PropTypes.string,
-    controls: PropTypes.bool,
-    height: PropTypes.number.isRequired,
-    onSelectItem: PropTypes.func.isRequired,
-    chartSpec: PropTypes.object,
-    width: PropTypes.number.isRequired,
-  };
-
   state = {
     vegaError: null,
   };
@@ -94,7 +20,7 @@ class TimelinePane extends React.PureComponent {
   filteredRangeChartRef = React.createRef();
 
   signalListeners = {
-    onItemSelectSignal: (_, [ event, item ]) => {
+    onItemSelectSignal: (_, [event, item]) => {
       if (item) {
         this.props.onSelectItem(item, event.metaKey || event.ctrilKey);
       }
@@ -120,24 +46,6 @@ class TimelinePane extends React.PureComponent {
       "timeline.svg",
       "image/svg+xml",
     );
-  };
-
-  handleMinBoundChange = (event) => {
-    const timestamp = Datetime.ISODateToTimestamp(event.target.value);
-    if (Datetime.isTimestamp(timestamp)) {
-      const bounds = [ ...this.props.bounds ];
-      bounds[0] = timestamp;
-      this.props.onChange(bounds);
-    }
-  };
-
-  handleMaxBoundChange = (event) => {
-    const timestamp = Datetime.ISODateToTimestamp(event.target.value);
-    if (Datetime.isTimestamp(timestamp)) {
-      const bounds = [ ...this.props.bounds ];
-      bounds[1] = timestamp;
-      this.props.onChange(bounds);
-    }
   };
 
   render() {
@@ -173,32 +81,15 @@ class TimelinePane extends React.PureComponent {
           width={props.width - 32}
           height={48}
         />
-
         <div className="mr-time-range">
-          <Paper
-            // className="mr-time-bounds"
-          >
-            <InputBase
-              onChange={this.handleMinBoundChange}
-              type="date"
-              value={Datetime.timestampToISODate(props.bounds[0])}
-            />
-            <Divider orientation="vertical" />
-            <span>
-              { formatRange(props.bounds, props.unit) }
-            </span>
-            <Divider orientation="vertical" />
-            <InputBase
-              onChange={this.handleMaxBoundChange}
-              type="date"
-              value={Datetime.timestampToISODate(props.bounds[1])}
-            />
-            <FilterMenu
+          <Paper>
+            <TimeLineRange
+              bounds={props.bounds}
               onTimelineFilter={props.onTimelineFilter}
+              unit={props.unit}
             />
           </Paper>
         </div>
-
         <TimelineControls
           onDownloadPNG={this.downloadPNG}
           onDownloadSVG={this.downloadSVG}
@@ -208,5 +99,19 @@ class TimelinePane extends React.PureComponent {
     );
   }
 }
+
+TimelinePane.propTypes = {
+  bounds: PropTypes.array,
+  chartSpec: PropTypes.object,
+  className: PropTypes.string,
+  controls: PropTypes.bool,
+  height: PropTypes.number.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onSelectItem: PropTypes.func.isRequired,
+  onTimelineFilter: PropTypes.func.isRequired,
+  timelineId: PropTypes.string.isRequired,
+  unit: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+};
 
 export default TimelinePane;
