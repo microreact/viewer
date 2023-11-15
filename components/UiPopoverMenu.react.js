@@ -14,23 +14,23 @@ class UiPopoverMenu extends React.PureComponent {
 
   state = {
     isOpen: false,
-  }
+  };
 
   anchorEl = React.createRef();
 
-  open = () => {
+  open = (event) => {
     if (this.props.onOpen) {
-      this.props.onOpen(this);
+      this.props.onOpen(this, event);
     }
     this.setState({ isOpen: true });
-  }
+  };
 
   close = () => {
     if (this.props.onClose) {
       this.props.onClose(this);
     }
     this.setState({ isOpen: false });
-  }
+  };
 
   render() {
     const { props } = this;
