@@ -15,26 +15,26 @@ import { emptyArray, fullWithStyle } from "../constants";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-function getOptionLabel(option) {
+function getOptionLabel(option, a, b) {
   if (typeof option === "string" || typeof option === "number") {
     return option.toString();
   }
   else {
-    return option.label || option.name;
+    return option.label || option.name || option.key;
   }
 }
 
-function renderMultiOption(option, { selected }) {
+function renderMultiOption(props, option, args) {
   return (
-    <React.Fragment>
+    <li {...props}>
       <Checkbox
         icon={icon}
         checkedIcon={checkedIcon}
         style={{ marginRight: 8 }}
-        checked={selected}
+        checked={args.selected}
       />
       { getOptionLabel(option) }
-    </React.Fragment>
+    </li>
   );
 }
 
