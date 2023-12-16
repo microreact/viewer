@@ -1,5 +1,3 @@
-// eslint-disable-next-line no-unused-vars
-import React from "react";
 import PropTypes from "prop-types";
 
 // function createEnumType(items) {
@@ -42,8 +40,15 @@ export const ColourModes = PropTypes.oneOf([
   "gradient",
 ]);
 
+export const DataType = PropTypes.oneOf([
+  "boolean",
+  "date",
+  "number",
+  "text",
+]);
+
 export const DataColumn = PropTypes.shape({
-  dataType: PropTypes.string.isRequired,
+  dataType: DataType.isRequired,
   isNumeric: PropTypes.bool.isRequired,
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,

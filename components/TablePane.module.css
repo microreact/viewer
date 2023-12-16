@@ -1,0 +1,10 @@
+.mr-table-header-cell-label {
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  min-width: unset;
+  padding-left: 2px;
+  padding-right: 2px;
+  text-transform: unset;
+}

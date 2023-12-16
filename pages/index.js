@@ -4,7 +4,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-import projectJson from "../public/data/ebola";
+import projectJson from "../public/data/euscape";
 
 let data;
 let files;

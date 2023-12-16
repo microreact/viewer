@@ -6,9 +6,10 @@ import tableStateSelector from "../selectors/tables/table-state";
 import paneNameSelector from "../selectors/panes/pane-name";
 import { getPresentState } from "../utils/state";
 
-import { measureWidth } from "../utils/text";
+import { measureWidth, toText } from "../utils/text";
 import { normaliseFilename } from "../utils/files";
 import { downloadDataUrl } from "../utils/downloads";
+
 import tableDataSelector from "../selectors/tables/table-data";
 
 export function addTable(paneId, title, fileId, columns) {
@@ -56,13 +57,18 @@ export function expandColumn(tableId, field) {
     const dataColumn = columns.find((x) => x.name === field);
     let longestLabel = "";
     for (const row of rows) {
-      if (row[dataColumn.name] && row[dataColumn.name].length > longestLabel.length) {
-        longestLabel = row[dataColumn.name];
+      const label = toText(
+        dataColumn.type,
+        row[dataColumn.name],
+        false /* convertBlanks */,
+      );
+      if (dataColumn.name in row && label.length > longestLabel.length) {
+        longestLabel = label;
       }
     }
     const width = Math.max(
-      measureWidth(tableColumn.label || dataColumn.name) + 36, /* (twice padding of 8px) plus 4px (for sort indicator) plus 16px (for filter menu button)  */
-      measureWidth(longestLabel) + 16 /* (twice padding of 8px) */
+      measureWidth((tableColumn.label || dataColumn.name || "").toString()) + 48, /* 32px (twice padding of 16px) plus 16px (for filter menu button)  */
+      measureWidth((longestLabel ?? "").toString()) + 32 /* (twice padding of 16px) */
     );
     dispatch(
       resizeColumn(
@@ -97,6 +103,17 @@ export function moveColumn(tableId, oldIndex, newIndex) {
   };
 }
 
+export function reorderColumns(tableId, columnsOrder) {
+  return {
+    delay: true,
+    group: "move columns",
+    label: "Table: Move columns",
+    payload: columnsOrder,
+    tableId,
+    type: "MICROREACT VIEWER/REORDER COLUMN",
+  };
+}
+
 export function removeTable(paneId) {
   return (dispatch, getState) => {
     const state = getPresentState(getState());
@@ -118,12 +135,23 @@ export function resizeColumn(tableId, field, width) {
   return {
     delay: true,
     label: `Table: Resize ${field} column`,
+    group: "resize columns",
     payload: {
       field,
       width,
     },
     tableId,
     type: "MICROREACT VIEWER/RESIZE COLUMN",
+  };
+}
+
+export function resizeColumns(tableId, sizes) {
+  return (dispatch, getState) => {
+    for (const [ field, width ] of Object.entries(sizes)) {
+      dispatch(
+        resizeColumn(tableId, field, width)
+      );
+    }
   };
 }
 
