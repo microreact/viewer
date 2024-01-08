@@ -15,7 +15,8 @@ import { emptyArray, fullWithStyle } from "../constants";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-function getOptionLabel(option, a, b) {
+function getOptionLabel(option) {
+  console.log({option})
   if (typeof option === "string" || typeof option === "number") {
     return option.toString();
   }
@@ -61,7 +62,7 @@ const UiCombobox = React.memo((props) => {
       // limitTags={props.limitTags}
       multiple={props.multiple}
       onChange={(event, item) => props.onChange(item, event)}
-      options={props.options}
+      options={props.options.filter(((x) => x !== undefined))}
       renderInput={
         (params) => (
           <div ref={params.InputProps.ref}>
