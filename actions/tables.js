@@ -131,6 +131,20 @@ export function removeTable(paneId) {
   };
 }
 
+export function resetColumns(tableId) {
+  return (dispatch, getState) => {
+    const state = getPresentState(getState());
+    const { columns } = fullDatasetSelector(state);
+    const fields = [];
+    for (const dataColumn of columns) {
+      fields.push(dataColumn.name);
+    }
+    dispatch(
+      reorderColumns(tableId, fields)
+    );
+  };
+}
+
 export function resizeColumn(tableId, field, width) {
   return {
     delay: true,

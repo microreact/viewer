@@ -216,11 +216,11 @@ export default {
       "title": "Metadata",
       "columns": [
         {
-          "field": "Carbapenem resistance mechanism",
+          "field": "id",
+          // "fixed": true,
         },
         {
-          "field": "id",
-          "fixed": true,
+          "field": "Carbapenem resistance mechanism",
         },
         {
           "field": "EuSCAPE ID",
@@ -230,7 +230,7 @@ export default {
         },
         {
           "field": "Run accession",
-          "fixed": true,
+          // "fixed": true,
         },
         {
           "field": "Assembly accession",
@@ -243,7 +243,7 @@ export default {
         },
         {
           "field": "Country",
-          "fixed": true,
+          // "fixed": true,
         },
         {
           "field": "Sample type",

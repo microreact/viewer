@@ -46,6 +46,12 @@ const TableColumns = React.memo(
           { props.hideUnselected ? "Show" : "Hide" } unselected entries
         </UiDropdownMenu.Item>
 
+        <UiDropdownMenu.Item
+          onClick={props.onResetColumns}
+        >
+          Reset column order
+        </UiDropdownMenu.Item>
+
         <Divider />
 
         <UiDropdownMenu.Item
@@ -53,8 +59,9 @@ const TableColumns = React.memo(
         >
           Download as CSV
         </UiDropdownMenu.Item>
+
         {/* <UiDropdownMenu.Item
-          onClick={props.onDownloadPNG}
+          onClick={props.onDownloadXSLX}
         >
           Download as XSLX
         </UiDropdownMenu.Item> */}
@@ -105,10 +112,14 @@ TableColumns.propTypes = {
   controls: PropTypes.bool.isRequired,
   dataFields: PropTypes.arrayOf(DataColumn).isRequired,
   displayMode: PropTypes.string.isRequired,
+  hideUnselected: PropTypes.bool.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   onControlsChange: PropTypes.func.isRequired,
   onDisplayModeChange: PropTypes.func.isRequired,
+  onDownloadCsv: PropTypes.func.isRequired,
   onEditPane: PropTypes.func.isRequired,
+  onHideUnselectedChange: PropTypes.func.isRequired,
+  onResetColumns: PropTypes.func.isRequired,
   onShowSelecttionChange: PropTypes.func.isRequired,
   onVisibleFieldsChange: PropTypes.func.isRequired,
   showSelection: PropTypes.bool,
