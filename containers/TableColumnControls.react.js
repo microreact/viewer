@@ -9,17 +9,17 @@ import { connectToPresentState } from "../utils/state";
 
 import Component from "../components/TableHeaderMenuContent.react";
 
-const mapStateToProps = (state, { dataColumn }) => {
+const mapStateToProps = (state, { tableColumn }) => {
   return {
-    filter: dataFieldFilterSelector(state, dataColumn.name),
+    filter: dataFieldFilterSelector(state, tableColumn.field),
   };
 };
 
-const mapDispatchToProps = (dispatch, { tableId }) => ({
-  onColumnExpand: (field) => dispatch(expandColumn(tableId, field)),
+const mapDispatchToProps = (dispatch, { tableColumn }) => ({
+  onColumnExpand: (field) => dispatch(expandColumn(tableColumn.tableId, field)),
   onColumnFilterChange: (field, operator, value) => dispatch(setFieldFilter(field, operator, value)),
-  onColumnHide: (field) => dispatch(hideColumn(tableId, field)),
-  onColumnSort: (field, direction) => dispatch(sortColumn(tableId, field, direction)),
+  onColumnHide: (field) => dispatch(hideColumn(tableColumn.tableId, field)),
+  onColumnSort: (field, direction) => dispatch(sortColumn(tableColumn.tableId, field, direction)),
 });
 
 export default connectToPresentState(Component, mapStateToProps, mapDispatchToProps);

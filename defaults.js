@@ -48,10 +48,6 @@ export default {
       dark: "#853a77",
       contrast: "#000000",
     },
-    fonts: {
-      headline: `"Space Grotesk", "Helvetica", "Arial", sans-serif`,
-      body: `"Work Sans", "Helvetica", "Arial", sans-serif`,
-    },
   },
 
   validFileExtensions: [

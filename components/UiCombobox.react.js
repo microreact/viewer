@@ -16,26 +16,25 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 function getOptionLabel(option) {
-  console.log({option})
   if (typeof option === "string" || typeof option === "number") {
     return option.toString();
   }
   else {
-    return option.label || option.name || option.key;
+    return option.label || option.name;
   }
 }
 
-function renderMultiOption(props, option, args) {
+function renderMultiOption(option, { selected }) {
   return (
-    <li {...props}>
+    <React.Fragment>
       <Checkbox
         icon={icon}
         checkedIcon={checkedIcon}
         style={{ marginRight: 8 }}
-        checked={args.selected}
+        checked={selected}
       />
       { getOptionLabel(option) }
-    </li>
+    </React.Fragment>
   );
 }
 
@@ -62,7 +61,7 @@ const UiCombobox = React.memo((props) => {
       // limitTags={props.limitTags}
       multiple={props.multiple}
       onChange={(event, item) => props.onChange(item, event)}
-      options={props.options.filter(((x) => x !== undefined))}
+      options={props.options}
       renderInput={
         (params) => (
           <div ref={params.InputProps.ref}>

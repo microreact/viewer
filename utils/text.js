@@ -6,7 +6,7 @@ let correctionUnit;
 function createContext() {
   const canvas = document.createElement("canvas");
   context = canvas.getContext("2d");
-  const font = "400 14px Work Sans, Helvetica, Arial, sans-serif";
+  const font = "400 13px Roboto, Helvetica, Arial, sans-serif";
   context.font = font;
   correctionUnit = context.measureText(" ").width;
   return context;
@@ -54,6 +54,6 @@ export function toText(dataType, value, convertBlanks = true) {
   }
 
   else {
-    return value?.toString();
+    return value;
   }
 }

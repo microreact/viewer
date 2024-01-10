@@ -1,5 +1,124 @@
+/*#region Customisation of ag-grid theme */
+
+/* https: //www.ag-grid.com/react-data-grid/global-style-customisation/ */
+.ag-theme-alpine {
+  --ag-foreground-color: var(--text-primary);
+  --ag-background-color: var(--background-main);
+
+  --ag-header-foreground-color: var(--primary-main);
+  --ag-header-background-color: var(--background-main);
+
+  --ag-odd-row-background-color: rgba(0, 0, 0, 0.03);
+  --ag-selected-row-background-color: rgba(0, 0, 0, 0.10);
+  --ag-row-hover-color: rgba(0, 0, 0, 0.05);
+  --ag-range-selection-border-color: var(--primary-main);
+
+  --ag-checkbox-background-color: var(--background-main);
+  --ag-checkbox-checked-color: var(--primary-main);
+  --ag-checkbox-unchecked-color: var(--text-primary);
+  --ag-checkbox-indeterminate-color: var(--background-main);
+
+  --ag-font-size: 13px;
+  --ag-font-family: inherit;
+  --ag-grid-size: 5px;
+}
+
+.ag-theme-alpine.comfortable {
+  --ag-row-height: 40px;
+}
+
+.ag-theme-alpine.cosy {
+  --ag-row-height: 32px;
+}
+
+.ag-theme-alpine.compact {
+  --ag-row-height: 24px;
+}
+
+.ag-theme-alpine .ag-center-cols-container {
+  min-width: 100%;
+}
+
+/*#endregion*/
+
+/*#region Top padding for main table */
 .mr-table {
-  padding-top: 12px;
+  padding-top: 24px;
   overflow: hidden;
   box-sizing: border-box;
+  height: 100%;
+  width: 100%;
 }
+
+/*#endregion*/
+
+
+/*#region Reset header row background */
+.mr-table .BaseTable__table-main .BaseTable__header,
+.mr-table .BaseTable__header-row {
+  background: var(--background-main);
+}
+
+.mr-table .BaseTable__header-cell:hover {
+  background-color: var(--background-hover);
+}
+
+/*#endregion*/
+
+
+/*#region Reset styles of header cell labels */
+.mr-table .ag-header-cell-sortable {
+  cursor: grab;
+}
+.mr-table .mr-table-header-cell-label {
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  min-width: unset;
+  padding-left: 2px;
+  padding-right: 2px;
+  text-transform: unset;
+}
+
+/*#endregion*/
+
+
+/*#region Draggable column handle */
+.mr-table .draggable-handle {
+  width: 8px;
+  overflow: hidden;
+  position: absolute;
+  left: 4px;
+  display: none;
+  color: rgba(0, 0, 0, 0.56);
+  margin-top: 2px;
+}
+
+.mr-table .draggable-handle svg {
+  margin-left: -6px;
+}
+
+.mr-table .ag-header-cell:hover .draggable-handle {
+  display: unset;
+}
+
+.mr-table .ag-header-cell .draggable-handle:hover {
+  cursor: grab;
+}
+
+/*#endregion*/
+
+
+/*#region Dragging column headers */
+.mr-table>.BaseTable__header-cell {
+  background-color: #5f6368;
+  pointer-events: all !important;
+}
+
+.mr-table>.BaseTable__header-cell,
+.mr-table>.BaseTable__header-cell .draggable-handle {
+  cursor: grabbing !important;
+}
+
+/*#endregion*/

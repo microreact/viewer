@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import React from "react";
 
 // import "../styles/table-column-menu.css";
-import { DataColumn, DataFilter } from "../utils/prop-types";
+import { DataFilter, TableColumn } from "../utils/prop-types";
 import TableHeaderMenuContent from "../containers/TableColumnControls.react";
 import UiPopoverMenu from "./UiPopoverMenu.react";
 
@@ -25,7 +25,7 @@ class TableHeaderMenu extends React.PureComponent {
               { "mr-has-filters": !!this.props.filter },
             ),
             color: "primary",
-            component: "button",
+            component: "span",
             size: "small",
             children: (<FilterListRoundedIcon />),
           }
@@ -33,12 +33,11 @@ class TableHeaderMenu extends React.PureComponent {
         className="mr-table-column-menu"
         direction="right"
         ref={this.menuRef}
-        title={this.props.title}
+        title={this.props.tableColumn.title}
       >
         <TableHeaderMenuContent
-          dataColumn={props.dataColumn}
           menuRef={this.menuRef}
-          tableId={props.tableId}
+          tableColumn={props.tableColumn}
         />
       </UiPopoverMenu>
     );
@@ -49,10 +48,8 @@ class TableHeaderMenu extends React.PureComponent {
 TableHeaderMenu.displayName = "TableHeaderMenu";
 
 TableHeaderMenu.propTypes = {
-  dataColumn: DataColumn.isRequired,
+  tableColumn: TableColumn.isRequired,
   filter: DataFilter,
-  tableId: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
 };
 
 export default TableHeaderMenu;

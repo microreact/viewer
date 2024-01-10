@@ -131,7 +131,7 @@
   margin-top: 2px;
   margin-left: 2px;
   height: 16px !important;
-  z-index: 2;
+  z-index: 1;
   overflow: visible;
   position: relative;
   border: none;

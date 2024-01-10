@@ -1,9 +1,7 @@
-/* eslint-disable default-param-last */
 /* eslint-disable prefer-object-spread */
 
 import { swap } from "../utils/arrays";
 import { mapQueryToProps } from "../utils/query";
-import { createLookupMap } from "../utils/sets";
 import {
   newId,
   updateKeyedState as updateTable,
@@ -86,11 +84,12 @@ const reducer = (state = {}, action) => {
     }
 
     case "MICROREACT VIEWER/MOVE COLUMN": {
-      action.label = `Table: Move ${state[action.tableId].columns[action.payload.oldIndex].field} column`;
+      action.label = `Table: Move ${action.payload.field} column`;
+      const oldIndex = state[action.tableId].columns.findIndex((column) => column.field === action.payload.field)
       const updater = {
         columns: swap(
           state[action.tableId].columns,
-          action.payload.oldIndex,
+          oldIndex,
           action.payload.newIndex,
         ),
       };
@@ -98,19 +97,6 @@ const reducer = (state = {}, action) => {
         state,
         action.tableId,
         updater,
-      );
-    }
-
-    case "MICROREACT VIEWER/REORDER COLUMN": {
-      const columnsByField = createLookupMap(state[action.tableId].columns, "field");
-      const columns = [];
-      for (const field of action.payload) {
-        columns.push(columnsByField.get(field) || { "field": field });
-      }
-      return updateTable(
-        state,
-        action.tableId,
-        { columns },
       );
     }
 
@@ -124,7 +110,7 @@ const reducer = (state = {}, action) => {
     }
 
     case "MICROREACT VIEWER/SET VISIBLE COLUMNS": {
-      const columns = [ ...state[action.tableId].columns ];
+      const columns = [...state[action.tableId].columns];
       for (let index = 0; index < columns.length; index++) {
         const tableColumn = columns[index];
         columns[index] = {

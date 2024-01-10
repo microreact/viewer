@@ -2,28 +2,6 @@ import escapeRegexp from "escape-string-regexp";
 
 export function makePredicate(operator, expression) {
   switch (operator) {
-    case "has-one": {
-      return (x) => {
-        for (const item of expression) {
-          if (x.includes(item)) {
-            return true;
-          }
-        }
-        return false;
-      };
-    }
-
-    case "has-all": {
-      return (x) => {
-        for (const item of expression) {
-          if (!x.includes(item)) {
-            return false;
-          }
-        }
-        return true;
-      };
-    }
-
     case "in": {
       return (x) => (expression.includes(x?.valueOf()));
     }

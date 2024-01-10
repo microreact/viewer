@@ -4,9 +4,9 @@ import { connectToPresentState } from "../utils/state";
 
 import Component from "../components/TableHeaderMenu.react";
 
-function mapStateToProps(state, { dataColumn }) {
+function mapStateToProps(state, { tableColumn }) {
   return {
-    filter: dataFieldFilterSelector(state, dataColumn.name),
+    filter: dataFieldFilterSelector(state, tableColumn.field),
   };
 }
 
