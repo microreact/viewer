@@ -172,7 +172,7 @@ function ColumnHeader(props) {
 
 ColumnHeader.propTypes = {
   children: PropTypes.node,
-  className: PropTypes.string.isRequired,
+  className: PropTypes.string,
   dragableColumns: PropTypes.bool.isRequired,
   hasResizer: PropTypes.bool.isRequired,
   header: PropTypes.object.isRequired,
