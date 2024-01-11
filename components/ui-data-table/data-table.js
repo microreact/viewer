@@ -8,7 +8,6 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import {
   flexRender,
   getCoreRowModel,
-  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import { useVirtualizer, notUndefined } from "@tanstack/react-virtual";
@@ -46,10 +45,10 @@ function getColumnStyle(type, column) {
     style["position"] = "sticky";
     style[column.getIsPinned()] = column.getStart();
     if (type === "header") {
-      style["z-index"] = "2";
+      style["zIndex"] = "2";
     }
     if (type === "cell") {
-      style["z-index"] = "0";
+      style["zIndex"] = "0";
     }
   }
   return style;
