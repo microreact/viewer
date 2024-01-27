@@ -30,12 +30,13 @@ const TableColumns = React.memo(
           !props.isReadOnly && (
             <React.Fragment>
               <UiDropdownMenu.Item
+                className="mr-edit-table-menu__item mr-edit-table"
                 onClick={props.onEditPane}
               >
                 Edit Table
               </UiDropdownMenu.Item>
 
-              <Divider />
+              <Divider className="mr-edit-table-menu__item mr-divider" />
             </React.Fragment>
           )
         }
@@ -47,14 +48,16 @@ const TableColumns = React.memo(
         </UiDropdownMenu.Item>
 
         <UiDropdownMenu.Item
+          className="mr-edit-table-menu__item mr-reset-columns"
           onClick={props.onResetColumns}
         >
           Reset column order
         </UiDropdownMenu.Item>
 
-        <Divider />
+        <Divider className="mr-edit-table-menu__item mr-divider" />
 
         <UiDropdownMenu.Item
+          className="mr-edit-table-menu__item mr-download-csv"
           onClick={props.onDownloadCsv}
         >
           Download as CSV
