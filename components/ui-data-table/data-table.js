@@ -117,6 +117,7 @@ function UiDataTable(props) {
         if (props.groupableColumns && col.group) {
           if (!(col.group in indexByGroupName)) {
             cols.push({
+              "renderable": false,
               "header": col.group,
               "columns": [],
             });
