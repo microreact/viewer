@@ -104,7 +104,7 @@ function ColumnHeader(props) {
         }
 
         {
-          (canDrop && isOver && !!props.header.column.columnDef.dragable) && (
+          (canDrop && isOver && props.header.column.columnDef.enableDragging) && (
             <div
               className={styles["is-dragging-over"]}
               style={{ height: props.table.options.meta.style.height }}
@@ -113,7 +113,7 @@ function ColumnHeader(props) {
         }
 
         {
-          (props.dragableColumns && !!props.header.column.columnDef.dragable) && (
+          (props.header.column.columnDef.enableDragging) && (
             <div
               className={styles["draggable-handle"]}
               ref={dragRef}
@@ -153,8 +153,8 @@ function ColumnHeader(props) {
                       ""
                   ),
                 }
-            }
-          />
+              }
+            />
           )
         }
 

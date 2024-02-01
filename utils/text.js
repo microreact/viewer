@@ -8,7 +8,7 @@ function createContext() {
   context = canvas.getContext("2d");
   const font = "400 13px Roboto, Helvetica, Arial, sans-serif";
   context.font = font;
-  correctionUnit = context.measureText(" ").width;
+  correctionUnit = context.measureText(" ").width * 2.2;
   return context;
 }
 

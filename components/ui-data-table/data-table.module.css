@@ -102,6 +102,11 @@
   background-color: var(--background-main);
 }
 
+th.selection-column,
+td.selection-column {
+  padding: 0 0 0 4px;
+}
+
 .root tr.is-selected td {
   background-color: var(--background-highlight);
 }
@@ -109,7 +114,6 @@
 .root tr:hover td {
   background-color: var(--background-hover);
 }
-
 
 /* .root td span {
   max-width: 100%;
