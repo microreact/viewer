@@ -84,21 +84,34 @@ export default {
         {
           "field": "country",
           "label": "COUNTRY",
+          "pinned": "left",
+        },
+        // {
+        //   "field": "location",
+        //   "label": "LOCATION",
+        //   "fixed": true,
+        // },
+        {
+          "field": "geo::location",
         },
         {
-          "field": "location",
-          "label": "LOCATION",
-          "fixed": true,
+          "field": "geo::locImputation",
         },
         {
-          "field": "locImputation",
+          "field": "geo::nonJitLat",
         },
         {
-          "field": "nonJitLat",
+          "field": "geo::nonJitLong",
         },
-        {
-          "field": "nonJitLong",
-        },
+        // {
+        //   "field": "locImputation",
+        // },
+        // {
+        //   "field": "nonJitLat",
+        // },
+        // {
+        //   "field": "nonJitLong",
+        // },
         {
           "field": "latitude",
           // "fixed": true,
