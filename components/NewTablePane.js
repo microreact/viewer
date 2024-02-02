@@ -41,41 +41,6 @@ function renderHeader(
   );
 }
 
-function renderCell(
-  _,
-  columnDef,
-  row,
-) {
-  if (columnDef?.dataColumn?.urlField) {
-    return (
-      <a
-        href={row[columnDef.dataColumn.urlField]}
-        target="_blank"
-        rel="noreferrer"
-      >
-        {row[columnDef.id]}
-      </a>
-    );
-  }
-
-  return TextUtils.toText(
-    columnDef.dataColumn.dataType,
-    row[columnDef.id],
-    false /* convertBlanks */,
-  );
-
-  // const value = args.rowData[args.column.field];
-  // if (args.column.dataType === "date") {
-  //   return timestampToDateString(value);
-  // }
-  // if (args.column.dataType === "boolean") {
-  //   return (value === true) ? "✅" : (value === false) ? "❌" : null;
-  // }
-  // else {
-  //   return value;
-  // }
-}
-
 class TablePane extends React.PureComponent {
 
   // columnOrderSelector = createSelector(
@@ -142,6 +107,7 @@ class TablePane extends React.PureComponent {
         if (dataColumn && !tableColumn.hidden) {
           columns.push({
             dataColumn,
+            renderer: tableColumn.renderer,
             dragable: tableColumn.dragable ?? true,
             group: dataColumn.group,
             hasControls: tableColumn.hasControls ?? true,
@@ -149,7 +115,7 @@ class TablePane extends React.PureComponent {
             label: tableColumn.label || dataColumn.label || dataColumn.name,
             resizable: tableColumn.resizable ?? true,
             sortable: tableColumn.sortable ?? true,
-            fixed: tableColumn.fixed ?? false,
+            fixed: tableColumn.fixed ?? tableColumn.pinned ?? false,
             tableId: this.props.tableId,
             width: tableColumn.width || 120,
           });
@@ -159,6 +125,56 @@ class TablePane extends React.PureComponent {
       return columns;
     },
   );
+
+  renderCell = (
+    _,
+    columnDef,
+    row,
+  ) => {
+    const { props } = this;
+
+    const formattedValue = TextUtils.toText(
+      columnDef.dataColumn.dataType,
+      row[columnDef.id],
+      false /* convertBlanks */,
+    );
+
+    if (columnDef.renderer) {
+      const Component = props.componentsDictionary[columnDef.renderer];
+      return (
+        <Component
+          column={columnDef}
+          data={row}
+          value={formattedValue}
+        />
+      );
+    }
+
+    if (columnDef?.dataColumn?.urlField) {
+      return (
+        <a
+          href={row[columnDef.dataColumn.urlField]}
+          target="_blank"
+          rel="noreferrer"
+        >
+          { formattedValue }
+        </a>
+      );
+    }
+
+    return formattedValue;
+
+    // const value = args.rowData[args.column.field];
+    // if (args.column.dataType === "date") {
+    //   return timestampToDateString(value);
+    // }
+    // if (args.column.dataType === "boolean") {
+    //   return (value === true) ? "✅" : (value === false) ? "❌" : null;
+    // }
+    // else {
+    //   return value;
+    // }
+  }
 
   // tableColumnsSelector = createSelector(
   //   this.dataColumnsSelector,
@@ -216,7 +232,7 @@ class TablePane extends React.PureComponent {
           data={props.data[0]}
           displayMode={props.displayMode}
           height={props.height - 12}
-          cellRenderer={renderCell}
+          cellRenderer={this.renderCell}
           headerRenderer={renderHeader}
           width={props.width}
           onColumnsResize={props.onColumnsResize}

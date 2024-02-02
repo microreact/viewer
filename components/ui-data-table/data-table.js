@@ -41,9 +41,10 @@ function getColumnStyle(type, column) {
     "minWidth": column.getSize(),
     "maxWidth": column.getSize(),
   };
-  if (column.getIsPinned()) {
+  const pinnedLocation = column.getIsPinned(); // left, right (when pinned), otherwise null
+  if (pinnedLocation) {
     style["position"] = "sticky";
-    style[column.getIsPinned()] = column.getStart();
+    style[pinnedLocation] = column.getStart();
     if (type === "header") {
       style["zIndex"] = "2";
     }
@@ -63,7 +64,7 @@ function UiDataTable(props) {
       const indexByGroupName = {};
       if (props.selectableRows) {
         const id = "--ui-data-table-selection";
-        columnSizing[id] = 56;
+        columnSizing[id] = 24;
         columnPinning["left"].push(id);
         cols.push(
           {
@@ -80,16 +81,15 @@ function UiDataTable(props) {
             ),
             cell: ({ row }) => {
               return (
-                <div className="px-1">
-                  <IndeterminateCheckbox
-                    checked={row.getIsSelected()}
-                    disabled={!row.getCanSelect()}
-                    indeterminate={row.getIsSomeSelected()}
-                    onChange={row.getToggleSelectedHandler()}
-                  />
-                </div>
+                <IndeterminateCheckbox
+                  checked={row.getIsSelected()}
+                  disabled={!row.getCanSelect()}
+                  indeterminate={row.getIsSomeSelected()}
+                  onChange={row.getToggleSelectedHandler()}
+                />
               );
             },
+            className: styles["selection-column"],
           }
         );
       }
@@ -99,6 +99,7 @@ function UiDataTable(props) {
           "id": col.id,
           "accessorKey": col.id,
           // "header": col.label || col.id,
+          "enableDragging": col.fixed ? false : (col.dragable ?? props.dragableColumns),
           "enableResizing": col.resizable ?? props.resizableColumns,
           "enableColumnPinning": col.pinnable ?? props.pinnableColumns,
           // "renderable": col.renderable ?? true,
@@ -132,7 +133,7 @@ function UiDataTable(props) {
 
       return [cols, columnSizing, columnPinning];
     },
-    [props.columns, props.groupableColumns, props.minColumnWidth, props.pinnableColumns, props.resizableColumns, props.selectableRows],
+    [props.columns, props.dragableColumns, props.groupableColumns, props.minColumnWidth, props.pinnableColumns, props.resizableColumns, props.selectableRows],
   );
 
   const rowSelection = React.useMemo(
@@ -244,7 +245,12 @@ function UiDataTable(props) {
     }
     return (
       <ColumnHeader
-        className={(header.column.id === lastPinnedColumn) ? styles["is-pinned"] : undefined}
+        className={
+          cc([
+            (header.column.id === lastPinnedColumn) ? styles["is-pinned"] : undefined,
+            header.column.columnDef.className,
+          ])
+        }
         colSpan={header.colSpan}
         component={props.components.TableHeader}
         dragableColumns={props.dragableColumns}
@@ -266,11 +272,42 @@ function UiDataTable(props) {
             )
             :
             flexRender(
-              header.column.columnDef.header,
+              header.column.columnDef.label ?? header.column.columnDef.header,
               header.getContext(),
             )
         }
       </ColumnHeader>
+    );
+  };
+
+  const renderCellContent = (cell) => {
+    if (props.cellRenderer && (cell.column.columnDef.renderable ?? true)) {
+      return props.cellRenderer(
+        cell,
+        cell.column.columnDef,
+        cell.row.original,
+      );
+    }
+    return flexRender(
+      cell.column.columnDef.cell,
+      cell.getContext(),
+    );
+  };
+
+  const renderTableCell = (cell) => {
+    return (
+      <props.components.TableCell
+        key={cell.id}
+        style={getColumnStyle("cell", cell.column)}
+        className={
+          cc([
+            (cell.column.id === lastPinnedColumn) ? styles["is-pinned"] : undefined,
+            cell.column.columnDef.className,
+          ])
+        }
+      >
+        { renderCellContent(cell) }
+      </props.components.TableCell>
     );
   };
 
@@ -324,30 +361,7 @@ function UiDataTable(props) {
                     className={(row.getIsSelected()) ? styles["is-selected"] : undefined}
                   >
                     {
-                    row.getVisibleCells().map((cell) => {
-                      return (
-                        <props.components.TableCell
-                          key={cell.id}
-                          style={getColumnStyle("cell", cell.column)}
-                          className={(cell.column.id === lastPinnedColumn) ? styles["is-pinned"] : undefined}
-                        >
-                          {
-                            props.cellRenderer && (cell.column.columnDef.renderable ?? true)
-                              ?
-                              props.cellRenderer(
-                                cell,
-                                cell.column.columnDef,
-                                cell.row.original,
-                              )
-                              :
-                              flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext(),
-                              )
-                          }
-                        </props.components.TableCell>
-                      );
-                    })}
+                    row.getVisibleCells().map(renderTableCell)}
                   </props.components.TableRow>
                 );
               })
@@ -392,6 +406,7 @@ UiDataTable.propTypes = {
   groupableColumns: PropTypes.bool,
   headerRenderer: PropTypes.func,
   height: PropTypes.number.isRequired,
+  meta: PropTypes.object,
   minColumnWidth: PropTypes.number,
   onColumnExpand: PropTypes.func.isRequired,
   onColumnOrderChange: PropTypes.func.isRequired,
