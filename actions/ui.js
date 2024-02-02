@@ -31,6 +31,7 @@ import { addMissingPaneTabs } from "../utils/panes";
 import layoutModelSelector from "../selectors/panes/layout-model";
 import { setLayoutModel } from "./panes";
 import fullDatasetSelector from "../selectors/datasets/full-dataset";
+import { addMatrix } from "./matrices";
 
 function createLabelFromFileName(file, allFiles) {
   const hasMoreThanOfTheSameType = allFiles.filter((x) => x.type === file.type).length > 1;
@@ -209,6 +210,25 @@ export function commitFiles(fileDescriptors) {
         }
         //#endregion
       }
+      else if (file.type === "matrix") {
+        const paneId = file.paneId || newId(state.matrices, "matrix", paneIds);
+        paneIds.push(paneId);
+        const label = createLabelFromFileName(file, fileDescriptors);
+        actions.push(
+          addMatrix(
+            paneId,
+            label,
+            file.id,
+          )
+        );
+        if (!file.paneId) {
+          orphanPanes.push({
+            paneId,
+            label,
+            component: "Matrix",
+          });
+        }
+      }
       else if (file.type === "tree") {
         if (!hasDataFiles) {
           const leafLabels = newickLabels(file._content);
@@ -325,7 +345,7 @@ export function commitFiles(fileDescriptors) {
         pendingFiles: null,
       })
     );
-
+console.log({orphanPanes})
     if (orphanPanes.length && state.panes.model) {
       actions.push(
         setLayoutModel(

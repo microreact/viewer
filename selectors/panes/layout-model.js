@@ -66,6 +66,7 @@ const defaultLayoutSelector = createSelector(
   (state) => state.timelines,
   (state) => state.trees,
   (state) => state.slicers,
+  (state) => state.matrices,
   (
     charts,
     maps,
@@ -75,6 +76,7 @@ const defaultLayoutSelector = createSelector(
     timelines,
     trees,
     slicers,
+    matrices,
   ) => {
     let leftPanes = null;
     const topPanes = [];
@@ -170,6 +172,22 @@ const defaultLayoutSelector = createSelector(
             name: trees[treeId].title,
             component: "Tree",
             // config: { treeId },
+          })
+        ),
+      });
+    }
+
+    const matrixIds = Object.keys(matrices);
+    if (matrixIds.length) {
+      topPanes.push({
+        type: "tabset",
+        children: matrixIds.map(
+          (matrixId) => ({
+            id: matrixId,
+            type: "tab",
+            name: matrices[matrixId].title,
+            component: "Matrix",
+            // config: { matrixId },
           })
         ),
       });
