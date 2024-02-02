@@ -3,17 +3,18 @@
 .mr-table .mr-table-column-menu-trigger {
   background-color: inherit;
   border-radius: 2px;
-  display: none;
   font-size: 1rem;
   padding: 0;
   position: absolute;
-  right: 4px;
-  top: 10px;
+  right: 2px;
+  top: 50%;
+  transform: translate(0px, -8px);
+  opacity: 0;
 }
 
 .mr-table .mr-table-column-menu-trigger.mr-has-filters,
-.mr-table .ag-header-cell:hover .mr-table-column-menu-trigger {
-  display: unset;
+.mr-table th:hover .mr-table-column-menu-trigger {
+  opacity: 1;
 }
 
 .mr-table .mr-table-column-menu-trigger svg {
@@ -47,8 +48,7 @@
 }
 
 .mr-table-column-menu .mr-header {
-  max-width: calc(100% - 32px - 32px - 32px - 16px);
-  /* 3 buttons of 32px plys 8px margin on both sides */
+  max-width: calc(100% - 32px - 32px - 32px - 16px); /* 3 buttons of 32px plys 8px margin on both sides */
 }
 
 /*#endregion*/

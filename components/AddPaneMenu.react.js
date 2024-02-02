@@ -131,7 +131,7 @@ const AddPaneMenu = React.memo(
         <Divider />
 
         <UiDropdownMenu.Item
-          className="mr-add-pane-menu__item mr-edit-panels"
+          className="mr-add-pane-menu__item mr-edit-existing-panels mr-add-pane-menu__item mr-edit-panels"
           onClick={props.onEditPane}
         >
           <EditTwoToneIcon />

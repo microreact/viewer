@@ -3,7 +3,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import PropTypes from "prop-types";
 import React from "react";
 
-import { DataColumn } from "../utils/prop-types";
 import UiAnimation from "./UiAnimation.react";
 import UiControlsButton from "./UiControlsButton.react";
 import UiControlsMenu from "./UiControlsMenu.react";
@@ -11,6 +10,7 @@ import UiDropdownMenu from "./UiDropdownMenu.react";
 import UiRadioList from "./UiRadioList.react";
 import MultipleDataColumnsSelect from "./MultipleDataColumnsSelect.react";
 
+import { DataColumn } from "../utils/prop-types";
 // import ToggleSelectionOnlyButton from "./ToggleSelectionOnlyButton.react";
 
 const displayModes = [
@@ -44,9 +44,7 @@ const TableColumns = React.memo(
         <UiDropdownMenu.Item
           onClick={() => props.onHideUnselectedChange(!props.hideUnselected)}
         >
-          {props.hideUnselected ? "Show" : "Hide"}
-          {" "}
-          unselected entries
+          { props.hideUnselected ? "Show" : "Hide" } unselected entries
         </UiDropdownMenu.Item>
 
         <UiDropdownMenu.Item
