@@ -56,11 +56,12 @@ function getColumnStyle(type, column) {
 }
 
 function UiDataTable(props) {
-  const [columns, columnSizingState, columnPinningState] = React.useMemo(
+  const [columns, columnSizingState, columnPinningState, columnOrderState] = React.useMemo(
     () => {
       const cols = [];
       const columnSizing = {};
       const columnPinning = { "left": [], "right": [] };
+      const unpinnedColumns = [];
       const indexByGroupName = {};
       if (props.selectableRows) {
         const id = "--ui-data-table-selection";
@@ -106,15 +107,18 @@ function UiDataTable(props) {
           // cell: (info) => info.getValue(),
           // header: () => <span>Last Name</span>,
         };
+
         columnSizing[col.id] = col.width || props.minColumnWidth;
-        if (col.fixed) {
-          if (col.fixed === "right") {
-            columnPinning["right"].push(col.id);
-          }
-          else if (col.fixed === "left" || col.fixed === true) {
-            columnPinning["left"].push(col.id);
-          }
+        if (col.fixed === "right") {
+          columnPinning["right"].push(col.id);
         }
+        else if (col.fixed === "left" || col.fixed === true) {
+          columnPinning["left"].push(col.id);
+        }
+        else {
+          unpinnedColumns.push(col.id);
+        }
+
         if (props.groupableColumns && col.group) {
           if (!(col.group in indexByGroupName)) {
             cols.push({
@@ -131,7 +135,18 @@ function UiDataTable(props) {
         }
       }
 
-      return [cols, columnSizing, columnPinning];
+      const columnOrder = [
+        ...columnPinning.left,
+        ...unpinnedColumns,
+        ...columnPinning.right,
+      ];
+
+      return [
+        cols,
+        columnSizing,
+        columnPinning,
+        columnOrder,
+      ];
     },
     [props.columns, props.dragableColumns, props.groupableColumns, props.minColumnWidth, props.pinnableColumns, props.resizableColumns, props.selectableRows],
   );
@@ -162,9 +177,9 @@ function UiDataTable(props) {
     // debugHeaders: true,
     // debugColumns: true,
     state: {
+      columnOrder: columnOrderState,
       columnPinning: columnPinningState,
       columnSizing: columnSizingState,
-      columnOrder: columnPinningState.left,
       rowSelection,
     },
     columnResizeMode: "onEnd",
