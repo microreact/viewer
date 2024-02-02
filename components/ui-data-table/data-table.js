@@ -174,9 +174,7 @@ function UiDataTable(props) {
     enablePinning: props.pinnableColumns,
     getCoreRowModel: getCoreRowModel(),
     getRowId: (row) => row[props.rowId],
-    meta: {
-      ...props.meta,
-    },
+    meta: props.meta,
     style,
     onColumnOrderChange: props.onColumnOrderChange,
     onColumnSizingChange: (updater) => {
