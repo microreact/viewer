@@ -141,7 +141,7 @@ export async function loadFile(input, onProgress) {
     settings: input.settings,
   };
 
-  if (!input.type.includes("/")) {
+  if (!input.type?.includes("/")) {
     loadedFile.type = input.type;
   }
 

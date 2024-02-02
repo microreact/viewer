@@ -65,7 +65,7 @@ function UiDataTable(props) {
       const indexByGroupName = {};
       if (props.selectableRows) {
         const id = "--ui-data-table-selection";
-        columnSizing[id] = 24;
+        columnSizing[id] = 32;
         columnPinning["left"].push(id);
         cols.push(
           {
