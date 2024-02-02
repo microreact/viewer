@@ -38,8 +38,9 @@ const reorderColumn = (
 
 function ColumnHeader(props) {
   const { column } = props.header;
+  const { columnDef } = props.header.column;
 
-  const [{ canDrop, isOver }, dropRef] = useDrop({
+  const [{ canDrop, isOver, draggedItem }, dropRef] = useDrop({
     accept: "column",
     drop: (draggedColumn) => {
       const newColumnOrder = reorderColumn(
@@ -53,6 +54,7 @@ function ColumnHeader(props) {
       return {
         isOver: monitor.isOver(),
         canDrop: monitor.canDrop(),
+        draggedItem: monitor.getItem(),
       };
     },
   });
@@ -69,6 +71,8 @@ function ColumnHeader(props) {
     //   dropEffect: "move"
     // }
   });
+
+  const before = draggedItem?.getStart() > column.getStart();
 
   return (
     <props.component
@@ -95,32 +99,30 @@ function ColumnHeader(props) {
         className={styles["header-content"]}
       >
         {
-          (canDrop && !!props.header.column.columnDef.dragable) && (
+          (canDrop && !!columnDef.dragable) && (
             <div
               className={styles["drop-target"]}
               style={{ height: props.table.options.meta.style.height }}
             />
           )
         }
-
         {
-          (canDrop && isOver && props.header.column.columnDef.enableDragging) && (
+          (canDrop && isOver && columnDef.enableDragging) && (
             <div
-              className={styles["is-dragging-over"]}
+              className={before ? styles["is-dragging-over-before"] : styles["is-dragging-over-after"]}
               style={{ height: props.table.options.meta.style.height }}
             />
           )
         }
 
         {
-          (props.header.column.columnDef.enableDragging) && (
+          (columnDef.enableDragging) && (
             <div
               className={styles["draggable-handle"]}
               ref={dragRef}
               title="Drag to move column"
             >
-              <DragIndicatorSharpIcon
-              />
+              <DragIndicatorSharpIcon />
             </div>
           )
         }
@@ -129,7 +131,7 @@ function ColumnHeader(props) {
           (
             props.resizableColumns
             &&
-            !!props.header.column.columnDef.resizable
+            !!columnDef.resizable
             &&
             (!props.hasResizer || props.header.column.getIsResizing())
           ) && (
