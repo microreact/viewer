@@ -79,7 +79,7 @@ function DraggableColumnHeader({ header, table }) {
         (canDrop) && (
           <div
             className={styles["drop-target"]}
-            style={{ height: table.options.meta.style.height }}
+            style={{ height: table.options.style.height }}
           />
         )
       }
@@ -88,7 +88,7 @@ function DraggableColumnHeader({ header, table }) {
         (canDrop && isOver) && (
           <div
             className={styles["is-dragging-over"]}
-            style={{ height: table.options.meta.style.height }}
+            style={{ height: table.options.style.height }}
           />
         )
       }
@@ -102,7 +102,7 @@ function DraggableColumnHeader({ header, table }) {
           ])
         }
         // className={styles["drag-preview"]}
-        // style={{ height: table.options.meta.style.height }}
+        // style={{ height: table.options.style.height }}
       >
       {header.isPlaceholder
         ? null

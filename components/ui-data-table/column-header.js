@@ -102,7 +102,7 @@ function ColumnHeader(props) {
           (canDrop && !!columnDef.dragable) && (
             <div
               className={styles["drop-target"]}
-              style={{ height: props.table.options.meta.style.height }}
+              style={{ height: props.table.options.style.height }}
             />
           )
         }
@@ -110,7 +110,7 @@ function ColumnHeader(props) {
           (canDrop && isOver && columnDef.enableDragging) && (
             <div
               className={before ? styles["is-dragging-over-before"] : styles["is-dragging-over-after"]}
-              style={{ height: props.table.options.meta.style.height }}
+              style={{ height: props.table.options.style.height }}
             />
           )
         }
