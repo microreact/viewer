@@ -78,9 +78,16 @@
 .is-dragging-over {
   position: absolute;
   width: 3px;
-  left: 0;
   top: 0;
   background-color: gray;
+}
+.is-dragging-over-before {
+  composes: is-dragging-over;
+  left: 0;
+}
+.is-dragging-over-after {
+  composes: is-dragging-over;
+  right: 0;
 }
 
 .draggable-handle {
