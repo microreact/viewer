@@ -176,8 +176,8 @@ function UiDataTable(props) {
     getRowId: (row) => row[props.rowId],
     meta: {
       ...props.meta,
-      style,
     },
+    style,
     onColumnOrderChange: props.onColumnOrderChange,
     onColumnSizingChange: (updater) => {
       const before = columnSizingState;
