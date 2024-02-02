@@ -50,7 +50,7 @@ export default {
     },
     fonts: {
       headline: `"Space Grotesk", "Helvetica", "Arial", sans-serif`,
-      body: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+      body: `"Open Sans", "Helvetica", "Arial", sans-serif`,
     },
   },
 

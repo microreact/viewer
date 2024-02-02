@@ -1,4 +1,6 @@
-import { timestampToDateString } from "./datetime";
+import { document } from "global/document";
+
+import { timestampToDateString } from "./datetime.js";
 
 let context;
 let correctionUnit;
@@ -6,7 +8,7 @@ let correctionUnit;
 function createContext() {
   const canvas = document.createElement("canvas");
   context = canvas.getContext("2d");
-  const font = "400 14px Work Sans, Helvetica, Arial, sans-serif";
+  const font = "400 14px Open Sans, Helvetica, Arial, sans-serif";
   context.font = font;
   correctionUnit = context.measureText(" ").width * 2.2;
   return context;

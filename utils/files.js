@@ -42,6 +42,14 @@ export const FileKinds = [
     linkable: true,
   },
   {
+    extensions: [ "csv", "tsv" ],
+    nameValidator: /\.(csv|tsv)$/i,
+    format: "text/csv",
+    type: "matrix",
+    name: "Matrix (CSV or TSV)",
+    linkable: true,
+  },
+  {
     extensions: [ "nwk", "newick", "tree", "tre", "nexus", "nhx", "treefile" ],
     nameValidator: /\.(nwk|newick|tree|tre|nexus|nhx|treefile)$/i,
     format: "text/x-nh",
@@ -81,7 +89,7 @@ function base64ToBlob(base64) {
 
 function blobToBase64(blob) {
   return new Promise((resolve, _) => {
-    const reader = new FileReader();
+    const reader = new FileReader(); // eslint-disable-line no-undef
     reader.onloadend = () => resolve(reader.result);
     reader.readAsDataURL(blob);
   });
@@ -133,6 +141,10 @@ export async function loadFile(input, onProgress) {
     settings: input.settings,
   };
 
+  if (!input.type.includes("/")) {
+    loadedFile.type = input.type;
+  }
+
   loadedFile.name = normaliseFilename(input.name);
 
   // The format of local files can be guessed from file extension
@@ -140,35 +152,35 @@ export async function loadFile(input, onProgress) {
 
   let loader;
   if (loadedFile.format === "data") {
-    loadedFile.type = "data";
+    loadedFile.type ??= "data";
     loader = loadDataArray;
   }
   else if (loadedFile.format === "application/json") {
-    loadedFile.type = "microreact";
+    loadedFile.type ??= "microreact";
     loader = loadJsonFile;
   }
   else if (loadedFile.format === "text/csv") {
-    loadedFile.type = "data";
+    loadedFile.type ??= "data";
     loader = loadCsvFile;
   }
   else if (loadedFile.format === "application/x-speadsheet") {
-    loadedFile.type = "data";
+    loadedFile.type ??= "data";
     loader = loadSpeadsheetFile;
   }
   else if (loadedFile.format === "text/x-nh") {
-    loadedFile.type = "tree";
+    loadedFile.type ??= "tree";
     loader = loadTextFile;
   }
   else if (loadedFile.format === "text/vnd.graphviz") {
-    loadedFile.type = "network";
+    loadedFile.type ??= "network";
     loader = loadTextFile;
   }
   else if (loadedFile.format === "application/geo+json") {
-    loadedFile.type = "geo";
+    loadedFile.type ??= "geo";
     loader = loadGeoJsonFile;
   }
   else if (loadedFile.format === "text/markdown") {
-    loadedFile.type = "markdown";
+    loadedFile.type ??= "markdown";
     loader = loadTextFile;
   }
   else {
