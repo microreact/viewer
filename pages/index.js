@@ -4,7 +4,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-// import projectJson from "../public/data/euscape/index.js";
+import projectJson from "../public/data/euscape/index.js";
 // import projectJson from "../public/data/matrix/index2.js";
 
 let data;

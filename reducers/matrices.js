@@ -9,7 +9,7 @@ export default function (state = {}, action) {
   switch (action.type) {
 
     case "MICROREACT VIEWER/ADD MATRIX": {
-      const matrixId = action.payload.matrixId || newId(state, "matrix");
+      const matrixId = action.payload.paneId || newId(state, "matrix");
       return {
         ...state,
         [matrixId]: {

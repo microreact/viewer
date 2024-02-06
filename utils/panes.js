@@ -67,7 +67,7 @@ export function removeTabFromModel(model, tabId) {
 
 export function createNewTab(component) {
   addTab(
-    `Drag to add new ${component}`,
+    `Add new ${component}`,
     {
       new: true,
       component,

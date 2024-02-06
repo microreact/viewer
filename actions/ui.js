@@ -345,7 +345,6 @@ export function commitFiles(fileDescriptors) {
         pendingFiles: null,
       })
     );
-console.log({orphanPanes})
     if (orphanPanes.length && state.panes.model) {
       actions.push(
         setLayoutModel(

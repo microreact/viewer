@@ -34,61 +34,7 @@ const AddPaneMenu = React.memo(
           >
             <PaneIcon component="Chart" />
             &nbsp;
-            Create New Chart
-          </UiDropdownMenu.Item>
-
-          <UiDropdownMenu.Item
-            className="mr-add-map"
-            onClick={() => createNewTab("Map")}
-          >
-            <PaneIcon component="Map" />
-            &nbsp;
-            Create New Map
-          </UiDropdownMenu.Item>
-
-          <UiDropdownMenu.Item
-            className="mr-add-network"
-            onClick={() => createNewTab("Network")}
-          >
-            <PaneIcon component="Network" />
-            &nbsp;
-            Create New Network
-          </UiDropdownMenu.Item>
-
-          <UiDropdownMenu.Item
-            className="mr-add-note"
-            onClick={() => createNewTab("Note")}
-          >
-            <PaneIcon component="Note" />
-            &nbsp;
-            Create New Note
-          </UiDropdownMenu.Item>
-
-          <UiDropdownMenu.Item
-            className="mr-add-table"
-            onClick={() => createNewTab("Table")}
-          >
-            <PaneIcon component="Table" />
-            &nbsp;
-            Create New Table
-          </UiDropdownMenu.Item>
-
-          <UiDropdownMenu.Item
-            className="mr-add-timeline"
-            onClick={() => createNewTab("Timeline")}
-          >
-            <PaneIcon component="Timeline" />
-            &nbsp;
-            Create New Timeline
-          </UiDropdownMenu.Item>
-
-          <UiDropdownMenu.Item
-            className="mr-add-tree"
-            onClick={() => createNewTab("Tree")}
-          >
-            <PaneIcon component="Tree" />
-            &nbsp;
-            Create New Tree
+            Create new Chart
           </UiDropdownMenu.Item>
 
           <UiDropdownMenu.Item
@@ -97,7 +43,70 @@ const AddPaneMenu = React.memo(
           >
             <PaneIcon component="Slicer" />
             &nbsp;
-            Create New Data Slicer
+            Create new Data Slicer
+          </UiDropdownMenu.Item>
+
+          <UiDropdownMenu.Item
+            className="mr-add-matrix"
+            onClick={() => createNewTab("Matrix")}
+          >
+            <PaneIcon component="Matrix" />
+            &nbsp;
+            Create new Matrix
+          </UiDropdownMenu.Item>
+
+          <UiDropdownMenu.Item
+            className="mr-add-map"
+            onClick={() => createNewTab("Map")}
+          >
+            <PaneIcon component="Map" />
+            &nbsp;
+            Create new Map
+          </UiDropdownMenu.Item>
+
+          <UiDropdownMenu.Item
+            className="mr-add-network"
+            onClick={() => createNewTab("Network")}
+          >
+            <PaneIcon component="Network" />
+            &nbsp;
+            Create new Network
+          </UiDropdownMenu.Item>
+
+          <UiDropdownMenu.Item
+            className="mr-add-note"
+            onClick={() => createNewTab("Note")}
+          >
+            <PaneIcon component="Note" />
+            &nbsp;
+            Create new Note
+          </UiDropdownMenu.Item>
+
+          <UiDropdownMenu.Item
+            className="mr-add-table"
+            onClick={() => createNewTab("Table")}
+          >
+            <PaneIcon component="Table" />
+            &nbsp;
+            Create new Table
+          </UiDropdownMenu.Item>
+
+          <UiDropdownMenu.Item
+            className="mr-add-timeline"
+            onClick={() => createNewTab("Timeline")}
+          >
+            <PaneIcon component="Timeline" />
+            &nbsp;
+            Create new Timeline
+          </UiDropdownMenu.Item>
+
+          <UiDropdownMenu.Item
+            className="mr-add-tree"
+            onClick={() => createNewTab("Tree")}
+          >
+            <PaneIcon component="Tree" />
+            &nbsp;
+            Create new Tree
           </UiDropdownMenu.Item>
 
           {/*
@@ -133,8 +142,6 @@ const AddPaneMenu = React.memo(
             className="mr-edit-existing-panels"
             onClick={() => setShowUpdateFromMicroreactFileDialog(true)}
           >
-            <EditTwoToneIcon />
-            &nbsp;
             Update project
           </UiDropdownMenu.Item>
 
@@ -142,8 +149,6 @@ const AddPaneMenu = React.memo(
             className="mr-edit-existing-panels"
             onClick={props.onEditPane}
           >
-            <EditTwoToneIcon />
-            &nbsp;
             Edit Existing Panels
           </UiDropdownMenu.Item>
 

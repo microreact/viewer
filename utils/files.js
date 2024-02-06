@@ -141,7 +141,7 @@ export async function loadFile(input, onProgress) {
     settings: input.settings,
   };
 
-  if (!input.type?.includes("/")) {
+  if (input.type && !input.type?.includes("/")) {
     loadedFile.type = input.type;
   }
 
@@ -238,7 +238,6 @@ async function processFiles(files) {
   processedFiles.sort(
     (a, b) => (FileTypes.indexOf(a.type) - FileTypes.indexOf(b.type))
   );
-
   return processedFiles;
 }
 
