@@ -9,28 +9,30 @@ import TextField from "@mui/material/TextField";
 
 const UiTextfield = React.memo(
   (props) => {
+    const endAdornment = (
+      props.clearable
+        ? (
+          <InputAdornment position="end">
+            <IconButton
+              onClick={() => props.onChange(props.nullValue)}
+              edge="end"
+            >
+              <ClearRoundedIcon />
+            </IconButton>
+          </InputAdornment>
+        )
+        : undefined
+    );
     return (
       <TextField
         autoFocus={props.autoFocus}
         className={props.className}
         disabled={props.disabled}
         InputProps={
-          props.clearable
-            ?
-            {
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    onClick={() => props.onChange(props.nullValue)}
-                    edge="end"
-                  >
-                    <ClearRoundedIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }
-            :
-            undefined
+          {
+            "endAdornment": endAdornment,
+            "readOnly": props.readOnly,
+          }
         }
         helperText={props.helperText}
         label={props.label}
@@ -56,6 +58,7 @@ UiTextfield.propTypes = {
   label: PropTypes.string,
   nullValue: PropTypes.string,
   onChange: PropTypes.func,
+  readOnly: PropTypes.bool,
   style: PropTypes.object,
   type: PropTypes.string,
   value: PropTypes.string,
