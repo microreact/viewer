@@ -13,12 +13,13 @@ import { createSelector } from "reselect";
 // import "../styles/panes-editor.css";
 
 import MapPaneEditor from "../containers/MapPaneEditor.react";
+import MatrixPaneEditor from "../containers/MatrixPaneEditor.js";
 import NetworkPaneEditor from "../containers/NetworkPaneEditor.react";
 import PaneIcon from "./PaneIcon.react";
+import SlicerPaneEditor from "../containers/SlicerPaneEditor.react";
 import TablePaneEditor from "../containers/TablePaneEditor.react";
 import TimelinePaneEditor from "../containers/TimelinePaneEditor.react";
 import TreePaneEditor from "../containers/TreePaneEditor.react";
-import SlicerPaneEditor from "../containers/SlicerPaneEditor.react";
 import UiDialog from "./UiDialog.react";
 
 class PaneEditor extends React.PureComponent {
@@ -117,6 +118,15 @@ class PaneEditor extends React.PureComponent {
       return (
         <SlicerPaneEditor
           slicerId={pane.paneId}
+          key={key}
+        />
+      );
+    }
+
+    if (pane.component === "Matrix") {
+      return (
+        <MatrixPaneEditor
+          matrixId={pane.paneId}
           key={key}
         />
       );

@@ -1,17 +1,11 @@
 import Button from "@mui/material/Button";
 import PropTypes from "prop-types";
 import React from "react";
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemAvatar from "@mui/material/ListItemAvatar";
-import Avatar from "@mui/material/Avatar";
-import Paper from "@mui/material/Paper";
 import { createSelector } from "reselect";
 
 import UiDialog from "./UiDialog.react";
 import UiTextfield from "./UiTextfield.react";
+import FileEditor from "../containers/FileEditor.react";
 
 class UpdateFromMicroreact extends React.PureComponent {
 
@@ -20,101 +14,6 @@ class UpdateFromMicroreact extends React.PureComponent {
     this.state = {
       isEditor: props.isEditor,
     };
-  }
-
-  panesSelector = createSelector(
-    (props) => (props.layoutModel),
-    (layoutModel) => {
-      const panes = [];
-
-      for (const node of Object.values(layoutModel._idMap)) {
-        if (
-          node._attributes.type === "tab"
-          &&
-          node._attributes.component
-          &&
-          !node._attributes.id.startsWith("#")
-          &&
-          !node._attributes.id.startsWith("--mr-")
-        ) {
-          panes.push({
-            paneId: node._attributes.id,
-            component: node._attributes.component,
-            name: node._attributes.name,
-          });
-        }
-      }
-
-      return panes;
-    },
-  );
-
-  renderStep() {
-    const { props } = this;
-
-    const pane = this.panesSelector(props).find((x) => x.paneId === props.paneId);
-
-    if (!props.paneId || !pane) {
-      return null;
-    }
-
-    const key = [ props.isEditor, props.isValidator, props.paneId ].join("-");
-
-    if (pane.component === "Table") {
-      return (
-        <TablePaneEditor
-          tableId={pane.paneId}
-          key={key}
-        />
-      );
-    }
-
-    if (pane.component === "Map") {
-      return (
-        <MapPaneEditor
-          mapId={pane.paneId}
-          key={key}
-        />
-      );
-    }
-
-    if (pane.component === "Tree") {
-      return (
-        <TreePaneEditor
-          treeId={pane.paneId}
-          key={key}
-        />
-      );
-    }
-
-    if (pane.component === "Network") {
-      return (
-        <NetworkPaneEditor
-          networkId={pane.paneId}
-          key={key}
-        />
-      );
-    }
-
-    if (pane.component === "Timeline") {
-      return (
-        <TimelinePaneEditor
-          timelineId={pane.paneId}
-          key={key}
-        />
-      );
-    }
-
-    if (pane.component === "Slicer") {
-      return (
-        <SlicerPaneEditor
-          slicerId={pane.paneId}
-          key={key}
-        />
-      );
-    }
-
-    return null;
   }
 
   renderActions() {
@@ -172,7 +71,7 @@ class UpdateFromMicroreact extends React.PureComponent {
         // disableDividers
         fullWidth
         isOpen
-        maxWidth="md"
+        maxWidth="sm"
         onClose={props.onClose}
         title="Upload project from .microreact file"
       >
@@ -180,8 +79,11 @@ class UpdateFromMicroreact extends React.PureComponent {
           Select a <code>.microreact</code> file to update this project.
         </p>
         <p>
-          <UiTextfield
+          {/* <UiTextfield
             type="file"
+          /> */}
+          <FileEditor
+            label="Select a .microreact file"
           />
         </p>
       </UiDialog>

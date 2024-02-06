@@ -13,6 +13,7 @@ import { addTable, removeTable } from "./tables";
 import { addTimeline, removeTimeline } from "./timelines";
 import { addTree, removeTree } from "./trees";
 import { addSlicer, removeSlicer } from "./slicers";
+import { addMatrix } from "./matrices";
 
 export function addView(componentName) {
   return (dispatch, getState) => {
@@ -57,6 +58,11 @@ export function addView(componentName) {
       case "Tree": {
         const paneId = newId(state.trees, "tree");
         return dispatch(addTree(paneId));
+      }
+
+      case "Matrix": {
+        const paneId = newId(state.matrices, "matrix");
+        return dispatch(addMatrix(paneId));
       }
     }
   };
