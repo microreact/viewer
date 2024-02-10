@@ -125,6 +125,22 @@ export function normaliseFilename(input) {
   return filename.replace(/_/g, "-");
 }
 
+export function blobify(input) {
+  if (input && typeof input === "string") {
+    if (/^data:.*\/.*;base64,/i.test(input)) {
+      return base64ToBlob(input);
+    }
+    else {
+      return new Blob([ input ], { type: input.format });
+    }
+  }
+  if (input instanceof Blob) {
+    return input;
+  }
+  console.error(input);
+  throw new Error("Cannot convert input to Blob");
+}
+
 function guessFileFormat(fileName) {
   for (const { nameValidator, format } of FileKinds) {
     if (nameValidator.test(fileName)) {
@@ -201,15 +217,7 @@ export async function loadFile(input, onProgress) {
         loadedFile._content = await loader(loadedFile.url, loadedFile.settings, onProgress);
       }
       else if (input instanceof File || input.blob) {
-        loadedFile.blob = input.blob || input;
-        if (loadedFile.blob && typeof loadedFile.blob === "string") {
-          if (/^data:.*\/.*;base64,/i.test(loadedFile.blob)) {
-            loadedFile.blob = await base64ToBlob(loadedFile.blob);
-          }
-          else {
-            loadedFile.blob = new Blob([ loadedFile.blob ], { type: input.format });
-          }
-        }
+        loadedFile.blob = await blobify(input.blob || input);
         loadedFile._content = await loader(loadedFile.blob, loadedFile.settings, onProgress);
       }
     }
