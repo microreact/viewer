@@ -196,6 +196,12 @@
   padding-right: 0;
 }
 
+.mr-panes.flexlayout__layout .flexlayout__tab_button_content {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 /*#endregion*/
 
 
