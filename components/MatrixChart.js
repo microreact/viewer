@@ -68,7 +68,11 @@ function MattixChart(props) {
       splitArea: {
       },
     },
+    legend: {
+      show: true,
+    },
     visualMap: {
+      type: 'continuous', // defined as discrete visualMap
       // formatter: function (value){ return 0 },
       min: dataRange[0],
       max: dataRange[1],
@@ -76,6 +80,10 @@ function MattixChart(props) {
       orient: "horizontal",
       left: "center",
       bottom: "0",
+      hoverLink: false,
+      // show: false,
+      // inverse: true, 
+      text: [dataRange[1], dataRange[0]],
     },
     series: [
       {
@@ -86,7 +94,7 @@ function MattixChart(props) {
           show: false,
         },
         emphasis: {
-          disabled: true,
+          // disabled: true,
           // itemStyle: {
           //   borderType: "solid",
           //   borderWidth: 1,
