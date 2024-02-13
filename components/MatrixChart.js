@@ -84,12 +84,14 @@ function MattixChart(props) {
         label: {
           show: false,
         },
-        // emphasis: {
-        //   itemStyle: {
-        //     shadowBlur: 10,
-        //     shadowColor: 'rgba(0, 0, 0, 0.5)'
-        //   }
-        // }
+        emphasis: {
+          disabled: true,
+          // itemStyle: {
+          //   borderType: "solid",
+          //   borderWidth: 1,
+          //   borderColor: "black",
+          // }
+        },
       },
     ],
   };
