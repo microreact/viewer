@@ -45,6 +45,7 @@ function MattixChart(props) {
       position: "top",
     },
     grid: {
+      containLabel: true,
       // height: '50%',
       // width: '80%',
       // top: '10%',
