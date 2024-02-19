@@ -87,7 +87,7 @@ function base64ToBlob(base64) {
   return fetch(base64).then((res) => res.blob());
 }
 
-function blobToBase64(blob) {
+export function blobToBase64(blob) {
   return new Promise((resolve, _) => {
     const reader = new FileReader(); // eslint-disable-line no-undef
     reader.onloadend = () => resolve(reader.result);
