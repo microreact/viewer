@@ -73,51 +73,31 @@ export default {
       "title": "Metadata",
       "columns": [
         {
-          "field": "X",
+          "field": "number",
         },
-        // {
-        //   "field": "id",
-        // },
-        // {
-        //   "field": "number",
-        // },
+        {
+          "field": "id",
+        },
         {
           "field": "country",
-          "label": "COUNTRY",
-          "pinned": "left",
-        },
-        // {
-        //   "field": "location",
-        //   "label": "LOCATION",
-        //   "fixed": true,
-        // },
-        {
-          "field": "geo::location",
         },
         {
-          "field": "geo::locImputation",
+          "field": "location",
         },
         {
-          "field": "geo::nonJitLat",
+          "field": "locImputation",
         },
         {
-          "field": "geo::nonJitLong",
+          "field": "nonJitLat",
         },
-        // {
-        //   "field": "locImputation",
-        // },
-        // {
-        //   "field": "nonJitLat",
-        // },
-        // {
-        //   "field": "nonJitLong",
-        // },
+        {
+          "field": "nonJitLong",
+        },
         {
           "field": "latitude",
-          // "fixed": true,
         },
         {
-          // "field": "longitude",
+          "field": "longitude",
         },
         {
           "field": "collection_date",
@@ -125,27 +105,27 @@ export default {
         {
           "field": "dateImputation",
         },
-        // {
-        //   "field": "year",
-        // },
-        // {
-        //   "field": "month",
-        // },
-        // {
-        //   "field": "day",
-        // },
+        {
+          "field": "year",
+        },
+        {
+          "field": "month",
+        },
+        {
+          "field": "day",
+        },
       ],
     },
   },
-  // "timelines": {
-  //   "timeline-1": {
-  //     "title": "Timeline",
-  //     "dataType": "year-month-day",
-  //     "yearField": "year",
-  //     "monthField": "month",
-  //     "dayField": "day",
-  //   },
-  // },
+  "timelines": {
+    "timeline-1": {
+      "title": "Timeline",
+      "dataType": "year-month-day",
+      "yearField": "year",
+      "monthField": "month",
+      "dayField": "day",
+    },
+  },
   "trees": {
     "tree-1": {
       "title": "Tree",

@@ -54,9 +54,9 @@ class TablePane extends React.PureComponent {
     columnIndex: null,
     rowIndex: null,
     scrollToRow: 0,
-  };
+  }
 
-  tableRef = React.createRef();
+  tableRef = React.createRef()
 
   // TODO: merge these two selectors
   dataColumnsSelector = createSelector(
@@ -253,7 +253,7 @@ class TablePane extends React.PureComponent {
         { cells }
       </SortableContainer>
     );
-  };
+  }
 
   render() {
     const { props } = this;

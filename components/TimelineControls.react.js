@@ -75,7 +75,7 @@ export default class TimelineControls extends React.PureComponent {
 
       return marks;
     },
-  );
+  )
 
   boundsIndecies = () => {
     const { props } = this;
@@ -177,13 +177,12 @@ export default class TimelineControls extends React.PureComponent {
             !props.isReadOnly && (
               <React.Fragment>
                 <UiDropdownMenu.Item
-                  className="mr-edit-timeline-menu__item mr-edit-timeline"
                   onClick={props.onEditPane}
                 >
                   Edit Timeline
                 </UiDropdownMenu.Item>
 
-                <Divider className="mr-edit-tree-menu__item mr-divider" />
+                <Divider />
               </React.Fragment>
             )
           }
@@ -206,19 +205,19 @@ export default class TimelineControls extends React.PureComponent {
         />
         <UiAnimation in={props.controls}>
           <UiControlsButton
-            onClick={
-              () => {
-                const [, upperIndex] = this.boundsIndecies();
-                const marks = this.marksSelector(props);
-                const delta = (marks.length - 1) - upperIndex;
-                if (delta > 0) {
-                  this.moveBounds(delta, delta);
+              onClick={
+                () => {
+                  const [ , upperIndex ] = this.boundsIndecies();
+                  const marks = this.marksSelector(props);
+                  const delta = (marks.length - 1) - upperIndex;
+                  if (delta > 0) {
+                    this.moveBounds(delta, delta);
+                  }
                 }
               }
-            }
-          >
-            <SkipNextRoundedIcon />
-          </UiControlsButton>
+            >
+              <SkipNextRoundedIcon />
+            </UiControlsButton>
 
           <UiControlsButton
             onClick={() => this.moveBounds(+1, +1)}

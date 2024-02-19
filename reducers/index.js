@@ -1,23 +1,22 @@
 import { combineReducers } from "redux";
 import undoable from "redux-undo";
 
-import charts from "./charts.js";
-import config from "./config.js";
-import datasets from "./datasets.js";
-import files from "./files.js";
-import filters from "./filters.js";
-import matrices from "./matrices.js";
-import maps from "./maps.js";
-import meta from "./meta.js";
-import networks from "./networks.js";
-import notes from "./notes.js";
-import panes from "./panes.js";
-import slicers from "./slicers.js";
-import styles from "./styles.js";
-import tables from "./tables.js";
-import timelines from "./timelines.js";
-import trees from "./trees.js";
-import views from "./views.js";
+import charts from "./charts";
+import config from "./config";
+import datasets from "./datasets";
+import files from "./files";
+import filters from "./filters";
+import maps from "./maps";
+import meta from "./meta";
+import networks from "./networks";
+import notes from "./notes";
+import panes from "./panes";
+import slicers from "./slicers";
+import styles from "./styles";
+import tables from "./tables";
+import timelines from "./timelines";
+import trees from "./trees";
+import views from "./views";
 
 const combinedReducer = combineReducers({
   charts,
@@ -25,7 +24,6 @@ const combinedReducer = combineReducers({
   datasets,
   files,
   filters,
-  matrices,
   maps,
   meta,
   networks,

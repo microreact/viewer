@@ -16,6 +16,7 @@ const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 function getOptionLabel(option) {
+  console.log({option})
   if (typeof option === "string" || typeof option === "number") {
     return option.toString();
   }

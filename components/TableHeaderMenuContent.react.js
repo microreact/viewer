@@ -18,7 +18,7 @@ import Box from "@mui/material/Box";
 
 // import "../styles/table-column-controls.css";
 
-import { DataColumn, DataFilter, DataType, ReactRef, TableColumn } from "../utils/prop-types";
+import { DataFilter, ReactRef, TableColumn } from "../utils/prop-types";
 
 import UiSvgIcon from "./UiSvgIcon.react";
 import { triggerWindowResize, nextTick } from "../utils/browser";
@@ -56,7 +56,7 @@ class TableHeaderMenuContent extends React.PureComponent {
     conditionOperator: (this.props.filter && this.props.filter.operator !== "in") ? this.props.filter.operator : undefined,
     conditionValue: (this.props.filter && this.props.filter.operator !== "in") ? this.props.filter.value : undefined,
     expandedSection: (this.props.filter && this.props.filter.operator !== "in") ? "condition" : "values",
-  };
+  }
 
   componentDidMount() {
     this.inputEL.current.focus();
@@ -70,57 +70,57 @@ class TableHeaderMenuContent extends React.PureComponent {
       conditionOperator: event.target.value,
       conditionValue: this.state.conditionValue,
     });
-  };
+  }
 
   handleConditionValueChange = (event) => {
     const conditionValue = this.state.conditionValue ? [ ...this.state.conditionValue ] : [];
     conditionValue[parseInt(event.target.name, 10)] = event.target.value;
     this.setState({ conditionValue });
-  };
+  }
 
   handleAccordionChange = (section, isExpanded) => {
     this.setState({ expandedSection: isExpanded ? section : false });
     triggerWindowResize(128);
-  };
+  }
 
   handleApplyFilter = (event) => {
     event.preventDefault();
     this.props.onColumnFilterChange(
-      this.props.dataColumn.name,
+      this.props.tableColumn.field,
       this.state.conditionOperator,
       this.state.conditionValue
     );
     this.setState({ isOpen: false });
     this.closeMenu();
-  };
+  }
 
   handleClearFilter = () => {
     this.props.onColumnFilterChange(
-      this.props.dataColumn.name,
+      this.props.tableColumn.field,
       null,
       null,
     );
     this.setState({ isOpen: false });
-  };
+  }
 
   handleFilterByValuesChange = (selection) => {
     this.props.onColumnFilterChange(
-      this.props.dataColumn.name,
+      this.props.tableColumn.field,
       selection.length ? "in" : null,
       selection,
     );
-  };
+  }
 
   closeMenu = () => {
     this.props.menuRef?.current.close();
-  };
+  }
 
   sortBy = (event, direction) => {
     this.props.onColumnSort(
-      this.props.dataColumn.name,
+      this.props.tableColumn.field,
       direction,
     );
-  };
+  }
 
   render() {
     const { props } = this;
@@ -146,7 +146,7 @@ class TableHeaderMenuContent extends React.PureComponent {
               >
 
                 <IconButton
-                  onClick={() => this.props.onColumnHide(this.props.dataColumn.name)}
+                  onClick={() => this.props.onColumnHide(this.props.tableColumn.field)}
                   size="small"
                   title="Hide this column"
                 >
@@ -154,7 +154,7 @@ class TableHeaderMenuContent extends React.PureComponent {
                 </IconButton>
 
                 <IconButton
-                  onClick={() => this.props.onColumnExpand(this.props.dataColumn.name)}
+                  onClick={() => this.props.onColumnExpand(this.props.tableColumn.field)}
                   size="small"
                   title="Expand this column"
                 >
@@ -172,7 +172,7 @@ class TableHeaderMenuContent extends React.PureComponent {
                 Sort
                 <ToggleButtonGroup
                   size="small"
-                  value={this.props.dataColumn.sort}
+                  value={this.props.tableColumn.sort}
                   exclusive
                   onChange={this.sortBy}
                 >
@@ -258,7 +258,7 @@ class TableHeaderMenuContent extends React.PureComponent {
                 variant="outlined"
                 size="small"
               >
-                { operatorsByFieldDataType[props.dataColumn.dataType] }
+                { operatorsByFieldDataType[props.tableColumn.dataType] }
               </TextField>
 
               <Box
@@ -274,7 +274,7 @@ class TableHeaderMenuContent extends React.PureComponent {
                   variant="outlined"
                   size="small"
                   label={isMultiValue ? "From" : "Value"}
-                  type={props.dataColumn.dataType}
+                  type={props.tableColumn.dataType}
                   name="0"
                   style={{ width: "100%" }}
                 />
@@ -286,7 +286,7 @@ class TableHeaderMenuContent extends React.PureComponent {
                       variant="outlined"
                       size="small"
                       label="To"
-                      type={props.dataColumn.dataType}
+                      type={props.tableColumn.dataType}
                       style={{ marginLeft: 8, width: "100%" }}
                       name="1"
                     />
@@ -328,7 +328,7 @@ class TableHeaderMenuContent extends React.PureComponent {
           </AccordionSummary>
           <AccordionDetails>
             <DataColumnFilterByValues
-              field={props.dataColumn.name}
+              field={props.tableColumn.field}
             />
           </AccordionDetails>
         </Accordion>
@@ -341,13 +341,13 @@ class TableHeaderMenuContent extends React.PureComponent {
 TableHeaderMenuContent.displayName = "TableHeaderMenuContent";
 
 TableHeaderMenuContent.propTypes = {
-  dataColumn: DataColumn.isRequired,
   filter: DataFilter,
   menuRef: ReactRef,
   onColumnExpand: PropTypes.func.isRequired,
   onColumnFilterChange: PropTypes.func.isRequired,
   onColumnHide: PropTypes.func.isRequired,
   onColumnSort: PropTypes.func.isRequired,
+  tableColumn: TableColumn,
 };
 
 export default TableHeaderMenuContent;

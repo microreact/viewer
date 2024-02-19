@@ -4,13 +4,12 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-import projectJson from "../public/data/euscape/index.js";
-// import projectJson from "../public/data/matrix/index2.js";
+import projectJson from "../public/data/ebola";
 
 let data;
 let files;
 
-// data = projectJson;
+data = projectJson;
 // files = [{ url: "https://microreact.org/api/projects/json?project=rcL4EAqWx7LfhnsUyFnPSX", format: "application/json" } ];
 // files = [{ url: "https://microreact.org/api/projects/json?project=dw4UAy2YoxGTvGTemCZY9K", format: "application/json" } ];
 

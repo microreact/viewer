@@ -1,6 +1,4 @@
-import { document } from "global/document";
-
-import { timestampToDateString } from "./datetime.js";
+import { timestampToDateString } from "./datetime";
 
 let context;
 let correctionUnit;
@@ -8,9 +6,9 @@ let correctionUnit;
 function createContext() {
   const canvas = document.createElement("canvas");
   context = canvas.getContext("2d");
-  const font = "400 14px Open Sans, Helvetica, Arial, sans-serif";
+  const font = "400 13px Roboto, Helvetica, Arial, sans-serif";
   context.font = font;
-  correctionUnit = context.measureText(" ").width * 2.2;
+  correctionUnit = context.measureText(" ").width;
   return context;
 }
 
@@ -56,6 +54,6 @@ export function toText(dataType, value, convertBlanks = true) {
   }
 
   else {
-    return value?.toString();
+    return value;
   }
 }

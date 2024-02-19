@@ -32,14 +32,3 @@ export function intersect(sets) {
   }
   return res;
 }
-
-export function createLookupMap(
-  items,
-  keyAttribute,
-) {
-  const map = new Map();
-  for (const col of items) {
-    map.set(col[keyAttribute], col);
-  }
-  return map;
-}

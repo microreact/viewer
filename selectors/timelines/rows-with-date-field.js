@@ -83,14 +83,7 @@ const rowsWithDateFieldSelector = createKeyedStateSelector(
       const valueDataColumn = fieldsMap.get(valueFieldName);
       if (valueDataColumn) {
         for (const row of rows) {
-          const cellValue = row[valueDataColumn.name];
-          const dateValue = (
-            row[valueDataColumn.name] instanceof Date
-              ?
-              row[valueDataColumn.name] :
-              new Date(row[valueDataColumn.name])
-          );
-          if (cellValue && isFinite(dateValue)) {
+          if (row[valueDataColumn.name] instanceof Date && isFinite(row[valueDataColumn.name])) {
             // const dateInstance = (
             //   (timelineFields.format && timelineFields.format !== valueDataColumn.format)
             //     ?
@@ -99,7 +92,7 @@ const rowsWithDateFieldSelector = createKeyedStateSelector(
             //     row[valueDataColumn.name]
             // );
 
-            const timestamp = dateValue.valueOf();
+            const timestamp = row[valueDataColumn.name].valueOf();
 
             if (timestamp < minDate) {
               minDate = timestamp;
@@ -108,7 +101,7 @@ const rowsWithDateFieldSelector = createKeyedStateSelector(
               maxDate = timestamp;
             }
 
-            row[timelineFieldName] = dateValue;
+            row[timelineFieldName] = row[valueDataColumn.name];
           }
         }
 

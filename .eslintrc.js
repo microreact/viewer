@@ -8,8 +8,5 @@ module.exports = {
     "ecmaVersion": "latest",
   },
   "rules": {
-    "dot-notation": 0,
-    "react/react-in-jsx-scope": 0,
-    "import/extensions": 0,
   },
 };

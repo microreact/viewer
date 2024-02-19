@@ -1,9 +1,7 @@
-/* eslint-disable default-param-last */
 /* eslint-disable prefer-object-spread */
 
 import { swap } from "../utils/arrays";
 import { mapQueryToProps } from "../utils/query";
-import { createLookupMap } from "../utils/sets";
 import {
   newId,
   updateKeyedState as updateTable,
@@ -98,19 +96,6 @@ const reducer = (state = {}, action) => {
         state,
         action.tableId,
         updater,
-      );
-    }
-
-    case "MICROREACT VIEWER/REORDER COLUMN": {
-      const columnsByField = createLookupMap(state[action.tableId].columns, "field");
-      const columns = [];
-      for (const field of action.payload) {
-        columns.push(columnsByField.get(field) || { "field": field });
-      }
-      return updateTable(
-        state,
-        action.tableId,
-        { columns },
       );
     }
 

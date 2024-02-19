@@ -52,7 +52,7 @@ class FilesQueue extends React.PureComponent {
     }
 
     return props.onCommitFiles(files);
-  };
+  }
 
   filesSelector = createSelector(
     (props) => props.pendingFiles,
@@ -68,36 +68,31 @@ class FilesQueue extends React.PureComponent {
 
       return files;
     },
-  );
+  )
 
-  handleFileChange = (file, updater) => {
+  handleFileChange = (file, key, value) => {
     const files = [ ...this.props.pendingFiles ];
 
     const fileIndex = files.indexOf(file);
     if (fileIndex >= 0) {
-      if (updater === undefined) {
+      if (value === undefined) {
         files.splice(fileIndex, 1);
       }
       else {
         files[fileIndex] = {
           ...files[fileIndex],
-          ...updater,
+          [key]: value,
         };
       }
     }
     else {
       files.push({
         ...(file || {}),
-        ...updater,
+        [key]: value,
       });
     }
 
     this.props.onPendingFileChange(files);
-  };
-
-  handleFormatChange = (file, value) => {
-    const { type, format } = FileKinds.find((x) => `${x.type}-${x.format}` === value);
-    this.handleFileChange(file, { type, format });
   };
 
   renderFileError(fileId) {
@@ -165,7 +160,7 @@ class FilesQueue extends React.PureComponent {
                           <UiTextfield
                             clearable={!!row.url}
                             label="Enter URL"
-                            onChange={(value) => this.handleFileChange(row, { "url": value })}
+                            onChange={(value) => this.handleFileChange(row, "url", value)}
                             size="small"
                             style={{ width: "100%" }}
                             value={row.url ?? ""}
@@ -177,7 +172,7 @@ class FilesQueue extends React.PureComponent {
                         fileNameCell = (
                           <UiTextfield
                             clearable
-                            onChange={(value) => this.handleFileChange(row, undefined)}
+                            onChange={(value) => this.handleFileChange(row, "blob", undefined)}
                             readOnly
                             size="small"
                             style={{ width: "100%" }}
@@ -197,8 +192,8 @@ class FilesQueue extends React.PureComponent {
                             <TextField
                               select
                               label=""
-                              value={(row.type && row.format) ? `${row.type}-${row.format}` : ""}
-                              onChange={(event) => this.handleFormatChange(row, event.target.value)}
+                              value={row.format ?? ""}
+                              onChange={(event) => this.handleFileChange(row, "format", event.target.value)}
                               variant="outlined"
                               size="small"
                               style={{ width: "100%" }}
@@ -207,10 +202,7 @@ class FilesQueue extends React.PureComponent {
                               {
                                 FileKinds.filter((x) => x.linkable).map(
                                   (option) => (
-                                    <MenuItem
-                                      key={`${option.type}-${option.format}`}
-                                      value={`${option.type}-${option.format}`}
-                                    >
+                                    <MenuItem key={option.format} value={option.format}>
                                       { option.name }
                                     </MenuItem>
                                   )
@@ -227,7 +219,7 @@ class FilesQueue extends React.PureComponent {
                   <TableCell>
                     <UiTextfield
                       label="Enter URL"
-                      onChange={(value) => this.handleFileChange({ id: newFileId }, { "url": value })}
+                      onChange={(value) => this.handleFileChange({ id: newFileId }, "url", value)}
                       size="small"
                       style={{ width: "100%" }}
                       value={""}

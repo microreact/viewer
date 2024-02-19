@@ -51,7 +51,7 @@ class UiDialog extends React.PureComponent {
           )
         }
         container={getContainerElement}
-        // disableBackdropClick
+        disableBackdropClick
         fullWidth
         maxWidth={props.maxWidth}
         onClose={this.close}

@@ -1,9 +1,4 @@
-import {
-  downloadAsCsv,
-  resetColumns,
-  setVisibleColumns,
-  update,
-} from "../actions/tables";
+import { update, setVisibleColumns, downloadAsCsv } from "../actions/tables";
 import { openPaneEditor } from "../actions/ui";
 
 import Component from "../components/TableControls.react";
@@ -31,7 +26,6 @@ const mapDispatchToProps = (dispatch, { tableId }) => ({
   onDownloadCsv: () => dispatch(downloadAsCsv(tableId)),
   onEditPane: () => dispatch(openPaneEditor(tableId)),
   onHideUnselectedChange: (value) => dispatch(update(tableId, "hideUnselected", value)),
-  onResetColumns: () => dispatch(resetColumns(tableId)),
   onShowSelecttionChange: (value) => dispatch(update(tableId, "showSelection", value)),
   onVisibleFieldsChange: (fields) => dispatch(setVisibleColumns(tableId, fields)),
 });

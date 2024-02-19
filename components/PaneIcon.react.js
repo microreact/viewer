@@ -11,9 +11,8 @@ import DescriptionTwoToneIcon from "@mui/icons-material/DescriptionTwoTone";
 import UndoRoundedIcon from "@mui/icons-material/UndoRounded";
 
 import {
-  mdiDataMatrix,
-  mdiFilter,
   mdiGraphql,
+  mdiFilter,
 } from "@mdi/js";
 
 import RectangularTreeIcon from "./RectangularTreeIcon.react";
@@ -58,9 +57,6 @@ const PaneIcon = React.memo(
 
       case "Views":
         return (<ShareTwoToneIcon />);
-
-      case "Matrix":
-        return (<UiSvgIcon >{ mdiDataMatrix }</UiSvgIcon>);
 
       default:
         return (<DescriptionTwoToneIcon />);

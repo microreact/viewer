@@ -4,8 +4,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Divider from "@mui/material/Divider";
 
 import { TreeType } from "../utils/prop-types";
-import TreeMetadataMenu from "../containers/TreeMetadataMenu.react";
-import TreeStyleMenu from "../containers/TreeStyleMenu.react";
 import UiAnimation from "./UiAnimation.react";
 import CircularTreeIcon from "./CircularTreeIcon.react";
 import DiagonalTreeIcon from "./DiagonalTreeIcon.react";
@@ -13,6 +11,8 @@ import HierarchicalTreeIcon from "./HierarchicalTreeIcon.react";
 import LassoButton from "./LassoButton.react";
 import RadialTreeIcon from "./RadialTreeIcon.react";
 import RectangularTreeIcon from "./RectangularTreeIcon.react";
+import TreeMetadataMenu from "../containers/TreeMetadataMenu.react";
+import TreeStyleMenu from "../containers/TreeStyleMenu.react";
 import UiSpeedDial from "./UiSpeedDial.react";
 import UiDropdownMenu from "./UiDropdownMenu.react";
 import UiControlsButton from "./UiControlsButton.react";
@@ -56,13 +56,12 @@ const TreeControls = React.memo(
           !props.isReadOnly && (
             <React.Fragment>
               <UiDropdownMenu.Item
-                className="mr-edit-tree-menu__item mr-edit-tree"
                 onClick={props.onEditPane}
               >
                 Edit Tree
               </UiDropdownMenu.Item>
 
-              <Divider className="mr-edit-tree-menu__item mr-divider" />
+              <Divider />
             </React.Fragment>
           )
         }

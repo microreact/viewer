@@ -14,7 +14,6 @@ import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 
 // import "../styles/panes-editor.css";
 import { nextTick } from "../utils/browser";
-import { matrix } from "echarts";
 
 class FileEditor extends React.PureComponent {
 
@@ -47,15 +46,7 @@ class FileEditor extends React.PureComponent {
 
   onFileInputChange = (event) => {
     if (event.target.files && event.target.files.length === 1) {
-      const { name, format, size } = event.target.files[0];
-      const file = {
-        name,
-        format,
-        size,
-        blob: event.target.files[0],
-        type: this.props.defaultFileType,
-      };
-      this.props.onFileChange(file);
+      this.props.onFileChange(event.target.files[0]);
     }
   };
 
@@ -235,9 +226,7 @@ class FileEditor extends React.PureComponent {
 FileEditor.displayName = "FileEditor";
 
 FileEditor.propTypes = {
-  defaultFileType: PropTypes.string,
   file: PropTypes.object,
-  label: PropTypes.string,
   onFileChange: PropTypes.func.isRequired,
 };
 
