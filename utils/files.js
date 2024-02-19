@@ -127,7 +127,8 @@ export function normaliseFilename(input) {
 
 export function blobify(input) {
   if (input && typeof input === "string") {
-    if (/^data:.*\/.*;base64,/i.test(input)) {
+    if (input.startsWith("data:")) {
+    // if (/^data:.*\/.*;base64,/i.test(input)) {
       return base64ToBlob(input);
     }
     else {
