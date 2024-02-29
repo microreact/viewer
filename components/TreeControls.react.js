@@ -6,6 +6,7 @@ import Divider from "@mui/material/Divider";
 import { TreeType } from "../utils/prop-types";
 import TreeMetadataMenu from "../containers/TreeMetadataMenu.react";
 import TreeStyleMenu from "../containers/TreeStyleMenu.react";
+import { publish } from "../utils/events.js";
 import UiAnimation from "./UiAnimation.react";
 import CircularTreeIcon from "./CircularTreeIcon.react";
 import DiagonalTreeIcon from "./DiagonalTreeIcon.react";
@@ -82,6 +83,15 @@ const TreeControls = React.memo(
         >
           Download as SVG image
         </UiDropdownMenu.Item>
+        {props.actions.map((action) => (
+          <UiDropdownMenu.Item
+            key={action.event}
+            onClick={() => publish(action.event, { id: props.treeId })}
+          >
+            {action.label}
+          </UiDropdownMenu.Item>
+        ))}
+
       </UiDropdownMenu>
 
       <UiControlsButton
@@ -162,6 +172,7 @@ const TreeControls = React.memo(
 TreeControls.displayName = "TreeControls";
 
 TreeControls.propTypes = {
+  actions: PropTypes.array.isRequired,
   controls: PropTypes.bool.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   lasso: PropTypes.bool.isRequired,
