@@ -4,9 +4,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Divider from "@mui/material/Divider";
 
 import { TreeType } from "../utils/prop-types";
+import { publish } from "../utils/events.js";
+
 import TreeMetadataMenu from "../containers/TreeMetadataMenu.react";
 import TreeStyleMenu from "../containers/TreeStyleMenu.react";
-import { publish } from "../utils/events.js";
 import UiAnimation from "./UiAnimation.react";
 import CircularTreeIcon from "./CircularTreeIcon.react";
 import DiagonalTreeIcon from "./DiagonalTreeIcon.react";
