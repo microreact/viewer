@@ -9,8 +9,8 @@ import Box from "@mui/material/Box";
 
 import { DataColumn, StylePalette } from "../utils/prop-types";
 
-import UiAnimation from "./UiAnimation.react";
 import DataColumnValuesCombobox from "../containers/DataColumnValuesCombobox.react";
+import UiAnimation from "./UiAnimation.react";
 import LassoButton from "./LassoButton.react";
 import UiCombobox from "./UiCombobox.react";
 import UiControlsButton from "./UiControlsButton.react";
@@ -67,12 +67,13 @@ const MapControls = React.memo(
             !props.isReadOnly && (
               <React.Fragment>
                 <UiDropdownMenu.Item
+                  className="mr-edit-map-menu__item mr-edit-map"
                   onClick={props.onEditPane}
                 >
                   Edit Map
                 </UiDropdownMenu.Item>
 
-                <Divider />
+                <Divider className="mr-edit-map-menu__item mr-divider" />
               </React.Fragment>
             )
           }
@@ -202,7 +203,7 @@ const MapControls = React.memo(
                         )
                       }
 
-                    {/* <UiTabs>
+                      {/* <UiTabs>
                       <div label="Colour by">
                         <UiRadioList
                           items={props.dataFields}
@@ -300,9 +301,15 @@ const MapControls = React.memo(
                   onChange={props.onScaleTypeChange}
                   value={props.scaleType}
                 >
-                  <small value="square">sqrt</small>
-                  <small value="logarithmic">log</small>
-                  <small value="linear">linear</small>
+                  <small value="square">
+                    sqrt
+                  </small>
+                  <small value="logarithmic">
+                    log
+                  </small>
+                  <small value="linear">
+                    linear
+                  </small>
                   {/* <span value="quadratic">quadratic</span> */}
                 </UiToggleButtons>
               )

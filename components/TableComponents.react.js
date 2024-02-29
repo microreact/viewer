@@ -1,151 +1,56 @@
-/* eslint "react/prop-types": 0 */
-
-import React from "react";
-import { sortableContainer, sortableElement, sortableHandle } from "react-sortable-hoc";
+import Button from "@mui/material/Button";
 import DragIndicatorOutlinedIcon from "@mui/icons-material/DragIndicatorOutlined";
-import CheckBoxTwoToneIcon from "@mui/icons-material/CheckBoxTwoTone";
-import CheckBoxOutlineBlankTwoToneIcon from "@mui/icons-material/CheckBoxOutlineBlankTwoTone";
+import PropTypes from "prop-types";
+import React from "react";
 
-// import "../styles/table.css";
 import TableHeaderMenu from "../containers/TableColumnMenu.react";
 
-const cursorStyle = { cursor: "pointer" };
-
-const SortableItem = sortableElement(
-  ({ children }) => children
+const DraggableHandle = () => (
+  <div
+    className="draggable-handle"
+    title="Drag to move column"
+  >
+    <DragIndicatorOutlinedIcon
+      fontSize="small"
+    />
+  </div>
 );
 
-export const SortableContainer = sortableContainer(
-  ({ children }) => {
-    return (
-      <div
-        style={
-          {
-            display: "flex",
-            width: "100%",
-            height: "100%",
-            // "white-space": "nowrap",
-            alignItems: "center",
-          }
-        }
-      >
-        {children}
-      </div>
-    );
-  }
-);
+export function HeaderTextComponent(props) {
 
-const DraggableHandle = sortableHandle(
-  () => (
-    <div
-      className="draggable-handle"
-      title="Drag to move column"
-    >
-      <DragIndicatorOutlinedIcon
-        fontSize="small"
-      />
-    </div>
-  )
-);
-
-export const HeaderCellComponent = (args) => {
-  const { index, children, ...rest } = args;
-  return (
-    <SortableItem key={`item-${index}`} index={index}>
-      <div
-        {...rest}
-        onClick={
-          (event) => {
-            if (
-              event.target
-              &&
-              event.target.classList
-              &&
-              (
-                event.target.classList.contains("BaseTable__header-cell")
-                ||
-                event.target.classList.contains("BaseTable__header-cell-text")
-                ||
-                event.target.classList.contains("BaseTable__sort-indicator")
-              )
-            ) {
-              rest.onClick(event);
-            }
-          }
-        }
-      >
-        {children}
-      </div>
-    </SortableItem>
-  );
-};
-
-const HeaderTextComponent = (args) => {
-  if (args.column.dataKey === "--microreact-selection-cell") {
+  if (props.column.colDef.dataKey === "--microreact-selection-cell") {
     return null;
   }
 
   return (
     <React.Fragment>
       {
-        (!args.column.frozen) && (<DraggableHandle />)
+        !props.column.colDef.suppressMovable && (
+          <DraggableHandle />
+        )
       }
-      <div className={args.className}>
-        { args.column.title }
-      </div>
+
+      <Button
+        className="mr-table-header-cell-label"
+        onClick={() => props.column.colDef.onColourByFieldChange(props.column.colDef.dataKey)}
+        title={`Set colour by column to ${props.displayName}`}
+        variant="text"
+      >
+        {props.displayName}
+      </Button>
+
       {
-        args.column.controls && (
+        props.column.colDef.controls && (
           <TableHeaderMenu
-            tableColumn={args.column}
+            tableColumn={props.column.colDef}
           />
         )
       }
     </React.Fragment>
   );
+}
+
+HeaderTextComponent.propTypes = {
+  column: PropTypes.object,
+  displayName: PropTypes.string,
 };
-
-const CellContent = (attributes) => {
-  if (attributes.column.dataKey === "--microreact-selection-cell") {
-    return (
-      <div
-        className={attributes.className}
-        style={cursorStyle}
-        onClick={
-          (event) => attributes.container.props.onSelectRows(
-            [ attributes.rowData[0] ],
-            !(event.metaKey || event.ctrlKey),
-          )
-        }
-      >
-        {
-          attributes.column.selectedIds?.includes(attributes.rowData[attributes.container.props.rowKey])
-            ?
-            <CheckBoxTwoToneIcon />
-            :
-            <CheckBoxOutlineBlankTwoToneIcon />
-        }
-      </div>
-    );
-  }
-
-  if (attributes.column.renderer) {
-    return (
-      attributes.container.props.componentsDictionary[attributes.column.renderer](attributes)
-    );
-  }
-
-  return (
-    <div
-      className={attributes.className}
-    >
-      { attributes.cellData }
-    </div>
-  );
-};
-
-const tabelComponents = {
-  TableCell: CellContent,
-  TableHeaderCell: HeaderTextComponent,
-};
-
-export default tabelComponents;

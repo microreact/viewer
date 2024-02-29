@@ -8,6 +8,7 @@ import configSelector from "../selectors/config";
 
 const mapStateToProps = (state, { treeId }) => ({
   controls: state.trees[treeId].controls,
+  actions: state.trees[treeId].actions || [],
   isReadOnly: configSelector(state).readOnly,
   lasso: state.trees[treeId].lasso,
   type: state.trees[treeId].type,

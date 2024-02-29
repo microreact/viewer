@@ -83,7 +83,7 @@ const rowsWithDateFieldSelector = createKeyedStateSelector(
       const valueDataColumn = fieldsMap.get(valueFieldName);
       if (valueDataColumn) {
         for (const row of rows) {
-          if (row[valueDataColumn.name] instanceof Date && isFinite(row[valueDataColumn.name])) {
+          if (row[valueDataColumn.name] instanceof Date) {
             // const dateInstance = (
             //   (timelineFields.format && timelineFields.format !== valueDataColumn.format)
             //     ?
@@ -101,13 +101,13 @@ const rowsWithDateFieldSelector = createKeyedStateSelector(
               maxDate = timestamp;
             }
 
-            row[timelineFieldName] = row[valueDataColumn.name];
+            // row[timelineId] = valueDataColumn.name;
           }
         }
 
         return {
           extent: [ minDate, maxDate ],
-          dateFieldName: timelineFieldName,
+          dateFieldName: valueDataColumn.name,
         };
       }
     }

@@ -12,12 +12,6 @@ const PanePlaceholder = React.memo(
   (props) => {
     const { PaneComponent, isEmpty, file, ...rest } = props;
 
-    if (file && !file._content) {
-      return (
-        <FileLoader file={file} />
-      );
-    }
-
     if (isEmpty) {
       return (
         <div
@@ -35,6 +29,12 @@ const PanePlaceholder = React.memo(
             { props.emptyLabel ?? `Edit${props.componentName}` }
           </Button>
         </div>
+      );
+    }
+
+    else if (file && !file._content) {
+      return (
+        <FileLoader file={file} />
       );
     }
 

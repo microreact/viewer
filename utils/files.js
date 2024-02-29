@@ -191,8 +191,7 @@ export async function loadFile(input, onProgress) {
       else if (input instanceof File || input.blob) {
         loadedFile.blob = input.blob || input;
         if (loadedFile.blob && typeof loadedFile.blob === "string") {
-          if (loadedFile.blob.startsWith("data:")) {
-          // if (/^data:.*\/.*;base64,/i.test(loadedFile.blob)) {
+          if (/^data:.*\/.*;base64,/i.test(loadedFile.blob)) {
             loadedFile.blob = await base64ToBlob(loadedFile.blob);
           }
           else {

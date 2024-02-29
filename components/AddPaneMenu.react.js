@@ -26,6 +26,7 @@ const AddPaneMenu = React.memo(
         }
       >
         <UiDropdownMenu.Item
+          className="mr-add-pane-menu__item mr-add-chart"
           onClick={() => createNewTab("Chart")}
         >
           <PaneIcon component="Chart" />
@@ -34,6 +35,7 @@ const AddPaneMenu = React.memo(
         </UiDropdownMenu.Item>
 
         <UiDropdownMenu.Item
+          className="mr-add-pane-menu__item mr-add-map"
           onClick={() => createNewTab("Map")}
         >
           <PaneIcon component="Map" />
@@ -42,6 +44,7 @@ const AddPaneMenu = React.memo(
         </UiDropdownMenu.Item>
 
         <UiDropdownMenu.Item
+          className="mr-add-pane-menu__item mr-add-network"
           onClick={() => createNewTab("Network")}
         >
           <PaneIcon component="Network" />
@@ -50,6 +53,7 @@ const AddPaneMenu = React.memo(
         </UiDropdownMenu.Item>
 
         <UiDropdownMenu.Item
+          className="mr-add-pane-menu__item mr-add-note"
           onClick={() => createNewTab("Note")}
         >
           <PaneIcon component="Note" />
@@ -58,6 +62,7 @@ const AddPaneMenu = React.memo(
         </UiDropdownMenu.Item>
 
         <UiDropdownMenu.Item
+          className="mr-add-pane-menu__item mr-add-table"
           onClick={() => createNewTab("Table")}
         >
           <PaneIcon component="Table" />
@@ -66,6 +71,7 @@ const AddPaneMenu = React.memo(
         </UiDropdownMenu.Item>
 
         <UiDropdownMenu.Item
+          className="mr-add-pane-menu__item mr-add-timeline"
           onClick={() => createNewTab("Timeline")}
         >
           <PaneIcon component="Timeline" />
@@ -74,6 +80,7 @@ const AddPaneMenu = React.memo(
         </UiDropdownMenu.Item>
 
         <UiDropdownMenu.Item
+          className="mr-add-pane-menu__item mr-add-tree"
           onClick={() => createNewTab("Tree")}
         >
           <PaneIcon component="Tree" />
@@ -86,6 +93,7 @@ const AddPaneMenu = React.memo(
         &nbsp;&nbsp;Experimental
 
         <UiDropdownMenu.Item
+          className="mr-add-pane-menu__item mr-add-data-slicer"
           onClick={() => createNewTab("Slicer")}
         >
           <PaneIcon component="Slicer" />
@@ -93,7 +101,7 @@ const AddPaneMenu = React.memo(
           Create New Data Slicer
         </UiDropdownMenu.Item>
 
-      {/*
+        {/*
         { props.panes.length > 0 && (<Divider />) }
         {
           props.panes.length > 0 && (
@@ -123,6 +131,7 @@ const AddPaneMenu = React.memo(
         <Divider />
 
         <UiDropdownMenu.Item
+          className="mr-add-pane-menu__item mr-edit-panels"
           onClick={props.onEditPane}
         >
           <EditTwoToneIcon />
