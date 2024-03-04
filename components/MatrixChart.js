@@ -41,19 +41,19 @@ function MattixChart(props) {
   const options = {
     // width: props.width,
     // height: props.height,
+    title: {
+      show: true,
+      text: "test"
+    },
     tooltip: {
       position: "top",
       formatter(params, ticket) {
         const [ row, column, value ] = params.data;
-        return `Row:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>${column}</strong><br />Column: <strong>${row}</strong><br />Value:&nbsp;&nbsp;&nbsp;&nbsp;&thinsp;<strong>${value}</strong>`;
+        return `Row:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>${column}</strong><br />Column: <strong>${row}</strong><br />Value:&nbsp;&nbsp;&nbsp;&nbsp;&thinsp;<strong>${value}${props.labelsUnit}</strong>`;
       },
     },
     grid: {
       containLabel: true,
-      // height: '50%',
-      // width: '80%',
-      // top: '10%',
-      // left: '10%',
     },
     xAxis: {
       type: "category",
@@ -65,6 +65,9 @@ function MattixChart(props) {
         onZero: false,
       },
       position: "top",
+      axisLabel : {
+        rotate: -1 * props.rotateAxisLabels,
+      }
     },
     yAxis: {
       type: "category",
@@ -76,8 +79,7 @@ function MattixChart(props) {
       show: true,
     },
     visualMap: {
-      type: 'continuous', // defined as discrete visualMap
-      // formatter: function (value){ return 0 },
+      type: "continuous",
       min: dataRange[0],
       max: dataRange[1],
       calculable: false,
@@ -86,7 +88,7 @@ function MattixChart(props) {
       bottom: "0",
       hoverLink: false,
       // show: false,
-      // inverse: true, 
+      // inverse: true,
       text: [dataRange[1], dataRange[0]],
     },
     series: [
@@ -95,7 +97,12 @@ function MattixChart(props) {
         type: "heatmap",
         data: chartData,
         label: {
-          show: false,
+          show: props.showLabels,
+          fontSize: props.labelsFontSize,
+          overflow: props.truncateLabels ? "truncate" : "none",
+          formatter(args) {
+            return `${args.value[2]}${props.labelsUnit}`;
+          },
         },
         emphasis: {
           // disabled: true,
@@ -121,8 +128,12 @@ MattixChart.propTypes = {
   activeIdsSet: PropTypes.instanceOf(Set).isRequired,
   className: PropTypes.string,
   height: PropTypes.number.isRequired,
+  labelsFontSize: PropTypes.number,
+  labelsUnit: PropTypes.string,
   matrixData: PropTypes.object,
   matrixId: PropTypes.string.isRequired,
+  showLabels: PropTypes.bool,
+  truncateLabels: PropTypes.bool,
   width: PropTypes.number.isRequired,
 };
 

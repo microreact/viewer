@@ -12,7 +12,7 @@ export function addMatrix(paneId, title, file) {
   };
 }
 
-export function removeNetwork(paneId) {
+export function removeMatrix(paneId) {
   return (dispatch, getState) => {
     const state = getPresentState(getState());
     const networkState = matrixStateSelector(state, paneId);
@@ -29,13 +29,13 @@ export function removeNetwork(paneId) {
   };
 }
 
-export function update(networkId, key, value) {
+export function updateMatrix(paneId, key, value) {
   return {
     delay: true,
-    group: `${networkId}/${key}`,
+    group: `${paneId}/${key}`,
     label: undefined,
     type: "MICROREACT VIEWER/UPDATE MATRIX",
-    networkId,
+    matrixId: paneId,
     payload: { [key]: value },
   };
 }
