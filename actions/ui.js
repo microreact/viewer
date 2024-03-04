@@ -53,6 +53,7 @@ function createLabelFromFileName(file, allFiles) {
       network: "Network",
       geo: "Regions",
       markdown: "Note",
+      matrix: "Matrix",
     };
     return fileNamesByType[file.type] || file.id;
   }
