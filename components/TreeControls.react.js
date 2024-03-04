@@ -84,6 +84,7 @@ const TreeControls = React.memo(
         >
           Download as SVG image
         </UiDropdownMenu.Item>
+
         {props.actions.map((action) => (
           <UiDropdownMenu.Item
             key={action.event}
