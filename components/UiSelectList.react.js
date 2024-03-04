@@ -100,7 +100,7 @@ class UiSelectList extends React.PureComponent {
         }
       </ListItem>
     );
-  }
+  };
 
   renderGroup = (groupName, args, groupItems) => {
     const { props } = this;
@@ -147,7 +147,7 @@ class UiSelectList extends React.PureComponent {
         }
       </ListSubheader>
     );
-  }
+  };
 
   render() {
     const { props } = this;

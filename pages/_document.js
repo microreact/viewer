@@ -29,19 +29,19 @@ export default class MyDocument extends Document {
 
           <link
             rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@fontsource/work-sans@4.5.12/index.css"
+            href="https://cdn.jsdelivr.net/npm/@fontsource/open-sans/index.css"
           />
           <link
             rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@fontsource/work-sans@4.5.12/500.css"
+            href="https://cdn.jsdelivr.net/npm/@fontsource/open-sans/500.css"
           />
           <link
             rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@4.5.0/index.css"
+            href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk/index.css"
           />
           <link
             rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk@4.5.0/500.css"
+            href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk/500.css"
           />
           <link
             rel="stylesheet"

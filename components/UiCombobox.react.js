@@ -20,21 +20,21 @@ function getOptionLabel(option) {
     return option.toString();
   }
   else {
-    return option.label || option.name;
+    return option.label || option.name || option.key;
   }
 }
 
-function renderMultiOption(option, { selected }) {
+function renderMultiOption(props, option, args) {
   return (
-    <React.Fragment>
+    <li {...props}>
       <Checkbox
         icon={icon}
         checkedIcon={checkedIcon}
         style={{ marginRight: 8 }}
-        checked={selected}
+        checked={args.selected}
       />
       { getOptionLabel(option) }
-    </React.Fragment>
+    </li>
   );
 }
 
@@ -61,7 +61,7 @@ const UiCombobox = React.memo((props) => {
       // limitTags={props.limitTags}
       multiple={props.multiple}
       onChange={(event, item) => props.onChange(item, event)}
-      options={props.options}
+      options={props.options.filter(((x) => x !== undefined))}
       renderInput={
         (params) => (
           <div ref={params.InputProps.ref}>

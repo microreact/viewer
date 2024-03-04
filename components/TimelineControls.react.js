@@ -30,7 +30,7 @@ const timelineSyles = [
 const timelineUnits = (
   Object.entries(timeUnits)
     .map(
-      ([value, label]) => ({
+      ([ value, label ]) => ({
         value,
         label,
       })
@@ -75,11 +75,11 @@ export default class TimelineControls extends React.PureComponent {
 
       return marks;
     },
-  )
+  );
 
   boundsIndecies = () => {
     const { props } = this;
-    const [lowerTimestamp, upperTimestamp] = props.silderTemporalRange;
+    const [ lowerTimestamp, upperTimestamp ] = props.silderTemporalRange;
 
     const marks = this.marksSelector(props);
 
@@ -102,7 +102,7 @@ export default class TimelineControls extends React.PureComponent {
 
   moveBounds = (startDelta, endDelta) => {
     const { props } = this;
-    const [lowerIndex, upperIndex] = this.boundsIndecies();
+    const [ lowerIndex, upperIndex ] = this.boundsIndecies();
 
     const minIndex = lowerIndex + startDelta;
     const maxIndex = upperIndex + endDelta;
@@ -152,7 +152,7 @@ export default class TimelineControls extends React.PureComponent {
     const isFinished = this.moveBounds(this.state.isMovingWindow ? +1 : 0, +1);
     if (isFinished) {
       if (rewind) {
-        const [lowerIndex, upperIndex] = this.boundsIndecies();
+        const [ lowerIndex, upperIndex ] = this.boundsIndecies();
         this.moveBounds(-lowerIndex, 1 - upperIndex);
         this.timeoutID = setTimeout(() => this.timerTick(), props.speed * 1000);
       }
@@ -230,7 +230,7 @@ export default class TimelineControls extends React.PureComponent {
             onClick={(event) => this.playTimeline(event)}
             title={this.state.isPlaying ? "Pause" : "Play timeline. Hold Ctrl/Cmd + click for moving window."}
           >
-            {this.state.isPlaying ? <PauseRoundedIcon /> : <PlayArrowRoundedIcon />}
+            { this.state.isPlaying ? <PauseRoundedIcon /> : <PlayArrowRoundedIcon /> }
           </UiControlsButton>
 
           <UiControlsButton
@@ -242,7 +242,7 @@ export default class TimelineControls extends React.PureComponent {
           <UiControlsButton
             onClick={
               () => {
-                const [lowerIndex] = this.boundsIndecies();
+                const [ lowerIndex ] = this.boundsIndecies();
                 if (lowerIndex > 0) {
                   this.moveBounds(-lowerIndex, -lowerIndex);
                 }
@@ -313,13 +313,7 @@ export default class TimelineControls extends React.PureComponent {
                 <React.Fragment>
                   <hr />
                   <label>
-                    Max Bubble Size:
-                    {" "}
-                    <strong>
-                      {props.nodeSize}
-                    </strong>
-                    {" "}
-                    pixels
+                    Max Bubble Size: <strong>{props.nodeSize}</strong> pixels
                   </label>
                   <Slider
                     max={props.maxNodeSize}

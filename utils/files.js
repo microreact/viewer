@@ -42,6 +42,14 @@ export const FileKinds = [
     linkable: true,
   },
   {
+    extensions: [ "csv", "tsv" ],
+    nameValidator: /\.(csv|tsv)$/i,
+    format: "text/csv",
+    type: "matrix",
+    name: "Matrix (CSV or TSV)",
+    linkable: true,
+  },
+  {
     extensions: [ "nwk", "newick", "tree", "tre", "nexus", "nhx", "treefile" ],
     nameValidator: /\.(nwk|newick|tree|tre|nexus|nhx|treefile)$/i,
     format: "text/x-nh",
@@ -79,9 +87,9 @@ function base64ToBlob(base64) {
   return fetch(base64).then((res) => res.blob());
 }
 
-function blobToBase64(blob) {
+export function blobToBase64(blob) {
   return new Promise((resolve, _) => {
-    const reader = new FileReader();
+    const reader = new FileReader(); // eslint-disable-line no-undef
     reader.onloadend = () => resolve(reader.result);
     reader.readAsDataURL(blob);
   });
@@ -117,6 +125,23 @@ export function normaliseFilename(input) {
   return filename.replace(/_/g, "-");
 }
 
+export function blobify(input) {
+  if (input && typeof input === "string") {
+    if (input.startsWith("data:")) {
+    // if (/^data:.*\/.*;base64,/i.test(input)) {
+      return base64ToBlob(input);
+    }
+    else {
+      return new Blob([ input ], { type: input.format });
+    }
+  }
+  if (input instanceof Blob) {
+    return input;
+  }
+  console.error(input);
+  throw new Error("Cannot convert input to Blob");
+}
+
 function guessFileFormat(fileName) {
   for (const { nameValidator, format } of FileKinds) {
     if (nameValidator.test(fileName)) {
@@ -133,6 +158,10 @@ export async function loadFile(input, onProgress) {
     settings: input.settings,
   };
 
+  if (input.type && !input.type?.includes("/")) {
+    loadedFile.type = input.type;
+  }
+
   loadedFile.name = normaliseFilename(input.name);
 
   // The format of local files can be guessed from file extension
@@ -140,35 +169,35 @@ export async function loadFile(input, onProgress) {
 
   let loader;
   if (loadedFile.format === "data") {
-    loadedFile.type = "data";
+    loadedFile.type ??= "data";
     loader = loadDataArray;
   }
   else if (loadedFile.format === "application/json") {
-    loadedFile.type = "microreact";
+    loadedFile.type ??= "microreact";
     loader = loadJsonFile;
   }
   else if (loadedFile.format === "text/csv") {
-    loadedFile.type = "data";
+    loadedFile.type ??= "data";
     loader = loadCsvFile;
   }
   else if (loadedFile.format === "application/x-speadsheet") {
-    loadedFile.type = "data";
+    loadedFile.type ??= "data";
     loader = loadSpeadsheetFile;
   }
   else if (loadedFile.format === "text/x-nh") {
-    loadedFile.type = "tree";
+    loadedFile.type ??= "tree";
     loader = loadTextFile;
   }
   else if (loadedFile.format === "text/vnd.graphviz") {
-    loadedFile.type = "network";
+    loadedFile.type ??= "network";
     loader = loadTextFile;
   }
   else if (loadedFile.format === "application/geo+json") {
-    loadedFile.type = "geo";
+    loadedFile.type ??= "geo";
     loader = loadGeoJsonFile;
   }
   else if (loadedFile.format === "text/markdown") {
-    loadedFile.type = "markdown";
+    loadedFile.type ??= "markdown";
     loader = loadTextFile;
   }
   else {
@@ -189,15 +218,7 @@ export async function loadFile(input, onProgress) {
         loadedFile._content = await loader(loadedFile.url, loadedFile.settings, onProgress);
       }
       else if (input instanceof File || input.blob) {
-        loadedFile.blob = input.blob || input;
-        if (loadedFile.blob && typeof loadedFile.blob === "string") {
-          if (/^data:.*\/.*;base64,/i.test(loadedFile.blob)) {
-            loadedFile.blob = await base64ToBlob(loadedFile.blob);
-          }
-          else {
-            loadedFile.blob = new Blob([ loadedFile.blob ], { type: input.format });
-          }
-        }
+        loadedFile.blob = await blobify(input.blob || input);
         loadedFile._content = await loader(loadedFile.blob, loadedFile.settings, onProgress);
       }
     }
@@ -226,7 +247,6 @@ async function processFiles(files) {
   processedFiles.sort(
     (a, b) => (FileTypes.indexOf(a.type) - FileTypes.indexOf(b.type))
   );
-
   return processedFiles;
 }
 
