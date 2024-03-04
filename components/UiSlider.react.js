@@ -25,6 +25,8 @@ const UiSlider = React.memo(
           min={props.min}
           onChange={(event, value) => props.onChange(value, event)}
           value={props.value}
+          step={props.step ?? undefined}
+          marks={!!props.step}
         />
       </div>
     );

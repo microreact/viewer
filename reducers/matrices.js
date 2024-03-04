@@ -2,6 +2,11 @@ import { newId, removeKeyedState, updateKeyedState } from "../utils/state";
 
 export const initialState = {
   controls: true,
+  labelsUnit: undefined,
+  labelsFontSize: 12,
+  showLabels: false,
+  truncateLabels: true,
+  rotateAxisLabels: 0,
 };
 
 // eslint-disable-next-line default-param-last

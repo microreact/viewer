@@ -1,4 +1,4 @@
-import { update } from "../actions/matrices.js";
+import { updateMatrix } from "../actions/matrices.js";
 
 import { connectToPresentState } from "../utils/state";
 
