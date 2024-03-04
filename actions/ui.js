@@ -212,6 +212,43 @@ export function commitFiles(fileDescriptors) {
         //#endregion
       }
       else if (file.type === "matrix") {
+        if (!hasDataFiles) {
+          const matrixLabels = file._content.rows.map((x) => x[file._content.columns[0].name]);
+          const dataFile = {
+            id: generateHashId(),
+            name: "matrix-labels",
+            format: "text/csv",
+            blob: new File(
+              [ `id\n${matrixLabels.join("\n")}` ],
+              "matrix-labels.csv",
+              { type: "text/csv" },
+            ),
+            type: "data",
+            _content: createBasicDataset(matrixLabels.map((id) => ({ id }))),
+          };
+          actions.push(
+            addFile(dataFile)
+          );
+          actions.push(
+            addDataset(
+              dataFile.id,
+              { idFieldName: "id" }
+            )
+          );
+          const label = createLabelFromFileName(dataFile, fileDescriptors);
+          actions.push(
+            addTable(
+              null,
+              label,
+              dataFile.id,
+              [
+                { field: "id" },
+              ],
+            )
+          );
+          file.labelFieldName = "id";
+        }
+
         const paneId = file.paneId || newId(state.matrices, "matrix", paneIds);
         paneIds.push(paneId);
         const label = createLabelFromFileName(file, fileDescriptors);
