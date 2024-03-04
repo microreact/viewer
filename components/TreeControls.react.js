@@ -85,14 +85,18 @@ const TreeControls = React.memo(
           Download as SVG image
         </UiDropdownMenu.Item>
 
-        {props.actions.map((action) => (
-          <UiDropdownMenu.Item
-            key={action.event}
-            onClick={() => publish(action.event, { id: props.treeId })}
-          >
-            {action.label}
-          </UiDropdownMenu.Item>
-        ))}
+        {
+          props.actions.map(
+            (action) => (
+              <UiDropdownMenu.Item
+                key={action.event}
+                onClick={() => publish(action.event, { id: props.treeId })}
+              >
+                {action.label}
+              </UiDropdownMenu.Item>
+            )
+          )
+        }
 
       </UiDropdownMenu>
 
