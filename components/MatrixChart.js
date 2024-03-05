@@ -61,9 +61,9 @@ function MattixChart(props) {
         onZero: false,
       },
       position: "top",
-      axisLabel : {
+      axisLabel: {
         rotate: -1 * props.rotateAxisLabels,
-      }
+      },
     },
     yAxis: {
       type: "category",
