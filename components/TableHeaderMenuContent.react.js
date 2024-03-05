@@ -133,103 +133,98 @@ class TableHeaderMenuContent extends React.PureComponent {
       <div
         className="mr-table-column-controls"
       >
-        {
-          !props.filtersOnly && (
-            <React.Fragment>
-              <Box
-                alignItems="center"
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between"
-                style={{ marginBottom: 4 }}
-                className="mr-action-buttons"
-              >
 
-                <IconButton
-                  onClick={() => this.props.onColumnHide(this.props.dataColumn.name)}
-                  size="small"
-                  title="Hide this column"
-                >
-                  <VisibilityOffTwoToneIcon />
-                </IconButton>
+        <Box
+          alignItems="center"
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+          style={{ marginBottom: 4 }}
+          className="mr-action-buttons"
+        >
 
-                <IconButton
-                  onClick={() => this.props.onColumnExpand(this.props.dataColumn.name)}
-                  size="small"
-                  title="Expand this column"
-                >
-                  <UiSvgIcon >{ mdiArrowExpandHorizontal }</UiSvgIcon>
-                </IconButton>
-              </Box>
+          <IconButton
+            onClick={() => this.props.onColumnHide(this.props.dataColumn.name)}
+            size="small"
+            title="Hide this column"
+          >
+            <VisibilityOffTwoToneIcon />
+          </IconButton>
 
-              <Box
-                alignItems="center"
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between"
-                style={{ marginBottom: 4 }}
-              >
-                Sort
-                <ToggleButtonGroup
-                  size="small"
-                  value={this.props.dataColumn.sort}
-                  exclusive
-                  onChange={this.sortBy}
-                >
-                  <ToggleButton
-                    value="asc"
-                    title="Sort by ascending order"
-                  >
-                    <SortByAlphaRoundedIcon fontSize="small" />
-                  </ToggleButton>
-                  <ToggleButton
-                    value="desc"
-                    title="Sort by decreasing order"
-                  >
-                    <SortByAlphaInverseRoundedIcon fontSize="small" />
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </Box>
+          <IconButton
+            onClick={() => this.props.onColumnExpand(this.props.dataColumn.name)}
+            size="small"
+            title="Expand this column"
+          >
+            <UiSvgIcon >{ mdiArrowExpandHorizontal }</UiSvgIcon>
+          </IconButton>
+        </Box>
 
-              {/*
-              <Box
-                alignItems="center"
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between"
-                style={{ marginBottom: 4 }}
-              >
-                Data type
-                <ToggleButtonGroup
-                  size="small"
-                  value={this.props.dataColumn.category}
-                  exclusive
-                  // onChange={this.sortBy}
-                >
-                  <ToggleButton
-                    value="text"
-                    title="Change data type to Text"
-                  >
-                    <UiSvgIcon fontSize="small" >{ mdiAlphabetical }</UiSvgIcon>
-                  </ToggleButton>
-                  <ToggleButton
-                    value="number"
-                    title="Change data type to Number"
-                  >
-                    <UiSvgIcon fontSize="small" >{ mdiNumeric }</UiSvgIcon>
-                  </ToggleButton>
-                  <ToggleButton
-                    value="date"
-                    title="Change data type to Date"
-                  >
-                    <UiSvgIcon fontSize="small" >{ mdiCalendarClock }</UiSvgIcon>
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </Box>
-              */}
-            </React.Fragment>
-          )
-        }
+        <Box
+          alignItems="center"
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+          style={{ marginBottom: 4 }}
+        >
+          Sort
+          <ToggleButtonGroup
+            size="small"
+            value={this.props.dataColumn.sort}
+            exclusive
+            onChange={this.sortBy}
+          >
+            <ToggleButton
+              value="asc"
+              title="Sort by ascending order"
+            >
+              <SortByAlphaRoundedIcon fontSize="small" />
+            </ToggleButton>
+            <ToggleButton
+              value="desc"
+              title="Sort by decreasing order"
+            >
+              <SortByAlphaInverseRoundedIcon fontSize="small" />
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
+
+        {/*
+        <Box
+          alignItems="center"
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+          style={{ marginBottom: 4 }}
+        >
+          Data type
+          <ToggleButtonGroup
+            size="small"
+            value={this.props.dataColumn.category}
+            exclusive
+            // onChange={this.sortBy}
+          >
+            <ToggleButton
+              value="text"
+              title="Change data type to Text"
+            >
+              <UiSvgIcon fontSize="small" >{ mdiAlphabetical }</UiSvgIcon>
+            </ToggleButton>
+            <ToggleButton
+              value="number"
+              title="Change data type to Number"
+            >
+              <UiSvgIcon fontSize="small" >{ mdiNumeric }</UiSvgIcon>
+            </ToggleButton>
+            <ToggleButton
+              value="date"
+              title="Change data type to Date"
+            >
+              <UiSvgIcon fontSize="small" >{ mdiCalendarClock }</UiSvgIcon>
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Box>
+        */}
 
         <Accordion
           className="mr-filter-by-condition"
