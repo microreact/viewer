@@ -139,7 +139,7 @@ export function commitFiles(fileDescriptors) {
     const paneIds = [];
     const orphanPanes = [];
 
-    let hasDataFiles = !isEmpty;
+    let hasDataFiles = !isEmpty || fileDescriptors.some((x) => x.type === "data");
 
     for (const file of fileDescriptors) {
       actions.push(
