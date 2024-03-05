@@ -82,7 +82,7 @@ function MattixChart(props) {
       orient: "horizontal",
       left: "center",
       bottom: "0",
-      hoverLink: false,
+      // hoverLink: false,
       // show: false,
       // inverse: true,
       text: [dataRange[1], dataRange[0]],
@@ -101,7 +101,7 @@ function MattixChart(props) {
           },
         },
         emphasis: {
-          // disabled: true,
+          disabled: true,
           // itemStyle: {
           //   borderType: "solid",
           //   borderWidth: 1,
