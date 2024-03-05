@@ -9,6 +9,7 @@ import SlicerControls from "./SlicerControls.react";
 import { DataColumn, DataFilter } from "../utils/prop-types";
 import { emptyArray, emptyObject } from "../constants";
 import UiSelectList from "./UiSelectList.react";
+import UiFloatingFilter from "./UiFloatingFilter.react";
 
 const groupBy = (item) => (item.group ?? "");
 
@@ -61,7 +62,6 @@ class SlicerPane extends React.PureComponent {
   itemsSelector = createSelector(
     (props) => this.valuesSelector(props),
     (props) => this.groupsDataSelector(props),
-    (props) => props.displayMode,
     (
       values,
       groups,
@@ -149,25 +149,40 @@ class SlicerPane extends React.PureComponent {
     const valuesFilter = (props.columnFilter && props.columnFilter.operator === "in") ? props.columnFilter : undefined;
     const selectedValues = valuesFilter ? valuesFilter.value : emptyArray;
     return (
-      <UiSelectList
-        disableSelectAll
-        groupItem={props.groupColumn ? groupBy : undefined}
+      <UiFloatingFilter
         items={this.itemsSelector(props)}
-        onChange={
-          (selection) => {
-            props.onColumnFilterChange(
-              props.dataColumn.name,
-              (selection.length > 0) ? "in" : null,
-              selection,
-            );
-          }
+        label="Search"
+        valueGetter={(x) => x.label?.toString()?.toLowerCase()}
+        renderItems= {
+          (items) => (
+            <UiSelectList
+              groupItem={props.groupColumn ? groupBy : undefined}
+              items={items}
+              onChange={
+                (selection) => {
+                  props.onColumnFilterChange(
+                    props.dataColumn.name,
+                    (selection.length > 0) ? "in" : null,
+                    selection,
+                  );
+                }
+              }
+              renderItemContent={(props.displayMode !== "off") ? this.renderItemContent : undefined}
+              showSelectOnly
+              style={emptyObject}
+              value={selectedValues}
+              valueProperty="value"
+              // style={
+              //   {
+              //     height: 40 + props.uniqueValues.length * 28,
+              //     maxHeight: props.height ?? "max(144px, calc(60vh - 256px))",
+              //   }
+              // }
+            />
+          )
         }
-        renderItemContent={(props.displayMode !== "off") ? this.renderItemContent : undefined}
-        showSelectOnly
-        style={emptyObject}
-        value={selectedValues}
-        valueProperty="value"
-      />
+      >
+      </UiFloatingFilter>
     );
   }
 
