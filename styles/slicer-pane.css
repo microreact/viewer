@@ -5,11 +5,24 @@
   overflow: hidden;
 }
 
-.mr-slicer .mr-ui-select-list {
-  height: calc(100% - 24px);
-  width: calc(100% - 8px);
+.mr-slicer .mr-floating-filter {
   margin-top: 24px;
   margin-left: 8px;
+  margin-right: 8px;
+  height: calc(100% - 24px);
+  width: calc(100% - 16px);
+}
+
+.mr-slicer .mr-floating-filter {
+  height: 100%;
+}
+
+.mr-slicer .mr-ui-select-list {
+  height: calc(100% - 40px);
+  width: calc(100% - 8px);
+  margin-top: 0;
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
 .mr-slicer .mr-ui-select-list .MuiListItemText-root {
