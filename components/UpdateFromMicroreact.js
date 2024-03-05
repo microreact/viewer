@@ -66,27 +66,27 @@ class UpdateFromMicroreact extends React.PureComponent {
     const { props } = this;
 
     return (
-      <UiDialog
-        // actions={this.renderActions()}
-        // disableDividers
-        fullWidth
-        isOpen
-        maxWidth="sm"
-        onClose={props.onClose}
-        title="Upload project from .microreact file"
-      >
+      <div>
         <p>
           Select a <code>.microreact</code> file to update this project.
         </p>
         <p>
-          {/* <UiTextfield
-            type="file"
-          /> */}
           <FileEditor
             label="Select a .microreact file"
           />
         </p>
-      </UiDialog>
+        <ul>
+          <li>
+            To preserve a snapshot of the existing project prior to overriding with the new project file, download the current .microreact file or save a copy as a new project
+          </li>
+          <li>
+            After replacing the .microreact file, save the project, or exit without saving to revert to the original
+          </li>
+          <li>
+            The project sharing settings and link will not change
+          </li>
+        </ul>
+      </div>
     );
   }
 

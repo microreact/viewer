@@ -26,6 +26,12 @@
   margin-right: 16px;
 }
 
+.mr-panes-editor .mr-panes-list .MuiList-root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
 .mr-panes-editor .mr-panes-list .MuiListItem-root {
   padding: 0 8px;
 }

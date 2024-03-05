@@ -21,6 +21,7 @@ import TablePaneEditor from "../containers/TablePaneEditor.react";
 import TimelinePaneEditor from "../containers/TimelinePaneEditor.react";
 import TreePaneEditor from "../containers/TreePaneEditor.react";
 import UiDialog from "./UiDialog.react";
+import UpdateFromMicroreact from "./UpdateFromMicroreact.js";
 
 class PaneEditor extends React.PureComponent {
 
@@ -60,6 +61,12 @@ class PaneEditor extends React.PureComponent {
 
   renderStep() {
     const { props } = this;
+
+    if (props.paneId === "--mr-replace-project") {
+      return (
+        <UpdateFromMicroreact />
+      );
+    }
 
     const pane = this.panesSelector(props).find((x) => x.paneId === props.paneId);
 
@@ -217,6 +224,17 @@ class PaneEditor extends React.PureComponent {
                 )
               )
             }
+            <div style={{ flexGrow: "1" }} />
+            <ListItem
+              button
+              disableGutters
+              onClick={() => props.onEditPane("--mr-replace-project")}
+              selected={props.paneId === "--mr-replace-project"}
+            >
+              <ListItemText
+                primary="Replace project"
+              />
+            </ListItem>
           </List>
         </Paper>
       );
