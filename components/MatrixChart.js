@@ -132,6 +132,7 @@ MattixChart.propTypes = {
   labelsUnit: PropTypes.string,
   matrixData: PropTypes.object,
   matrixId: PropTypes.string.isRequired,
+  rotateAxisLabels: PropTypes.number,
   showLabels: PropTypes.bool,
   truncateLabels: PropTypes.bool,
   width: PropTypes.number.isRequired,
