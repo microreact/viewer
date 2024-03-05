@@ -41,10 +41,6 @@ function MattixChart(props) {
   const options = {
     // width: props.width,
     // height: props.height,
-    title: {
-      show: true,
-      text: "test"
-    },
     tooltip: {
       position: "top",
       formatter(params, ticket) {
