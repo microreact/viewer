@@ -43,7 +43,7 @@ function MattixChart(props) {
     // height: props.height,
     tooltip: {
       position: "top",
-      formatter(params, ticket) {
+      formatter(params) {
         const [ row, column, value ] = params.data;
         return `Row:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>${column}</strong><br />Column: <strong>${row}</strong><br />Value:&nbsp;&nbsp;&nbsp;&nbsp;&thinsp;<strong>${value}${props.labelsUnit}</strong>`;
       },
