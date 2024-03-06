@@ -3,9 +3,10 @@ import React from "react";
 import { createSelector } from "reselect";
 
 import { ChartTypes } from "../utils/prop-types";
-import { exportPNG, exportSVG, isVegaLiteSpec, vegaLiteToVega } from "../utils/charts";
+import { exportPNG, exportSVG } from "../utils/charts";
 import { downloadDataUrl } from "../utils/downloads";
 
+import GraphChart from "../containers/GraphChart.js";
 import ChartControls from "../containers/ChartControls.react";
 import ChartCustomEmbed from "../containers/ChartCustomEmbed";
 import ChartDefaultEmbed from "../containers/ChartDefaultEmbed";
@@ -118,6 +119,16 @@ class ChartPane extends React.PureComponent {
 
   renderChartEmbed() {
     const { props } = this;
+
+    if (props.chartType === "graph") {
+      return (
+        <GraphChart
+          chartId={props.chartId}
+          height={props.height}
+          width={props.width}
+        />
+      );
+    }
 
     if (props.chartType === "custom") {
       return (
