@@ -81,6 +81,7 @@ class TimelinePane extends React.PureComponent {
     timelineId: PropTypes.string.isRequired,
     className: PropTypes.string,
     controls: PropTypes.bool,
+    sliderOnly: PropTypes.bool,
     height: PropTypes.number.isRequired,
     onSelectItem: PropTypes.func.isRequired,
     chartSpec: PropTypes.object,
@@ -158,11 +159,15 @@ class TimelinePane extends React.PureComponent {
         }
       >
 
-        <TimelineFilteredRangeChart
-          timelineId={props.timelineId}
-          signalListeners={this.signalListeners}
-          ref={this.filteredRangeChartRef}
-        />
+        {
+          (!props.sliderOnly) && (
+            <TimelineFilteredRangeChart
+              timelineId={props.timelineId}
+              signalListeners={this.signalListeners}
+              ref={this.filteredRangeChartRef}
+            />
+          )
+        }
 
         <TimelineFullRangeChart
           timelineId={props.timelineId}

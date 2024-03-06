@@ -4,13 +4,16 @@ import { applyTimelineFilter, selectItem, setFilter } from "../actions/timelines
 import filteredRangeExtentSelector from "../selectors/timelines/filtered-range-extent";
 import filteredRangeUnitSelector from "../selectors/timelines/filtered-range-unit";
 import { connectToPresentState } from "../utils/state";
+import timelineStateSelector from "../selectors/timelines/timeline-state";
 // import chartDataSelector from "../selectors/timelines/chart-data";
 // import chartSpecSelector from "../selectors/timelines/chart-spec";
 
 const mapStateToProps = (state, { timelineId }) => {
+  const timelineState = timelineStateSelector(state, timelineId);
   return {
     bounds: filteredRangeExtentSelector(state, timelineId),
     unit: filteredRangeUnitSelector(state, timelineId),
+    sliderOnly: timelineState.sliderOnly,
   };
 };
 
