@@ -11,18 +11,21 @@ function MattixChart(props) {
       const activeColumns = props.matrixData.columns.filter((x) => props.activeIdsSet.has(x.name));
       for (let yIndex = 0; yIndex < props.matrixData.rows.length; yIndex++) {
         const row = props.matrixData.rows[yIndex];
-        for (let xIndex = 0; xIndex < activeColumns.length; xIndex++) {
-          const column = activeColumns[xIndex];
-          data.push([
-            column.name,
-            row[props.matrixData.columns[0].name],
-            row[column.name],
-          ]);
-          if (row[column.name] > max) {
-            max = row[column.name];
-          }
-          if (row[column.name] < min) {
-            min = row[column.name];
+        const rowId = row[props.matrixData.columns[0].name];
+        if (props.activeIdsSet.has(rowId)) {
+          for (let xIndex = 0; xIndex < activeColumns.length; xIndex++) {
+            const column = activeColumns[xIndex];
+            data.push([
+              column.name,
+              rowId,
+              row[column.name],
+            ]);
+            if (row[column.name] > max) {
+              max = row[column.name];
+            }
+            if (row[column.name] < min) {
+              min = row[column.name];
+            }
           }
         }
       }
