@@ -1,9 +1,9 @@
-import matrixDataSelector from "../selectors/matrices/matrix-data";
+import matrixDataSelector from "../selectors/matrices/matrix-data.js";
 
-import MatrixChart from "../components/MatrixChart";
-import { connectToPresentState } from "../utils/state";
+import MatrixChart from "../components/MatrixChart.js";
+import { connectToPresentState } from "../utils/state.js";
 
-import activeRowsIdsSelector from "../selectors/filters/active-row-ids";
+import activeRowsIdsSelector from "../selectors/filters/active-row-ids.js";
 
 function mapStateToProps(state, { matrixId }) {
   const matrixState = state.matrices[matrixId];
