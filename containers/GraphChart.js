@@ -1,17 +1,17 @@
-import GraphChart from "../components/GraphChart";
-import { connectToPresentState } from "../utils/state";
-import activeRowsWithStyleFieldsSelector from "../selectors/filters/active-rows-with-style-fields";
+import GraphChart from "../components/GraphChart.js";
+import { connectToPresentState } from "../utils/state.js";
+import activeRowsWithStyleFieldsSelector from "../selectors/filters/active-rows-with-style-fields.js";
 
-import activeRowsIdsSelector from "../selectors/filters/active-row-ids";
+import activeRowsIdsSelector from "../selectors/filters/active-row-ids.js";
 
 function mapStateToProps(state, { chartId }) {
   const chartState = state.charts[chartId];
   return {
-    colourColumnName: chartState.colourColumnName,
-    showLabels: chartState.showLabels,
-    labelsFontSize: chartState.labelsFontSize,
     activeIdsSet: activeRowsIdsSelector(state),
-    rows: activeRowsWithStyleFieldsSelector(state).rows,
+    activeRows: activeRowsWithStyleFieldsSelector(state).rows,
+    colourColumnName: chartState.colourColumnName,
+    labelsFontSize: chartState.labelsFontSize,
+    showLabels: chartState.showLabels,
   };
 }
 
