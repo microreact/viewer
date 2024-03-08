@@ -126,6 +126,7 @@ class ChartPane extends React.PureComponent {
           chartId={props.chartId}
           height={props.height}
           width={props.width}
+          onClick={this.signalListeners.onItemSelectSignal}
         />
       );
     }
