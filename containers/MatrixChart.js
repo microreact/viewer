@@ -1,6 +1,6 @@
 import matrixDataSelector from "../selectors/matrices/matrix-data.js";
 
-import MatrixChart from "../components/MatrixChart.js";
+import MatrixChart from "../components/MatrixVegaChart.js";
 import { connectToPresentState } from "../utils/state.js";
 
 import activeRowsIdsSelector from "../selectors/filters/active-row-ids.js";

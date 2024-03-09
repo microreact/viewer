@@ -6,7 +6,7 @@ export const initialState = {
   labelsFontSize: 12,
   showLabels: false,
   truncateLabels: true,
-  rotateAxisLabels: 0,
+  rotateAxisLabels: 90,
 };
 
 // eslint-disable-next-line default-param-last
