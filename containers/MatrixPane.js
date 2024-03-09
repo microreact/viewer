@@ -20,4 +20,8 @@ function mapDispatchToProps(dispatch, { matrixId }) {
   };
 }
 
-export default connectToPresentState(MatrixPane, mapStateToProps, mapDispatchToProps);
+export default connectToPresentState(
+  MatrixPane,
+  mapStateToProps,
+  mapDispatchToProps,
+);
