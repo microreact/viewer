@@ -22,4 +22,8 @@ function mapDispatchToProps(dispatch, { matrixId }) {
   };
 }
 
-export default connectToPresentState(MatrixChart, mapStateToProps, mapDispatchToProps);
+export default connectToPresentState(
+  MatrixChart,
+  mapStateToProps,
+  mapDispatchToProps,
+);
