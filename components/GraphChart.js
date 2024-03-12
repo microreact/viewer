@@ -137,12 +137,9 @@ function GraphChart(props) {
         nodes.push({
           x: child.x,
           y: child.y,
-          // r: child.r,
-          // value: child.value,
-          // r: child.r,
+          value: child.value,
           symbolSize: child.r * 2,
           name: child.data.name,
-          // id: child.data.name,
           itemStyle: {
             color: child.data.colour,
           },
@@ -157,43 +154,43 @@ function GraphChart(props) {
   );
 
   const options = {
-    series: (
-      {
-        name: "graph",
-        type: "graph",
-        layout: "none",
-        data: graphNodes,
-        roam: true,
-        label: {
-          // show: true,
-          position: "inside",
-          fontSize: 10,
-          fontWeight: "bold",
-          width: 1,
-        },
-        selectedMode: "single",
-        labelLayout: {
-          hideOverlap: true,
-          width: 10,
-        },
-        // itemStyle: {
-        //   borderWidth: 1,
-        //   borderColor: "#333",
-        //   gapWidth: 0,
-        // },
-        nodeScaleRatio: 1,
-        scaleLimit: {
-          min: 1,
-          max: 100,
-        },
-        emphasis: {
-          label: { show: true },
-          scale: false,
-        },
-        animationDurationUpdate: 1000,
-        universalTransition: true,
-      }
-    ),
+    series: {
+      name: "graph",
+      type: "graph",
+      layout: "none",
+      data: graphNodes,
+      roam: true,
+      label: {
+        show: props.showLabels,
+        position: "inside",
+        fontSize: 10,
+        fontWeight: "bold",
+        width: 1,
+      },
+      selectedMode: "single",
+      labelLayout: {
+        hideOverlap: true,
+        width: 10,
+      },
+      nodeScaleRatio: 1,
+      scaleLimit: {
+        min: 1,
+        max: 100,
+      },
+      emphasis: {
+        label: { show: true },
+        scale: false,
+      },
+      animationDurationUpdate: 1000,
+      universalTransition: true,
+    },
+    tooltip: {
+      position: "top",
+      formatter(params) {
+        const { name, value } = params.data;
+        return `<strong>${name}</strong><br />Number of entries: <strong>${value}</strong>`;
+      },
+    },
   };
 
   const handleChartClick = (params) => {
@@ -221,6 +218,7 @@ GraphChart.propTypes = {
   colourColumnName: PropTypes.string,
   height: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
+  showLabels: PropTypes.bool,
   width: PropTypes.number.isRequired,
 };
 
