@@ -10,7 +10,6 @@ function mapStateToProps(state, { chartId }) {
     activeIdsSet: activeRowsIdsSelector(state),
     activeRows: activeRowsWithStyleFieldsSelector(state).rows,
     colourColumnName: chartState.colourColumnName,
-    labelsFontSize: chartState.labelsFontSize,
     showLabels: chartState.showLabels,
   };
 }
