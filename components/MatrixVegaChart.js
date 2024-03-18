@@ -51,7 +51,6 @@ function MatrixVegaChart(props) {
         },
         "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
         "data": { "url": "data/cars.json" },
-        "mark": "rect",
         "encoding": {
           "y": {
             "field": "row", "type": "nominal",
@@ -62,14 +61,6 @@ function MatrixVegaChart(props) {
             "axis": {
               "labelAngle": -props.rotateAxisLabels,
               "orient": "top",
-            },
-          },
-          "color": {
-            "field": "value",
-            "type": "quantitative",
-            "scale": {
-              "scheme": "goldred",
-              "type": "linear",
             },
           },
         },
@@ -83,14 +74,52 @@ function MatrixVegaChart(props) {
             "stroke": "transparent",
           },
         },
+        "layer": [
+          {
+            "mark": {
+              "type": "rect",
+              "tooltip": true,
+            },
+            "encoding": {
+              "color": {
+                "field": "value",
+                "type": "quantitative",
+                "scale": {
+                  "scheme": "goldred",
+                  "type": "linear",
+                },
+                "legend": {
+                  "title": "",
+                },
+              },
+            },
+          },
+        ],
       };
+      if (props.showLabels) {
+        vlSpec.layer.push({
+          "mark": {
+            "type": "text",
+            "tooltip": true,
+            "fontSize": props.labelsFontSize,
+            "limit": props.width / props.activeIdsSet.size,
+          },
+          "encoding": {
+            "text": { "field": "value", "type": "quantitative" },
+            // "color": {
+            //   "condition": { "test": "datum['num_cars'] < 40", "value": "black" },
+            //   "value": "white",
+            // },
+          },
+        });
+      }
       return convertChartSpec(
         vlSpec,
         props.width,
         props.height,
       );
     },
-    [ props.width, props.height, props.rotateAxisLabels ],
+    [ props.width, props.height, props.rotateAxisLabels, props.labelsFontSize, props.activeIdsSet, props.showLabels ],
   );
 
   return (
