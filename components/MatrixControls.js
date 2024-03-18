@@ -77,7 +77,7 @@ const MatrixControls = React.memo(
               value={props.labelsFontSize}
             />
 
-            {
+            {/* {
               (props.showLabels) && (
                 <UiToggleSwitch
                   label="Truncate values"
@@ -85,15 +85,15 @@ const MatrixControls = React.memo(
                   value={props.truncateLabels}
                 />
               )
-            }
+            } */}
 
-            <UiToggleSwitch
+            {/* <UiToggleSwitch
               label="Append unit"
               onChange={(value) => props.onLabelsUnitChange(value ? "" : undefined)}
               value={props.labelsUnit !== undefined}
-            />
+            /> */}
 
-            {
+            {/* {
               (props.labelsUnit !== undefined) && (
                 <Box
                   alignItems="center"
@@ -111,7 +111,7 @@ const MatrixControls = React.memo(
                   />
                 </Box>
               )
-            }
+            } */}
 
             <hr />
 
