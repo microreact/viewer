@@ -85,7 +85,7 @@ function MatrixVegaChart(props) {
                 "field": "value",
                 "type": "quantitative",
                 "scale": {
-                  "scheme": "goldred",
+                  "scheme": "tealblues",
                   "type": "linear",
                 },
                 "legend": {
