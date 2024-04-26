@@ -81,7 +81,7 @@ function GraphChart(props) {
       const colours = {};
 
       for (const row of props.activeRows) {
-        const value = row["--microreact-colour-label"].length === 40 ? "noval" : row["--microreact-colour-label"];
+        const value = row["--microreact-colour-label"].length === 40 ? "novel" : row["--microreact-colour-label"];
         counts[value] = (counts[value] ?? 0) + 1;
         colours[value] = row["--microreact-colour"];
       }
