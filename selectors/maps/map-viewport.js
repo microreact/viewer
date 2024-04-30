@@ -62,6 +62,7 @@ const defaultViewportSelector = createKeyedStateSelector(
           {
             duration: 0,
             padding: 64,
+            maxZoom: 5, // Avoid zooming in too much for close marker groups
           },
         );
         longitude = newViewport.longitude;
