@@ -6,6 +6,16 @@
     "dev": "next dev",
     "start": "next dev"
   },
+  "overrides": {
+    "react-sortable-hoc": {
+      "react": "^16.3.0 || ^18.0.0",
+      "react-dom": "^16.3.0 || ^18.0.0"
+    },
+    "react-base-table": {
+      "react": "^16.0.0 || ^18.0.0",
+      "react-dom": "^16.0.0 || ^18.0.0"
+    }
+  },
   "dependencies": {
     "@emotion/cache": "^11.10.1",
     "@emotion/react": "^11.10.0",
@@ -39,7 +49,7 @@
     "echarts": "^5.4.3",
     "echarts-for-react": "^3.0.2",
     "filesize": "^10.0.5",
-    "flexlayout-react": "^0.6.9",
+    "flexlayout-react": "^0.7.15",
     "geojson-geometries-lookup": "^0.5.0",
     "global": "^4.4.0",
     "html2canvas": "^1.4.1",
@@ -55,14 +65,14 @@
     "postal": "^2.0.6",
     "query-string": "^7.1.1",
     "re-reselect": "^4.0.1",
-    "react": "17.0.2",
+    "react": "^18.3.1",
     "react-base-table": "^1.13.2",
     "react-color": "^2.19.3",
     "react-debounce-input": "^3.3.0",
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dnd-preview": "^8.0.3",
-    "react-dom": "17.0.2",
+    "react-dom": "^18.3.1",
     "react-file-drop": "^3.1.5",
     "react-hotkeys": "^2.0.0",
     "react-map-gl": "^7.0.18",
@@ -87,8 +97,8 @@
     "axios": "^0.27.2",
     "eslint": "8.24.0",
     "eslint-config-cgps": "github:cgps-group/eslint-config",
-    "eslint-config-next": "12.3.1",
-    "next": "12.3.1",
+    "eslint-config-next": "^13.5.6",
+    "next": "^13.5.6",
     "web-vitals": "^2.1.4"
   }
 }
