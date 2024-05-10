@@ -5,6 +5,8 @@ import {
   documentGetInitialProps,
 } from '@mui/material-nextjs/v13-pagesRouter';
 
+import createEmotionCache from "../dev/create-emotion-cache";
+
 export default function MyDocument(props) {
   return (
     <Html lang="en">
@@ -84,8 +86,12 @@ export default function MyDocument(props) {
   );
 }
 
-
+// https://mui.com/material-ui/integrations/nextjs/#pages-router
 MyDocument.getInitialProps = async (ctx) => {
-  const finalProps = await documentGetInitialProps(ctx);
-  return finalProps;
+  const emotionCache = createEmotionCache();
+  const initialProps = await documentGetInitialProps(ctx, {
+    emotionCache,
+  });
+
+  return initialProps;
 };
