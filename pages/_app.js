@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import React from "react";
+import { AppCacheProvider } from '@mui/material-nextjs/v13-pagesRouter';
 
 // import "@fontsource/space-grotesk/400.css";
 // import "@fontsource/space-grotesk/700.css";
@@ -9,8 +10,13 @@ import React from "react";
 
 import "../styles/index.css";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+function MyApp(props) {
+  const { Component, pageProps } = props;
+  return (
+    <AppCacheProvider {...props}>
+      <Component {...pageProps} />
+    </AppCacheProvider>
+  )
 }
 
 export default MyApp;
