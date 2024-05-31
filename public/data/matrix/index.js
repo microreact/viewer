@@ -18,8 +18,10 @@ export default
       "type": "data"
     },
     "matrix-file": {
-      "blob": "data:text/csv;base64,aWQsYSxiLGMNCmEsMSwyLDMNCmIsNCw1LDYNCmMsNyw4LDk=",
-      "format": "text/csv",
+      // "blob": "data:text/csv;base64,aWQsYSxiLGMNCmEsMSwyLDMNCmIsNCw1LDYNCmMsNyw4LDk=",
+      // "format": "text/csv",
+      "blob": [{ "id": "a", "a": 1, "b": 2, "c": 3 }, { "id": "b", "a": 4, "b": 5, "c": 6 }, { "id": "c", "a": 7, "b": 8, "c": 9 }],
+      "format": "data",
       "id": "matrix-file",
       "name": "matrix.csv",
       "size": 33,
