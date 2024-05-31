@@ -135,7 +135,7 @@ export function blobify(input) {
       return new Blob([ input ], { type: input.format });
     }
   }
-  if (input instanceof Blob) {
+  if (input instanceof Blob || Array.isArray(input)) {
     return input;
   }
   console.error(input);
