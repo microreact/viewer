@@ -133,17 +133,19 @@ function GraphChart(props) {
     () => {
       const nodes = [];
 
-      for (const child of graphRoot.children) {
-        nodes.push({
-          x: child.x,
-          y: child.y,
-          value: child.value,
-          symbolSize: child.r * 2,
-          name: child.data.name,
-          itemStyle: {
-            color: child.data.colour,
-          },
-        });
+      if (graphRoot?.children) {
+        for (const child of graphRoot.children) {
+          nodes.push({
+            x: child.x,
+            y: child.y,
+            value: child.value,
+            symbolSize: child.r * 2,
+            name: child.data.name,
+            itemStyle: {
+              color: child.data.colour,
+            },
+          });
+        }
       }
 
       return nodes;
