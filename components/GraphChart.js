@@ -92,6 +92,7 @@ function GraphChart(props) {
         data.push({
           id: value,
           name: value,
+          count: count,
           size: count,
           value: count,
           colour: colours[value],
@@ -138,9 +139,9 @@ function GraphChart(props) {
           nodes.push({
             x: child.x,
             y: child.y,
-            value: child.value,
             symbolSize: child.r * 2,
             name: child.data.name,
+            value: child.data.value,
             itemStyle: {
               color: child.data.colour,
             },
@@ -190,7 +191,7 @@ function GraphChart(props) {
       position: "top",
       formatter(params) {
         const { name, value } = params.data;
-        return `<strong>${name}</strong><br />Number of entries: <strong>${value}</strong>`;
+        return `${props.colourColumnName}: <strong>${name}</strong><br />Number of entries: <strong>${value}</strong>`;
       },
     },
   };
