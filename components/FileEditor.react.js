@@ -14,7 +14,6 @@ import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 
 // import "../styles/panes-editor.css";
 import { nextTick } from "../utils/browser";
-import { matrix } from "echarts";
 
 class FileEditor extends React.PureComponent {
 
