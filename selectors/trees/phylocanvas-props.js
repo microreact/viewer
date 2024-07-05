@@ -22,7 +22,7 @@ const nodeStylesSelector = createKeyedStateSelector(
   (state) => filteredIdsSelector(state),
   (
     labels,
-    [ rowStyles ],
+    [rowStyles],
     rowsByLabel,
     filteredIds,
   ) => {
@@ -80,6 +80,7 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
       branchLengthsDigits: phylocanvasProps.roundBranchLengths ? phylocanvasProps.branchLengthsDigits : 1,
       branchLengthsFormat: phylocanvasProps.roundBranchLengths ? "decimal" : "scientific",
       fontFamily: defaults.fontFamily,
+      fontFamily: defaults.theme?.fonts?.body || defaults?.fontFamily,
       id: treeId,
       interactive: true,
       internalLabelsFilterRange: phylocanvasProps.filterInternalLabels ? phylocanvasProps.internalLabelsFilterRange : undefined,
