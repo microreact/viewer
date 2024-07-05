@@ -23,6 +23,21 @@ const fullRangeChartSpecSelector = createKeyedStateSelector(
         view: {
           stroke: "transparent",
         },
+        font: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+        title: {
+          font: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+        },
+        axis: {
+          labelFont: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+          titleFont: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+        },
+        legend: {
+          labelFont: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+          titleFont: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+        },
+        tooltip: {
+          font: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+        }
       },
       encoding: {
         x: {

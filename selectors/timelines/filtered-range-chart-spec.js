@@ -45,6 +45,23 @@ const chartSpecSelector = createKeyedStateSelector(
         view: {
           stroke: "transparent",
         },
+        font: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+        title: {
+          font: `"Work Sans", "Helvetica", "Arial", sans-serif`, // Font for titles
+        },
+        axis: {
+          labelFont: `"Work Sans", "Helvetica", "Arial", sans-serif`, // Font for axis labels
+          titleFont: `"Work Sans", "Helvetica", "Arial", sans-serif`, // Font for axis titles
+        },
+        legend: {
+          labelFont: `"Work Sans", "Helvetica", "Arial", sans-serif`, // Font for legend labels
+          titleFont: `"Work Sans", "Helvetica", "Arial", sans-serif`, // Font for legend titles
+        },
+        tooltip: {
+          font: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+          labelFont: `"Work Sans", "Helvetica", "Arial", sans-serif`, // Font for legend labels
+          titleFont: `"Work Sans", "Helvetica", "Arial", sans-serif`, // Font for legend titles
+        }
       },
       data: { name: "dataset" },
       mark: "bar",
@@ -82,8 +99,8 @@ const chartSpecSelector = createKeyedStateSelector(
         fillOpacity: {
           field: "isSelected",
           scale: {
-            domain: [ false, true ],
-            range: [ 0.14, 1 ],
+            domain: [false, true],
+            range: [0.14, 1],
           },
           legend: false,
         },
