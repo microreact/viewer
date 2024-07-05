@@ -15,9 +15,11 @@
 .mr-legends {
   display: flex;
 }
+
 .mr-legends.mr-stack-horizontally {
   flex-direction: column;
 }
+
 .mr-legends.mr-stack-vertically {
   flex-direction: row;
 }
@@ -61,6 +63,7 @@
   /* min-height: 16px; */
   min-height: 32px;
   font-weight: 700;
+  font-family: var(--body-font);
 }
 
 .mr-legend-entries button.mr-selected::after {
@@ -105,6 +108,7 @@
 .mr-legend-entries .mr-legend-table {
   height: 120px;
 }
+
 .mr-legend-entries .mr-legend-table td {
   padding: 0;
 }
