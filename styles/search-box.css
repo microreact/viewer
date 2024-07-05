@@ -52,7 +52,6 @@
 }
 
 .mr-search-totals {
-  /* font-family: var(--body-font); */
   white-space: nowrap;
   align-items: center;
   display: flex;
