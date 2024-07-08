@@ -71,7 +71,7 @@
   position: absolute;
   top: 0px;
   left: -2px;
-  border: 4px #3c7383 solid;
+  border: 4px var(--primary-main) solid;
   border-radius: 50%;
   height: 32px;
   width: 32px;

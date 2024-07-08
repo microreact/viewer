@@ -20,7 +20,7 @@
   font-family: "Saira Semi Condensed", "Roboto", "Helvetica", "Arial", sans-serif;
   line-height: 1.5;
   font-weight: 500;
-  color: #3c7383;
+  color: var(--primary-main);
   font-size: 34px;
 }
 
@@ -29,8 +29,9 @@
   position: absolute;
   display: inline-block;
   vertical-align: bottom;
-  animation: ellipsis steps(4,end) calc(0.28s * 4) infinite;
-  content: "\2026"; /* ascii code for the ellipsis character */
+  animation: ellipsis steps(4, end) calc(0.28s * 4) infinite;
+  content: "\2026";
+  /* ascii code for the ellipsis character */
   width: 0px;
   left: 100%;
 }

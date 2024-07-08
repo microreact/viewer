@@ -6,7 +6,7 @@ import seriesFieldSelector from "./series-field";
 import rowsSelector from "../datasets/rows";
 import filteredIdsSelector from "../filters/filtered-ids";
 
-const defaultColourRange = [ "#3C7383" ];
+const defaultColourRange = ["pink"];
 
 const seriesValueToColourMapSelector = (state, chartId) => {
   const seriesDataColumn = seriesFieldSelector(state, chartId);

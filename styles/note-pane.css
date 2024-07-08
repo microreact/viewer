@@ -14,7 +14,7 @@
 }
 
 .mr-note-pane .mr-add-note:hover {
-  color: #3c7383;
+  color: var(--primary-main);
 } */
 
 /* .mr-note-pane {
@@ -24,7 +24,7 @@
   min-height: 32px;
 }
 .mr-note-pane:hover {
-  border-color: #3c7383;
+  border-color: var(--primary-main);
 } */
 
 /* .mr-note-pane button {
@@ -32,7 +32,7 @@
   right: 0;
   top: 0;
   display: none;
-  color: #3c7383;
+  color: var(--primary-main);
 }
 
 .mr-note-pane:hover button {
@@ -45,7 +45,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   outline: none !important;
-  border: 2px solid #3c7383;
+  border: 2px solid var(--primary-main);
   border-radius: 4px;
   box-sizing: border-box;
   resize: none;
@@ -53,11 +53,11 @@
 }
 
 .mr-note-pane textarea:focus {
-  border-color: #3c7383;
+  border-color: var(--primary-main);
 }
 
 .mr-note-pane button {
-  color: #3c7383;
+  color: var(--primary-main);
   position: absolute;
   right: 0;
   top: 0;
