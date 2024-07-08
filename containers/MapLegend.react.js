@@ -13,6 +13,7 @@ import markersLayerDataSelector from "../selectors/maps/markers-layer-data";
 import regionColourLegendItemsSelector from "../selectors/maps/region-colour-legend-items";
 import hasMarkerSizeLegendSelector from "../selectors/maps/has-marker-size-legend";
 import hasRegionColourLegendSelector from "../selectors/maps/has-region-colour-legend";
+import { connectToPresentState } from "../utils/state";
 
 const mapStateToProps = (state, { mapId }) => {
   const hasMarkerSizeLegend = hasMarkerSizeLegendSelector(state, mapId);
@@ -40,4 +41,8 @@ const mapDispatchToProps = (dispatch, { mapId }) => {
   };
 };
 
-export default connect((state, props) => mapStateToProps(state.present, props), mapDispatchToProps)(MapLegend);
+export default connectToPresentState(
+  MapLegend,
+  mapStateToProps,
+  mapDispatchToProps,
+);
