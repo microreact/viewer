@@ -1,12 +1,15 @@
+import defaults from "../../defaults.js";
 import { createKeyedStateSelector } from "../../utils/state";
 
 import configSelector from "../config";
 import paneSizeSelector from "../panes/pane-size";
 
 const fullRangeChartSpecSelector = createKeyedStateSelector(
+  (_state, _timelineId, theme) => theme?.typography?.body1?.fontFamily || defaults.theme.fonts.body,
   (state, timelineId) => paneSizeSelector(state, timelineId),
   (state) => configSelector(state),
   (
+    fontStack,
     size,
     defaults,
   ) => {
@@ -23,20 +26,20 @@ const fullRangeChartSpecSelector = createKeyedStateSelector(
         view: {
           stroke: "transparent",
         },
-        font: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+        font: fontStack,
         title: {
-          font: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+          font: fontStack,
         },
         axis: {
-          labelFont: `"Work Sans", "Helvetica", "Arial", sans-serif`,
-          titleFont: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+          labelFont: fontStack,
+          titleFont: fontStack,
         },
         legend: {
-          labelFont: `"Work Sans", "Helvetica", "Arial", sans-serif`,
-          titleFont: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+          labelFont: fontStack,
+          titleFont: fontStack,
         },
         tooltip: {
-          font: `"Work Sans", "Helvetica", "Arial", sans-serif`,
+          font: fontStack,
         }
       },
       encoding: {

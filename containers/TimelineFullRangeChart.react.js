@@ -7,12 +7,12 @@ import fullRangeChartDataSelector from "../selectors/timelines/full-range-chart-
 const onError = (err) => console.error("Timeline", err);
 const onParseError = (err) => console.error("Timeline", err);
 
-const mapStateToProps = (state, { timelineId }) => {
+const mapStateToProps = (state, { timelineId, theme }) => {
   return {
     data: fullRangeChartDataSelector(state, timelineId),
     onError,
     onParseError,
-    spec: fullRangeChartSpecSelector(state, timelineId),
+    spec: fullRangeChartSpecSelector(state, timelineId, theme),
     className: "mr-timeline-full-range-chart",
   };
 };
