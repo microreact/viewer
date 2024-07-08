@@ -150,8 +150,6 @@ class TimelinePane extends React.PureComponent {
 
     const theme = this.context;
 
-    console.log({ theme })
-
     if (props.bounds === null) {
       return false;
     }

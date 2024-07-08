@@ -27,8 +27,6 @@ const chartSpecSelector = createKeyedStateSelector(
     fontFamily,
     colourByDataField,
   ) => {
-
-    console.log({ fontStack })
     const vlSpec = {
       $schema: "https://vega.github.io/schema/vega-lite/v4.json",
       autosize: {
