@@ -151,9 +151,7 @@ function GraphChart(props) {
 
       return nodes;
     },
-    [
-      graphRoot,
-    ]
+    [graphRoot],
   );
 
   const options = {
