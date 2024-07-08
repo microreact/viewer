@@ -18,7 +18,7 @@ import yAxisModeSelector from "./y-axis-mode";
 import xAxisModeSelector from "./x-axis-mode";
 import mainAxisEncodingSelector from "./main-axis-encoding";
 
-const defaultColourRange = [ "#3C7383" ];
+const defaultColourRange = ["#3C7383"];
 
 const seriesValueToColourMapSelector = (state, chartId) => {
   const seriesDataColumn = seriesFieldSelector(state, chartId);
@@ -140,7 +140,7 @@ const defaultSpecSelector = createKeyedStateSelector(
     };
     const vlSpec = {
       $schema: "https://vega.github.io/schema/vega-lite/v4.json",
-      transform: [ aggregateTransform ],
+      transform: [aggregateTransform],
       mark: {
         type: chartType,
         point: (chartType === "line"),
@@ -365,7 +365,7 @@ const defaultSpecSelector = createKeyedStateSelector(
           field: "--mr-scalar",
           as: "--mr-frequency-total",
         }],
-        groupby: [ vlSpec.encoding[mainAxis.encoding].field ],
+        groupby: [vlSpec.encoding[mainAxis.encoding].field],
       });
       aggregateTransform.groupby.push("--mr-frequency-total");
       vlSpec.encoding.tooltip.push({
@@ -440,7 +440,7 @@ const vlSpecSelector = createKeyedStateSelector(
           const step = Math.floor((size.height - xAxisLabelLimit - 40 /* padding */ - 32 /* title */) / numberOfDomainValues);
           if (seriesStacking === "overlapping" && numberOfDomainValues > 1) {
             const overlap = numberOfDomainValues / 2;
-            vlSpec.encoding.y.scale = { range: [ step, -overlap * step ] };
+            vlSpec.encoding.y.scale = { range: [step, -overlap * step] };
           }
           vlSpec.width = size.width - yAxisLabelLimit - 16 /* padding */ - 32/* title */;
           vlSpec.height = step;

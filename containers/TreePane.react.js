@@ -12,11 +12,11 @@ import TreePane from "../components/TreePane.react";
 import { addHistoryEntry } from "../actions/ui";
 import { connectToPresentState } from "../utils/state";
 
-const mapStateToProps = (state, { treeId }) => {
+const mapStateToProps = (state, { treeId, theme }) => {
   const treeState = state.trees[treeId];
   return {
     controls: treeState.controls,
-    phylocanvasProps: phylocanvasPropsSelector(state, treeId),
+    phylocanvasProps: phylocanvasPropsSelector(state, treeId, theme),
     selectedIds: selectedIdsListSelector(state),
     treeType: state.trees[treeId].type,
   };

@@ -4,10 +4,10 @@ import mrTheme from "cgps-stdlib/themes/mr.js";
 export default {
   colour: "transparent",
 
-  fontFamily: "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
+  fontFamily: mrTheme.fonts.body,
 
   highlight: {
-    colour: "#3C7383",
+    colour: mrTheme.primary.main,
     width: 4,
   },
 
@@ -52,7 +52,7 @@ export default {
     MINIMUM_CONTAINER_WIDTH: 150,
     MINIMUM_CONTAINER_HEIGHT: 50,
   },
-  HIGHLIGHT_COLOUR: "#3C7383",
+  HIGHLIGHT_COLOUR: mrTheme.primary.main,
   HIGHLIGHT_WIDTH: 4,
   MAP: {
     CENTER: {
@@ -75,7 +75,7 @@ export default {
   },
   THEME: {
     COLOURS: {
-      GREEN: "#3C7383",
+      GREEN: mrTheme.primary.main,
       LIGHT_GREEN: "#9BB7BF",
     },
     ICONS: {

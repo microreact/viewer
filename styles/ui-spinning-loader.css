@@ -1,10 +1,6 @@
 .mr-ui-spinning-loader {
   width: 100vw;
   height: 100vh;
-  background-image: url("../images/spinner.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  position: relative;
 }
 
 .flexlayout__tab .mr-ui-spinning-loader {
@@ -12,10 +8,10 @@
   height: 100%;
 }
 
-.mr-ui-spinning-loader > div {
+.mr-ui-spinning-loader .progress {
   width: 100%;
   text-align: center;
-  top: calc(50% + 48px);
+  top: calc(50% - 50px);
   position: absolute;
 }
 

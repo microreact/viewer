@@ -35,7 +35,7 @@
 
 .mr-map-summary .mr-chart {
   z-index: 1;
-  background:#fff;
+  background: #fff;
   padding: 16px;
 }
 
@@ -66,7 +66,7 @@
   border: 0;
   background: none;
   cursor: pointer;
-  color: #3C7383;
+  color: var(--primary-main);
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -81,24 +81,24 @@
   margin-right: 4px;
 }
 
-.mr-map-summary svg > circle {
+.mr-map-summary svg>circle {
   fill: #fff;
 }
 
-.mr-map-summary svg > g > path,
-.mr-map-summary svg > g > circle {
+.mr-map-summary svg>g>path,
+.mr-map-summary svg>g>circle {
   cursor: pointer;
 }
 
-.mr-map-summary svg:hover > g > path {
+.mr-map-summary svg:hover>g>path {
   opacity: 0.54;
 }
 
-.mr-map-summary svg > g > path:hover {
+.mr-map-summary svg>g>path:hover {
   opacity: 1;
 }
 
-.mr-map-summary svg > text {
+.mr-map-summary svg>text {
   fill: rgba(0, 0, 0, 0.54);
   text-anchor: middle;
   dominant-baseline: middle;

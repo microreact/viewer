@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { ThemeContext } from "@emotion/react";
 
 import CanvasOverlay from "./CanvasOverlay";
 
@@ -14,12 +15,17 @@ function round(x, n) {
 
 export default class MapMarkersLayer extends React.PureComponent {
 
+  static contextType = ThemeContext;
+
   onCanvasOverlayRedraw = ({ width, height, ctx, isDragging, project, unproject }) => {
     const {
       compositeOperation,
       globalOpacity,
     } = this.props;
 
+    const theme = this.context;
+
+    console.log({ theme });
     ctx.clearRect(0, 0, width, height);
     ctx.globalCompositeOperation = compositeOperation;
     ctx.globalAlpha = globalOpacity;
@@ -54,7 +60,9 @@ export default class MapMarkersLayer extends React.PureComponent {
                 pixelY,
                 size,
                 marker.slices,
-                isHighlighted && defaults.THEME.COLOURS.GREEN
+                isHighlighted && defaults.THEME.COLOURS.GREEN,
+                undefined,
+                theme,
               );
             }
             else {
