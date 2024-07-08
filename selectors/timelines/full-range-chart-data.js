@@ -6,6 +6,7 @@ import { createKeyedStateSelector } from "../../utils/state";
 import paneSizeSelector from "../panes/pane-size";
 import rowsSelector from "../datasets/rows";
 import rowsWithDateFieldSelector from "./rows-with-date-field";
+import timelineStateSelector from "./timeline-state";
 
 const fullRangeUnitSelector = createKeyedStateSelector(
   (state, timelineId) => rowsWithDateFieldSelector(state, timelineId),
@@ -28,7 +29,7 @@ const fullRangeUnitSelector = createKeyedStateSelector(
 
 const fullRangeChartDataSelector = createKeyedStateSelector(
   (state, timelineId) => rowsWithDateFieldSelector(state, timelineId),
-  (state, timelineId) => fullRangeUnitSelector(state, timelineId),
+  (state, timelineId) => timelineStateSelector(state, timelineId).fullRangeUnit ?? fullRangeUnitSelector(state, timelineId),
   (state) => rowsSelector(state),
   (
     { dateFieldName },
