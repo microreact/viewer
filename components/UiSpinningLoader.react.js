@@ -9,11 +9,12 @@ const UiSpinningLoader = React.memo(
     >
       <div
         className="progress"
-
       >
         <CircularProgress
           size={60}
           color={"primary"}
+          thickness={5}
+          sx={{ opacity: 0.7 }}
         />
       </div>
       <div>
