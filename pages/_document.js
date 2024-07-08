@@ -30,31 +30,6 @@ export default function MyDocument(props) {
           href="https://cdn.jsdelivr.net/npm/flexlayout-react@0.6.10/style/light.css"
         />
 
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@fontsource/open-sans/index.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@fontsource/open-sans/500.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk/index.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@fontsource/space-grotesk/500.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/ag-grid-community@29.2.0/styles/ag-grid.min.css"
-        />
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/ag-grid-community@29.2.0/styles/ag-theme-alpine.min.css"
-        />
-
         {/* Inject MUI styles first to match with the prepend: true configuration. */}
         {props.emotionStyleTags}
       </Head>
