@@ -35,24 +35,24 @@ const rowsWithDateFieldSelector = createKeyedStateSelector(
         const dayField = fieldsMap.get(dayFieldName);
         const yearFieldIndex = yearField.name;
         for (const row of rows) {
-          const yearValue = parseInt(row[yearFieldIndex], 10);
+          const yearValue = parseInt(row[yearFieldIndex]);
           if (Number.isInteger(yearValue)) {
             let month = 1;
             let day = 1;
             if (monthField) {
-              const monthValue = parseInt(row[monthField.name], 10);
+              const monthValue = parseInt(row[monthField.name]);
               if (Number.isInteger(monthValue)) {
                 month = monthValue;
               }
             }
             if (dayField) {
-              const dayValue = parseInt(row[dayField.name], 10);
+              const dayValue = parseInt(row[dayField.name]);
               if (Number.isInteger(dayValue)) {
                 day = dayValue;
               }
             }
             if (dayField && Number.isFinite(row[dayField.name])) {
-              day = parseInt(row[dayField.name], 10);
+              day = parseInt(row[dayField.name]);
             }
             const dateInstance = new Date(
               yearValue,
