@@ -17,8 +17,9 @@ import filteredIdsSelector from "../filters/filtered-ids";
 import yAxisModeSelector from "./y-axis-mode";
 import xAxisModeSelector from "./x-axis-mode";
 import mainAxisEncodingSelector from "./main-axis-encoding";
+import defaults from "../../../defaults.js";
 
-const defaultColourRange = ["#3C7383"];
+const defaultColourRange = [defaults.primary.main]; // TODO: Use theme
 
 const seriesValueToColourMapSelector = (state, chartId) => {
   const seriesDataColumn = seriesFieldSelector(state, chartId);
