@@ -1,10 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import createTheme from "cgps-stdlib/themes/create-theme.js";
 import mr from "cgps-stdlib/themes/mr.js";
 
+import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 
 const {
@@ -22,7 +21,6 @@ function Theme(props) {
     </ThemeProvider>
   );
 }
-
 
 Theme.propTypes = {
   children: PropTypes.node,

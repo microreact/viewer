@@ -5,6 +5,7 @@ import ViewerWithProvider from "./components/ViewerWithProvider.js";
 import store from "./store";
 import { presentStateSelector } from "./selectors/index";
 
+export { default as Theme } from "./containers/Theme.react";
 
 export { default as store } from "./store";
 
