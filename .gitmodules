@@ -1,0 +1,3 @@
+[submodule "cgps-stdlib"]
+	path = cgps-stdlib
+	url = https://github.com/cgps-group/cgps-stdlib.git
