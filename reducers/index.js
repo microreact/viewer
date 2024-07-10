@@ -39,6 +39,7 @@ const combinedReducer = combineReducers({
   views,
 });
 
+// eslint-disable-next-line default-param-last
 function rootReducer(state = {}, action) {
   let nextState = state;
   if (action.type === "MICROREACT VIEWER/BATCH") {
@@ -77,7 +78,6 @@ const undoableReducer = undoable(
 );
 
 export default function (state, action) {
-
   let currentState = state;
   if (action.type === "MICROREACT VIEWER/UNLOAD") {
     currentState = undefined;
