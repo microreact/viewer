@@ -113,7 +113,7 @@ class MapPane extends React.PureComponent {
       },
     );
 
-    this.props.onViewportChange(this.props.viewport);
+    // this.props.onViewportChange(this.props.viewport);
 
     // const _mapbox = this.getMapboxWrapper();
     // _mapbox.setPaintProperty("water", "fill-color", "#bd0026");
