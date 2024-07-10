@@ -3,6 +3,7 @@ import GeoJsonPolygonLookup from "geojson-geometries-lookup";
 import { createKeyedStateSelector } from "../../utils/state";
 
 import dataColumnsByFieldMapSelector from "../datasets/data-columns-by-field-map";
+import activeRowsWithStyleFieldsSelector from "../filters/active-rows-with-style-fields";
 import geojsonLayerDataSelector from "./geojson-layer-data";
 import mapStateSelector from "./map-state";
 import markersLayerDataSelector from "./markers-layer-data";
@@ -23,11 +24,13 @@ const rowsByRegionSelector = createKeyedStateSelector(
   (state, mapId) => geodataLinkDataFieldSelector(state, mapId),
   (state, mapId) => geojsonLayerDataSelector(state, mapId),
   (state, mapId) => markersLayerDataSelector(state, mapId),
+  (state) => activeRowsWithStyleFieldsSelector(state),
   (
     geodata,
     geodataLinkDataField,
     geojson,
     markersLayerData,
+    { rows: activeRows },
   ) => {
     if (!geodata) {
       return undefined;
@@ -35,11 +38,11 @@ const rowsByRegionSelector = createKeyedStateSelector(
 
     const rowsByRegion = {};
 
-    for (const feature of geojson.features) {
-      rowsByRegion[feature.properties["mr-region-id"]] = [];
-    }
-
     if (geodata.linkType === "geographic-coordinates") {
+      for (const feature of geojson.features) {
+        rowsByRegion[feature.properties["mr-region-id"]] = [];
+      }
+
       const lookup = new GeoJsonPolygonLookup(geojson);
 
       for (const marker of markersLayerData) {
@@ -57,17 +60,18 @@ const rowsByRegionSelector = createKeyedStateSelector(
       }
     }
     else if (geodata.linkType === "field-property") {
+      // Group data rows by geodata linked column to speed up lookups
+      const rowsByLinkedColumn = {};
+      for (const row of activeRows) {
+        const value = row[geodataLinkDataField.name];
+        rowsByLinkedColumn[value] ??= [];
+        rowsByLinkedColumn[value].push(row);
+      }
+
       for (const feature of geojson.features) {
         const propertyValue = feature.properties[geodata.linkPropertyName];
-        const regionRows = rowsByRegion[feature.properties["mr-region-id"]];
-        if (propertyValue !== undefined) {
-          for (const datum of markersLayerData) {
-            const rows = datum.rows.filter((x) => x[geodataLinkDataField.name] === propertyValue);
-            for (const row of rows) {
-              regionRows.push(row);
-            }
-          }
-        }
+
+        rowsByRegion[feature.properties["mr-region-id"]] = rowsByLinkedColumn[propertyValue] ?? [];
       }
     }
 
