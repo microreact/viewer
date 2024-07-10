@@ -1,13 +1,10 @@
-
-import mrTheme from "cgps-stdlib/themes/mr.js";
-
 export default {
   colour: "transparent",
 
-  fontFamily: mrTheme.fonts.body,
+  fontFamily: "\"Roboto\", \"Helvetica\", \"Arial\", sans-serif",
 
   highlight: {
-    colour: mrTheme.primary.main,
+    colour: "#3C7383",
     width: 4,
   },
 
@@ -22,7 +19,40 @@ export default {
     width: 1,
   },
 
-  theme: mrTheme,
+  theme: {
+    background: {
+      main: "#ffffff",
+      highlight: "#f8f9fa",
+      hover: "#e8eaed",
+      disabled: "rgba(0, 0, 0, 0.24)",
+    },
+    text: {
+      primary: "rgba(0, 0, 0, 0.87)",
+      secondary: "rgba(0, 0, 0, 0.54)",
+      disabled: "rgba(0, 0, 0, 0.38)",
+      hint: "rgba(0, 0, 0, 0.38)",
+    },
+    primary: {
+      light: "#6ca2b3",
+      main: "#3c7383",
+      dark: "#024756",
+      contrast: "#fff",
+      // light: "#9768c0",
+      // main: "#673c8f",
+      // dark: "#391161",
+      // contrast: "#fff",
+    },
+    secondary: {
+      light: "#e998d8",
+      main: "#b668a6",
+      dark: "#853a77",
+      contrast: "#000000",
+    },
+    fonts: {
+      headline: `"Space Grotesk", "Helvetica", "Arial", sans-serif`,
+      body: `"Open Sans", "Helvetica", "Arial", sans-serif`,
+    },
+  },
 
   validFileExtensions: [
     { kind: "data", extension: "csv" },
@@ -52,7 +82,7 @@ export default {
     MINIMUM_CONTAINER_WIDTH: 150,
     MINIMUM_CONTAINER_HEIGHT: 50,
   },
-  HIGHLIGHT_COLOUR: mrTheme.primary.main,
+  HIGHLIGHT_COLOUR: "#3C7383",
   HIGHLIGHT_WIDTH: 4,
   MAP: {
     CENTER: {
@@ -75,7 +105,7 @@ export default {
   },
   THEME: {
     COLOURS: {
-      GREEN: mrTheme.primary.main,
+      GREEN: "#3C7383",
       LIGHT_GREEN: "#9BB7BF",
     },
     ICONS: {

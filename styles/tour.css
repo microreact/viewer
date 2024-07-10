@@ -5,9 +5,9 @@
 .mr-tour {
   border-radius: 2px;
   position: absolute;
-  background: var(--primary-main);
-  border: none var(--primary-main);
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.12), 0 4px 16px rgba(0, 0, 0, 0.12);
+  background: #3C7383;
+  border: none #3C7383;
+  box-shadow: 0 0 4px rgba(0,0,0,0.12),0 4px 16px rgba(0,0,0,0.12);
   color: #fff;
   line-height: normal;
   line-height: 20px;
@@ -39,7 +39,7 @@
 
 .mr-tour.pointer-top .mr-pointer {
   border-bottom-style: solid;
-  border-bottom-color: var(--primary-main);
+  border-bottom-color: #3C7383;  
   border-top-width: 0;
   left: calc(50% - 6.5px);
   top: -8.5px;
@@ -47,7 +47,7 @@
 
 .mr-tour.pointer-bottom .mr-pointer {
   border-top-style: solid;
-  border-top-color: var(--primary-main);
+  border-top-color: #3C7383;  
   border-bottom-width: 0;
   left: calc(50% - 6.5px);
   bottom: -8px;
@@ -55,7 +55,7 @@
 
 .mr-tour.pointer-left .mr-pointer {
   border-right-style: solid;
-  border-right-color: var(--primary-main);
+  border-right-color: #3C7383;  
   border-left-width: 0;
   top: calc(50% - 8.5px);
   left: -8.5px;
@@ -63,7 +63,7 @@
 
 .mr-tour.pointer-right .mr-pointer {
   border-left-style: solid;
-  border-left-color: var(--primary-main);
+  border-left-color: #3C7383;  
   border-right-width: 0;
   top: calc(50% - 8.5px);
   right: -8px;
@@ -91,11 +91,11 @@
 }
 
 .mr-tour-close-button:hover {
-  background-color: rgba(158, 158, 158, .2);
+  background-color: rgba(158,158,158,.2);
 }
 
 .mr-tour-content {
-  padding-top: 8px;
+  padding-top: 8px; 
   height: 80px;
   display: flex;
   flex-direction: column;
@@ -125,7 +125,7 @@
 .mr-tour-footer {
   display: flex;
   align-items: center;
-  font-size: 14px;
+  font-size: 14px;  
   align-content: space-between;
 }
 
@@ -140,5 +140,5 @@
 .mr-tour-content .mr-button-group svg {
   height: 20px;
   width: 20px;
-  fill: #fff;
+  fill: #fff;  
 }

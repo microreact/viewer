@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { ThemeContext } from "@emotion/react";
-
 import Paper from "@mui/material/Paper";
 import InputBase from "@mui/material/InputBase";
 import Divider from "@mui/material/Divider";
@@ -14,12 +12,12 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 import * as Datetime from "../utils/datetime";
 import { downloadDataUrl } from "../utils/downloads";
-import { exportPNG, exportSVG } from "../utils/charts";
 
 import TimelineSlider from "../containers/TimelineSlider.react";
 import TimelineControls from "../containers/TimelineControls.react";
 import TimelineFullRangeChart from "../containers/TimelineFullRangeChart.react";
 import TimelineFilteredRangeChart from "../containers/TimelineFilteredRangeChart.react";
+import { exportPNG, exportSVG } from "../utils/charts";
 
 function formatRange(bounds, unit) {
   const length = Datetime.rangeLength(bounds, unit);
@@ -90,8 +88,6 @@ class TimelinePane extends React.PureComponent {
     width: PropTypes.number.isRequired,
   };
 
-  static contextType = ThemeContext;
-
   state = {
     vegaError: null,
   };
@@ -99,7 +95,7 @@ class TimelinePane extends React.PureComponent {
   filteredRangeChartRef = React.createRef();
 
   signalListeners = {
-    onItemSelectSignal: (_, [event, item]) => {
+    onItemSelectSignal: (_, [ event, item ]) => {
       if (item) {
         this.props.onSelectItem(item, event.metaKey || event.ctrilKey);
       }
@@ -130,7 +126,7 @@ class TimelinePane extends React.PureComponent {
   handleMinBoundChange = (event) => {
     const timestamp = Datetime.ISODateToTimestamp(event.target.value);
     if (Datetime.isTimestamp(timestamp)) {
-      const bounds = [...this.props.bounds];
+      const bounds = [ ...this.props.bounds ];
       bounds[0] = timestamp;
       this.props.onChange(bounds);
     }
@@ -139,7 +135,7 @@ class TimelinePane extends React.PureComponent {
   handleMaxBoundChange = (event) => {
     const timestamp = Datetime.ISODateToTimestamp(event.target.value);
     if (Datetime.isTimestamp(timestamp)) {
-      const bounds = [...this.props.bounds];
+      const bounds = [ ...this.props.bounds ];
       bounds[1] = timestamp;
       this.props.onChange(bounds);
     }
@@ -147,8 +143,6 @@ class TimelinePane extends React.PureComponent {
 
   render() {
     const { props } = this;
-
-    const theme = this.context;
 
     if (props.bounds === null) {
       return false;
@@ -168,7 +162,6 @@ class TimelinePane extends React.PureComponent {
         {
           (!props.sliderOnly) && (
             <TimelineFilteredRangeChart
-              theme={theme}
               timelineId={props.timelineId}
               signalListeners={this.signalListeners}
               ref={this.filteredRangeChartRef}
@@ -177,7 +170,6 @@ class TimelinePane extends React.PureComponent {
         }
 
         <TimelineFullRangeChart
-          theme={theme}
           timelineId={props.timelineId}
         />
 
@@ -187,30 +179,34 @@ class TimelinePane extends React.PureComponent {
           height={48}
         />
 
-        <div className="mr-time-range">
-          <Paper
-          // className="mr-time-bounds"
-          >
-            <InputBase
-              onChange={this.handleMinBoundChange}
-              type="date"
-              value={Datetime.timestampToISODate(props.bounds[0])}
-            />
-            <Divider orientation="vertical" />
-            <span>
-              {formatRange(props.bounds, props.unit)}
-            </span>
-            <Divider orientation="vertical" />
-            <InputBase
-              onChange={this.handleMaxBoundChange}
-              type="date"
-              value={Datetime.timestampToISODate(props.bounds[1])}
-            />
-            <FilterMenu
-              onTimelineFilter={props.onTimelineFilter}
-            />
-          </Paper>
-        </div>
+        {
+          props.hasControls && (
+            <div className="mr-time-range">
+              <Paper
+                // className="mr-time-bounds"
+              >
+                <InputBase
+                  onChange={this.handleMinBoundChange}
+                  type="date"
+                  value={Datetime.timestampToISODate(props.bounds[0])}
+                />
+                <Divider orientation="vertical" />
+                <span>
+                  { formatRange(props.bounds, props.unit) }
+                </span>
+                <Divider orientation="vertical" />
+                <InputBase
+                  onChange={this.handleMaxBoundChange}
+                  type="date"
+                  value={Datetime.timestampToISODate(props.bounds[1])}
+                />
+                <FilterMenu
+                  onTimelineFilter={props.onTimelineFilter}
+                />
+              </Paper>
+            </div>
+          )
+        }
 
         <TimelineControls
           onDownloadPNG={this.downloadPNG}

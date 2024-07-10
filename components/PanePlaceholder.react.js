@@ -7,11 +7,9 @@ import { FileDescriptor } from "../utils/prop-types";
 
 import PaneIcon from "./PaneIcon.react";
 import FileLoader from "../containers/FileLoader.react";
-import { useTheme } from "@emotion/react";
 
 const PanePlaceholder = React.memo(
   (props) => {
-    const theme = useTheme();
     const { PaneComponent, isEmpty, file, ...rest } = props;
 
     if (file && !file._content) {
@@ -34,7 +32,7 @@ const PanePlaceholder = React.memo(
             disableElevation
             size="small"
           >
-            {props.emptyLabel ?? `Edit${props.componentName}`}
+            { props.emptyLabel ?? `Edit${props.componentName}` }
           </Button>
         </div>
       );
@@ -42,7 +40,6 @@ const PanePlaceholder = React.memo(
 
     return (
       <PaneComponent
-        theme={theme}
         {...rest}
       />
     );

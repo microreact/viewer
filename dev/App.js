@@ -11,13 +11,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import MicroreactViewer, { Theme, store, actions } from "../index";
 import { setFetcher } from "../utils/proxy";
 
-import "@fontsource/space-grotesk/400.css";
-import "@fontsource/space-grotesk/500.css";
-import "@fontsource/space-grotesk/700.css";
-import "@fontsource/work-sans/400.css";
-import "@fontsource/work-sans/500.css";
-import "@fontsource/work-sans/700.css";
-
 setFetcher(async (originalUrl) => {
   if (typeof originalUrl !== "string") {
     return fetchFile(originalUrl);

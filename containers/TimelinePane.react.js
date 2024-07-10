@@ -11,6 +11,7 @@ import timelineStateSelector from "../selectors/timelines/timeline-state";
 const mapStateToProps = (state, { timelineId }) => {
   const timelineState = timelineStateSelector(state, timelineId);
   return {
+    hasControls: timelineState.controls,
     bounds: filteredRangeExtentSelector(state, timelineId),
     unit: filteredRangeUnitSelector(state, timelineId),
     sliderOnly: timelineState.sliderOnly,
