@@ -71,11 +71,11 @@ ChartCustomEmbed.propTypes = {
     ).isRequired,
   }).isRequired,
   chartRef: PropTypes.object,
-  height: PropTypes.number.isRequired,
+  height: PropTypes.number,
   onError: PropTypes.func,
   onParseError: PropTypes.func,
   signalListeners: PropTypes.object,
-  width: PropTypes.number.isRequired,
+  width: PropTypes.number,
 };
 
 export default ChartCustomEmbed;

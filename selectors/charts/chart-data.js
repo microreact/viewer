@@ -19,7 +19,7 @@ const filterChartIdsSelector = createCombinedStateSelector(
   },
 );
 
-const filterChartDataSelector = createKeyedStateSelector(
+export const filterChartDataSelector = createKeyedStateSelector(
   (state) => rowsSelector(state),
   (state) => filteredNonDataIdsSelector(state),
   (state) => filteredDataIdsSelector(state),

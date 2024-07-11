@@ -4,9 +4,10 @@ import centroid from "@turf/centroid";
 import { getGroupedColours } from "../../utils/drawing";
 import { createKeyedStateSelector } from "../../utils/state";
 
+import activeRowsWithStyleFieldsSelector from "../filters/active-rows-with-style-fields";
+
 import mapStateSelector from "./map-state";
 import geojsonLayerDataSelector from "./geojson-layer-data";
-import activeRowsWithStyleFieldsSelector from "../filters/active-rows-with-style-fields";
 import rowsWithPositionFieldSelector from "./rows-with-position-field";
 
 const markersLayerDataSelector = createKeyedStateSelector(

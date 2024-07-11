@@ -186,32 +186,34 @@ class TimelinePane extends React.PureComponent {
           width={props.width - 32}
           height={48}
         />
-
-        <div className="mr-time-range">
-          <Paper
-          // className="mr-time-bounds"
-          >
-            <InputBase
-              onChange={this.handleMinBoundChange}
-              type="date"
-              value={Datetime.timestampToISODate(props.bounds[0])}
-            />
-            <Divider orientation="vertical" />
-            <span>
-              {formatRange(props.bounds, props.unit)}
-            </span>
-            <Divider orientation="vertical" />
-            <InputBase
-              onChange={this.handleMaxBoundChange}
-              type="date"
-              value={Datetime.timestampToISODate(props.bounds[1])}
-            />
-            <FilterMenu
-              onTimelineFilter={props.onTimelineFilter}
-            />
-          </Paper>
-        </div>
-
+        {
+          props.hasControls && (
+            <div className="mr-time-range">
+              <Paper
+              // className="mr-time-bounds"
+              >
+                <InputBase
+                  onChange={this.handleMinBoundChange}
+                  type="date"
+                  value={Datetime.timestampToISODate(props.bounds[0])}
+                />
+                <Divider orientation="vertical" />
+                <span>
+                  {formatRange(props.bounds, props.unit)}
+                </span>
+                <Divider orientation="vertical" />
+                <InputBase
+                  onChange={this.handleMaxBoundChange}
+                  type="date"
+                  value={Datetime.timestampToISODate(props.bounds[1])}
+                />
+                <FilterMenu
+                  onTimelineFilter={props.onTimelineFilter}
+                />
+              </Paper>
+            </div>
+          )
+        }
         <TimelineControls
           onDownloadPNG={this.downloadPNG}
           onDownloadSVG={this.downloadSVG}
