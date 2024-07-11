@@ -11,7 +11,7 @@
   display: block;
   padding: 0 16px 0 4px;
   border: none;
-  color: rgba(0,0,0,.87);
+  color: rgba(0, 0, 0, .87);
   appearance: none;
   background: none;
   height: 100%;
@@ -42,5 +42,5 @@
 }
 
 .mr-dropdown:hover::after {
-  color: #3c7383;
+  color: var(--primary-main);
 }

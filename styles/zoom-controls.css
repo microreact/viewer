@@ -10,7 +10,7 @@
   width: 28px;
   /* height: 55px; */
   transition-property: opacity;
-  transition: 0.28s cubic-bezier(.4,0,.2,1);
+  transition: 0.28s cubic-bezier(.4, 0, .2, 1);
   visibility: hidden;
   opacity: 0;
   z-index: 4;
@@ -34,6 +34,7 @@
   /* top: 0px; */
   width: 28px;
 }
+
 .mr-zoom-controls .mr-button:hover {
   color: var(--primary-main);
 }
@@ -62,5 +63,5 @@
 } */
 
 .mr-zoom-controls .mr-button:hover .mr-zoom-controls .mr-icon {
-  color: #3C7383;
+  color: var(--primary-main);
 }

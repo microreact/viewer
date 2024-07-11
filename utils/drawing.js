@@ -62,9 +62,18 @@ export function drawShape(ctx, x, y, radius, shape, colour, highlightColour, bor
   }
 }
 
-export function drawPieChart(ctx, x, y, radius, slices, highlight = false, borderWidth = 1) {
+export function drawPieChart(
+  ctx,
+  x,
+  y,
+  radius,
+  slices,
+  highlight = false,
+  borderWidth = 1,
+  theme
+) {
   let startingAngle = Angles.Degrees270;
-  for (const [ colour, value ] of slices) {
+  for (const [colour, value] of slices) {
     ctx.fillStyle = colour;
     ctx.beginPath();
     ctx.moveTo(x, y);
@@ -86,7 +95,7 @@ export function drawPieChart(ctx, x, y, radius, slices, highlight = false, borde
   }
 
   if (highlight) {
-    ctx.strokeStyle = defaults.HIGHLIGHT_COLOUR;
+    ctx.strokeStyle = theme?.palette?.primary?.main || defaults.HIGHLIGHT_COLOUR;
     ctx.lineWidth = defaults.HIGHLIGHT_WIDTH;
     ctx.beginPath();
     ctx.arc(x, y, radius * 2, 0, Math.PI * 2, false);

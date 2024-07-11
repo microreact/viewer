@@ -1,5 +1,6 @@
 .mr-timeline-pane {
   position: relative;
+  font-family: var(--body-font);
 }
 
 /*#region Range input form  */
@@ -16,6 +17,7 @@
   height: 1px;
   overflow: visible;
 }
+
 .mr-timeline-pane .mr-time-range:hover {
   opacity: 1;
 }
@@ -27,6 +29,7 @@
   align-items: center;
   height: 20px;
 }
+
 .mr-timeline-pane .mr-time-range .MuiDivider-root {
   margin: 4px;
 }
@@ -58,6 +61,11 @@
   bottom: 8px;
   height: 48px;
   left: 0;
+  font-family: var(--body-font);
+}
+
+#vg-tooltip-element.vg-tooltip {
+  font-family: var(--body-font);
 }
 
 .mr-timeline-filtered-range-chart .chart-wrapper canvas {
@@ -84,8 +92,10 @@
   padding-top: 4px;
   padding-bottom: 0;
 }
+
 .vg-tooltip.timeline-theme#vg-tooltip-element table tr:nth-child(even) td {
   padding-top: 0;
   padding-bottom: 4px;
 }
+
 /*#endregion*/

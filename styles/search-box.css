@@ -26,6 +26,7 @@
 }
 
 .mr-search-box__input {
+  font-family: var(--body-font);
   flex-grow: 1;
   flex-shrink: 1;
   padding: 0 8px;
@@ -55,6 +56,7 @@
   align-items: center;
   display: flex;
   line-height: 1;
+  font-size: 13px;
 }
 
 .mr-search-box button {
@@ -65,7 +67,7 @@
   background: none;
   border-radius: 0;
   box-sizing: content-box;
-  border: 2px solid transparent;  
+  border: 2px solid transparent;
   border-bottom: 2px solid transparent;
   padding: 0;
   cursor: pointer;
