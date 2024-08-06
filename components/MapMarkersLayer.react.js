@@ -25,7 +25,6 @@ export default class MapMarkersLayer extends React.PureComponent {
 
     const theme = this.context;
 
-    console.log({ theme });
     ctx.clearRect(0, 0, width, height);
     ctx.globalCompositeOperation = compositeOperation;
     ctx.globalAlpha = globalOpacity;
