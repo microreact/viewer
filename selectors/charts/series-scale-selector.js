@@ -5,8 +5,9 @@ import colourMapForFieldSelector from "../styles/colour-map-for-field";
 import seriesFieldSelector from "./series-field";
 import rowsSelector from "../datasets/rows";
 import filteredIdsSelector from "../filters/filtered-ids";
+import defaults from "../../defaults.js";
 
-const defaultColourRange = [ "#3C7383" ];
+const defaultColourRange = [defaults.primary.main]; // TODO: Use theme
 
 const seriesValueToColourMapSelector = (state, chartId) => {
   const seriesDataColumn = seriesFieldSelector(state, chartId);

@@ -5,9 +5,13 @@
 .mr-panes.flexlayout__layout .flexlayout__tabset,
 .mr-panes.flexlayout__layout .flexlayout__tabset_tabbar_outer,
 .mr-panes.flexlayout__layout .flexlayout__tab,
+.mr-panes.flexlayout__layout .flexlayout__border_button,
 .mr-panes .BaseTable,
 .mr-panes .BaseTable__table {
+  --font-family: var(--body-font);
   background-color: unset;
+  font-family: var(--body-font);
+  font-weight: normal;
 }
 
 .mr-panes.flexlayout__layout .flexlayout__outline_rect {
@@ -167,7 +171,6 @@
   border-right: none;
   border: 1px solid rgba(0, 0, 0, 0.28);
   font-size: 11px;
-  font-weight: 500;
   margin: 0;
   outline: none;
   text-decoration: none !important;

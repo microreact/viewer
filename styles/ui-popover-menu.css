@@ -1,7 +1,7 @@
 .mr-ui-popover-menu.MuiPopover-paper {
   border-radius: 8px;
   padding: 8px 16px 16px 16px;
-  box-shadow: 0 1px 3px rgba(60,64,67, 0.3), 0 4px 8px 3px rgba(60,64,67, 0.15) !important;
+  box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15) !important;
   min-width: 200px;
   max-height: calc(100% - 96px);
   min-height: 96px;
@@ -46,8 +46,7 @@
   padding: 8px 16px;
 }
 
-.mr-ui-popover-menu.mr-fixed-size
-{
+.mr-ui-popover-menu.mr-fixed-size {
   min-width: 320px !important;
   max-width: 320px !important;
   width: 320px !important;
@@ -71,8 +70,7 @@
   overflow-y: auto !important;
 }
 
-.mr-ui-popover-menu.mr-fixed-size .mr-content
-{
+.mr-ui-popover-menu.mr-fixed-size .mr-content {
   width: 320px;
   box-sizing: border-box;
 }

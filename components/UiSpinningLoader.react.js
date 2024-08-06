@@ -1,15 +1,24 @@
 import React from "react";
 import PropTypes from "prop-types";
-
-// import "../styles/ui-spinning-loader.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const UiSpinningLoader = React.memo(
   (props) => (
     <div
       className="mr-ui-spinning-loader"
     >
+      <div
+        className="progress"
+      >
+        <CircularProgress
+          size={60}
+          color={"primary"}
+          thickness={5}
+          sx={{ opacity: 0.7 }}
+        />
+      </div>
       <div>
-        { props.children }
+        {props.children}
       </div>
     </div>
   )

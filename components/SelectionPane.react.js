@@ -23,7 +23,7 @@ function colourMapToScale(colourMap) {
   const domain = [];
   const range = [];
 
-  for (const [ value, colour ] of colourMap.entries()) {
+  for (const [value, colour] of colourMap.entries()) {
     domain.push(value);
     range.push(colour);
   }
@@ -80,7 +80,7 @@ class SelectionPane extends React.PureComponent {
                 aggregate: [
                   { op: "sum", field: "--mr-scalar", as: "--mr-selection-colour-frequency" },
                 ],
-                groupby: [ summaryDataColumn.name ],
+                groupby: [summaryDataColumn.name],
               },
             ],
             mark: { type: "arc", innerRadius: 33, outerRadius: 100 },
@@ -285,8 +285,8 @@ class SelectionPane extends React.PureComponent {
         />
 
         <div className="mr-selection-content">
-          { this.renderSelectionChart() }
-          { this.renderSelectionLegends() }
+          {this.renderSelectionChart()}
+          {this.renderSelectionLegends()}
         </div>
 
       </div>

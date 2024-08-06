@@ -18,7 +18,7 @@
 
 .mr-cheat-sheet {
   position: relative;
-  background-color: color(#3c7383 alpha(0.87));
+  background-color: color(var(--primary-main) alpha(0.87));
   color: #fff;
   border-radius: 8px;
   padding: 32px;
@@ -29,7 +29,7 @@
 }
 
 .mr-cheat-sheet-obfuscator {
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(0, 0, 0, .5);
   position: fixed;
   top: 0;
   bottom: 0;
@@ -76,7 +76,7 @@
   justify-content: center;
 }
 
-.mr-cheat-sheet-content dl > * {
+.mr-cheat-sheet-content dl>* {
   display: flex;
   align-items: center;
   margin: 8px 0;
@@ -122,7 +122,7 @@
   padding: 0px 5px;
   border-radius: 3px;
   background: rgb(243, 243, 243);
-  box-shadow: .5px .5px 0 rgba(0,0,0,.2);
+  box-shadow: .5px .5px 0 rgba(0, 0, 0, .2);
   border: 1px solid #ccc;
   margin: 6px 4px;
   color: #242729;
@@ -152,13 +152,14 @@
   border-radius: 4px;
   background: #fff;
   -webkit-animation: finger 1s infinite;
-          animation: finger 1s infinite;
+  animation: finger 1s infinite;
 }
 
 @keyframes finger {
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
     transform: translateY(20px);
@@ -176,13 +177,13 @@ section.mr-cheat-sheet-tree dl {
   justify-content: flex-start;
 }
 
-section.mr-cheat-sheet-tree dl > * {
+section.mr-cheat-sheet-tree dl>* {
   box-sizing: border-box;
   width: 50%;
   padding: 0 16px;
 }
 
-section.mr-cheat-sheet-tree dl > :last-child {
+section.mr-cheat-sheet-tree dl> :last-child {
   width: 100%;
 }
 

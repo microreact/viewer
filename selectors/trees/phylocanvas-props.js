@@ -22,7 +22,7 @@ const nodeStylesSelector = createKeyedStateSelector(
   (state) => filteredIdsSelector(state),
   (
     labels,
-    [ rowStyles ],
+    [rowStyles],
     rowsByLabel,
     filteredIds,
   ) => {
@@ -47,6 +47,7 @@ const nodeStylesSelector = createKeyedStateSelector(
 
 const phylocanvasPropsSelector = createKeyedStateSelector(
   (_, treeId) => treeId,
+  (_state, _treeId, theme) => theme,
   (state, treeId) => treeFileSelector(state, treeId)?._content,
   (state, treeId) => state.trees[treeId],
   (state, treeId) => nodeStylesSelector(state, treeId),
@@ -58,6 +59,7 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
   (state) => configSelector(state),
   (
     treeId,
+    theme,
     treeFileContent,
     phylocanvasProps,
     styles,
@@ -79,7 +81,7 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
       blocks: metadataBlocks,
       branchLengthsDigits: phylocanvasProps.roundBranchLengths ? phylocanvasProps.branchLengthsDigits : 1,
       branchLengthsFormat: phylocanvasProps.roundBranchLengths ? "decimal" : "scientific",
-      fontFamily: defaults.fontFamily,
+      fontFamily: theme?.typography?.body1?.fontFamily || defaults?.theme?.fonts?.body,
       id: treeId,
       interactive: true,
       internalLabelsFilterRange: phylocanvasProps.filterInternalLabels ? phylocanvasProps.internalLabelsFilterRange : undefined,
@@ -93,6 +95,7 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
       size,
       source,
       strokeColour: "#222",
+      highlightColour: theme?.palette?.primary?.main || defaults?.theme?.primary?.main,
       styles,
     };
   },
