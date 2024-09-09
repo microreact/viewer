@@ -395,20 +395,20 @@ export default class ChartControls extends React.PureComponent {
 
   state = {
     spec: null,
-  }
+  };
 
-  chartTypeMenu = React.createRef()
+  chartTypeMenu = React.createRef();
 
-  xAxisMenu = React.createRef()
+  xAxisMenu = React.createRef();
 
-  yAxisMenu = React.createRef()
+  yAxisMenu = React.createRef();
 
-  vegaSpecMenu = React.createRef()
+  vegaSpecMenu = React.createRef();
 
   handleSpecChange = (event) => {
     const spec = Charts.vegaEditorDataUrlToSpec(event.target.value) || event.target.value;
     this.setState({ spec });
-  }
+  };
 
   saveSpecChanges = () => {
     try {
@@ -423,7 +423,7 @@ export default class ChartControls extends React.PureComponent {
     catch (error) {
       console.error(error);
     }
-  }
+  };
 
   generateDefaultSpec = () => {
     return `
@@ -448,12 +448,12 @@ export default class ChartControls extends React.PureComponent {
   }
 }
     `;
-  }
+  };
 
   openInVegaEditor = () => {
     const url = Charts.vegaEditorSpecToDataUrl(this.state.spec || this.generateDefaultSpec());
     Downloads.openUrl(url);
-  }
+  };
 
   renderControls() {
     const { props } = this;
