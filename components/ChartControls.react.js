@@ -344,7 +344,7 @@ SecondaryAxisMenu.propTypes = {
 
 //#region ChartControls
 
-const chartTypes = [
+const chartTypeOptions = [
   { label: "Area Chart", value: "area" },
   { label: "Bar Chart", value: "bar" },
   { label: "Circle Chart", value: "circle" },
@@ -698,7 +698,7 @@ export default class ChartControls extends React.PureComponent {
             ref={this.chartTypeMenu}
           >
             <UiRadioList
-              items={chartTypes}
+              items={chartTypeOptions}
               onChange={
                 (value) => {
                   props.onChartTypeChange(value);
