@@ -61,7 +61,10 @@ class App extends React.PureComponent {
   componentDidMount() {
     const { props } = this;
     if (props.data) {
-      props.data.config = defaultConfig;
+      props.data.config = {
+        ...(props.data.config || {}),
+        ...defaultConfig,
+      };
       store.dispatch(actions.load(props.data));
       this.setState({ ready: true });
     }
