@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import Divider from "@mui/material/Divider";
 
 import UiDropdownMenu from "./UiDropdownMenu.react";
 import PaneIcon from "./PaneIcon.react";
@@ -49,7 +50,7 @@ class DownloadFilesMenuContent extends React.PureComponent {
     return Object.values(props.files);
   }
 
-  render() {
+  renderDownloads() {
     return (
       this.filesSelector().map(
         (item) => {
@@ -75,12 +76,64 @@ class DownloadFilesMenuContent extends React.PureComponent {
     );
   }
 
+  renderActions(actions) {
+    const { props } = this;
+
+    const links = [];
+
+    for (const item of actions) {
+      let href;
+      if (item.type === "filtered" && props.filteredIdsSet?.size) {
+        href = `${item.url}${Array.from(props.filteredIdsSet).join(",")}`;
+      }
+      if (item.type === "selection" && props.selectedIds?.length) {
+        href = `${item.url}${props.selectedIds.join(",")}`;
+      }
+      if (href) {
+        links.push(
+          <UiDropdownMenu.Item
+            key={item.id}
+            alignItems="flex-start"
+            button
+            component="a"
+            href={href}
+            target={"_blank"}
+          >
+            { item.label }
+          </UiDropdownMenu.Item>
+        );
+      }
+    }
+
+    if (links.length) {
+      links.unshift(<Divider />);
+    }
+
+    return links;
+  }
+
+  render() {
+    const { props } = this;
+
+    const hasActions = Array.isArray(props.actions);
+
+    return (
+      <React.Fragment>
+        { this.renderDownloads() }
+        { hasActions && this.renderActions(props.actions) }
+      </React.Fragment>
+    );
+  }
+
 }
 
 DownloadFilesMenuContent.displayName = "DownloadFilesMenuContent";
 
 DownloadFilesMenuContent.propTypes = {
   files: PropTypes.object,
+  actions: PropTypes.array,
+  selectedIds: PropTypes.array,
+  filteredIdsSet: PropTypes.instanceOf(Set),
 };
 
 export default DownloadFilesMenuContent;
