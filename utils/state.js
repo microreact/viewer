@@ -54,7 +54,9 @@ export function createCombinedStateSelector(stateKeysSelector, baseSelector, res
   return selector;
 }
 
-export const getPresentState = (rootState) => rootState.present;
+export const presentStateSelector = (rootState) => rootState.present;
+
+export const getPresentState = presentStateSelector;
 
 const keySelector = (_, stateId) => {
   if (!stateId) {
