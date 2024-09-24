@@ -38,6 +38,7 @@ const operatorsByFieldDataType = {
     (<MenuItem value="not-ends-with" key="not-ends-with">Text does not end with</MenuItem>),
     (<MenuItem value="regex" key="regex">Matches a regular expression</MenuItem>),
     (<MenuItem value="not-regex" key="not-regex">Does not match a regular expression</MenuItem>),
+    (<MenuItem value="in-csv" key="in-csv">Text in comma-separated values</MenuItem>),
   ],
   number: [
     (<MenuItem value="greater-than" key="greater-than">Greater than</MenuItem>),
