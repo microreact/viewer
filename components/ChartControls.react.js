@@ -345,11 +345,11 @@ SecondaryAxisMenu.propTypes = {
 //#region ChartControls
 
 export const chartTypeOptions = [
-  { label: "Pie Chart", value: "piechart" },
   { label: "Area Chart", value: "area" },
   { label: "Bar Chart", value: "bar" },
   { label: "Circle Chart", value: "circle" },
   { label: "Line Chart", value: "line" },
+  { label: "Pie Chart", value: "piechart" },
   { label: "Point", value: "point" },
   { label: "Tick", value: "tick" },
   // { label: "Heatmap Matrix", value: "heatmap" },
