@@ -14,6 +14,10 @@
   /* height: auto; */
 }
 
+.mr-main-controls.mr-reverse-controls {
+  flex-direction: row;
+}
+
 .mr-main-controls > .MuiButtonBase-root,
 .mr-main-controls > .mr-controls-button {
   margin-bottom: 4px;

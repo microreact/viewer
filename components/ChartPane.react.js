@@ -7,9 +7,11 @@ import { exportPNG, exportSVG } from "../utils/charts";
 import { downloadDataUrl } from "../utils/downloads";
 
 import GraphChart from "../containers/GraphChart.js";
+import PieChart from "../containers/PieChart.js";
 import ChartControls from "../containers/ChartControls.react";
 import ChartCustomEmbed from "../containers/ChartCustomEmbed";
 import ChartDefaultEmbed from "../containers/ChartDefaultEmbed";
+import PieChartControls from "./PieChartControls.js";
 
 // import "../styles/chart-pane.css";
 
@@ -131,6 +133,17 @@ class ChartPane extends React.PureComponent {
       );
     }
 
+    if (props.chartType === "piechart") {
+      return (
+        <PieChart
+          chartId={props.chartId}
+          height={props.height}
+          width={props.width}
+          onClick={this.signalListeners.onItemSelectSignal}
+        />
+      );
+    }
+
     if (props.chartType === "custom") {
       return (
         <ChartCustomEmbed
@@ -162,7 +175,29 @@ class ChartPane extends React.PureComponent {
     }
 
     return undefined;
+  }
 
+  renderChartControls() {
+    const { props } = this;
+
+    if (props.chartType === "piechart") {
+      return (
+        <PieChartControls
+          chartId={props.chartId}
+          height={props.height}
+          width={props.width}
+          onClick={this.signalListeners.onItemSelectSignal}
+        />
+      );
+    }
+
+    return (
+      <ChartControls
+        chartId={this.props.chartId}
+        onDownloadPNG={this.downloadPNG}
+        onDownloadSVG={this.downloadSVG}
+      />
+    );
   }
 
   render() {
@@ -174,12 +209,7 @@ class ChartPane extends React.PureComponent {
         style={this.styleSelector(props)}
       >
         { this.renderChartEmbed() }
-
-        <ChartControls
-          chartId={this.props.chartId}
-          onDownloadPNG={this.downloadPNG}
-          onDownloadSVG={this.downloadSVG}
-        />
+        { this.renderChartControls() }
       </div>
     );
   }

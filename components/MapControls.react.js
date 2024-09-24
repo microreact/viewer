@@ -19,7 +19,6 @@ import UiDropdownMenu from "./UiDropdownMenu.react";
 import UiRadioList from "./UiRadioList.react";
 import UiSelect from "./UiSelect.react";
 import UiSlider from "./UiSlider.react";
-import UiTabs from "./UiTabs.react";
 import UiToggleButtons from "./UiToggleButtons.react";
 import UiToggleSlider from "./UiToggleSlider.react";
 import UiToggleSwitch from "./UiToggleSwitch.react";

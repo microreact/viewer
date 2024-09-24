@@ -46,3 +46,16 @@
 .mr-controls-menu.mr-chart-axis-menu .MuiFormControl-root + .MuiFormControl-root {
   margin-top: 16px;
 }
+
+.mr-ui-popover-menu.mr-controls-menu.mr-chart-controls-menu {
+  max-width: 320px;
+  min-height: 32px;
+}
+
+.mr-chart-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  flex-direction: column;
+}
