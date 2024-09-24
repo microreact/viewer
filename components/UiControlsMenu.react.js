@@ -13,11 +13,11 @@ class UiControlsMenu extends React.PureComponent {
 
   open = () => {
     this.menuRef.current.open();
-  }
+  };
 
   close = () => {
     this.menuRef.current.close();
-  }
+  };
 
   popoverMenuButtonProps = () => {
     const { props } = this;
@@ -33,10 +33,10 @@ class UiControlsMenu extends React.PureComponent {
       onDelete: props.onClear || undefined,
       size: "small",
       // variant: "outlined",
-      color: (props.onClear ? "primary" : undefined),
+      color: (props.onClear || props.active) ? "primary" : undefined,
       style: props.style,
     };
-  }
+  };
 
   render() {
     const { props } = this;
@@ -69,6 +69,7 @@ class UiControlsMenu extends React.PureComponent {
 UiControlsMenu.displayName = "ControlsMenu";
 
 UiControlsMenu.propTypes = {
+  active: PropTypes.bool,
   children: PropTypes.node,
   className: PropTypes.string,
   disableHeader: PropTypes.bool,

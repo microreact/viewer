@@ -344,7 +344,8 @@ SecondaryAxisMenu.propTypes = {
 
 //#region ChartControls
 
-const chartTypes = [
+export const chartTypeOptions = [
+  { label: "Pie Chart", value: "piechart" },
   { label: "Area Chart", value: "area" },
   { label: "Bar Chart", value: "bar" },
   { label: "Circle Chart", value: "circle" },
@@ -395,20 +396,20 @@ export default class ChartControls extends React.PureComponent {
 
   state = {
     spec: null,
-  }
+  };
 
-  chartTypeMenu = React.createRef()
+  chartTypeMenu = React.createRef();
 
-  xAxisMenu = React.createRef()
+  xAxisMenu = React.createRef();
 
-  yAxisMenu = React.createRef()
+  yAxisMenu = React.createRef();
 
-  vegaSpecMenu = React.createRef()
+  vegaSpecMenu = React.createRef();
 
   handleSpecChange = (event) => {
     const spec = Charts.vegaEditorDataUrlToSpec(event.target.value) || event.target.value;
     this.setState({ spec });
-  }
+  };
 
   saveSpecChanges = () => {
     try {
@@ -423,7 +424,7 @@ export default class ChartControls extends React.PureComponent {
     catch (error) {
       console.error(error);
     }
-  }
+  };
 
   generateDefaultSpec = () => {
     return `
@@ -448,12 +449,12 @@ export default class ChartControls extends React.PureComponent {
   }
 }
     `;
-  }
+  };
 
   openInVegaEditor = () => {
     const url = Charts.vegaEditorSpecToDataUrl(this.state.spec || this.generateDefaultSpec());
     Downloads.openUrl(url);
-  }
+  };
 
   renderControls() {
     const { props } = this;
@@ -518,10 +519,14 @@ export default class ChartControls extends React.PureComponent {
     }
 
     if (isStandardChartType) {
-      return (
-        <React.Fragment>
+      const hasAxis = (props.chartType !== "piechart");
 
+      const controls = [];
+
+      if (hasAxis) {
+        controls.push(
           <MainAxisMenu
+            key="facet-menu"
             axisField={props.facetField}
             axisOrder={props.facetOrder}
             fullDatasetColumns={props.fullDatasetColumns}
@@ -544,111 +549,124 @@ export default class ChartControls extends React.PureComponent {
               value={props.facetGridRows}
             />
           </MainAxisMenu>
+        );
+      }
 
-          <MainAxisMenu
-            axisField={props.seriesDataColumn?.name}
-            axisOrder={props.seriesOrder}
-            axisType={props.seriesType}
-            fullDatasetColumns={props.fullDatasetColumns}
-            onAxisFieldChange={(field) => props.onSeriesFieldChange(field)}
-            onAxisOrderChange={props.onSeriesOrderChange}
-            onAxisReset={props.seriesField && props.onSeriesFieldChange}
-            onAxisTypeChange={props.onSeriesTypeChange}
-            title="Colour"
-          >
-            <UiSelect
-              label="Stacking"
-              value={props.seriesStacking ?? "stacked"}
-              onChange={props.onSeriesStackingChange}
-              options={stackingTypes}
-            />
-          </MainAxisMenu>
+      controls.push(
+        <MainAxisMenu
+          key="series-menu"
+          axisField={props.seriesDataColumn?.name}
+          axisOrder={props.seriesOrder}
+          axisType={props.seriesType}
+          fullDatasetColumns={props.fullDatasetColumns}
+          onAxisFieldChange={(field) => props.onSeriesFieldChange(field)}
+          onAxisOrderChange={props.onSeriesOrderChange}
+          onAxisReset={props.seriesField && props.onSeriesFieldChange}
+          onAxisTypeChange={props.onSeriesTypeChange}
+          title="Colour"
+        >
+          <UiSelect
+            label="Stacking"
+            value={props.seriesStacking ?? "stacked"}
+            onChange={props.onSeriesStackingChange}
+            options={stackingTypes}
+          />
+        </MainAxisMenu>
+      );
 
-          {
-            isStandardChartType
+      if (hasAxis) {
+        if (
+          isStandardChartType
             &&
             (!props.mainAxisEncoding || props.mainAxisEncoding === "y")
-              ?
-              (
-                <MainAxisMenu
-                  axisField={props.yAxisField}
-                  axisLabelAngle={props.yAxisLabelAngle ?? 0}
-                  axisLabelLimit={props.yAxisLabelLimit}
-                  axisMaxBins={props.chartType === "bar" && props.yAxisAutoType === "quantitative" ? (props.yAxisBins ?? 0) : undefined}
-                  axisOrder={props.yAxisOrder}
-                  axisType={props.yAxisType}
-                  fullDatasetColumns={props.fullDatasetColumns}
-                  onAxisFieldChange={(field) => props.onMainAxisFieldChange("yAxisField", field)}
-                  onAxisLabelAngleChange={props.onYAxisLabelAngleChange}
-                  onAxisLabelLimitChange={props.onYAxisLabelLimitChange}
-                  onAxisMaxBinsChange={props.onYAxisBinsChange}
-                  onAxisOrderChange={props.onYAxisOrderChange}
-                  onAxisReset={() => props.onMainAxisFieldChange("yAxisField")}
-                  onAxisTypeChange={props.onYAxisTypeChange}
-                  ref={this.yAxisMenu}
-                  title="Y Axis"
-                />
-              )
-              :
-              (
-                <SecondaryAxisMenu
-                  axisField={props.yAxisField}
-                  axisLabelLimit={props.yAxisLabelLimit}
-                  axisMode={props.yAxisMode}
-                  fullDatasetColumns={props.fullDatasetColumns}
-                  onAxisFieldChange={(field) => props.onYAxisFieldChange(field)}
-                  onAxisLabelLimitChange={props.onYAxisLabelLimitChange}
-                  onAxisModeChange={props.onYAxisModeChange}
-                  onAxisReset={() => props.onMainAxisFieldChange("yAxisField")}
-                  ref={this.yAxisMenu}
-                  title="Y Axis"
-                />
-              )
-          }
+        ) {
+          controls.push(
+            <MainAxisMenu
+              key="y-axis-main-menu"
+              axisField={props.yAxisField}
+              axisLabelAngle={props.yAxisLabelAngle ?? 0}
+              axisLabelLimit={props.yAxisLabelLimit}
+              axisMaxBins={props.chartType === "bar" && props.yAxisAutoType === "quantitative" ? (props.yAxisBins ?? 0) : undefined}
+              axisOrder={props.yAxisOrder}
+              axisType={props.yAxisType}
+              fullDatasetColumns={props.fullDatasetColumns}
+              onAxisFieldChange={(field) => props.onMainAxisFieldChange("yAxisField", field)}
+              onAxisLabelAngleChange={props.onYAxisLabelAngleChange}
+              onAxisLabelLimitChange={props.onYAxisLabelLimitChange}
+              onAxisMaxBinsChange={props.onYAxisBinsChange}
+              onAxisOrderChange={props.onYAxisOrderChange}
+              onAxisReset={() => props.onMainAxisFieldChange("yAxisField")}
+              onAxisTypeChange={props.onYAxisTypeChange}
+              ref={this.yAxisMenu}
+              title="Y Axis"
+            />
+          );
+        }
+        else {
+          controls.push(
+            <SecondaryAxisMenu
+              key="y-axis-secondary-menu"
+              axisField={props.yAxisField}
+              axisLabelLimit={props.yAxisLabelLimit}
+              axisMode={props.yAxisMode}
+              fullDatasetColumns={props.fullDatasetColumns}
+              onAxisFieldChange={(field) => props.onYAxisFieldChange(field)}
+              onAxisLabelLimitChange={props.onYAxisLabelLimitChange}
+              onAxisModeChange={props.onYAxisModeChange}
+              onAxisReset={() => props.onMainAxisFieldChange("yAxisField")}
+              ref={this.yAxisMenu}
+              title="Y Axis"
+            />
+          );
+        }
 
-          {
-            isStandardChartType
-            &&
-            (!props.mainAxisEncoding || props.mainAxisEncoding === "x")
-              ?
-              (
-                <MainAxisMenu
-                  axisField={props.xAxisField}
-                  axisLabelAngle={props.xAxisLabelAngle ?? -90}
-                  axisLabelLimit={props.xAxisLabelLimit}
-                  axisMaxBins={props.chartType === "bar" && props.xAxisAutoType === "quantitative" ? (props.xAxisBins ?? 0) : undefined}
-                  axisOrder={props.xAxisOrder}
-                  axisType={props.xAxisType}
-                  fullDatasetColumns={props.fullDatasetColumns}
-                  onAxisFieldChange={(field) => props.onMainAxisFieldChange("xAxisField", field)}
-                  onAxisLabelAngleChange={props.onXAxisLabelAngleChange}
-                  onAxisLabelLimitChange={props.onXAxisLabelLimitChange}
-                  onAxisMaxBinsChange={props.onXAxisBinsChange}
-                  onAxisOrderChange={props.onXAxisOrderChange}
-                  onAxisReset={() => props.onMainAxisFieldChange("xAxisField")}
-                  onAxisTypeChange={props.onXAxisTypeChange}
-                  ref={this.xAxisMenu}
-                  title="X Axis"
-                />
-              )
-              :
-              (
-                <SecondaryAxisMenu
-                  axisField={props.xAxisField}
-                  axisLabelLimit={props.xAxisLabelLimit}
-                  axisMode={props.xAxisMode}
-                  fullDatasetColumns={props.fullDatasetColumns}
-                  onAxisFieldChange={(field) => props.onXAxisFieldChange(field)}
-                  onAxisLabelLimitChange={props.onXAxisLabelLimitChange}
-                  onAxisModeChange={props.onXAxisModeChange}
-                  onAxisReset={() => props.onMainAxisFieldChange("xAxisField")}
-                  ref={this.xAxisMenu}
-                  title="X Axis"
-                />
-              )
-          }
-        </React.Fragment>
-      );
+        if (
+          isStandardChartType
+          &&
+          (!props.mainAxisEncoding || props.mainAxisEncoding === "x")
+        ) {
+          controls.push(
+            <MainAxisMenu
+              key="x-axis-main-menu"
+              axisField={props.xAxisField}
+              axisLabelAngle={props.xAxisLabelAngle ?? -90}
+              axisLabelLimit={props.xAxisLabelLimit}
+              axisMaxBins={props.chartType === "bar" && props.xAxisAutoType === "quantitative" ? (props.xAxisBins ?? 0) : undefined}
+              axisOrder={props.xAxisOrder}
+              axisType={props.xAxisType}
+              fullDatasetColumns={props.fullDatasetColumns}
+              onAxisFieldChange={(field) => props.onMainAxisFieldChange("xAxisField", field)}
+              onAxisLabelAngleChange={props.onXAxisLabelAngleChange}
+              onAxisLabelLimitChange={props.onXAxisLabelLimitChange}
+              onAxisMaxBinsChange={props.onXAxisBinsChange}
+              onAxisOrderChange={props.onXAxisOrderChange}
+              onAxisReset={() => props.onMainAxisFieldChange("xAxisField")}
+              onAxisTypeChange={props.onXAxisTypeChange}
+              ref={this.xAxisMenu}
+              title="X Axis"
+            />
+          );
+        }
+        else {
+          controls.push(
+            <SecondaryAxisMenu
+              key="x-axis-secondary-menu"
+              axisField={props.xAxisField}
+              axisLabelLimit={props.xAxisLabelLimit}
+              axisMode={props.xAxisMode}
+              fullDatasetColumns={props.fullDatasetColumns}
+              onAxisFieldChange={(field) => props.onXAxisFieldChange(field)}
+              onAxisLabelLimitChange={props.onXAxisLabelLimitChange}
+              onAxisModeChange={props.onXAxisModeChange}
+              onAxisReset={() => props.onMainAxisFieldChange("xAxisField")}
+              ref={this.xAxisMenu}
+              title="X Axis"
+            />
+          );
+        }
+      }
+
+      return controls;
     }
 
     return null;
@@ -698,7 +716,7 @@ export default class ChartControls extends React.PureComponent {
             ref={this.chartTypeMenu}
           >
             <UiRadioList
-              items={chartTypes}
+              items={chartTypeOptions}
               onChange={
                 (value) => {
                   props.onChartTypeChange(value);
@@ -706,12 +724,12 @@ export default class ChartControls extends React.PureComponent {
                     setTimeout(
                       () => {
                         if (value === "custom") {
-                          this.chartTypeMenu.current.close();
-                          this.vegaSpecMenu.current.open();
+                          this.chartTypeMenu.current?.close();
+                          this.vegaSpecMenu.current?.open();
                         }
                         else if (!props.xAxisField && !props.yAxisField) {
-                          this.chartTypeMenu.current.close();
-                          this.xAxisMenu.current.open();
+                          this.chartTypeMenu.current?.close();
+                          this.xAxisMenu.current?.open();
                         }
                       },
                       16,

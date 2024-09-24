@@ -5,9 +5,7 @@ import colourMapForFieldSelector from "../styles/colour-map-for-field";
 import seriesFieldSelector from "./series-field";
 import rowsSelector from "../datasets/rows";
 import filteredIdsSelector from "../filters/filtered-ids";
-import defaults from "../../defaults.js";
-
-const defaultColourRange = [defaults.primary.main]; // TODO: Use theme
+import configSelector from "../config.js";
 
 const seriesValueToColourMapSelector = (state, chartId) => {
   const seriesDataColumn = seriesFieldSelector(state, chartId);
@@ -25,12 +23,14 @@ const seriesScaleSelector = createKeyedStateSelector(
   (state) => filteredIdsSelector(state),
   (state, chartId) => seriesValueToColourMapSelector(state, chartId),
   (state) => state.styles.defaultColour,
+  (state) => configSelector(state).theme.primary.main,
   (
     seriesDataColumn,
     rows,
     filteredIds,
     seriesValueToColourMap,
     defaultColour,
+    defaultColourRange,
   ) => {
     if (!seriesDataColumn) {
       return null;

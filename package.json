@@ -45,7 +45,6 @@
     "canvas2svg": "github:gliffy/canvas2svg#eaab317a36a57421711a297d996bc80318185e44",
     "classcat": "^5.0.4",
     "colorbrewer": "^1.5.2",
-    "cgps-stdlib": "file:cgps-stdlib",
     "date-fns": "^2.29.1",
     "downloadjs": "^1.4.7",
     "echarts": "^5.4.3",
