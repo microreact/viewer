@@ -4,7 +4,7 @@
 import React from "react";
 import dynamic from "next/dynamic";
 
-import projectJson from "../public/data/json/index2.js";
+import projectJson from "../public/data/json/index.js";
 
 let data;
 let files;
