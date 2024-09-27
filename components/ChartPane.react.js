@@ -12,6 +12,8 @@ import ChartControls from "../containers/ChartControls.react";
 import ChartCustomEmbed from "../containers/ChartCustomEmbed";
 import ChartDefaultEmbed from "../containers/ChartDefaultEmbed";
 import PieChartControls from "./PieChartControls.js";
+import MultiVariableBarChart from "./MultiVariableBarChart.js";
+import MultiVariableBarChartControls from "./MultiVariableBarChartControls.js";
 
 // import "../styles/chart-pane.css";
 
@@ -133,6 +135,17 @@ class ChartPane extends React.PureComponent {
       );
     }
 
+    if (props.chartType === "multi-variable-bar") {
+      return (
+        <MultiVariableBarChart
+          chartId={props.chartId}
+          height={props.height}
+          width={props.width}
+          onClick={this.signalListeners.onItemSelectSignal}
+        />
+      );
+    }
+
     if (props.chartType === "piechart") {
       return (
         <PieChart
@@ -182,12 +195,13 @@ class ChartPane extends React.PureComponent {
 
     if (props.chartType === "piechart") {
       return (
-        <PieChartControls
-          chartId={props.chartId}
-          height={props.height}
-          width={props.width}
-          onClick={this.signalListeners.onItemSelectSignal}
-        />
+        <PieChartControls chartId={props.chartId} />
+      );
+    }
+
+    if (props.chartType === "multi-variable-bar") {
+      return (
+        <MultiVariableBarChartControls chartId={props.chartId} />
       );
     }
 

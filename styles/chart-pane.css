@@ -59,3 +59,24 @@
   height: 100%;
   flex-direction: column;
 }
+
+.mr-chart .mr-chart-field-filter {
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  z-index: 10;
+  transform: translate(-50%, 0);
+}
+
+.mr-chart .mr-chart-field-filter .MuiSelect-select {
+  height: 16px;
+  line-height: 18px;
+  min-height: 0;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  font-size: 13px;
+}
+
+.mr-chart .mr-chart-field-filter.mr-ui-select.MuiFormControl-root {
+  margin: 0;
+}

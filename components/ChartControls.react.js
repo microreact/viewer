@@ -349,7 +349,9 @@ export const chartTypeOptions = [
   { label: "Bar Chart", value: "bar" },
   { label: "Circle Chart", value: "circle" },
   { label: "Line Chart", value: "line" },
+  { label: "Multi-variable Bar Chart", value: "multi-variable-bar" },
   { label: "Pie Chart", value: "piechart" },
+
   { label: "Point", value: "point" },
   { label: "Tick", value: "tick" },
   // { label: "Heatmap Matrix", value: "heatmap" },
