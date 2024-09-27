@@ -11,8 +11,9 @@ import ChartSliceLabelsControls from "./ChartSliceLabelsControls.js";
 import { useAppDispatch, useChartStateSelector } from "../utils/hooks.js";
 
 import { update } from "../actions/charts.js";
+import ChartSeriesColumnMenu from "./ChartSeriesColumnMenu.js";
 
-function PieChartControls(props) {
+function MultiVariableBarChartControls(props) {
   const dispatch = useAppDispatch();
 
   const handleControlsChange = (controls) => {
@@ -31,17 +32,15 @@ function PieChartControls(props) {
         onClick={() => handleControlsChange(!controls)}
       />
       <UiAnimation in={controls}>
-        <ChartSliceLabelsControls chartId={props.chartId} />
-        <ChartSliceScaleControls chartId={props.chartId} />
-        <ChartCategoriesControls chartId={props.chartId} />
+        <ChartSeriesColumnMenu chartId={props.chartId} />
         <ChartTypeControls chartId={props.chartId} />
       </UiAnimation>
   </div>
   );
 }
 
-PieChartControls.propTypes = {
+MultiVariableBarChartControls.propTypes = {
   chartId: PropTypes.string.isRequired,
 };
 
-export default PieChartControls;
+export default MultiVariableBarChartControls;

@@ -15,7 +15,7 @@ import { selectRows, setChartFilter } from "./filters";
 const getQueryFromChartItem = (presentState, chartId, chartItem) => {
   const fieldsMap = dataColumnsByFieldMapSelector(presentState);
   const chartType = chartTypeSelector(presentState, chartId);
-  if (chartType === "custom" || chartType === "graph") {
+  if (chartType === "custom" || chartType === "graph" || chartType === "piechart" || chartType === "multi-variable-bar") {
     const query = {};
     for (const key of Object.keys(chartItem)) {
       if (fieldsMap.get(key)) {

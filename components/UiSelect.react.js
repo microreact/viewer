@@ -10,49 +10,53 @@ import clsx from "clsx";
 
 // import "../styles/ui-select.css";
 
+function renderItem(item) {
+  const value = (typeof item === "string") ? item : item.value;
+  const label = (typeof item === "string") ? item : item.label;
+  return (
+    <MenuItem
+      key={value}
+      value={value}
+    >
+      <Box
+        display="flex"
+        alignItems="center"
+      >
+        { item.icon }
+        <Box
+          display="flex"
+          flexDirection="column"
+        >
+          { label ?? value }
+          {
+            item.secondary && (
+              <Typography
+                color="textSecondary"
+                component="small"
+                variant="caption"
+              >
+                { item.secondary }
+              </Typography>
+            )
+          }
+        </Box>
+      </Box>
+    </MenuItem>
+  );
+}
+
 function formatOptions(props) {
   if (props.children) {
     return props.children;
   }
   else if (props.options) {
-    return props.options.map(
-      (item) => (
-        <MenuItem
-          key={item.value}
-          value={item.value}
-        >
-          <Box
-            display="flex"
-            alignItems="center"
-          >
-            { item.icon }
-            <Box
-              display="flex"
-              flexDirection="column"
-            >
-              { item.label ?? item.value }
-              {
-                item.secondary && (
-                  <Typography
-                    color="textSecondary"
-                    component="small"
-                    variant="caption"
-                  >
-                    { item.secondary }
-                  </Typography>
-                )
-              }
-            </Box>
-          </Box>
-        </MenuItem>
-      )
-    );
+    return props.options.map(renderItem);
   }
   return undefined;
 }
 
 function UiSelect(props) {
-  const { size, variant, style, options, ...rest } = props;
+  const { size, variant, style, options, nullValue, nullLabel, className, ...rest } = props; // eslint-disable-line no-unused-vars
   return (
     <FormControl
       size={size}
@@ -62,6 +66,7 @@ function UiSelect(props) {
         clsx(
           "mr-ui-select",
           props.disabled ? "mr-disabled" : undefined,
+          className,
         )
       }
     >
@@ -72,6 +77,7 @@ function UiSelect(props) {
         {...rest}
         onChange={(event) => props.onChange(event.target.value)}
       >
+        { nullValue && renderItem({ value: nullValue, label: nullLabel }) }
         { formatOptions(props) }
       </Select>
     </FormControl>
