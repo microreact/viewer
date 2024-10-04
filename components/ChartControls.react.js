@@ -1,6 +1,3 @@
-import Box from "@mui/material/Box";
-import EditRoundedIcon from "@mui/icons-material/EditRounded";
-import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import PropTypes from "prop-types";
 import React from "react";
@@ -349,6 +346,7 @@ export const chartTypeOptions = [
   { label: "Bar Chart", value: "bar" },
   { label: "Circle Chart", value: "circle" },
   { label: "Line Chart", value: "line" },
+  { label: "Heatmap", value: "heatmap" },
   { label: "Multi-variable Bar Chart", value: "multi-variable-bar" },
   { label: "Pie Chart", value: "piechart" },
 

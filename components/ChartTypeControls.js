@@ -14,7 +14,7 @@ import { chartTypeOptions } from "./ChartControls.react.js";
 function ChartTypeControls(props) {
   const dispatch = useAppDispatch();
 
-  const handleSliceScaleTypeChange = (chartType = undefined) => {
+  const handleChartTypeTypeChange = (chartType = undefined) => {
     dispatch(update(props.chartId, "type", chartType));
   };
 
@@ -25,13 +25,13 @@ function ChartTypeControls(props) {
   return (
     <UiControlsMenu
       title="Chart Type"
-      summary={chartTypeOptions.find((x => x.value === chartType))?.label ?? undefined}
+      summary={chartTypeOptions.find(((x) => x.value === chartType))?.label ?? undefined}
       className="mr-chart-controls-menu"
-      onClear={chartType && (() => handleSliceScaleTypeChange(undefined))}
+      active={!!chartType}
     >
       <UiRadioList
         items={chartTypeOptions}
-        onChange={handleSliceScaleTypeChange}
+        onChange={handleChartTypeTypeChange}
         value={chartType}
       />
     </UiControlsMenu>

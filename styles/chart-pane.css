@@ -52,6 +52,12 @@
   min-height: 32px;
 }
 
+.mr-chart-controls-menu .mr-header,
+.mr-chart-controls-menu .mr-floating-action-buttons {
+  position: sticky;
+  top: 0;
+}
+
 .mr-chart-message {
   display: flex;
   justify-content: center;

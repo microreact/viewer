@@ -1,23 +1,30 @@
-import { document } from "global/document";
+import { document as globalDocument } from "global/document";
 
 import { timestampToDateString } from "./datetime.js";
 
 let context;
 let correctionUnit;
 
+function getDocument() {
+  return globalDocument ?? document; // eslint-disable-line no-undef
+}
+
 function createContext() {
-  const canvas = document.createElement("canvas");
+  const canvas = getDocument().createElement("canvas");
   context = canvas.getContext("2d");
-  const font = "400 14px var(--body-font)";
-  context.font = font;
   correctionUnit = context.measureText(" ").width * 2.2;
   return context;
 }
 
-export function measureWidth(text, strong = false) {
-  // const weight = strong ? 700 : 400;
-  // context.font = `${weight} ${font}`;
-  const textMetrics = (context ?? createContext()).measureText(text);
+export function measureWidth(text, fontSize = 14, strong = false) {
+  const weight = strong ? 700 : 400;
+  context ??= createContext();
+  // set fallback font
+  context.font = "400 14px Open Sans, Helvetica, Arial, sans-serif";
+  // eslint-disable-next-line no-undef
+  const fontFamily = getComputedStyle(getDocument().body).getPropertyValue("--body-font");
+  context.font = `${weight} ${fontSize}px ${fontFamily}`;
+  const textMetrics = context.measureText(text);
   return Math.ceil(textMetrics.width + correctionUnit);
 }
 

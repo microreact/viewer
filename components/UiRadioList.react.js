@@ -37,6 +37,7 @@ const UiRadioList = React.memo(
         }
         onChange={(event) => props.onChange(event.target.value)}
         value={props.value || null}
+        style={props.style}
       >
         {
           props.nullable && (
@@ -74,6 +75,7 @@ UiRadioList.propTypes = {
   nullable: PropTypes.bool,
   nullOptionLabel: PropTypes.string,
   onChange: PropTypes.func,
+  style: PropTypes.object,
   value: PropTypes.string,
   valueProperty: PropTypes.string,
 };

@@ -14,6 +14,8 @@ import ChartDefaultEmbed from "../containers/ChartDefaultEmbed";
 import PieChartControls from "./PieChartControls.js";
 import MultiVariableBarChart from "./MultiVariableBarChart.js";
 import MultiVariableBarChartControls from "./MultiVariableBarChartControls.js";
+import HeatmapChartControls from "./HeatmapChartControls.js";
+import HeatmapChart from "./HeatmapChart.js";
 
 // import "../styles/chart-pane.css";
 
@@ -135,6 +137,17 @@ class ChartPane extends React.PureComponent {
       );
     }
 
+    if (props.chartType === "heatmap") {
+      return (
+        <HeatmapChart
+          chartId={props.chartId}
+          height={props.height}
+          width={props.width}
+          onClick={this.signalListeners.onItemSelectSignal}
+        />
+      );
+    }
+
     if (props.chartType === "multi-variable-bar") {
       return (
         <MultiVariableBarChart
@@ -196,6 +209,12 @@ class ChartPane extends React.PureComponent {
     if (props.chartType === "piechart") {
       return (
         <PieChartControls chartId={props.chartId} />
+      );
+    }
+
+    if (props.chartType === "heatmap") {
+      return (
+        <HeatmapChartControls chartId={props.chartId} />
       );
     }
 

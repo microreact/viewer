@@ -29,6 +29,13 @@ function ChartCategoriesControls(props) {
         columns={datasetColumns}
         onChange={handleCategoriesFieldChange}
         value={categoriesField}
+        style={
+          {
+            maxHeight: "calc(100vh - 240px)",
+            flexDirection: "row",
+            overflow: "auto",
+          }
+        }
       />
     </UiControlsMenu>
   );

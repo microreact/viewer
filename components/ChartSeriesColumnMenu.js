@@ -28,9 +28,9 @@ function ChartSeriesColumnMenu(props) {
     >
       <MultipleDataColumnsSelect
         dataColumns={datasetColumns}
-        maxHeightOffset="400px"
         onChange={handleSeriesFieldsChange}
         value={seriesFields}
+        maxHeightOffset="240px"
       />
     </UiControlsMenu>
   );
