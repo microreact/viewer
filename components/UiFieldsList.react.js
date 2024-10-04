@@ -26,6 +26,7 @@ const UiFieldsList = React.memo(
               onChange={props.onChange}
               value={props.value}
               valueProperty="name"
+              style={props.style}
             />
           )
         }
@@ -41,6 +42,7 @@ UiFieldsList.propTypes = {
   columns: PropTypes.arrayOf(DataColumn),
   nullable: PropTypes.bool,
   onChange: PropTypes.func,
+  style: PropTypes.object,
   value: PropTypes.string,
 };
 

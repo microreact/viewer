@@ -41,41 +41,43 @@ function MultiVariableBarChart(props) {
     () => {
       const uniqueValues = new Set();
 
-      const activeSeriesFields = (filterField && filterField !== " ") ? [ filterField ] : seriesFields;
-
-      for (const row of activeRows) {
-        for (const fieldName of activeSeriesFields) {
-          const value = row[fieldName] ?? "";
-          if (!excludeNullValues || !!value) {
-            uniqueValues.add(value);
-          }
-        }
-      }
-
-      const counts = {};
-
-      for (const row of activeRows) {
-        for (const fieldName of activeSeriesFields) {
-          const value = row[fieldName] ?? "";
-          const key = `${fieldName} - ${value}`;
-          counts[key] = (counts[key] ?? 0) + 1;
-        }
-      }
-
       const series = [];
 
-      for (const value of uniqueValues.keys()) {
-        const data = [];
-        for (const fieldName of activeSeriesFields) {
-          const key = `${fieldName} - ${value}`;
-          data.push(counts[key] || "-");
+      const activeSeriesFields = (filterField && filterField !== " ") ? [ filterField ] : seriesFields;
+
+      if (activeSeriesFields?.length > 0) {
+        for (const row of activeRows) {
+          for (const fieldName of activeSeriesFields) {
+            const value = row[fieldName] ?? "";
+            if (!excludeNullValues || !!value) {
+              uniqueValues.add(value);
+            }
+          }
         }
-        series.push({
-          "data": data,
-          "name": value,
-          "stack": "a",
-          "type": "bar",
-        });
+
+        const counts = {};
+
+        for (const row of activeRows) {
+          for (const fieldName of activeSeriesFields) {
+            const value = row[fieldName] ?? "";
+            const key = `${fieldName} - ${value}`;
+            counts[key] = (counts[key] ?? 0) + 1;
+          }
+        }
+
+        for (const value of uniqueValues.keys()) {
+          const data = [];
+          for (const fieldName of activeSeriesFields) {
+            const key = `${fieldName} - ${value}`;
+            data.push(counts[key] || "-");
+          }
+          series.push({
+            "data": data,
+            "name": value,
+            "stack": "a",
+            "type": "bar",
+          });
+        }
       }
 
       return series;
@@ -137,7 +139,7 @@ function MultiVariableBarChart(props) {
             nullLabel="ALL COLUMNS"
             onChange={handleFilterFieldChange}
             options={seriesFields}
-            value={filterField}
+            value={filterField ?? " "}
             className="mr-chart-field-filter"
             size="small"
           />

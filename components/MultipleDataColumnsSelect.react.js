@@ -47,6 +47,10 @@ const MultipleDataColumnsSelect = React.memo(
 
 MultipleDataColumnsSelect.displayName = "MultipleDataColumnsSelect";
 
+MultipleDataColumnsSelect.defaultProps = {
+  maxHeightOffset: "0px",
+};
+
 MultipleDataColumnsSelect.propTypes = {
   className: PropTypes.string,
   dataColumns: PropTypes.arrayOf(DataColumn),
@@ -55,9 +59,6 @@ MultipleDataColumnsSelect.propTypes = {
   onChange: PropTypes.func,
   style: PropTypes.object,
   value: PropTypes.array,
-};
-
-MultipleDataColumnsSelect.defaultProps = {
 };
 
 export default MultipleDataColumnsSelect;

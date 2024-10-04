@@ -3,7 +3,9 @@ import { Html, Head, Main, NextScript } from "next/document";
 import {
   DocumentHeadTags,
   documentGetInitialProps,
-} from '@mui/material-nextjs/v13-pagesRouter';
+} from "@mui/material-nextjs/v13-pagesRouter";
+
+import { themeStyle } from "../dev/theme.js";
 
 import createEmotionCache from "../dev/create-emotion-cache";
 
@@ -33,7 +35,9 @@ export default function MyDocument(props) {
         {/* Inject MUI styles first to match with the prepend: true configuration. */}
         {props.emotionStyleTags}
       </Head>
-      <body>
+      <body
+        style={themeStyle}
+      >
         <script
           defer
           src="https://cdnjs.cloudflare.com/ajax/libs/sigma.js/1.2.1/sigma.min.js"

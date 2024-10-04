@@ -35,7 +35,7 @@ function ChartSliceLabelsControls(props) {
   const hasLabels = (sliceLabels !== nullValue);
   return (
     <UiControlsMenu
-      title="Slices labels"
+      title="Slice labels"
       summary="Labels"
       className="mr-chart-controls-menu"
       // onClear={hasLabels && (() => handleSliceScaleTypeChange(nullValue))}

@@ -88,6 +88,8 @@ UiSelect.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   label: PropTypes.string,
+  nullLabel: PropTypes.string,
+  nullValue: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   options: PropTypes.array.isRequired,
   size: PropTypes.string,
