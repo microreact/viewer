@@ -67,6 +67,7 @@ function PieChart(props) {
         const { name, value } = params.data;
         return `${props.categoriesField}: <strong>${name}</strong><br />Number of entries: <strong>${value}</strong>`;
       },
+      "appendToBody": true,
     },
     "series": [
       {
