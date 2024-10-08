@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import ReactECharts from "echarts-for-react";
+import naturalCompare from "natural-compare";
 
 import { useChartStateSelector, usePresentSelector } from "../utils/hooks.js";
 import activeRowsSelector from "../selectors/filters/active-rows.js";
@@ -81,7 +82,8 @@ function HeatmapChart(props) {
           categoriesSet.add(category);
         }
       }
-
+      const categories = Array.from(categoriesSet);
+      categories.sort(sortComparator());
       const counts = {};
 
       for (const row of activeRows) {
@@ -96,7 +98,6 @@ function HeatmapChart(props) {
       }
 
       const data = [];
-      const categories = Array.from(categoriesSet);
 
       let minValue = Number.MAX_SAFE_INTEGER;
       let maxValue = Number.MIN_SAFE_INTEGER;
