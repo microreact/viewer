@@ -85,11 +85,10 @@ function MultiVariableBarChart(props) {
     [ activeRows, seriesFields, filterField, excludeNullValues ],
   );
 
-  if (chartData.length > 5000) {
+  if (chartData.length > 500) {
     return (
       <div className="mr-chart-message">
-        <p>Too Many Categories</p>
-        <p>The column <code>{categoriesField}</code> includes more than 5000 unique values.</p>
+        <p>Too Many variables selected</p>
       </div>
     );
   }
