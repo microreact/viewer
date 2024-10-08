@@ -7,6 +7,7 @@ import activeRowsSelector from "../selectors/filters/active-rows.js";
 import configSelector from "../selectors/config.js";
 import { measureWidth } from "../utils/text.js";
 import chartStateSelector from "../selectors/charts/chart-state.js";
+import { emptyArray } from "../constants.js";
 
 const labelFontSize = 11;
 
@@ -25,7 +26,7 @@ function HeatmapChart(props) {
   );
 
   const seriesFields = useChartStateSelector(
-    (chartState) => chartState.seriesFields,
+    (chartState) => chartState.seriesFields ?? emptyArray,
     props.chartId,
   );
 
@@ -55,7 +56,7 @@ function HeatmapChart(props) {
 
       return measureWidth(longestLabel, labelFontSize) + 8;
     },
-    [ config, seriesFields ],
+    [seriesFields],
   );
 
   const isNormalised = (valueType === "percentage");
@@ -135,6 +136,10 @@ function HeatmapChart(props) {
     );
   }
 
+  if (seriesFields.length === 0 || categoriesField) {
+    return null;
+  }
+
   const options = {
     "animation": false,
     "grid": {
@@ -204,6 +209,7 @@ function HeatmapChart(props) {
       props.onClick(null, [ params.event.event, { [params.name]: params.seriesName } ]);
     }
   };
+
   return (
     <ReactECharts
       style={{ width: props.width, height: props.height }}
