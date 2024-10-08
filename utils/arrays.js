@@ -113,12 +113,22 @@ export function summarise(array) {
 }
 
 export function sortComparator(property) {
-  return (a, b) => {
-    return naturalCompare(
-      a?.[property]?.toString()?.toLowerCase(),
-      b?.[property]?.toString()?.toLowerCase()
-    );
-  };
+  if (property) {
+    return (a, b) => {
+      return naturalCompare(
+        a?.[property]?.toString()?.toLowerCase(),
+        b?.[property]?.toString()?.toLowerCase()
+      );
+    };
+  }
+  else {
+    return (a, b) => {
+      return naturalCompare(
+        a?.toString()?.toLowerCase(),
+        b?.toString()?.toLowerCase()
+      );
+    };
+  }
 }
 
 export function swap(array, oldInex, newIndex) {

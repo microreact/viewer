@@ -1,6 +1,5 @@
 import { createSelector } from "reselect";
 import { emptyObject } from "../../constants";
-import { sortComparator } from "../../utils/arrays";
 
 import dataColumnsSelector from "../datasets/data-columns";
 

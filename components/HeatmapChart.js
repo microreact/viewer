@@ -8,8 +8,12 @@ import configSelector from "../selectors/config.js";
 import { measureWidth } from "../utils/text.js";
 import chartStateSelector from "../selectors/charts/chart-state.js";
 import { emptyArray } from "../constants.js";
+import { colourRanges } from "../utils/colours";
+import { sortComparator } from "../utils/arrays.js";
 
 const labelFontSize = 11;
+
+const defaultColourRange = "microreact teal-2";
 
 function normaliseValue(value, whole) {
   return parseFloat((value / whole * 100).toFixed(2));
@@ -43,6 +47,12 @@ function HeatmapChart(props) {
   const valueType = usePresentSelector(
     (state) => chartStateSelector(state, props.chartId).valueType
   );
+
+  const colourScheme = usePresentSelector(
+    (state) => chartStateSelector(state, props.chartId).colourScheme ?? defaultColourRange
+  );
+
+  const colourRange = colourRanges.find((x) => x.name === colourScheme)?.entries;
 
   const labelsWidth = React.useMemo(
     () => {
@@ -200,6 +210,9 @@ function HeatmapChart(props) {
       "formatter": (value) => {
         // return "0";
         return isNormalised ? `${normaliseValue(value, activeRows.length)}%` : value;
+      },
+      "inRange": {
+        "color": colourRange,
       },
     },
   };
