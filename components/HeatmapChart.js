@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
 import ReactECharts from "echarts-for-react";
-import naturalCompare from "natural-compare";
 
 import { useChartStateSelector, usePresentSelector } from "../utils/hooks.js";
 import activeRowsSelector from "../selectors/filters/active-rows.js";
