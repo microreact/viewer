@@ -124,7 +124,7 @@ function HeatmapChart(props) {
         range: [ minValue, maxValue ],
       };
     },
-    [ activeRows, categoriesField, seriesFields, countableValues, isNormalised, excludeNullValues ],
+    [activeRows, categoriesField, seriesFields, countableValues, excludeNullValues],
   );
 
   if (chartData.series > 5000) {
@@ -136,7 +136,7 @@ function HeatmapChart(props) {
     );
   }
 
-  if (seriesFields.length === 0 || categoriesField) {
+  if (seriesFields.length === 0 || !categoriesField) {
     return null;
   }
 
