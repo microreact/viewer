@@ -11,6 +11,7 @@ import chartStateSelector from "../selectors/charts/chart-state.js";
 import { useAppDispatch, usePresentSelector } from "../utils/hooks.js";
 import UiSelectList from "./UiSelectList.react.js";
 import activeRowsSelector from "../selectors/filters/active-rows.js";
+import { emptyArray } from "../constants.js";
 
 const options = [
   { value: "count", label: "Count" },
@@ -31,7 +32,7 @@ function ChartValuesMenu(props) {
   const activeRows = usePresentSelector(activeRowsSelector);
 
   const seriesFields = usePresentSelector(
-    (state) => chartStateSelector(state, props.chartId).seriesFields
+    (state) => chartStateSelector(state, props.chartId).seriesFields ?? emptyArray
   );
 
   const countableValues = usePresentSelector(
