@@ -68,7 +68,7 @@
 
 .mr-chart .mr-chart-field-filter {
   position: absolute;
-  top: 3px;
+  top: 20px;
   left: 50%;
   z-index: 10;
   transform: translate(-50%, 0);

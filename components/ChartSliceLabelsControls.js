@@ -9,6 +9,7 @@ import chartStateSelector from "../selectors/charts/chart-state.js";
 import { useAppDispatch, usePresentSelector } from "../utils/hooks.js";
 import UiRadioList from "./UiRadioList.react.js";
 import UiToggleSlider from "./UiToggleSlider.react.js";
+import UiToggleSwitch from "./UiToggleSwitch.react.js";
 
 const nullValue = "off";
 
@@ -20,6 +21,9 @@ const options = [
 
 function ChartSliceLabelsControls(props) {
   const dispatch = useAppDispatch();
+  const handleShowPercentagesChange = (showPercentages) => {
+    dispatch(update(props.chartId, "showPercentages", showPercentages));
+  };
   const handleSliceScaleTypeChange = (sliceLabels) => {
     dispatch(update(props.chartId, "sliceLabels", sliceLabels));
   };
@@ -31,6 +35,9 @@ function ChartSliceLabelsControls(props) {
   );
   const minSliceCount = usePresentSelector(
     (state) => chartStateSelector(state, props.chartId).minSliceCount
+  );
+  const showPercentages = usePresentSelector(
+    (state) => chartStateSelector(state, props.chartId).showPercentages
   );
   const hasLabels = (sliceLabels !== nullValue);
   return (
@@ -50,6 +57,12 @@ function ChartSliceLabelsControls(props) {
         hasLabels && (
           <React.Fragment>
             <hr />
+
+            <UiToggleSwitch
+              label="Show percentages"
+              onChange={handleShowPercentagesChange}
+              value={showPercentages}
+            />
 
             <UiToggleSlider
               label="Min slice count"

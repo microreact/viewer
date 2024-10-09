@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import ReactECharts from "echarts-for-react";
 
+import { normaliseValue } from "../utils/text.js";
+
 function PieChart(props) {
   const groupedData = React.useMemo(
     () => {
@@ -17,13 +19,19 @@ function PieChart(props) {
 
       const data = [];
 
-      for (const [value, count] of Object.entries(counts)) {
-        const hasLabel = (props.sliceLabels !== "off") && (count > minSliceCount) && value;
+      for (const [category, count] of Object.entries(counts)) {
+        const hasLabel = (props.sliceLabels !== "off") && (count > minSliceCount) && category;
         data.push({
-          "name": value,
+          "name": (
+            props.showPercentages
+              ?
+              `${category} (${normaliseValue(count, props.activeRows.length)}%)`
+              :
+              category
+          ),
           "value": count,
           "itemStyle": {
-            "color": props.colourMap.get(value),
+            "color": props.colourMap.get(category),
           },
           "label": {
             "show": hasLabel,
@@ -37,7 +45,7 @@ function PieChart(props) {
 
       return data;
     },
-    [ props.activeRows, props.colourMap, props.minSliceCount, props.sliceLabels, props.excludeNullValues ],
+    [ props.activeRows, props.colourMap, props.minSliceCount, props.sliceLabels, props.excludeNullValues, props.showPercentages ],
   );
 
   if (groupedData.length > 5000) {
@@ -51,6 +59,12 @@ function PieChart(props) {
 
   const options = {
     "animation": false,
+    "grid": {
+      "top": 32,
+      "bottom": 16,
+      "left": 16,
+      "right": 16,
+    },
     // toolbox: {
     //   show: true,
     //   feature: {
@@ -65,12 +79,18 @@ function PieChart(props) {
       "position": "top",
       "formatter": (params) => {
         const { name, value } = params.data;
-        return `${props.categoriesField}: <strong>${name}</strong><br />Number of entries: <strong>${value}</strong>`;
+        return `
+          ${props.categoriesField}: <strong>${name}</strong>
+          <br />
+          Number of entries: <strong>${value}</strong> of <strong>${props.activeRows.length}
+          (${normaliseValue(value, props.activeRows.length)}%)
+        `;
       },
       "appendToBody": true,
     },
     "series": [
       {
+        // radius: [0, 100],
         "name": props.categoriesField,
         "type": "pie",
         "data": groupedData,
@@ -119,6 +139,7 @@ PieChart.propTypes = {
   minSliceCount: PropTypes.number,
   onClick: PropTypes.func.isRequired,
   sliceLabels: PropTypes.bool,
+  showPercentages: PropTypes.bool,
   sliceScaleType: PropTypes.string,
   width: PropTypes.number.isRequired,
 };
