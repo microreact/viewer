@@ -57,8 +57,13 @@
 .mr-panes .flexlayout__tab_toolbar {
   flex-grow: 1;
   margin-top: 4px;
-  margin-left: -4px;
+  margin-left: -2px;
   padding-left: 0;
+}
+.mr-panes .flexlayout__tab_toolbar .flexlayout__tab_toolbar_button {
+  width: 16px;
+  height: 16px;
+  padding: 0;
 }
 
 .mr-panes .flexlayout__tabset_tabbar_inner {
@@ -67,7 +72,7 @@
 
 .mr-panes .flexlayout__tabset_tabbar_inner_tab_container {
   position: static;
-  width: auto;
+  width: auto !important;
 }
 
 .mr-panes .flexlayout__tab_button_overflow {
