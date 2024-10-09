@@ -29,7 +29,7 @@ export default function MyDocument(props) {
 
         <link
           rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/flexlayout-react@0.6.10/style/light.css"
+          href="https://cdn.jsdelivr.net/npm/flexlayout-react@0.7.15/style/light.css"
         />
 
         {/* Inject MUI styles first to match with the prepend: true configuration. */}
