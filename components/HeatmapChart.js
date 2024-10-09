@@ -5,7 +5,7 @@ import ReactECharts from "echarts-for-react";
 import { useChartStateSelector, usePresentSelector } from "../utils/hooks.js";
 import activeRowsSelector from "../selectors/filters/active-rows.js";
 import configSelector from "../selectors/config.js";
-import { measureWidth } from "../utils/text.js";
+import { measureWidth, normaliseValue } from "../utils/text.js";
 import chartStateSelector from "../selectors/charts/chart-state.js";
 import { emptyArray } from "../constants.js";
 import { colourRanges } from "../utils/colours";
@@ -14,10 +14,6 @@ import { sortComparator } from "../utils/arrays.js";
 const labelFontSize = 11;
 
 const defaultColourRange = "microreact teal-2";
-
-function normaliseValue(value, whole) {
-  return parseFloat((value / whole * 100).toFixed(2));
-}
 
 function HeatmapChart(props) {
   const config = usePresentSelector(configSelector);
@@ -68,7 +64,8 @@ function HeatmapChart(props) {
     },
     [seriesFields],
   );
-
+console.log({valueType})
+  const showLabels = (valueType !== "off");
   const isNormalised = (valueType === "percentage");
 
   const chartData = React.useMemo(
@@ -161,7 +158,6 @@ function HeatmapChart(props) {
     "tooltip": {
       "trigger": "item",
       "position": "top",
-      // "formatter": "{b0}: {a0}<br />Number of entries: {c0}",
       "formatter": (params) => {
         return `${categoriesField}: <strong>${params.name}</strong><br />${seriesFields[params.value[1]]}: <strong>${params.value[2]}</strong> of <strong>${activeRows.length}</strong> (${normaliseValue(params.value[2], activeRows.length)}%)`;
       },
@@ -171,9 +167,15 @@ function HeatmapChart(props) {
       "type": "heatmap",
       "data": chartData.seriesData,
       "label": {
-        "show": true,
+        "show": showLabels,
         "formatter": (params) => {
-          return isNormalised ? `${normaliseValue(params.data[2], activeRows.length)}%` : params.data[2];
+          return (
+            isNormalised
+              ?
+              `${normaliseValue(params.data[2], activeRows.length)}%`
+              :
+              params.data[2]
+          );
         },
       },
       "emphasis": {

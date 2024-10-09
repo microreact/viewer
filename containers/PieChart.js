@@ -17,6 +17,7 @@ function mapStateToProps(state, { chartId }) {
     minSliceCount: chartState.minSliceCount,
     sliceLabels: chartState.sliceLabels,
     sliceScaleType: chartState.sliceScaleType,
+    showPercentages: chartState.showPercentages,
   };
 }
 

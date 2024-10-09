@@ -12,21 +12,25 @@ import { useAppDispatch, usePresentSelector } from "../utils/hooks.js";
 import UiSelectList from "./UiSelectList.react.js";
 import activeRowsSelector from "../selectors/filters/active-rows.js";
 import { emptyArray } from "../constants.js";
+import { sortComparator } from "../utils/arrays.js";
 
 const options = [
-  { value: "count", label: "Count" },
-  { value: "percentage", label: "Percentage" },
+  { value: "all", label: "All values" },
+  { value: "non-null", label: "All values except blanks" },
+  { value: "custom", label: "Custom values" },
 ];
 
-function ChartValuesMenu(props) {
+const defaultValueType = "all";
+
+function ChartCountableValuesMenu(props) {
   const dispatch = useAppDispatch();
 
   const handleValueTypeChange = (valueType) => {
     dispatch(update(props.chartId, "valueType", valueType));
   };
 
-  const handleCountableValuesChange = (countableValues) => {
-    dispatch(update(props.chartId, "countableValues", countableValues));
+  const handleIncludedValuesChange = (includedValues) => {
+    dispatch(update(props.chartId, "includedValues", includedValues));
   };
 
   const activeRows = usePresentSelector(activeRowsSelector);
@@ -35,8 +39,8 @@ function ChartValuesMenu(props) {
     (state) => chartStateSelector(state, props.chartId).seriesFields ?? emptyArray
   );
 
-  const countableValues = usePresentSelector(
-    (state) => chartStateSelector(state, props.chartId).countableValues
+  const includedValues = usePresentSelector(
+    (state) => chartStateSelector(state, props.chartId).includedValues
   );
 
   const valueType = usePresentSelector(
@@ -55,12 +59,16 @@ function ChartValuesMenu(props) {
 
       const items = [];
 
+      console.log({valuesSet})
+
       for (const value of valuesSet.keys()) {
         items.push({
-          label: value,
+          label: value ?? "(blank)",
           value,
         });
       }
+
+      items.sort(sortComparator("label"));
 
       return items;
     },
@@ -71,36 +79,42 @@ function ChartValuesMenu(props) {
     <UiControlsMenu
       title="Values"
       className="mr-chart-controls-menu"
-      active={countableValues?.length > 0}
+      active={includedValues?.length > 0}
     >
       <UiRadioList
         items={options}
         onChange={handleValueTypeChange}
-        value={valueType ?? "count"}
+        value={valueType ?? defaultValueType}
       />
 
-      <hr />
+      {
+        (valueType === "custom") && (
+          <React.Fragment>
+            <hr />
 
-      <UiSelectList
-        disableSelectAll
-        items={seriesValues}
-        onChange={handleCountableValuesChange}
-        style={
-          {
-            height: 8 + seriesValues.length * 28,
-            maxHeight: "calc(100vh) - 160px",
-          }
-        }
-        value={countableValues}
-        valueProperty="value"
-      />
+            <UiSelectList
+              disableSelectAll
+              items={seriesValues}
+              onChange={handleIncludedValuesChange}
+              style={
+                {
+                  height: 8 + seriesValues.length * 28,
+                  maxHeight: "calc(100vh - 280px)",
+                }
+              }
+              value={includedValues}
+              valueProperty="value"
+            />
+          </React.Fragment>
+        )
+      }
 
     </UiControlsMenu>
   );
 }
 
-ChartValuesMenu.propTypes = {
+ChartCountableValuesMenu.propTypes = {
   chartId: PropTypes.string.isRequired,
 };
 
-export default ChartValuesMenu;
+export default ChartCountableValuesMenu;

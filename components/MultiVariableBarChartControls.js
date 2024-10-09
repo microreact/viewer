@@ -5,13 +5,11 @@ import UiAnimation from "./UiAnimation.react";
 import UiControlsButton from "./UiControlsButton.react";
 
 import ChartTypeControls from "./ChartTypeControls.js";
-import ChartCategoriesControls from "./ChartCategoriesControls.js";
-import ChartSliceScaleControls from "./ChartSliceScaleControls.js";
-import ChartSliceLabelsControls from "./ChartSliceLabelsControls.js";
 import { useAppDispatch, useChartStateSelector } from "../utils/hooks.js";
 
 import { update } from "../actions/charts.js";
 import ChartSeriesColumnMenu from "./ChartSeriesColumnMenu.js";
+import ChartIncludedValuesMenu from "./ChartIncludedValuesMenu.js";
 
 function MultiVariableBarChartControls(props) {
   const dispatch = useAppDispatch();
@@ -32,6 +30,7 @@ function MultiVariableBarChartControls(props) {
         onClick={() => handleControlsChange(!controls)}
       />
       <UiAnimation in={controls}>
+        <ChartIncludedValuesMenu chartId={props.chartId} />
         <ChartSeriesColumnMenu chartId={props.chartId} />
         <ChartTypeControls chartId={props.chartId} />
       </UiAnimation>

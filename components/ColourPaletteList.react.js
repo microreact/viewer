@@ -26,7 +26,10 @@ class ColourPaletteList extends React.PureComponent {
     const groups = this.getItems();
 
     return (
-      <div className="mr-colour-palette-list">
+      <div
+        className="mr-colour-palette-list"
+        style={props.style}
+      >
         <div className="mr-list">
           <List subheader={<li />}>
             {

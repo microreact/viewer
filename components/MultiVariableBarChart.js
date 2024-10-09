@@ -7,6 +7,8 @@ import { update } from "../actions/charts.js";
 import { useAppDispatch, useChartStateSelector, usePresentSelector } from "../utils/hooks.js";
 import activeRowsSelector from "../selectors/filters/active-rows.js";
 import UiSelect from "./UiSelect.react.js";
+import { emptyArray } from "../constants.js";
+import { normaliseValue } from "../utils/text.js";
 
 function MultiVariableBarChart(props) {
   const dispatch = useAppDispatch();
@@ -27,8 +29,13 @@ function MultiVariableBarChart(props) {
     props.chartId,
   );
 
-  const excludeNullValues = useChartStateSelector(
-    (chartState) => chartState.excludeNullValues,
+  const valueType = useChartStateSelector(
+    (chartState) => chartState.valueType,
+    props.chartId,
+  );
+
+  const includedValues = useChartStateSelector(
+    (chartState) => chartState.includedValues ?? emptyArray,
     props.chartId,
   );
 
@@ -49,7 +56,14 @@ function MultiVariableBarChart(props) {
         for (const row of activeRows) {
           for (const fieldName of activeSeriesFields) {
             const value = row[fieldName] ?? "";
-            if (!excludeNullValues || !!value) {
+            const valueIncluded = (
+              (!valueType || valueType === "all")
+              ||
+              (valueType === "non-null" && ((value ?? undefined) || undefined) !== undefined)
+              ||
+              (valueType === "custom" && includedValues.includes(value))
+            );
+            if (valueIncluded) {
               uniqueValues.add(value);
             }
           }
@@ -82,7 +96,7 @@ function MultiVariableBarChart(props) {
 
       return series;
     },
-    [ activeRows, seriesFields, filterField, excludeNullValues ],
+    [ activeRows, seriesFields, filterField, valueType, includedValues ],
   );
 
   if (chartData.length > 500) {
@@ -96,7 +110,7 @@ function MultiVariableBarChart(props) {
   const options = {
     "animation": false,
     "grid": {
-      "top": 64,
+      "top": 80,
       "bottom": 32,
       "left": 64,
       "right": 16,
@@ -104,7 +118,17 @@ function MultiVariableBarChart(props) {
     "tooltip": {
       "trigger": "item",
       "position": "top",
-      "formatter": "{b0}: {a0}<br />Number of entries: {c0}",
+      "formatter": (params) => {
+        return `
+          ${params.name}: <strong>${params.seriesName}</strong>
+          <br />
+          Number of entries: 
+          <strong>${params.value}</strong> 
+          of 
+          <strong>${activeRows.length}</strong> 
+          (${normaliseValue(params.value, activeRows.length)}%)
+          `;
+      },
       "appendToBody": true,
     },
     "series": chartData,
@@ -118,7 +142,7 @@ function MultiVariableBarChart(props) {
     "legend": {
       "show": true,
       "type": "scroll",
-      "top": 24,
+      "top": 40,
       "left": 24,
       "right": 24,
     },
@@ -129,6 +153,7 @@ function MultiVariableBarChart(props) {
       props.onClick(null, [ params.event.event, { [params.name]: params.seriesName } ]);
     }
   };
+
   return (
     <React.Fragment>
       {

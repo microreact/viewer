@@ -62,7 +62,9 @@ export function toText(dataType, value, convertBlanks = true) {
     return (value === true) ? "✅" : (value === false) ? "❌" : null;
   }
 
-  else {
-    return value?.toString();
-  }
+  return value?.toString();
+}
+
+export function normaliseValue(part, whole) {
+  return parseFloat((part / whole * 100).toFixed(2));
 }
