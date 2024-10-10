@@ -152,10 +152,12 @@ class SlicerPane extends React.PureComponent {
       <UiFloatingFilter
         items={this.itemsSelector(props)}
         label="Search"
+        disabled={!!props.hideSearch}
         valueGetter={(x) => x.label?.toString()?.toLowerCase()}
         renderItems= {
           (items) => (
             <UiSelectList
+              disableSelectAll={!!props.hideSelectAll}
               groupItem={props.groupColumn ? groupBy : undefined}
               items={items}
               onChange={
@@ -217,6 +219,8 @@ SlicerPane.propTypes = {
   isReadOnly: PropTypes.bool.isRequired,
   onColumnFilterChange: PropTypes.func.isRequired,
   onEditPane: PropTypes.func.isRequired,
+  hideSearch: PropTypes.bool,
+  hideSelectAll: PropTypes.bool,
   slicerId: PropTypes.string.isRequired,
   slicerType: PropTypes.string.isRequired,
   uniqueValues: PropTypes.array,

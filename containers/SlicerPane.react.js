@@ -28,6 +28,8 @@ function mapStateToProps(state, { slicerId }) {
     displayMode: slicerState.displayMode,
     groupColumn,
     isReadOnly: configSelector(state).readOnly,
+    hideSearch: slicerState.hideSearch,
+    hideSelectAll: slicerState.hideSelectAll,
     slicerType: slicerState.slicerType,
     sortOrder: slicerState.sortOrder,
     uniqueValues: dataColumn && filterableValuesSelector(state, dataColumn?.name),

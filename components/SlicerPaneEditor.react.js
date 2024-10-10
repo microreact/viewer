@@ -7,7 +7,7 @@ import { toText } from "../utils/text";
 
 import UiSelect from "./UiSelect.react";
 import UiCombobox from "./UiCombobox.react";
-import UiTextfield from "./UiTextfield.react";
+import UiToggleSwitch from "./UiToggleSwitch.react";
 
 class SlicerPaneEditor extends React.PureComponent {
 
@@ -141,6 +141,18 @@ class SlicerPaneEditor extends React.PureComponent {
           variant="outlined"
         /> */}
 
+        <UiToggleSwitch
+          label="Hide search"
+          onChange={(value) => props.onSlicerPropChange("hideSearch", value)}
+          value={props.hideSearch}
+        />
+
+        <UiToggleSwitch
+          label="Hide select all"
+          onChange={(value) => props.onSlicerPropChange("hideSelectAll", value)}
+          value={props.hideSelectAll}
+        />
+
       </React.Fragment>
     );
   }
@@ -156,6 +168,8 @@ SlicerPaneEditor.propTypes = {
   displayMode: PropTypes.string,
   groupColumn: DataColumn,
   onSlicerPropChange: PropTypes.func.isRequired,
+  hideSearch: PropTypes.bool,
+  hideSelectAll: PropTypes.bool,
   slicerId: PropTypes.string.isRequired,
   sortOrder: PropTypes.string,
 };

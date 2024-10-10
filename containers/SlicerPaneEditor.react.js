@@ -20,6 +20,8 @@ function mapStateToProps(state, { slicerId }) {
     dataRows: rowsSelector(state),
     displayMode: slicerState.displayMode,
     groupColumn,
+    hideSearch: slicerState.hideSearch,
+    hideSelectAll: slicerState.hideSelectAll,
     sortOrder: slicerState.sortOrder,
   };
 }
