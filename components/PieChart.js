@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import ReactECharts from "echarts-for-react";
 
-import { normaliseValue } from "../utils/text.js";
+import { calculatePercentage } from "../utils/number.js";
 
 function PieChart(props) {
   const groupedData = React.useMemo(
@@ -25,7 +25,7 @@ function PieChart(props) {
           "name": (
             props.showPercentages
               ?
-              `${category} (${normaliseValue(count, props.activeRows.length)}%)`
+              `${category} (${calculatePercentage(count, props.activeRows.length)}%)`
               :
               category
           ),
@@ -83,7 +83,7 @@ function PieChart(props) {
           ${props.categoriesField}: <strong>${name}</strong>
           <br />
           Number of entries: <strong>${value}</strong> of <strong>${props.activeRows.length}
-          (${normaliseValue(value, props.activeRows.length)}%)
+          (${calculatePercentage(value, props.activeRows.length)}%)
         `;
       },
       "appendToBody": true,
