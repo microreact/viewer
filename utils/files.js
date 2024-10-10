@@ -1,4 +1,5 @@
 import { filesize } from "filesize";
+import blobCompare from "blob-compare";
 
 import { generateHashId } from "./hash";
 import { loadCsvFile, loadDataArray } from "./loaders/data";

@@ -43,6 +43,7 @@
     "ag-grid-community": "^30.0.2",
     "ag-grid-react": "^30.0.2",
     "array-join": "^3.1.1",
+    "blob-compare": "^1.1.0",
     "canvas2svg": "github:gliffy/canvas2svg#eaab317a36a57421711a297d996bc80318185e44",
     "classcat": "^5.0.4",
     "colorbrewer": "^1.5.2",
