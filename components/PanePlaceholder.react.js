@@ -12,11 +12,14 @@ import { useTheme } from "@emotion/react";
 const PanePlaceholder = React.memo(
   (props) => {
     const theme = useTheme();
-    const { PaneComponent, isEmpty, file, ...rest } = props;
+    const { PaneComponent, isEmpty, file, disableLoadingText, ...rest } = props;
 
     if (file && !file._content) {
       return (
-        <FileLoader file={file} />
+        <FileLoader
+          disableLoadingText={disableLoadingText}
+          file={file}
+        />
       );
     }
 
