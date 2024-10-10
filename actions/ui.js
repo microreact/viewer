@@ -2,6 +2,7 @@
 /* eslint-disable no-use-before-define */
 
 import { nameWithoutExtention, loadFiles, loadFile, clearLoadedContent } from "../utils/files";
+import { compactMrDocument } from "../utils/schema.js";
 
 import { addDataset, updateDataset } from "./datasets";
 import { addFile, updateFile } from "./files";
@@ -539,6 +540,8 @@ export function save() {
 
         const state = getPresentState(getState());
         const doc = { ...state };
+
+        await compactMrDocument(doc);
 
         // Set schema and metadata
         doc.schema = `https://microreact.org/schema/v${version}.json`;
