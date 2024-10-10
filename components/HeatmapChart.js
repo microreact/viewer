@@ -5,7 +5,8 @@ import ReactECharts from "echarts-for-react";
 import { useChartStateSelector, usePresentSelector } from "../utils/hooks.js";
 import activeRowsSelector from "../selectors/filters/active-rows.js";
 import configSelector from "../selectors/config.js";
-import { measureWidth, normaliseValue } from "../utils/text.js";
+import { measureWidth } from "../utils/text.js";
+import { calculatePercentage, toFixedDigits } from "../utils/number.js";
 import chartStateSelector from "../selectors/charts/chart-state.js";
 import { emptyArray } from "../constants.js";
 import { colourRanges } from "../utils/colours";
@@ -60,11 +61,11 @@ function HeatmapChart(props) {
         }
       }
 
-      return measureWidth(longestLabel, labelFontSize) + 8;
+      return measureWidth(longestLabel, labelFontSize) + 12;
     },
     [seriesFields],
   );
-console.log({valueType})
+
   const showLabels = (valueType !== "off");
   const isNormalised = (valueType === "percentage");
 
@@ -81,6 +82,7 @@ console.log({valueType})
       const categories = Array.from(categoriesSet);
       categories.sort(sortComparator());
       const counts = {};
+      const sumsByCategory = {};
 
       for (const row of activeRows) {
         for (const fieldName of seriesFields) {
@@ -89,6 +91,7 @@ console.log({valueType})
           if (!countableValues || countableValues.length === 0 || countableValues.includes(value)) {
             const key = `${category} - ${fieldName}`;
             counts[key] = (counts[key] ?? 0) + 1;
+            sumsByCategory[category] = (sumsByCategory[category] ?? 0) + 1;
           }
         }
       }
@@ -103,24 +106,37 @@ console.log({valueType})
         for (let yIndex = 0; yIndex < seriesFields.length; yIndex++) {
           const fieldName = seriesFields[yIndex];
           const key = `${category} - ${fieldName}`;
-          const value = counts[key];
-          // const value = (
-          //   isNormalised
-          //     ?
-          //     parseFloat((counts[key] / activeRows.length * 100).toFixed(2))
-          //     :
-          //     counts[key]
-          // );
-          data.push([
-            xIndex,
-            yIndex,
-            (key in counts) ? value : "-",
-          ]);
-          if (value < minValue) {
-            minValue = value;
+          if (key in counts) {
+            const measure = (
+              isNormalised
+                ?
+                calculatePercentage(
+                  counts[key],
+                  sumsByCategory[category],
+                )
+                :
+                counts[key]
+            );
+            data.push([
+              xIndex,
+              yIndex,
+              measure,
+              counts[key],
+              sumsByCategory[category],
+            ]);
+            if (measure < minValue) {
+              minValue = measure;
+            }
+            if (measure > maxValue) {
+              maxValue = measure;
+            }
           }
-          if (value > maxValue) {
-            maxValue = value;
+          else {
+            data.push([
+              xIndex,
+              yIndex,
+              "-",
+            ]);
           }
         }
       }
@@ -131,7 +147,7 @@ console.log({valueType})
         range: [ minValue, maxValue ],
       };
     },
-    [activeRows, categoriesField, seriesFields, countableValues, excludeNullValues],
+    [activeRows, categoriesField, seriesFields, countableValues, excludeNullValues, isNormalised],
   );
 
   if (chartData.series > 5000) {
@@ -159,7 +175,16 @@ console.log({valueType})
       "trigger": "item",
       "position": "top",
       "formatter": (params) => {
-        return `${categoriesField}: <strong>${params.name}</strong><br />${seriesFields[params.value[1]]}: <strong>${params.value[2]}</strong> of <strong>${activeRows.length}</strong> (${normaliseValue(params.value[2], activeRows.length)}%)`;
+        return `
+          ${categoriesField}:
+            <strong>${params.name}</strong>
+          <br />
+          ${seriesFields[params.value[1]]}:
+            <strong>${params.value[3]}</strong>
+            of
+            <strong>${params.value[4]}</strong> 
+            (${calculatePercentage(params.value[3], params.value[4])}%)
+          `;
       },
       "appendToBody": true,
     },
@@ -172,7 +197,7 @@ console.log({valueType})
           return (
             isNormalised
               ?
-              `${normaliseValue(params.data[2], activeRows.length)}%`
+              `${params.data[2]}%`
               :
               params.data[2]
           );
@@ -193,16 +218,13 @@ console.log({valueType})
       "type": "category",
       "data": seriesFields,
       "axisLabel": {
-        // show: true,
         position: "top",
         fontFamily: config.theme.fonts.body,
         fontSize: labelFontSize,
-        // formatter(d) {
-        //   return `${d.name} ${d.data}`;
-        // },
       },
     },
     "visualMap": {
+      "dimension": 2,
       "min": chartData.range[0],
       "max": chartData.range[1],
       "calculable": true,
@@ -210,12 +232,9 @@ console.log({valueType})
       "right": "center",
       "top": 0,
       "formatter": (value) => {
-        // return "0";
-        return isNormalised ? `${normaliseValue(value, activeRows.length)}%` : value;
+        return isNormalised ? `${toFixedDigits(value)}%` : toFixedDigits(value, 0);
       },
-      "inRange": {
-        "color": colourRange,
-      },
+      "inRange": { "color": colourRange },
     },
   };
 

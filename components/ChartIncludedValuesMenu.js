@@ -59,7 +59,6 @@ function ChartCountableValuesMenu(props) {
 
       const items = [];
 
-      console.log({valuesSet})
 
       for (const value of valuesSet.keys()) {
         items.push({

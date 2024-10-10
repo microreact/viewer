@@ -8,7 +8,7 @@ import { useAppDispatch, useChartStateSelector, usePresentSelector } from "../ut
 import activeRowsSelector from "../selectors/filters/active-rows.js";
 import UiSelect from "./UiSelect.react.js";
 import { emptyArray } from "../constants.js";
-import { normaliseValue } from "../utils/text.js";
+import { calculatePercentage } from "../utils/number.js";
 
 function MultiVariableBarChart(props) {
   const dispatch = useAppDispatch();
@@ -126,7 +126,7 @@ function MultiVariableBarChart(props) {
           <strong>${params.value}</strong> 
           of 
           <strong>${activeRows.length}</strong> 
-          (${normaliseValue(params.value, activeRows.length)}%)
+          (${calculatePercentage(params.value, activeRows.length)}%)
           `;
       },
       "appendToBody": true,

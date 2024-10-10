@@ -64,7 +64,3 @@ export function toText(dataType, value, convertBlanks = true) {
 
   return value?.toString();
 }
-
-export function normaliseValue(part, whole) {
-  return parseFloat((part / whole * 100).toFixed(2));
-}
