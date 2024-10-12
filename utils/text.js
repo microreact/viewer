@@ -1,16 +1,14 @@
 import { document as globalDocument } from "global/document";
 
 import { timestampToDateString } from "./datetime.js";
+import { getCssVariable } from "./theme.js";
 
 let context;
 let correctionUnit;
 
-function getDocument() {
-  return globalDocument ?? document; // eslint-disable-line no-undef
-}
-
 function createContext() {
-  const canvas = getDocument().createElement("canvas");
+  // eslint-disable-next-line no-undef
+  const canvas = (globalDocument ?? document).createElement("canvas");
   context = canvas.getContext("2d");
   correctionUnit = context.measureText(" ").width * 2.2;
   return context;
@@ -21,8 +19,7 @@ export function measureWidth(text, fontSize = 14, strong = false) {
   context ??= createContext();
   // set fallback font
   context.font = "400 14px Open Sans, Helvetica, Arial, sans-serif";
-  // eslint-disable-next-line no-undef
-  const fontFamily = getComputedStyle(getDocument().body).getPropertyValue("--body-font");
+  const fontFamily = getCssVariable("--body-font");
   context.font = `${weight} ${fontSize}px ${fontFamily}`;
   const textMetrics = context.measureText(text);
   return Math.ceil(textMetrics.width + correctionUnit);
