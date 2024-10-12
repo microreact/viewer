@@ -9,6 +9,9 @@ import activeRowsSelector from "../selectors/filters/active-rows.js";
 import UiSelect from "./UiSelect.react.js";
 import { emptyArray } from "../constants.js";
 import { calculatePercentage } from "../utils/number.js";
+import { createCombinedStateSelector } from "../utils/state.js";
+import colourMapForFieldSelector from "../selectors/styles/colour-map-for-field.js";
+import configSelector from "../selectors/config.js";
 
 function MultiVariableBarChart(props) {
   const dispatch = useAppDispatch();
@@ -16,6 +19,8 @@ function MultiVariableBarChart(props) {
   const handleFilterFieldChange = (filterField) => {
     dispatch(update(props.chartId, "filterField", filterField));
   };
+
+  const config = usePresentSelector(configSelector);
 
   const activeRows = usePresentSelector(activeRowsSelector);
 
@@ -43,6 +48,25 @@ function MultiVariableBarChart(props) {
     (chartState) => chartState.filterField,
     props.chartId,
   );
+
+  const colourMapsSelector = React.useMemo(
+    () => createCombinedStateSelector(
+      () => seriesFields,
+      (state, field) => colourMapForFieldSelector(state, field),
+      (colourMaps) => {
+        const combinedColourMap = new Map();
+        for (const colourMap of colourMaps) {
+          for (const [value, colour] of colourMap.entries()) {
+            combinedColourMap.set(value, colour);
+          }
+        }
+        return combinedColourMap;
+      },
+    ),
+    [seriesFields],
+  );
+
+  const combinedColourMap = usePresentSelector(colourMapsSelector);
 
   const chartData = React.useMemo(
     () => {
@@ -90,13 +114,16 @@ function MultiVariableBarChart(props) {
             "name": value,
             "stack": "a",
             "type": "bar",
+            "itemStyle": {
+              "color": combinedColourMap.get(value),
+            },
           });
         }
       }
 
       return series;
     },
-    [ activeRows, seriesFields, filterField, valueType, includedValues ],
+    [ activeRows, seriesFields, filterField, valueType, includedValues, combinedColourMap ],
   );
 
   if (chartData.length > 500) {
@@ -107,13 +134,15 @@ function MultiVariableBarChart(props) {
     );
   }
 
+  const categories = (filterField && filterField !== " ") ? [ filterField ] : seriesFields;
+
   const options = {
     "animation": false,
     "grid": {
       "top": 80,
       "bottom": 32,
       "left": 64,
-      "right": 16,
+      "right": 32,
     },
     "tooltip": {
       "trigger": "item",
@@ -134,7 +163,14 @@ function MultiVariableBarChart(props) {
     "series": chartData,
     "xAxis": {
       "type": "category",
-      "data": (filterField && filterField !== " ") ? [ filterField ] : seriesFields,
+      "data": categories,
+      "axisLabel": {
+        "interval": 0,
+        "hideOverlap": true,
+        "overflow": "truncate",
+        "width": (props.width - 64 - 32) / categories.length,
+        "fontFamily": config.theme.fonts.body,
+      },
     },
     "yAxis": {
       "type": "value",
