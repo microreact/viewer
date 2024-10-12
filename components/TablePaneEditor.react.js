@@ -105,6 +105,10 @@ class TablePaneEditor extends React.PureComponent {
       );
     }
 
+    const currentIdField = props.masterDataset?.idFieldName;
+    const idFields = this.possibleIdFields(props);
+    const idFieldNotFound = currentIdField && !idFields.find((x) => x.name === currentIdField);
+
     return (
       <React.Fragment>
         <FileEditor
@@ -118,13 +122,13 @@ class TablePaneEditor extends React.PureComponent {
             <div className="mr-section">
               <UiCombobox
                 autoFocus
-                error={!(props.masterDataset?.idFieldName)}
-                // helperText="Each row must have an unique id (i.e. the column cannot contain an id more than once)"
-                label={(props.masterDataset?.idFieldName) ? "ID column" : "Select an ID column (Each row must have an unique id)"}
+                error={!currentIdField || idFieldNotFound}
+                helperText={idFieldNotFound ? `The selected column ${currentIdField} does not exist` : undefined}
+                label={(currentIdField) ? "ID column" : "Select an ID column (Each row must have an unique id)"}
                 onChange={(item) => props.onUpdateDataset(props.masterDataset.id, { idFieldName: item.name })}
-                options={this.possibleIdFields(props)}
+                options={idFields}
                 required
-                value={props.masterDataset?.idFieldName ?? this.defaultIdField()}
+                value={currentIdField ?? this.defaultIdField()}
               />
             </div>
           )
