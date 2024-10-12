@@ -226,17 +226,17 @@ class MapPane extends React.PureComponent {
   handleViewportChange = (event) => {
     const { props } = this;
     if (
-      event.viewState.altitude !== props.viewport.altitude
+      event.viewState.altitude !== props.viewport?.altitude
       ||
-      event.viewState.bearing !== props.viewport.bearing
+      event.viewState.bearing !== props.viewport?.bearing
       ||
-      event.viewState.latitude !== props.viewport.latitude
+      event.viewState.latitude !== props.viewport?.latitude
       ||
-      event.viewState.longitude !== props.viewport.longitude
+      event.viewState.longitude !== props.viewport?.longitude
       ||
-      event.viewState.pitch !== props.viewport.pitch
+      event.viewState.pitch !== props.viewport?.pitch
       ||
-      event.viewState.zoom !== props.viewport.zoom
+      event.viewState.zoom !== props.viewport?.zoom
     ) {
       this.props.onViewportChange(event.viewState);
     }
