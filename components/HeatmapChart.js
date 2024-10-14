@@ -82,7 +82,6 @@ function HeatmapChart(props) {
       categories.sort(sortComparator());
       const counts = {};
       const allCounts = {};
-      // const sumsByCategory = {};
 
       for (const row of activeRows) {
         for (const fieldName of seriesFields) {
@@ -167,6 +166,9 @@ function HeatmapChart(props) {
   }
 
   const options = {
+    "textStyle": {
+      "fontFamily": config.theme.fonts.body,
+    },
     "animation": false,
     "grid": {
       "left": labelsWidth,
@@ -205,6 +207,7 @@ function HeatmapChart(props) {
               params.data[2]
           );
         },
+        "fontWeight": "bold",
       },
       "emphasis": {
         itemStyle: {
@@ -221,9 +224,8 @@ function HeatmapChart(props) {
       "type": "category",
       "data": seriesFields,
       "axisLabel": {
-        position: "top",
-        fontFamily: config.theme.fonts.body,
-        fontSize: labelFontSize,
+        "position": "top",
+        "fontSize": labelFontSize,
       },
     },
     "visualMap": {
