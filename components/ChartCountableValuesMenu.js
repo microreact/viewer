@@ -13,6 +13,8 @@ import UiSelectList from "./UiSelectList.react.js";
 import activeRowsSelector from "../selectors/filters/active-rows.js";
 import { emptyArray } from "../constants.js";
 import { sortComparator } from "../utils/arrays.js";
+import UiToggleSwitch from "./UiToggleSwitch.react.js";
+import { isBlankValue } from "../utils/text.js";
 
 const options = [
   { value: "off", label: "Off" },
@@ -33,6 +35,10 @@ function ChartCountableValuesMenu(props) {
     dispatch(update(props.chartId, "countableValues", countableValues));
   };
 
+  const handleHideNullValuesChange = (excludeNullValues = undefined) => {
+    dispatch(update(props.chartId, "excludeNullValues", excludeNullValues));
+  };
+
   const activeRows = usePresentSelector(activeRowsSelector);
 
   const seriesFields = usePresentSelector(
@@ -47,13 +53,19 @@ function ChartCountableValuesMenu(props) {
     (state) => chartStateSelector(state, props.chartId).valueType
   );
 
+  const excludeNullValues = usePresentSelector(
+    (state) => chartStateSelector(state, props.chartId).excludeNullValues
+  );
+
   const seriesValues = React.useMemo(
     () => {
       const valuesSet = new Set();
 
       for (const row of activeRows) {
         for (const fieldName of seriesFields) {
-          valuesSet.add(row[fieldName]);
+          if (!excludeNullValues || !isBlankValue(row[fieldName])) {
+            valuesSet.add(row[fieldName]);
+          }
         }
       }
 
@@ -70,7 +82,7 @@ function ChartCountableValuesMenu(props) {
 
       return items;
     },
-    [ activeRows, seriesFields ],
+    [ activeRows, seriesFields, excludeNullValues ],
   );
 
   return (
@@ -83,6 +95,12 @@ function ChartCountableValuesMenu(props) {
         items={options}
         onChange={handleValueTypeChange}
         value={valueType ?? defaultValueType}
+      />
+
+      <UiToggleSwitch
+        label="Exclude blank values"
+        onChange={handleHideNullValuesChange}
+        value={excludeNullValues}
       />
 
       <hr />
