@@ -47,7 +47,7 @@ function ChartSliceScaleControls(props) {
       <hr />
 
       <UiToggleSwitch
-        label="Hide null values"
+        label="Exclude blank values"
         onChange={handleHideNullValuesChange}
         value={excludeNullValues}
       />

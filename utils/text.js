@@ -14,6 +14,15 @@ function createContext() {
   return context;
 }
 
+export function isBlankValue(value) {
+  if (value === null || value === undefined || value === "") {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
 export function measureWidth(text, fontSize = 14, strong = false) {
   const weight = strong ? 700 : 400;
   context ??= createContext();
@@ -42,7 +51,7 @@ export function entriesLabel(number) {
 }
 
 export function toText(dataType, value, convertBlanks = true) {
-  if (value === null || value === undefined || value === "") {
+  if (isBlankValue(value)) {
     if (convertBlanks) {
       return "(blank)";
     }

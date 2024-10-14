@@ -5,7 +5,7 @@ import ReactECharts from "echarts-for-react";
 import { useChartStateSelector, usePresentSelector } from "../utils/hooks.js";
 import activeRowsSelector from "../selectors/filters/active-rows.js";
 import configSelector from "../selectors/config.js";
-import { measureWidth } from "../utils/text.js";
+import { isBlankValue, measureWidth } from "../utils/text.js";
 import { calculatePercentage, toFixedDigits } from "../utils/number.js";
 import chartStateSelector from "../selectors/charts/chart-state.js";
 import { emptyArray } from "../constants.js";
@@ -36,9 +36,8 @@ function HeatmapChart(props) {
     props.chartId,
   );
 
-  const excludeNullValues = useChartStateSelector(
-    (chartState) => chartState.excludeNullValues,
-    props.chartId,
+  const excludeNullValues = usePresentSelector(
+    (state) => chartStateSelector(state, props.chartId).excludeNullValues
   );
 
   const valueType = usePresentSelector(
@@ -82,16 +81,20 @@ function HeatmapChart(props) {
       const categories = Array.from(categoriesSet);
       categories.sort(sortComparator());
       const counts = {};
-      const sumsByCategory = {};
+      const allCounts = {};
+      // const sumsByCategory = {};
 
       for (const row of activeRows) {
         for (const fieldName of seriesFields) {
           const category = row[categoriesField] ?? "";
+          const key = `${category} - ${fieldName}`;
           const value = row[fieldName] ?? "";
-          if (!countableValues || countableValues.length === 0 || countableValues.includes(value)) {
-            const key = `${category} - ${fieldName}`;
-            counts[key] = (counts[key] ?? 0) + 1;
-            sumsByCategory[category] = (sumsByCategory[category] ?? 0) + 1;
+          if (!excludeNullValues || !isBlankValue(value)) {
+            if (!countableValues || countableValues.length === 0 || countableValues.includes(value)) {
+              counts[key] = (counts[key] ?? 0) + 1;
+            }
+
+            allCounts[key] = (allCounts[key] ?? 0) + 1;
           }
         }
       }
@@ -112,7 +115,7 @@ function HeatmapChart(props) {
                 ?
                 calculatePercentage(
                   counts[key],
-                  sumsByCategory[category],
+                  allCounts[key],
                 )
                 :
                 counts[key]
@@ -122,7 +125,7 @@ function HeatmapChart(props) {
               yIndex,
               measure,
               counts[key],
-              sumsByCategory[category],
+              allCounts[key],
             ]);
             if (measure < minValue) {
               minValue = measure;
