@@ -72,7 +72,7 @@ function ColumnHeader(props) {
     // }
   });
 
-  const before = draggedItem?.getStart?.() > column.getStart();
+  const before = draggedItem && (draggedItem?.getStart?.() > column.getStart());
 
   return (
     <props.component
