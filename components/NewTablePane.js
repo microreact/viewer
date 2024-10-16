@@ -14,35 +14,6 @@ import EmptySearchMessage from "./EmptySearchMessage.js";
 
 import styles from "./TablePane.module.css";
 
-function renderHeader(
-  _,
-  columnDef,
-) {
-  return (
-    <React.Fragment>
-      {
-        columnDef.hasControls && (
-          <TableHeaderMenu
-            dataColumn={columnDef.dataColumn}
-            title={columnDef.label}
-            tableId={columnDef.tableId}
-          />
-        )
-      }
-
-      <Button
-        className={styles["mr-table-header-cell-label"]}
-        onClick={() => _.getContext().table.options.meta.onColourByFieldChange(columnDef.id)}
-        title={`Set colour by column to ${columnDef.label}`}
-        variant="text"
-      >
-        {columnDef.label}
-      </Button>
-
-    </React.Fragment>
-  );
-}
-
 class TablePane extends React.PureComponent {
 
   // columnOrderSelector = createSelector(
@@ -178,6 +149,37 @@ class TablePane extends React.PureComponent {
     // }
   };
 
+  renderHeader = (
+    _,
+    columnDef,
+  ) => {
+    const { props } = this;
+
+    return (
+      <React.Fragment>
+        {
+          columnDef.hasControls && (
+            <TableHeaderMenu
+              dataColumn={columnDef.dataColumn}
+              title={columnDef.label}
+              tableId={columnDef.tableId}
+            />
+          )
+        }
+
+        <Button
+          className={styles["mr-table-header-cell-label"]}
+          onClick={() => props.onColourByFieldChange(columnDef.id)}
+          title={`Set colour by column to ${columnDef.label}`}
+          variant="text"
+        >
+          {columnDef.label}
+        </Button>
+
+      </React.Fragment>
+    );
+  };
+
   // tableColumnsSelector = createSelector(
   //   this.dataColumnsSelector,
   //   (props) => props.selectedIds,
@@ -235,7 +237,7 @@ class TablePane extends React.PureComponent {
           displayMode={props.displayMode}
           height={props.height - 20}
           cellRenderer={this.renderCell}
-          headerRenderer={renderHeader}
+          headerRenderer={this.renderHeader}
           width={props.width}
           onColumnsResize={props.onColumnsResize}
           rowId="0"
@@ -244,7 +246,7 @@ class TablePane extends React.PureComponent {
           onColumnOrderChange={props.onColumnOrderChange}
           onColumnExpand={props.onColumnExpand}
           onSelectedRowIdsChange={props.onSelectRows}
-          meta={{ onColourByFieldChange: props.onColourByFieldChange }}
+          // meta={{ onColourByFieldChange: props.onColourByFieldChange }}
           // groupableColumns={false}
           // onColumnSort={
           //   (args) => {

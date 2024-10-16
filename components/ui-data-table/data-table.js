@@ -189,7 +189,6 @@ function UiDataTable(props) {
     enablePinning: props.pinnableColumns,
     getCoreRowModel: getCoreRowModel(),
     getRowId: (row) => row[props.rowId],
-    meta: props.meta,
     style,
     onColumnOrderChange: props.onColumnOrderChange,
     onColumnSizingChange: (updater) => {
@@ -419,7 +418,6 @@ UiDataTable.propTypes = {
   groupableColumns: PropTypes.bool,
   headerRenderer: PropTypes.func,
   height: PropTypes.number.isRequired,
-  meta: PropTypes.object,
   minColumnWidth: PropTypes.number,
   onColumnExpand: PropTypes.func.isRequired,
   onColumnOrderChange: PropTypes.func.isRequired,
