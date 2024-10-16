@@ -231,7 +231,7 @@ class TablePane extends React.PureComponent {
           columns={this.tableColumnsSelector(props)}
           data={props.data[0]}
           displayMode={props.displayMode}
-          height={props.height - 12}
+          height={props.height - 20}
           cellRenderer={this.renderCell}
           headerRenderer={renderHeader}
           width={props.width}
