@@ -174,7 +174,7 @@ class TablePane extends React.PureComponent {
     // else {
     //   return value;
     // }
-  }
+  };
 
   // tableColumnsSelector = createSelector(
   //   this.dataColumnsSelector,
