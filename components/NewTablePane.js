@@ -10,6 +10,8 @@ import TableHeaderMenu from "../containers/TableColumnMenu.react";
 import TableControls from "../containers/TableControls.react";
 import UiDataTable from "./ui-data-table/index.js";
 
+import EmptySearchMessage from "./EmptySearchMessage.js";
+
 import styles from "./TablePane.module.css";
 
 function renderHeader(
@@ -256,6 +258,10 @@ class TablePane extends React.PureComponent {
           sortState={props.sort}
           componentsDictionary={props.componentsDictionary}
         />
+
+        {
+          (props.data[0].length === 0) && (<EmptySearchMessage />)
+        }
       </div>
     );
   }
