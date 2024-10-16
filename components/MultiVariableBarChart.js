@@ -51,7 +51,7 @@ function MultiVariableBarChart(props) {
 
   const colourMapsSelector = React.useMemo(
     () => createCombinedStateSelector(
-      () => seriesFields,
+      () => seriesFields ?? emptyArray,
       (state, field) => colourMapForFieldSelector(state, field),
       (colourMaps) => {
         const combinedColourMap = new Map();
@@ -136,6 +136,10 @@ function MultiVariableBarChart(props) {
 
   const categories = (filterField && filterField !== " ") ? [ filterField ] : seriesFields;
 
+  if ((seriesFields?.length ?? 0) === 0) {
+    return null;
+  }
+
   const options = {
     "animation": false,
     "grid": {
@@ -168,7 +172,7 @@ function MultiVariableBarChart(props) {
         "interval": 0,
         "hideOverlap": true,
         "overflow": "truncate",
-        "width": (props.width - 64 - 32) / categories.length,
+        "width": (props.width - 64 - 32) / (categories?.length ?? 1),
         "fontFamily": config.theme.fonts.body,
       },
     },
