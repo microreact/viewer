@@ -185,7 +185,11 @@ class UiSelectList extends React.PureComponent {
                 () => props.onChange(
                   toggleSelection(
                     props.value,
-                    allSelected ? props.items.map((x) => x[props.valueProperty]) : props.items.map((x) => x[props.valueProperty]).filter(((x) => !props.value.includes(x))),
+                    allSelected
+                      ?
+                      props.items.map((x) => x[props.valueProperty])
+                      :
+                      props.items.map((x) => x[props.valueProperty]).filter(((x) => !props.value.includes(x))),
                   )
                 )
               }
