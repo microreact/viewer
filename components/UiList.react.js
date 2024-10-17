@@ -65,7 +65,7 @@ class UiList extends React.PureComponent {
       return props.renderGroup(item, args, groups[item]);
     }
     else {
-      return props.renderItem(item, args);
+      return props.renderItem(item, args, items, groups);
     }
   }
 

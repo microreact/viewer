@@ -35,7 +35,7 @@ function toggleSelection(selection, toggledValues, appendOnlyMode) {
 
 class UiSelectList extends React.PureComponent {
 
-  renderItem = (item, args) => {
+  renderItem = (item, args, items) => {
     const { props } = this;
     return (
       <ListItem
@@ -46,7 +46,7 @@ class UiSelectList extends React.PureComponent {
         onClick={
           () => props.onChange(
             toggleSelection(
-              props.value,
+              (props.value ?? []).filter((x) => items.find((y) => y[props.valueProperty] === x)),
               [ item[props.valueProperty] ],
             ),
           )

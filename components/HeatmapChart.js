@@ -11,6 +11,7 @@ import chartStateSelector from "../selectors/charts/chart-state.js";
 import { emptyArray } from "../constants.js";
 import { colourRanges } from "../utils/colours";
 import { sortComparator } from "../utils/arrays.js";
+import dataColumnsByFieldMapSelector from "../selectors/datasets/data-columns-by-field-map.js";
 
 const labelFontSize = 11;
 
@@ -21,14 +22,31 @@ function HeatmapChart(props) {
 
   const activeRows = usePresentSelector(activeRowsSelector);
 
+  const dataColumnsByFieldMap = usePresentSelector(dataColumnsByFieldMapSelector);
+
   const countableValues = useChartStateSelector(
     (chartState) => chartState.countableValues,
     props.chartId,
   );
 
-  const seriesFields = useChartStateSelector(
+  const rawSeriesFields = useChartStateSelector(
     (chartState) => chartState.seriesFields ?? emptyArray,
     props.chartId,
+  );
+
+  const seriesFields = React.useMemo(
+    () => {
+      const fields = [];
+
+      for (const field of rawSeriesFields) {
+        if (dataColumnsByFieldMap.get(field)) {
+          fields.push(field);
+        }
+      }
+
+      return fields;
+    },
+    [rawSeriesFields],
   );
 
   const categoriesField = useChartStateSelector(
