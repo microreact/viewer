@@ -9,11 +9,13 @@ function PieChart(props) {
     () => {
       const minSliceCount = props.minSliceCount ?? 0;
       const counts = {};
+      let total = 0;
 
       for (const row of props.activeRows) {
         const value = row[props.categoriesField] ?? "";
         if (!props.excludeNullValues || !!value) {
           counts[value] = (counts[value] ?? 0) + 1;
+          total += 1;
         }
       }
 
@@ -25,7 +27,7 @@ function PieChart(props) {
           "name": (
             props.showPercentages
               ?
-              `${category} (${calculatePercentage(count, props.activeRows.length)}%)`
+              `${category} (${calculatePercentage(count, total)}%)`
               :
               category
           ),
@@ -42,6 +44,8 @@ function PieChart(props) {
           },
         });
       }
+
+      data.total = total;
 
       return data;
     },
@@ -82,8 +86,8 @@ function PieChart(props) {
         return `
           ${props.categoriesField}: <strong>${name}</strong>
           <br />
-          Number of entries: <strong>${value}</strong> of <strong>${props.activeRows.length}
-          (${calculatePercentage(value, props.activeRows.length)}%)
+          Number of entries: <strong>${value}</strong> of <strong>${groupedData.total}
+          (${calculatePercentage(value, groupedData.total)}%)
         `;
       },
       "appendToBody": true,
