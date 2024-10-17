@@ -44,6 +44,10 @@ function HeatmapChart(props) {
     (state) => chartStateSelector(state, props.chartId).valueType
   );
 
+  const roundingDigits = usePresentSelector(
+    (state) => chartStateSelector(state, props.chartId).roundingDigits
+  );
+
   const colourScheme = usePresentSelector(
     (state) => chartStateSelector(state, props.chartId).colourScheme ?? defaultColourRange
   );
@@ -115,6 +119,7 @@ function HeatmapChart(props) {
                 calculatePercentage(
                   counts[key],
                   allCounts[key],
+                  roundingDigits,
                 )
                 :
                 counts[key]
@@ -149,7 +154,7 @@ function HeatmapChart(props) {
         range: [ minValue, maxValue ],
       };
     },
-    [activeRows, categoriesField, seriesFields, countableValues, excludeNullValues, isNormalised],
+    [activeRows, categoriesField, seriesFields, countableValues, excludeNullValues, roundingDigits, isNormalised],
   );
 
   if (chartData.series > 5000) {
@@ -165,17 +170,19 @@ function HeatmapChart(props) {
     return null;
   }
 
+  const grid = {
+    "left": labelsWidth,
+    "right": 32,
+    "top": 56,
+    "bottom": 32,
+  };
+
   const options = {
     "textStyle": {
       "fontFamily": config.theme.fonts.body,
     },
     "animation": false,
-    "grid": {
-      "left": labelsWidth,
-      "right": 32,
-      "top": 56,
-      "bottom": 32,
-    },
+    "grid": grid,
     "tooltip": {
       "trigger": "item",
       "position": "top",
@@ -188,7 +195,7 @@ function HeatmapChart(props) {
             <strong>${params.value[3]}</strong>
             of
             <strong>${params.value[4]}</strong> 
-            (${calculatePercentage(params.value[3], params.value[4])}%)
+            (${calculatePercentage(params.value[3], params.value[4], roundingDigits)}%)
           `;
       },
       "appendToBody": true,
@@ -219,6 +226,14 @@ function HeatmapChart(props) {
     "xAxis": {
       "type": "category",
       "data": chartData.categories,
+
+      "axisLabel": {
+        "interval": 0,
+        "hideOverlap": true,
+        "overflow": "truncate",
+        "width": (props.width - grid.left - grid.right) / (chartData.categories?.length ?? 1) - 2,
+        "fontFamily": config.theme.fonts.body,
+      },
     },
     "yAxis": {
       "type": "category",

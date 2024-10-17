@@ -3,17 +3,16 @@ import React from "react";
 
 import UiControlsMenu from "./UiControlsMenu.react.js";
 import UiRadioList from "./UiRadioList.react.js";
+import UiSelectList from "./UiSelectList.react.js";
+import UiSlider from "./UiSlider.react.js";
+import UiToggleSwitch from "./UiToggleSwitch.react.js";
 
 import { update } from "../actions/charts.js";
-
 import chartStateSelector from "../selectors/charts/chart-state.js";
-
 import { useAppDispatch, usePresentSelector } from "../utils/hooks.js";
-import UiSelectList from "./UiSelectList.react.js";
 import activeRowsSelector from "../selectors/filters/active-rows.js";
 import { emptyArray } from "../constants.js";
 import { sortComparator } from "../utils/arrays.js";
-import UiToggleSwitch from "./UiToggleSwitch.react.js";
 import { isBlankValue } from "../utils/text.js";
 
 const options = [
@@ -39,6 +38,10 @@ function ChartCountableValuesMenu(props) {
     dispatch(update(props.chartId, "excludeNullValues", excludeNullValues));
   };
 
+  const handleRoundingDigitsChange = (roundingDigits) => {
+    dispatch(update(props.chartId, "roundingDigits", roundingDigits));
+  };
+
   const activeRows = usePresentSelector(activeRowsSelector);
 
   const seriesFields = usePresentSelector(
@@ -55,6 +58,10 @@ function ChartCountableValuesMenu(props) {
 
   const excludeNullValues = usePresentSelector(
     (state) => chartStateSelector(state, props.chartId).excludeNullValues
+  );
+
+  const roundingDigits = usePresentSelector(
+    (state) => chartStateSelector(state, props.chartId).roundingDigits
   );
 
   const seriesValues = React.useMemo(
@@ -99,6 +106,18 @@ function ChartCountableValuesMenu(props) {
 
       <hr />
 
+      {
+        (valueType === "percentage") && (
+          <UiSlider
+            label="Rounding digits"
+            max={12}
+            min={0}
+            onChange={handleRoundingDigitsChange}
+            value={roundingDigits ?? 0}
+          />
+        )
+      }
+
       <UiToggleSwitch
         label="Exclude blank values"
         onChange={handleHideNullValuesChange}
@@ -113,7 +132,7 @@ function ChartCountableValuesMenu(props) {
         style={
           {
             height: 8 + seriesValues.length * 28,
-            maxHeight: "calc(100vh - 320px)",
+            maxHeight: "calc(100vh - 384px)",
           }
         }
         value={countableValues}
