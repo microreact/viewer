@@ -97,6 +97,8 @@ function ChartCountableValuesMenu(props) {
         value={valueType ?? defaultValueType}
       />
 
+      <hr />
+
       <UiToggleSwitch
         label="Exclude blank values"
         onChange={handleHideNullValuesChange}
@@ -106,13 +108,12 @@ function ChartCountableValuesMenu(props) {
       <hr />
 
       <UiSelectList
-        disableSelectAll
         items={seriesValues}
         onChange={handleCountableValuesChange}
         style={
           {
             height: 8 + seriesValues.length * 28,
-            maxHeight: "calc(100vh - 240px)",
+            maxHeight: "calc(100vh - 320px)",
           }
         }
         value={countableValues}
