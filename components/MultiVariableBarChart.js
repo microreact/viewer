@@ -140,14 +140,19 @@ function MultiVariableBarChart(props) {
     return null;
   }
 
+  const grid = {
+    "top": 80,
+    "bottom": 32,
+    "left": 64,
+    "right": 32,
+  };
+
   const options = {
     "animation": false,
-    "grid": {
-      "top": 80,
-      "bottom": 32,
-      "left": 64,
-      "right": 32,
+    "textStyle": {
+      "fontFamily": config.theme.fonts.body,
     },
+    "grid": grid,
     "tooltip": {
       "trigger": "item",
       "position": "top",
@@ -172,8 +177,7 @@ function MultiVariableBarChart(props) {
         "interval": 0,
         "hideOverlap": true,
         "overflow": "truncate",
-        "width": (props.width - 64 - 32) / (categories?.length ?? 1),
-        "fontFamily": config.theme.fonts.body,
+        "width": (props.width - grid.left - grid.right) / (categories?.length ?? 1) - 2,
       },
     },
     "yAxis": {
