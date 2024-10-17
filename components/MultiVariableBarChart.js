@@ -71,6 +71,7 @@ function MultiVariableBarChart(props) {
   const chartData = React.useMemo(
     () => {
       const uniqueValues = new Set();
+      const totals = {};
 
       const series = [];
 
@@ -98,8 +99,18 @@ function MultiVariableBarChart(props) {
         for (const row of activeRows) {
           for (const fieldName of activeSeriesFields) {
             const value = row[fieldName] ?? "";
-            const key = `${fieldName} - ${value}`;
-            counts[key] = (counts[key] ?? 0) + 1;
+            const valueIncluded = (
+              (!valueType || valueType === "all")
+              ||
+              (valueType === "non-null" && ((value ?? undefined) || undefined) !== undefined)
+              ||
+              (valueType === "custom" && includedValues.includes(value))
+            );
+            if (valueIncluded) {
+              const key = `${fieldName} - ${value}`;
+              counts[key] = (counts[key] ?? 0) + 1;
+              totals[fieldName] = (totals[fieldName] ?? 0) + 1;
+            }
           }
         }
 
@@ -121,12 +132,12 @@ function MultiVariableBarChart(props) {
         }
       }
 
-      return series;
+      return { series, totals };
     },
     [ activeRows, seriesFields, filterField, valueType, includedValues, combinedColourMap ],
   );
 
-  if (chartData.length > 500) {
+  if (chartData.series.length > 500) {
     return (
       <div className="mr-chart-message">
         <p>Too Many variables selected</p>
@@ -163,13 +174,13 @@ function MultiVariableBarChart(props) {
           Number of entries: 
           <strong>${params.value}</strong> 
           of 
-          <strong>${activeRows.length}</strong> 
-          (${calculatePercentage(params.value, activeRows.length)}%)
+          <strong>${chartData.totals[params.name]}</strong> 
+          (${calculatePercentage(params.value, chartData.totals[params.name])}%)
           `;
       },
       "appendToBody": true,
     },
-    "series": chartData,
+    "series": chartData.series,
     "xAxis": {
       "type": "category",
       "data": categories,
