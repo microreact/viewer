@@ -5,6 +5,18 @@ import ReactECharts from "echarts-for-react";
 import { calculatePercentage } from "../utils/number.js";
 
 function PieChart(props) {
+  const colourMap = React.useMemo(
+    () => {
+      const map = new Map();
+
+      for (const [key, value] of props.colourMap.entries()) {
+        map.set(key?.toString?.(), value);
+      }
+      return map;
+    },
+    [props.colourMap]
+  );
+
   const groupedData = React.useMemo(
     () => {
       const minSliceCount = props.minSliceCount ?? 0;
@@ -33,7 +45,7 @@ function PieChart(props) {
           ),
           "value": count,
           "itemStyle": {
-            "color": props.colourMap.get(category),
+            "color": colourMap.get(category),
           },
           "label": {
             "show": hasLabel,
@@ -49,7 +61,7 @@ function PieChart(props) {
 
       return data;
     },
-    [ props.activeRows, props.colourMap, props.minSliceCount, props.sliceLabels, props.excludeNullValues, props.showPercentages ],
+    [ props.activeRows, colourMap, props.minSliceCount, props.sliceLabels, props.excludeNullValues, props.showPercentages ],
   );
 
   if (groupedData.length > 5000) {
