@@ -5,7 +5,7 @@ import React from "react";
 
 import dynamic from "next/dynamic";
 
-import projectJson from "../public/data/strep/index.js";
+import projectJson from "../public/data/charts/index.js";
 
 let data;
 let files;
