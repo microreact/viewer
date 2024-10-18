@@ -7,6 +7,10 @@
   padding: 0 4px;
 }
 
+.root.readonly {
+  color: unset;
+}
+
 .input {
   background-color: var(--primary-main);
   border-radius: 4px;

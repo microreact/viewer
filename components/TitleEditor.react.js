@@ -1,5 +1,5 @@
 import React from "react";
-import clsx from "clsx";
+import cc from "classcat";
 import PropTypes from "prop-types";
 import { DebounceInput } from "react-debounce-input";
 
@@ -10,25 +10,31 @@ function TitleEditor(props) {
     <React.Fragment>
       <span
         className={
-          clsx(
+          cc([
             "mr-title-editor",
             styles.root,
-          )
+            props.isReadOnly ? styles.readonly : undefined,
+          ])
         }
       >
-        {props.value}
-        <DebounceInput
-          className={styles.input}
-          value={props.value}
-          debounceTimeout={1000}
-          onChange={(e) => props.onChange(e.target.value)}
-        />
+        { props.value }
+        {
+          !props.isReadOnly && (
+            <DebounceInput
+              className={styles.input}
+              value={props.value}
+              debounceTimeout={1000}
+              onChange={(e) => props.onChange(e.target.value)}
+            />
+          )
+        }
       </span>
     </React.Fragment>
   );
 }
 
 TitleEditor.propTypes = {
+  isReadOnly: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
 };
