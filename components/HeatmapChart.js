@@ -66,6 +66,10 @@ function HeatmapChart(props) {
     (state) => chartStateSelector(state, props.chartId).roundingDigits
   );
 
+  const hideLabels = usePresentSelector(
+    (state) => chartStateSelector(state, props.chartId).hideLabels
+  );
+
   const colourScheme = usePresentSelector(
     (state) => chartStateSelector(state, props.chartId).colourScheme ?? defaultColourRange
   );
@@ -87,7 +91,7 @@ function HeatmapChart(props) {
     [seriesFields],
   );
 
-  const showLabels = (valueType !== "off");
+  const showLabels = !hideLabels;
   const isNormalised = (valueType === "percentage");
 
   const chartData = React.useMemo(
