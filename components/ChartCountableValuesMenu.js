@@ -6,6 +6,7 @@ import UiRadioList from "./UiRadioList.react.js";
 import UiSelectList from "./UiSelectList.react.js";
 import UiSlider from "./UiSlider.react.js";
 import UiToggleSwitch from "./UiToggleSwitch.react.js";
+import UiFloatingFilter from "./UiFloatingFilter.react.js";
 
 import { update } from "../actions/charts.js";
 import chartStateSelector from "../selectors/charts/chart-state.js";
@@ -139,18 +140,26 @@ function ChartCountableValuesMenu(props) {
 
       <hr />
 
-      <UiSelectList
+      <UiFloatingFilter
         items={seriesValues}
-        onChange={handleCountableValuesChange}
-        style={
-          {
-            height: 40 + seriesValues.length * 28,
-            minHeight: "32px",
-            maxHeight: "calc(100vh - 384px)",
-          }
+        label="Search values"
+        renderItems={
+          (items) => (
+            <UiSelectList
+              items={items}
+              onChange={handleCountableValuesChange}
+              style={
+                {
+                  height: 40 + items.length * 28,
+                  minHeight: "64px",
+                  maxHeight: "calc(100vh - 420px)",
+                }
+              }
+              value={countableValues}
+              valueProperty="value"
+            />
+          )
         }
-        value={countableValues}
-        valueProperty="value"
       />
 
     </UiControlsMenu>
