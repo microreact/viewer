@@ -3,6 +3,7 @@ import React from "react";
 
 import UiControlsMenu from "./UiControlsMenu.react.js";
 import UiRadioList from "./UiRadioList.react.js";
+import UiFloatingFilter from "./UiFloatingFilter.react.js";
 
 import { update } from "../actions/charts.js";
 
@@ -59,7 +60,6 @@ function ChartCountableValuesMenu(props) {
 
       const items = [];
 
-
       for (const value of valuesSet.keys()) {
         items.push({
           label: value ?? "(blank)",
@@ -91,18 +91,26 @@ function ChartCountableValuesMenu(props) {
           <React.Fragment>
             <hr />
 
-            <UiSelectList
-              disableSelectAll
+            <UiFloatingFilter
               items={seriesValues}
-              onChange={handleIncludedValuesChange}
-              style={
-                {
-                  height: 8 + seriesValues.length * 28,
-                  maxHeight: "calc(100vh - 280px)",
-                }
+              label="Search values"
+              renderItems={
+                (items) => (
+                  <UiSelectList
+                    items={items}
+                    onChange={handleIncludedValuesChange}
+                    style={
+                      {
+                        height: 48 + items.length * 28,
+                        minHeight: "64px",
+                        maxHeight: "calc(100vh - 320px)",
+                      }
+                    }
+                    value={includedValues}
+                    valueProperty="value"
+                  />
+                )
               }
-              value={includedValues}
-              valueProperty="value"
             />
           </React.Fragment>
         )
