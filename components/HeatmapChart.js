@@ -195,7 +195,7 @@ function HeatmapChart(props) {
   const grid = {
     "left": labelsWidth,
     "right": 32,
-    "top": 56,
+    "top": 64,
     "bottom": 32,
   };
 
@@ -272,7 +272,7 @@ function HeatmapChart(props) {
       "calculable": true,
       "orient": "horizontal",
       "right": "center",
-      "top": 0,
+      "top": 14,
       "formatter": (value) => {
         return isNormalised ? `${toFixedDigits(value)}%` : toFixedDigits(value, 0);
       },
