@@ -70,13 +70,17 @@ function HeatmapChart(props) {
     (state) => chartStateSelector(state, props.chartId).hideLabels
   );
 
+  const xAxisLabelRotate = usePresentSelector(
+    (state) => chartStateSelector(state, props.chartId).xAxisLabelRotate
+  );
+
   const colourScheme = usePresentSelector(
     (state) => chartStateSelector(state, props.chartId).colourScheme ?? defaultColourRange
   );
 
   const colourRange = colourRanges.find((x) => x.name === colourScheme)?.entries;
 
-  const labelsWidth = React.useMemo(
+  const yAxisLabelsWidth = React.useMemo(
     () => {
       let longestLabel = "";
 
@@ -179,6 +183,21 @@ function HeatmapChart(props) {
     [activeRows, categoriesField, seriesFields, countableValues, excludeNullValues, roundingDigits, isNormalised],
   );
 
+  const xAxisLabelsWidth = React.useMemo(
+    () => {
+      let longestLabel = "";
+
+      for (const category of chartData.categories) {
+        if (category.length > longestLabel.length) {
+          longestLabel = category;
+        }
+      }
+
+      return measureWidth(longestLabel, labelFontSize) + 12;
+    },
+    [chartData.categories],
+  );
+
   if (chartData.series > 5000) {
     return (
       <div className="mr-chart-message">
@@ -193,11 +212,13 @@ function HeatmapChart(props) {
   }
 
   const grid = {
-    "left": labelsWidth,
+    "left": yAxisLabelsWidth,
     "right": 32,
     "top": 64,
     "bottom": 32,
   };
+
+  const maxXAxisLabelHeight = (props.height - grid.top) / 2;
 
   const options = {
     "textStyle": {
@@ -248,13 +269,11 @@ function HeatmapChart(props) {
     "xAxis": {
       "type": "category",
       "data": chartData.categories,
-
       "axisLabel": {
         "interval": 0,
         "hideOverlap": true,
         "overflow": "truncate",
-        "width": (props.width - grid.left - grid.right) / (chartData.categories?.length ?? 1) - 2,
-        "fontFamily": config.theme.fonts.body,
+        "rotate": xAxisLabelRotate,
       },
     },
     "yAxis": {
@@ -279,6 +298,22 @@ function HeatmapChart(props) {
       "inRange": { "color": colourRange },
     },
   };
+
+  if (xAxisLabelRotate === 0) {
+    options.xAxis.axisLabel.width = (props.width - grid.left - grid.right) / (chartData.categories?.length ?? 1) - 2;
+  }
+  else if (xAxisLabelRotate === 45) {
+    const coff = Math.sin(Math.PI / 4);
+    const maxWidth = (props.width - grid.left - grid.right) / (chartData.categories?.length ?? 1) - 2;
+    const maxHeight = maxXAxisLabelHeight;
+    const maxLabelLength = coff * (xAxisLabelsWidth + 8);
+    grid.bottom = Math.min(maxWidth, maxHeight, maxLabelLength);
+    options.xAxis.axisLabel.width = (grid.bottom - 8) / coff;
+  }
+  else if (xAxisLabelRotate === 90) {
+    grid.bottom = Math.min(maxXAxisLabelHeight, xAxisLabelsWidth + 8);
+    options.xAxis.axisLabel.width = grid.bottom - 8;
+  }
 
   const handleChartClick = (params) => {
     if (params.componentSubType === "bar" && params.componentType === "series") {
