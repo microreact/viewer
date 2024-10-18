@@ -111,8 +111,6 @@ function ChartCountableValuesMenu(props) {
         value={valueType ?? defaultValueType}
       />
 
-      <hr />
-
       {
         (valueType === "percentage") && (
           <UiSlider
@@ -124,6 +122,8 @@ function ChartCountableValuesMenu(props) {
           />
         )
       }
+
+      <hr />
 
       <UiToggleSwitch
         label="Hide labels"
@@ -144,7 +144,8 @@ function ChartCountableValuesMenu(props) {
         onChange={handleCountableValuesChange}
         style={
           {
-            height: 8 + seriesValues.length * 28,
+            height: 40 + seriesValues.length * 28,
+            minHeight: "32px",
             maxHeight: "calc(100vh - 384px)",
           }
         }
