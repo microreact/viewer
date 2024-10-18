@@ -16,7 +16,6 @@ import { sortComparator } from "../utils/arrays.js";
 import { isBlankValue } from "../utils/text.js";
 
 const options = [
-  { value: "off", label: "Off" },
   { value: "count", label: "Count" },
   { value: "percentage", label: "Percentage" },
 ];
@@ -42,6 +41,10 @@ function ChartCountableValuesMenu(props) {
     dispatch(update(props.chartId, "roundingDigits", roundingDigits));
   };
 
+  const handleHideLabelsChange = (hideLabels) => {
+    dispatch(update(props.chartId, "hideLabels", hideLabels));
+  };
+
   const activeRows = usePresentSelector(activeRowsSelector);
 
   const seriesFields = usePresentSelector(
@@ -62,6 +65,10 @@ function ChartCountableValuesMenu(props) {
 
   const roundingDigits = usePresentSelector(
     (state) => chartStateSelector(state, props.chartId).roundingDigits
+  );
+
+  const hideLabels = usePresentSelector(
+    (state) => chartStateSelector(state, props.chartId).hideLabels
   );
 
   const seriesValues = React.useMemo(
@@ -117,6 +124,12 @@ function ChartCountableValuesMenu(props) {
           />
         )
       }
+
+      <UiToggleSwitch
+        label="Hide labels"
+        onChange={handleHideLabelsChange}
+        value={hideLabels}
+      />
 
       <UiToggleSwitch
         label="Exclude blank values"
