@@ -46,6 +46,10 @@ function ChartCountableValuesMenu(props) {
     dispatch(update(props.chartId, "hideLabels", hideLabels));
   };
 
+  const handleXAxisLabelRotateChange = (xAxisLabelRotate) => {
+    dispatch(update(props.chartId, "xAxisLabelRotate", xAxisLabelRotate));
+  };
+
   const activeRows = usePresentSelector(activeRowsSelector);
 
   const seriesFields = usePresentSelector(
@@ -70,6 +74,10 @@ function ChartCountableValuesMenu(props) {
 
   const hideLabels = usePresentSelector(
     (state) => chartStateSelector(state, props.chartId).hideLabels
+  );
+
+  const xAxisLabelRotate = usePresentSelector(
+    (state) => chartStateSelector(state, props.chartId).xAxisLabelRotate
   );
 
   const seriesValues = React.useMemo(
@@ -138,6 +146,16 @@ function ChartCountableValuesMenu(props) {
         value={excludeNullValues}
       />
 
+      <UiSlider
+        label="Rotate x-axis labels"
+        max={90}
+        min={0}
+        step={45}
+        unit="°"
+        onChange={handleXAxisLabelRotateChange}
+        value={xAxisLabelRotate ?? 0}
+      />
+
       <hr />
 
       <UiFloatingFilter
@@ -152,7 +170,7 @@ function ChartCountableValuesMenu(props) {
                 {
                   height: 40 + items.length * 28,
                   minHeight: "64px",
-                  maxHeight: "calc(100vh - 420px)",
+                  maxHeight: "calc(100vh - 472px)",
                 }
               }
               value={countableValues}
