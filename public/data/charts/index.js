@@ -34,6 +34,7 @@ export default
         "Absent",
         "Present",
       ],
+      "xAxisLabelRotate": 45,
     },
     "chart-3": {
       "controls": true,
