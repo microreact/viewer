@@ -111,6 +111,7 @@ function ChartCountableValuesMenu(props) {
                   />
                 )
               }
+              valueGetter={(x) => (x.value ?? "").toString().toLowerCase()}
             />
           </React.Fragment>
         )
