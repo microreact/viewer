@@ -42,7 +42,7 @@ class FileLoader extends React.PureComponent {
     return (
       <UiSpinningLoader>
         {!props.disableLoadingText && (
-          <Fragment>
+          <React.Fragment>
             Loading {props.file.name || "file"}
             &nbsp;
             {
@@ -51,7 +51,7 @@ class FileLoader extends React.PureComponent {
               (<span className="mr-file-loader">({fileSize(state.bytesUsed)})</span>)
             }
             …
-          </Fragment>
+          </React.Fragment>
 
         )}
       </UiSpinningLoader>
