@@ -34,21 +34,26 @@ class FileLoader extends React.PureComponent {
         <div
           className="mr-pane-placeholder"
         >
-          { state.error.message }
+          {state.error.message}
         </div>
       );
     }
 
     return (
       <UiSpinningLoader>
-        Loading { props.file.name || "file" }
-        &nbsp;
-        {
-          (state.bytesUsed > 0)
-            &&
-            (<span className="mr-file-loader">({ fileSize(state.bytesUsed) })</span>)
-        }
-        …
+        {!props.disableLoadingText && (
+          <Fragment>
+            Loading {props.file.name || "file"}
+            &nbsp;
+            {
+              (state.bytesUsed > 0)
+              &&
+              (<span className="mr-file-loader">({fileSize(state.bytesUsed)})</span>)
+            }
+            …
+          </Fragment>
+
+        )}
       </UiSpinningLoader>
     );
 
@@ -59,6 +64,7 @@ class FileLoader extends React.PureComponent {
 FileLoader.displayName = "FileLoader";
 
 FileLoader.propTypes = {
+  disableLoadingText: PropTypes.bool,
   file: FileDescriptor.isRequired,
   onFileLoaded: PropTypes.func.isRequired,
 };
