@@ -58,6 +58,7 @@ class ColoursLegend extends React.PureComponent {
           <table
             className="mr-legend-table"
             border="0"
+            role="presentation"
           >
             <tbody>
               <tr>
