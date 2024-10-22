@@ -58,13 +58,14 @@ class MapLegend extends React.PureComponent {
           onClick={this.toggleLegend}
           title="Collapse Legend"
         />
-        <table>
+        <table role="presentation">
           <tbody>
             <tr>
               {
                 props.hasMarkerSizeLegend && (
                   <td>
                     <table
+                      role="presentation"
                       className="mr-legend-table"
                     >
                       <thead>
@@ -158,6 +159,7 @@ class MapLegend extends React.PureComponent {
                 props.hasRegionColourLegend && (
                   <td>
                     <table
+                      role="presentation"
                       className="mr-legend-table"
                     >
                       <thead style={{ height: "16px" }}>
