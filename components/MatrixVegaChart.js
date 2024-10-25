@@ -13,12 +13,15 @@ function MatrixVegaChart(props) {
       const data = [];
       const activeColumns = props.matrixData.columns.filter((x) => props.activeIdsSet.has(x.name));
 
+      const ids = new Set();
+
       for (let yIndex = 0; yIndex < props.matrixData.rows.length; yIndex++) {
         const row = props.matrixData.rows[yIndex];
         const rowId = row[props.matrixData.columns[0].name];
         if (props.activeIdsSet.has(rowId)) {
           for (let xIndex = 0; xIndex < activeColumns.length; xIndex++) {
             const column = activeColumns[xIndex];
+            ids.add(rowId);
             data.push({
               col: column.name,
               row: rowId,
@@ -33,6 +36,8 @@ function MatrixVegaChart(props) {
           }
         }
       }
+
+      data.size = ids.size;
 
       return { table: data };
     },
@@ -102,7 +107,7 @@ function MatrixVegaChart(props) {
             "type": "text",
             "tooltip": true,
             "fontSize": props.labelsFontSize,
-            "limit": props.width / props.activeIdsSet.size,
+            "limit": props.width / chartData.table.size,
           },
           "encoding": {
             "text": { "field": "value", "type": "quantitative" },
