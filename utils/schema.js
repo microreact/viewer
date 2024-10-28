@@ -1,4 +1,3 @@
-
 async function sameFile(file, file2) {
   if (file.url && file2.url) {
     return (file.url === file2.url);
