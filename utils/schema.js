@@ -7,7 +7,7 @@ async function sameFile(file, file2) {
       return (file.blob === file2.blob);
     }
     else if (typeof window !== "undefined" && typeof window.Blob !== "undefined") {
-      const blobCompare = await import("blob-compare");
+      const { default: blobCompare } = await import("blob-compare");
       return blobCompare.isEqual(file.blob, file2.blob);
     } else {
       const { Buffer } = await import("buffer");
