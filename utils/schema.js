@@ -6,16 +6,14 @@ async function sameFile(file, file2) {
     if (typeof file.blob === "string" && typeof file2.blob === "string") {
       return (file.blob === file2.blob);
     }
-    else {
-      if (typeof window !== 'undefined' && typeof window.Blob !== 'undefined') {
-        const blobCompare = await import("blob-compare");
-        return blobCompare.isEqual(file.blob, file2.blob);
-      } else {
-        const { Buffer } = await import("buffer");
-        const buffer1 = Buffer.from(await file.blob.arrayBuffer());
-        const buffer2 = Buffer.from(await file2.blob.arrayBuffer());
-        return buffer1.equals(buffer2);
-      }
+    else if (typeof window !== "undefined" && typeof window.Blob !== "undefined") {
+      const blobCompare = await import("blob-compare");
+      return blobCompare.isEqual(file.blob, file2.blob);
+    } else {
+      const { Buffer } = await import("buffer");
+      const buffer1 = Buffer.from(await file.blob.arrayBuffer());
+      const buffer2 = Buffer.from(await file2.blob.arrayBuffer());
+      return buffer1.equals(buffer2);
     }
   }
   return false;
