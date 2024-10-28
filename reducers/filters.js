@@ -4,6 +4,7 @@ import { emptyArray, emptyObject } from "../constants";
 import * as Arrays from "../utils/arrays";
 
 const initialState = {
+  paneFilters: [],
   dataFilters: [],
   chartFilters: [],
   searchOperator: "includes",
@@ -124,6 +125,7 @@ const reducer = (state = initialState, action) => {
     case "MICROREACT VIEWER/RESET ALL FILTERS": {
       return {
         ...state,
+        paneFilters: initialState.paneFilters,
         dataFilters: initialState.dataFilters,
         chartFilters: initialState.chartFilters,
         searchValue: initialState.searchValue,
@@ -140,6 +142,32 @@ const reducer = (state = initialState, action) => {
 
     case "MICROREACT VIEWER/SELECT ROWS": {
       return addRowsToSelection(state, action.payload);
+    }
+
+    case "MICROREACT VIEWER/SET PANE FILTER": {
+      const paneFilters = [ ...state.paneFilters ];
+
+      let index = paneFilters.findIndex((x) => x.pane === action.pane && x.field === action.payload.field);
+
+      if (action.payload.operator) {
+        if (index === -1) {
+          paneFilters.push({ field: action.payload.field });
+          index = paneFilters.length - 1;
+        }
+        paneFilters[index] = {
+          ...paneFilters[index],
+          operator: action.payload.operator,
+          value: action.payload.value,
+        };
+      }
+      else if (index > -1) {
+        paneFilters.splice(index, 1);
+      }
+
+      return {
+        ...state,
+        paneFilters,
+      };
     }
 
     case "MICROREACT VIEWER/SET CHART FILTER": {

@@ -76,6 +76,28 @@ export function setSelectionSummaryField(field) {
   };
 }
 
+export function setPaneFilter(pane, field, operator, value) {
+  if (operator === "in") {
+    for (let valueIndex = 0; valueIndex < value.length; valueIndex++) {
+      if (value[valueIndex] === null) {
+        value[valueIndex] = undefined;
+      }
+    }
+  }
+  return {
+    delay: true,
+    label: `Filters: Change column ${field} filter`,
+    group: `Filters/pane ${pane}`,
+    payload: {
+      pane,
+      field,
+      operator,
+      value,
+    },
+    type: "MICROREACT VIEWER/SET PANE FILTER",
+  };
+}
+
 export function setFieldFilter(field, operator, value) {
   return {
     delay: true,
