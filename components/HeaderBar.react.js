@@ -24,18 +24,18 @@ class HeaderBar extends React.PureComponent {
         position="static"
       >
         <Toolbar variant="dense">
-          { props.drawerButton }
+          {props.drawerButton}
 
           <Typography component="h1" variant="h6" color="inherit" noWrap>
             <TitleEditor />
-
+            {props.appendTitle}
             <InfoMenu />
           </Typography>
 
           <SearchBox />
 
           <nav>
-            { props.prependNavButtons }
+            {props.prependNavButtons}
 
             {
               (!props.isReadOnly) && <AddPaneMenu />
@@ -64,6 +64,7 @@ HeaderBar.displayName = "HeaderBar";
 
 HeaderBar.propTypes = {
   appendNavButtons: PropTypes.node,
+  appendTitle: PropTypes.node,
   drawerButton: PropTypes.node,
   isReadOnly: PropTypes.bool.isRequired,
   onSave: PropTypes.func,
@@ -76,6 +77,7 @@ HeaderBar.propTypes = {
 
 HeaderBar.defaultProps = {
   appendNavButtons: false,
+  appendTitle: false,
   drawerButton: false,
   prependNavButtons: false,
   title: "Microreact",
