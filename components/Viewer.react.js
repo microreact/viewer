@@ -71,6 +71,7 @@ class Viewer extends React.PureComponent {
           appendNavButtons={props.slots.appendNavButtons}
           drawerButton={props.slots.drawerButton}
           prependNavButtons={props.slots.prependNavButtons}
+          appendTitle={props.slots.appendTitle}
         />
 
         <Paper
@@ -158,6 +159,7 @@ Viewer.propTypes = {
     appendNavButtons: PropTypes.node,
     drawerButton: PropTypes.node,
     prependNavButtons: PropTypes.node,
+    appendTitle: PropTypes.node,
   }),
 };
 
