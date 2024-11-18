@@ -12,6 +12,7 @@ function mapStateToProps(state, { matrixId }) {
     labelsUnit: matrixState.labelsUnit || "",
     showLabels: matrixState.showLabels,
     labelsFontSize: matrixState.labelsFontSize,
+    axisLabelsFontSize: matrixState.axisLabelsFontSize,
     activeIdsSet: activeRowsIdsSelector(state),
     matrixData: matrixDataSelector(state, matrixId),
   };

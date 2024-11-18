@@ -11,7 +11,6 @@ import UiControlsMenu from "./UiControlsMenu.react";
 import UiDropdownMenu from "./UiDropdownMenu.react";
 import UiSlider from "./UiSlider.react";
 import UiToggleSlider from "./UiToggleSlider.react";
-import UiToggleSwitch from "./UiToggleSwitch.react";
 
 const MatrixControls = React.memo(
   (props) => {
@@ -116,6 +115,15 @@ const MatrixControls = React.memo(
             <hr />
 
             <UiSlider
+              label="Axis labels font size"
+              max={props.maxFontSize}
+              min={props.minFontSize}
+              onChange={(value) => props.onAxisLabelsFontSizeChange(value)}
+              unit="px"
+              value={props.axisLabelsFontSize ?? 11}
+            />
+
+            <UiSlider
               label="Rotate axis labels"
               max={90}
               min={0}
@@ -136,12 +144,14 @@ const MatrixControls = React.memo(
 MatrixControls.displayName = "MatrixControls";
 
 MatrixControls.propTypes = {
+  axisLabelsFontSize: PropTypes.number,
   controls: PropTypes.bool.isRequired,
   isReadOnly: PropTypes.bool.isRequired,
   labelsFontSize: PropTypes.number,
   labelsUnit: PropTypes.string,
   maxFontSize: PropTypes.number,
   minFontSize: PropTypes.number,
+  onAxisLabelsFontSizeChange: PropTypes.func.isRequired,
   onControlsChange: PropTypes.func.isRequired,
   onEditPane: PropTypes.func.isRequired,
   onFontSizeChange: PropTypes.func.isRequired,

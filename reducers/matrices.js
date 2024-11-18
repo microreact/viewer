@@ -4,6 +4,7 @@ export const initialState = {
   controls: true,
   labelsUnit: undefined,
   labelsFontSize: 12,
+  axisLabelsFontSize: 12,
   showLabels: false,
   truncateLabels: true,
   rotateAxisLabels: 90,
