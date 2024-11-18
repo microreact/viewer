@@ -58,7 +58,11 @@ function MatrixVegaChart(props) {
         "data": { "url": "data/cars.json" },
         "encoding": {
           "y": {
-            "field": "row", "type": "nominal",
+            "field": "row",
+            "type": "nominal",
+            "axis": {
+              "labelFontSize": props.axisLabelsFontSize,
+            },
           },
           "x": {
             "field": "col",
@@ -66,6 +70,7 @@ function MatrixVegaChart(props) {
             "axis": {
               "labelAngle": -props.rotateAxisLabels,
               "orient": "top",
+              "labelFontSize": props.axisLabelsFontSize,
             },
           },
         },
@@ -124,7 +129,7 @@ function MatrixVegaChart(props) {
         props.height,
       );
     },
-    [ props.width, props.height, props.rotateAxisLabels, props.labelsFontSize, props.activeIdsSet, props.showLabels ],
+    [props.rotateAxisLabels, props.axisLabelsFontSize, props.showLabels, props.width, props.height, props.labelsFontSize, chartData.table.size],
   );
 
   return (
@@ -138,6 +143,8 @@ function MatrixVegaChart(props) {
 
 MatrixVegaChart.propTypes = {
   activeIdsSet: PropTypes.instanceOf(Set).isRequired,
+  axisLabelsFontSize: PropTypes.number,
+  chartRef: PropTypes.object,
   className: PropTypes.string,
   height: PropTypes.number.isRequired,
   labelsFontSize: PropTypes.number,
@@ -148,7 +155,6 @@ MatrixVegaChart.propTypes = {
   showLabels: PropTypes.bool,
   truncateLabels: PropTypes.bool,
   width: PropTypes.number.isRequired,
-  chartRef: PropTypes.object,
 };
 
 export default MatrixVegaChart;
