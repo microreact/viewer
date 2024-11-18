@@ -73,7 +73,7 @@ export function selectRegion(mapId, regionId, merge) {
           dispatch(
             toggleFieldFilter(
               geodata.linkField,
-              "equals",
+              "in",
               [ feature.properties[geodata.linkPropertyName] ],
             )
           );
