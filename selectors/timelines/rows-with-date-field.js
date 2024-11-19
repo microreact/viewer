@@ -35,6 +35,8 @@ const rowsWithDateFieldSelector = createKeyedStateSelector(
         const dayField = fieldsMap.get(dayFieldName);
         const yearFieldIndex = yearField.name;
         for (const row of rows) {
+          row[timelineFieldName] = undefined;
+
           const yearValue = parseInt(row[yearFieldIndex]);
           if (Number.isInteger(yearValue)) {
             let month = 1;
@@ -83,6 +85,8 @@ const rowsWithDateFieldSelector = createKeyedStateSelector(
       const valueDataColumn = fieldsMap.get(valueFieldName);
       if (valueDataColumn) {
         for (const row of rows) {
+          row[timelineFieldName] = undefined;
+
           const cellValue = row[valueDataColumn.name];
           const dateValue = (
             row[valueDataColumn.name] instanceof Date
