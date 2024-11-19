@@ -1,9 +1,10 @@
+import activeRowsIdsSelector from "../selectors/filters/active-row-ids.js";
 import matrixDataSelector from "../selectors/matrices/matrix-data.js";
+import filteredIdsSelector from "../selectors/filters/filtered-ids.js";
 
-import MatrixChart from "../components/MatrixVegaChart.js";
 import { connectToPresentState } from "../utils/state.js";
 
-import activeRowsIdsSelector from "../selectors/filters/active-row-ids.js";
+import MatrixChart from "../components/MatrixVegaChart.js";
 
 function mapStateToProps(state, { matrixId }) {
   const matrixState = state.matrices[matrixId];
@@ -14,6 +15,8 @@ function mapStateToProps(state, { matrixId }) {
     labelsFontSize: matrixState.labelsFontSize,
     axisLabelsFontSize: matrixState.axisLabelsFontSize,
     activeIdsSet: activeRowsIdsSelector(state),
+    filteredIds: filteredIdsSelector(state),
+    hideUnmatched: matrixState.hideUnmatched,
     matrixData: matrixDataSelector(state, matrixId),
   };
 }

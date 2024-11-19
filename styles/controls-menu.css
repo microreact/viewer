@@ -19,10 +19,14 @@
 
 .mr-controls-menu-trigger.MuiChip-root .MuiChip-label
 {
-  padding: 0 0 0 6px;
+  padding: 0 6px;
   /* font-size: 11px; */
   /* line-height: 1; */
   /* background-color: red; */
+}
+
+.mr-controls-menu-trigger.MuiChip-root .MuiSvgIcon-root.MuiChip-icon + .MuiChip-label {
+  padding-right: 0;
 }
 
 .mr-controls-menu-trigger.MuiChip-root .MuiChip-icon

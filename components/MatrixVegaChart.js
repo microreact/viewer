@@ -11,37 +11,48 @@ function MatrixVegaChart(props) {
       let min = Number.MAX_SAFE_INTEGER;
       let max = Number.MIN_SAFE_INTEGER;
       const data = [];
-      const activeColumns = props.matrixData.columns.filter((x) => props.activeIdsSet.has(x.name));
 
-      const ids = new Set();
+      const visibleColumns = new Set();
 
-      for (let yIndex = 0; yIndex < props.matrixData.rows.length; yIndex++) {
-        const row = props.matrixData.rows[yIndex];
+      if (props.hideUnmatched || props.filteredIds) {
+        for (const col of props.matrixData.columns) {
+          if (props.activeIdsSet.has(col.name)) {
+            visibleColumns.add(col.name);
+          }
+        }
+      }
+      else {
+        for (const col of props.matrixData.columns) {
+          if (col.name !== "0" && col.name !== "--mr-index") {
+            visibleColumns.add(col.name);
+          }
+        }
+      }
+
+      for (const row of props.matrixData.rows) {
         const rowId = row[props.matrixData.columns[0].name];
-        if (props.activeIdsSet.has(rowId)) {
-          for (let xIndex = 0; xIndex < activeColumns.length; xIndex++) {
-            const column = activeColumns[xIndex];
-            ids.add(rowId);
+        if (visibleColumns.has(rowId)) {
+          for (const column of visibleColumns.keys()) {
             data.push({
-              col: column.name,
+              col: column,
               row: rowId,
-              value: row[column.name],
+              value: row[column],
             });
-            if (row[column.name] > max) {
-              max = row[column.name];
+            if (row[column] > max) {
+              max = row[column];
             }
-            if (row[column.name] < min) {
-              min = row[column.name];
+            if (row[column] < min) {
+              min = row[column];
             }
           }
         }
       }
 
-      data.size = ids.size;
+      data.size = visibleColumns.size;
 
       return { table: data };
     },
-    [ props.activeIdsSet, props.matrixData ]
+    [ props.activeIdsSet, props.matrixData, props.hideUnmatched, props.filteredIds ]
   );
 
   const chartSpec = React.useMemo(
@@ -146,14 +157,15 @@ MatrixVegaChart.propTypes = {
   axisLabelsFontSize: PropTypes.number,
   chartRef: PropTypes.object,
   className: PropTypes.string,
+  filteredIds: PropTypes.instanceOf(Set).isRequired,
   height: PropTypes.number.isRequired,
+  hideUnmatched: PropTypes.bool,
   labelsFontSize: PropTypes.number,
   labelsUnit: PropTypes.string,
   matrixData: PropTypes.object,
   matrixId: PropTypes.string.isRequired,
   rotateAxisLabels: PropTypes.number,
   showLabels: PropTypes.bool,
-  truncateLabels: PropTypes.bool,
   width: PropTypes.number.isRequired,
 };
 
