@@ -15,8 +15,9 @@ const MatrixControls = React.memo(
   (props) => {
     const hasUnmatchedIds = React.useMemo(
       () => {
-        for (const column of props.matrixData.columns) {
-          if (props.rowIds.includes(column.name)) {
+        const idField = props.matrixData.columns[0].name;
+        for (const row of props.matrixData.rows) {
+          if (!props.rowIds.includes(row[idField])) {
             return true;
           }
         }
