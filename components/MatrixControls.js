@@ -2,8 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
-import TextField from "@mui/material/TextField";
-import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
 
 import UiAnimation from "./UiAnimation.react";
 import UiControlsButton from "./UiControlsButton.react";
@@ -14,6 +13,19 @@ import UiToggleSlider from "./UiToggleSlider.react";
 
 const MatrixControls = React.memo(
   (props) => {
+    const hasUnmatchedIds = React.useMemo(
+      () => {
+        for (const column of props.matrixData.columns) {
+          if (props.rowIds.includes(column.name)) {
+            return true;
+          }
+        }
+
+        return false;
+      },
+      [props.rowIds, props.matrixData],
+    );
+
     return (
       <div
         className="mr-main-controls"
@@ -135,6 +147,19 @@ const MatrixControls = React.memo(
 
           </UiControlsMenu>
 
+          {
+            hasUnmatchedIds && (
+              <Chip
+                className="mr-controls-menu-trigger"
+                size="small"
+                label="Hide unmatched"
+                onClick={() => props.onHideUnmatchedChange(!props.hideUnmatched)}
+                color={props.hideUnmatched ? "primary" : undefined}
+                title={`${props.hideUnmatched ? "Show" : "Hide"} rows/columns not matched in metadata`}
+              />
+            )
+          }
+
         </UiAnimation>
       </div>
     );
@@ -146,21 +171,25 @@ MatrixControls.displayName = "MatrixControls";
 MatrixControls.propTypes = {
   axisLabelsFontSize: PropTypes.number,
   controls: PropTypes.bool.isRequired,
+  hideUnmatched: PropTypes.bool,
   isReadOnly: PropTypes.bool.isRequired,
   labelsFontSize: PropTypes.number,
   labelsUnit: PropTypes.string,
+  matrixData: PropTypes.object,
   maxFontSize: PropTypes.number,
   minFontSize: PropTypes.number,
   onAxisLabelsFontSizeChange: PropTypes.func.isRequired,
   onControlsChange: PropTypes.func.isRequired,
   onEditPane: PropTypes.func.isRequired,
   onFontSizeChange: PropTypes.func.isRequired,
+  onHideUnmatchedChange: PropTypes.func.isRequired,
   onLabelsFontSizeChange: PropTypes.func.isRequired,
   onLabelsUnitChange: PropTypes.func.isRequired,
   onRotateAxisLabelsChange: PropTypes.func.isRequired,
   onShowLabelsChange: PropTypes.func.isRequired,
   onTruncateLabelsChange: PropTypes.func.isRequired,
   rotateAxisLabels: PropTypes.number,
+  rowIds: PropTypes.array.isRequired,
   showLabels: PropTypes.bool,
   truncateLabels: PropTypes.bool,
 };
