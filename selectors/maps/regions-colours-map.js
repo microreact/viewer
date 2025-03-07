@@ -1,5 +1,5 @@
 // import randomcolor from "randomcolor";
-import { scaleLinear } from "d3-scale";
+import { scaleLinear, scaleThreshold } from "d3-scale";
 import {
   extent,
   max,
@@ -8,6 +8,7 @@ import {
   min,
   sum,
   count,
+  ticks,
 } from "d3-array";
 
 import {
@@ -16,11 +17,11 @@ import {
 } from "../../utils/arrays";
 import { createKeyedStateSelector } from "../../utils/state";
 
-import rowsByRegionSelector from "./rows-by-region";
 import colourPaletteByNameSelector from "../styles/colour-palette-by-name";
-import mapStateSelector from "./map-state";
 import dataColumnByFieldSelector from "../datasets/data-column-by-field";
 import { emptyArray } from "../../constants";
+import mapStateSelector from "./map-state";
+import rowsByRegionSelector from "./rows-by-region";
 
 const computeColourMethods = {
   max,
@@ -52,7 +53,7 @@ const regionValueFunctionSelector = createKeyedStateSelector(
     regionsColourField,
     regionsColourValues,
   ) => {
-    if (regionsColourField || regionsColourMethod) {
+    if (regionsColourField && regionsColourMethod) {
       switch (regionsColourMethod) {
         case "max":
           return (
@@ -126,13 +127,17 @@ const regionColoursMapSelector = createKeyedStateSelector(
   (state, mapId) => rowsByRegionSelector(state, mapId),
   (state, mapId) => regionValueFunctionSelector(state, mapId),
   (state, mapId) => regionsColourPaletteSelector(state, mapId),
+  (state, mapId) => state.maps[mapId].regionsColourScale,
   (
     rowsByRegion,
     regionValueFunction,
     colourPalette,
+    regionsColourScale,
   ) => {
     const domainValues = [];
     const coloursByRegion = {};
+    const coloursLegend = [];
+    const type = regionsColourScale ?? "gradient";
 
     if (colourPalette) {
       for (const [ regionId, regionRows ] of Object.entries(rowsByRegion)) {
@@ -145,12 +150,43 @@ const regionColoursMapSelector = createKeyedStateSelector(
 
       const domainExtent = extent(domainValues);
 
-      const colourGetter = scaleLinear()
-        .domain(domainExtent)
-        .range([
+      let colourGetter;
+      if (regionsColourScale === "binned") {
+        const colorRange = colourPalette.entries;
+        const domain = ticks(domainExtent[0], domainExtent[1], colorRange.length);
+        colourGetter = scaleThreshold()
+          .domain(domain)
+          .range(colorRange);
+
+        for (const value of domain) {
+          coloursLegend.push({ value, colour: colourGetter(value) });
+        }
+      }
+      else {
+        const domain = domainExtent;
+        const range = [
           Array.isArray(colourPalette.entries[0]) ? colourPalette.entries[0][1] : colourPalette.entries[0],
           Array.isArray(colourPalette.entries[colourPalette.entries.length - 1]) ? colourPalette.entries[colourPalette.entries.length - 1][1] : colourPalette.entries[colourPalette.entries.length - 1],
-        ]);
+        ];
+        colourGetter = scaleLinear()
+          .domain(domain)
+          .range(range);
+        for (const value of domain) {
+          coloursLegend.push({ value, colour: colourGetter(value) });
+        }
+      }
+
+      // const colorRange = [
+      //   "#ffffcc",
+      //   "#ffeda0",
+      //   "#fed976",
+      //   "#feb24c",
+      //   "#fd8d3c",
+      //   "#fc4e2a",
+      //   "#e31a1c",
+      //   "#bd0026",
+      //   "#800026",
+      // ];
 
       for (const regionEntry of Object.values(coloursByRegion)) {
         const colour = colourGetter(regionEntry.value);
@@ -158,7 +194,11 @@ const regionColoursMapSelector = createKeyedStateSelector(
       }
     }
 
-    return coloursByRegion;
+    return {
+      coloursByRegion,
+      coloursLegend,
+      type,
+    };
   },
 );
 
