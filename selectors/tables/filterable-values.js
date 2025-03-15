@@ -1,3 +1,5 @@
+import naturalCompare from "natural-compare";
+
 import { createKeyedStateSelector, createCombinedStateSelector } from "../../utils/state";
 import { intersect } from "../../utils/sets";
 import { toText } from "../../utils/text";
@@ -67,7 +69,7 @@ const filterableValuesSelector = createKeyedStateSelector(
       });
     }
 
-    for (const value of Array.from(countByValue.keys()).sort()) {
+    for (const value of Array.from(countByValue.keys()).sort(naturalCompare)) {
       items.push({
         value,
         count: countByValue.get(value),
