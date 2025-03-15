@@ -24,11 +24,11 @@ export function addTable(paneId, title, fileId, columns) {
   };
 }
 
-export function downloadAsCsv(tableId) {
+export function downloadAsCsv(tableId, fileName) {
   return (dispatch, getState) => {
     const state = getPresentState(getState());
     const [rows] = tableDataSelector(state, tableId);
-    const name = paneNameSelector(state, tableId);
+    const name = fileName ?? paneNameSelector(state, tableId);
     const tableColumns = (
       state.tables[tableId].columns
         .filter((x) => !x.hidden)
