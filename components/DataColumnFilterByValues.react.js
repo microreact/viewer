@@ -5,10 +5,10 @@ import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 
 import { DataFilter } from "../utils/prop-types";
+import { emptyArray } from "../constants";
+
 import UiSelectList from "./UiSelectList.react";
 import UiFloatingFilter from "./UiFloatingFilter.react";
-
-import { emptyArray } from "../constants";
 
 const DataColumnFilterByValues = React.memo(
   (props) => {
