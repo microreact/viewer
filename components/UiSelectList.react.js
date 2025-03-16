@@ -10,10 +10,10 @@ import Button from "@mui/material/Button";
 import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
 
 // import "../styles/ui-select-list.css";
+import { emptyArray } from "../constants";
 import UiToggleSwitch from "./UiToggleSwitch.react";
 import UiList from "./UiList.react";
 import EmptyIcon from "./EmptyIcon.react";
-import { emptyArray } from "../constants";
 
 function toggleSelection(selection, toggledValues, appendOnlyMode) {
   const newSelection = [];
@@ -104,6 +104,7 @@ class UiSelectList extends React.PureComponent {
 
   renderGroup = (groupName, args, groupItems) => {
     const { props } = this;
+    const checked = groupItems.every((x) => props.value.includes(x[props.valueProperty]));
     return (
       <ListSubheader
         key={args.index}
@@ -112,13 +113,25 @@ class UiSelectList extends React.PureComponent {
             toggleSelection(
               props.value,
               groupItems.map((x) => x[props.valueProperty]),
-              !groupItems.every((x) => props.value.includes(x[props.valueProperty])),
+              !checked,
             ),
           )
         }
         style={args.style}
-        title="Click to toggle group"
+        // title="Click to toggle group"
       >
+        <ListItemIcon>
+          <Checkbox
+            checked={checked}
+            indeterminate={!checked && groupItems.some((x) => props.value.includes(x[props.valueProperty]))}
+            checkedIcon={props.boxed ? undefined : <DoneRoundedIcon />}
+            color="primary"
+            disableRipple
+            edge="start"
+            icon={props.boxed ? undefined : <EmptyIcon />}
+            tabIndex={-1}
+          />
+        </ListItemIcon>
         <div className="MuiListItemText-root">
           { props.groupPrefix }{ groupName }
         </div>
@@ -164,6 +177,7 @@ class UiSelectList extends React.PureComponent {
           classnames(
             "mr-ui-select-list",
             props.className,
+            props.groupItem && "has-groups",
           )
         }
         title={props.title}
