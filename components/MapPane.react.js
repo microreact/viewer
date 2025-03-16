@@ -6,7 +6,6 @@ import debounce from "lodash.debounce";
 
 // import "../styles/map-pane.css";
 
-import ZoomControls from "./ZoomControls.react";
 import MapMarkersLayer from "../containers/MapMarkersLayer.react";
 import MapLassoOverlay from "../containers/MapLassoLayer.react";
 import MapControls from "../containers/MapControls.react";
@@ -18,6 +17,7 @@ import { downloadDataUrl } from "../utils/downloads";
 import { MapboxStyle, MapMarker, ReactRef } from "../utils/prop-types";
 import * as HtmlUtils from "../utils/html";
 import { subscribe } from "../utils/events";
+import ZoomControls from "./ZoomControls.react";
 
 const interactiveLayerIds = [ "mr-geojson-layer" ];
 
@@ -134,6 +134,14 @@ class MapPane extends React.PureComponent {
 
     if (props.trackViewport && props.trackViewport !== prevProps.trackViewport) {
       this.handleViewportFilter();
+    }
+
+    if (props.viewport !== prevProps.viewport && props.viewport.bounds) {
+      // https://github.com/visgl/react-map-gl/blob/2b32363feb181e614eb02edf13628ba8e88b7a1f/examples/zoom-to-bounds/src/app.tsx#L28
+      this.reactMapRef.current.fitBounds(
+        props.viewport.bounds,
+        { padding: 40, duration: 1000 },
+      );
     }
   }
 
