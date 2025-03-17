@@ -3,15 +3,18 @@ import { createKeyedStateSelector } from "../../utils/state";
 import geojsonLayerDataSelector from "./geojson-layer-data";
 import mapStateSelector from "./map-state";
 import regionColoursSelector from "./regions-colours";
+import totalRowCountByRegionSelector from "./total-row-count-by-region";
 
 const geojsonLayerStyleSelector = createKeyedStateSelector(
   (state, mapId) => geojsonLayerDataSelector(state, mapId),
   (state, mapId) => regionColoursSelector(state, mapId),
+  (state, mapId) => totalRowCountByRegionSelector(state, mapId),
   (state, mapId) => mapStateSelector(state, mapId).showRegionOutlines,
   (state, mapId) => mapStateSelector(state, mapId).regionsColourOpacity,
   (
     geojson,
     { coloursByRegionId },
+    totalRowCountByRegion,
     showRegionOutlines,
     regionsColourOpacity,
   ) => {
@@ -23,7 +26,11 @@ const geojsonLayerStyleSelector = createKeyedStateSelector(
     for (const feature of geojson.features) {
       color.stops.push([
         feature.properties["mr-region-id"],
-        coloursByRegionId[feature.properties["mr-region-id"]] ?? "transparent",
+        coloursByRegionId[feature.properties["mr-region-id"]]
+        ??
+        (totalRowCountByRegion[feature.properties["mr-region-id"]] > 0 ? "lightgray" : undefined)
+        ??
+        "transparent",
       ]);
     }
 

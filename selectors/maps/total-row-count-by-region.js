@@ -3,33 +3,33 @@ import GeoJsonPolygonLookup from "geojson-geometries-lookup";
 import { createKeyedStateSelector } from "../../utils/state";
 
 import dataColumnsByFieldMapSelector from "../datasets/data-columns-by-field-map";
-import activeRowsWithStyleFieldsSelector from "../filters/active-rows-with-style-fields";
+import rowsSelector from "../datasets/rows";
 import geojsonLayerDataSelector from "./geojson-layer-data";
 import mapStateSelector from "./map-state";
 import markersLayerDataSelector from "./markers-layer-data";
 
-const rowsByRegionSelector = createKeyedStateSelector(
+const totalRowCountByRegionSelector = createKeyedStateSelector(
   (state, mapId) => mapStateSelector(state, mapId).geodata,
   (state, mapId) => geojsonLayerDataSelector(state, mapId),
   (state, mapId) => markersLayerDataSelector(state, mapId),
-  (state) => activeRowsWithStyleFieldsSelector(state),
+  (state) => rowsSelector(state),
   (state) => dataColumnsByFieldMapSelector(state),
   (
     geodata,
     geojson,
     markersLayerData,
-    { rows: activeRows },
+    allRows,
     dataColumnsByFieldMap,
   ) => {
     if (!geodata) {
       return undefined;
     }
 
-    const rowsByRegion = {};
+    const rowCountByRegion = {};
 
     if (geodata.linkType === "geographic-coordinates") {
       for (const feature of geojson.features) {
-        rowsByRegion[feature.properties["mr-region-id"]] = [];
+        rowCountByRegion[feature.properties["mr-region-id"]] = 0;
       }
 
       const lookup = new GeoJsonPolygonLookup(geojson);
@@ -41,10 +41,7 @@ const rowsByRegionSelector = createKeyedStateSelector(
         });
 
         for (const feature of collection.features) {
-          const regionRows = rowsByRegion[feature.properties["mr-region-id"]];
-          for (const row of marker.rows) {
-            regionRows.push(row);
-          }
+          rowCountByRegion[feature.properties["mr-region-id"]] += marker.rows.length;
         }
       }
     }
@@ -53,7 +50,7 @@ const rowsByRegionSelector = createKeyedStateSelector(
       if (geodata.linkField && geodata.linkPropertyName && geodataLinkDataField) {
         // Group data rows by geodata linked column to speed up lookups
         const rowsByLinkedColumn = {};
-        for (const row of activeRows) {
+        for (const row of allRows) {
           const value = row[geodataLinkDataField.name];
           rowsByLinkedColumn[value] ??= [];
           rowsByLinkedColumn[value].push(row);
@@ -62,13 +59,13 @@ const rowsByRegionSelector = createKeyedStateSelector(
         for (const feature of geojson.features) {
           const propertyValue = feature.properties[geodata.linkPropertyName];
 
-          rowsByRegion[feature.properties["mr-region-id"]] = rowsByLinkedColumn[propertyValue] ?? [];
+          rowCountByRegion[feature.properties["mr-region-id"]] = rowsByLinkedColumn[propertyValue]?.length ?? 0;
         }
       }
     }
 
-    return rowsByRegion;
+    return rowCountByRegion;
   },
 );
 
-export default rowsByRegionSelector;
+export default totalRowCountByRegionSelector;
