@@ -123,7 +123,7 @@ const regionValueFunctionSelector = createKeyedStateSelector(
   },
 );
 
-const regionColoursMapSelector = createKeyedStateSelector(
+const regionColoursSelector = createKeyedStateSelector(
   (state, mapId) => rowsByRegionSelector(state, mapId),
   (state, mapId) => regionValueFunctionSelector(state, mapId),
   (state, mapId) => regionsColourPaletteSelector(state, mapId),
@@ -134,21 +134,22 @@ const regionColoursMapSelector = createKeyedStateSelector(
     colourPalette,
     regionsColourScale,
   ) => {
-    const domainValues = [];
-    const coloursByRegion = {};
-    const coloursLegend = [];
-    const type = regionsColourScale ?? "gradient";
+    const coloursByRegionId = {};
+    const valuesByRegionId = {};
+    // const domainValues = [];
+    const legendEntries = [];
+    // const type = regionsColourScale ?? "gradient";
 
     if (colourPalette) {
       for (const [ regionId, regionRows ] of Object.entries(rowsByRegion)) {
         if (regionRows.length) {
           const value = regionValueFunction(regionRows);
-          coloursByRegion[regionId] = { value };
-          domainValues.push(value);
+          valuesByRegionId[regionId] = value;
+          // domainValues.push(value);
         }
       }
 
-      const domainExtent = extent(domainValues);
+      const domainExtent = extent(Object.values(valuesByRegionId));
 
       let colourGetter;
       if (regionsColourScale === "binned") {
@@ -159,7 +160,7 @@ const regionColoursMapSelector = createKeyedStateSelector(
           .range(colorRange);
 
         for (const value of domain) {
-          coloursLegend.push({ value, colour: colourGetter(value) });
+          legendEntries.push({ value, colour: colourGetter(value) });
         }
       }
       else {
@@ -172,7 +173,7 @@ const regionColoursMapSelector = createKeyedStateSelector(
           .domain(domain)
           .range(range);
         for (const value of domain) {
-          coloursLegend.push({ value, colour: colourGetter(value) });
+          legendEntries.push({ value, colour: colourGetter(value) });
         }
       }
 
@@ -188,18 +189,17 @@ const regionColoursMapSelector = createKeyedStateSelector(
       //   "#800026",
       // ];
 
-      for (const regionEntry of Object.values(coloursByRegion)) {
-        const colour = colourGetter(regionEntry.value);
-        regionEntry.colour = colour;
+      for (const [ regionId, value ] of Object.entries(valuesByRegionId)) {
+        const colour = colourGetter(value);
+        coloursByRegionId[regionId] = colour;
       }
     }
 
     return {
-      coloursByRegion,
-      coloursLegend,
-      type,
+      coloursByRegionId,
+      legendEntries,
     };
   },
 );
 
-export default regionColoursMapSelector;
+export default regionColoursSelector;

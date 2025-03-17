@@ -2,13 +2,13 @@ import PropTypes from "prop-types";
 import React from "react";
 
 import { usePresentSelector } from "microreact-viewer/utils/hooks.js";
-import regionColoursMapSelector from "../../selectors/maps/regions-colours-map.js";
+import regionColoursSelector from "../../selectors/maps/regions-colours.js";
 
 import Component from "./component.js";
 
 function MapColourLegend(props) {
-  const regionColourLegendItems = usePresentSelector((state) => {
-    return regionColoursMapSelector(state, props.mapId);
+  const regionColours = usePresentSelector((state) => {
+    return regionColoursSelector(state, props.mapId);
   });
 
   const regionsColourScale = usePresentSelector((state) => {
@@ -18,7 +18,7 @@ function MapColourLegend(props) {
   return (
     <Component
       regionsColourScale={regionsColourScale}
-      regionColourLegendItems={regionColourLegendItems}
+      colourLegendEntries={regionColours.legendEntries}
     />
   );
 }

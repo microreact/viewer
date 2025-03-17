@@ -111,9 +111,9 @@ function MapColourLegend(props) {
         {
           props.regionsColourScale === "binned"
             ?
-            renderBins(props.regionColourLegendItems.coloursLegend)
+            renderBins(props.colourLegendEntries)
             :
-            renderGradient(props.regionColourLegendItems.coloursLegend)
+            renderGradient(props.colourLegendEntries)
         }
       </tbody>
     </table>
@@ -124,7 +124,7 @@ MapColourLegend.displayName = "MapLegend";
 
 MapColourLegend.propTypes = {
   regionsColourScale: PropTypes.string.isRequired,
-  regionColourLegendItems: PropTypes.array,
+  colourLegendEntries: PropTypes.array.isRequired,
 };
 
 export default MapColourLegend;

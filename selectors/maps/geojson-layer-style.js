@@ -2,16 +2,16 @@ import { createKeyedStateSelector } from "../../utils/state";
 
 import geojsonLayerDataSelector from "./geojson-layer-data";
 import mapStateSelector from "./map-state";
-import regionColoursMapSelector from "./regions-colours-map";
+import regionColoursSelector from "./regions-colours";
 
 const geojsonLayerStyleSelector = createKeyedStateSelector(
   (state, mapId) => geojsonLayerDataSelector(state, mapId),
-  (state, mapId) => regionColoursMapSelector(state, mapId),
+  (state, mapId) => regionColoursSelector(state, mapId),
   (state, mapId) => mapStateSelector(state, mapId).showRegionOutlines,
   (state, mapId) => mapStateSelector(state, mapId).regionsColourOpacity,
   (
     geojson,
-    { coloursByRegion },
+    { coloursByRegionId },
     showRegionOutlines,
     regionsColourOpacity,
   ) => {
@@ -23,7 +23,7 @@ const geojsonLayerStyleSelector = createKeyedStateSelector(
     for (const feature of geojson.features) {
       color.stops.push([
         feature.properties["mr-region-id"],
-        coloursByRegion[feature.properties["mr-region-id"]]?.colour ?? "transparent",
+        coloursByRegionId[feature.properties["mr-region-id"]] ?? "transparent",
       ]);
     }
 
