@@ -104,7 +104,7 @@ function MapColourLegend(props) {
       role="presentation"
       className="mr-legend-table"
     >
-      <thead style={{ height: "16px" }}>
+      {/* <thead style={{ height: "16px" }}>
         <tr>
           <td
             colSpan="2"
@@ -113,7 +113,7 @@ function MapColourLegend(props) {
             # entries
           </td>
         </tr>
-      </thead>
+      </thead> */}
       <tbody style={{ height: "calc(100% - 16px)" }}>
         {
           props.regionsColourScale === "binned"
