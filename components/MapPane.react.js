@@ -213,6 +213,7 @@ class MapPane extends React.PureComponent {
     if (this.props.showRegions) {
       const region = event.features && event.features.find((x) => x.layer.id === "mr-geojson-layer");
       if (region) {
+        console.log(event, region);
         if (region !== this.state.hover?.region) {
           this.setState({
             hover: {
@@ -226,6 +227,10 @@ class MapPane extends React.PureComponent {
       }
     }
 
+    this.handleResetHover();
+  };
+
+  handleResetHover = () => {
     if (this.state.hover) {
       this.setState({ hover: null });
     }
@@ -319,6 +324,7 @@ class MapPane extends React.PureComponent {
       <div
         className={state.hover ? "mr-map mr-hovered" : "mr-map"}
         ref={this.elementRef}
+        onMouseLeave={this.handleResetHover}
       >
         <InteractiveMap
           height={props.height}
