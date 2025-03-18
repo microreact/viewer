@@ -18,26 +18,10 @@ import {
 import { createKeyedStateSelector } from "../../utils/state";
 
 import colourPaletteByNameSelector from "../styles/colour-palette-by-name";
-import dataColumnByFieldSelector from "../datasets/data-column-by-field";
 import { emptyArray } from "../../constants";
 import mapStateSelector from "./map-state";
 import rowsByRegionSelector from "./rows-by-region";
-
-const computeColourMethods = {
-  max,
-  mean,
-  median,
-  min,
-  mode,
-  sum,
-  unique: (array, valueOf) => uniqueElements(array, valueOf).length,
-  value: (array, valueOf, value) => count(array, (x) => (valueOf(x) === value ? 1 : undefined)),
-};
-
-// const regionsColourColumnSelector = (state, mapId) => {
-//   const mapState = mapStateSelector(state, mapId);
-//   return dataColumnByFieldSelector(state, mapState.regionsColourField);
-// };
+import totalRowCountByRegionSelector from "./total-row-count-by-region";
 
 const regionsColourPaletteSelector = (state, mapId) => {
   const mapState = mapStateSelector(state, mapId);
@@ -128,43 +112,51 @@ const regionColoursSelector = createKeyedStateSelector(
   (state, mapId) => regionValueFunctionSelector(state, mapId),
   (state, mapId) => regionsColourPaletteSelector(state, mapId),
   (state, mapId) => state.maps[mapId].regionsColourScale,
+  (state, mapId) => state.maps[mapId].regionsColourMethod,
+  (state, mapId) => totalRowCountByRegionSelector(state, mapId),
   (
     rowsByRegion,
     regionValueFunction,
     colourPalette,
     regionsColourScale,
+    regionsColourMethod,
+    totalRowCountByRegion,
   ) => {
     const coloursByRegionId = {};
     const valuesByRegionId = {};
     // const domainValues = [];
     const legendEntries = [];
     // const type = regionsColourScale ?? "gradient";
+    const showProportions = (regionsColourMethod === "proportion");
 
     if (colourPalette) {
       for (const [ regionId, regionRows ] of Object.entries(rowsByRegion)) {
         if (regionRows.length) {
-          const value = regionValueFunction(regionRows);
-          valuesByRegionId[regionId] = value;
-          // domainValues.push(value);
+          if (showProportions) {
+            const value = regionRows.length;
+            const total = totalRowCountByRegion[regionId];
+            valuesByRegionId[regionId] = (value === total) ? value : ((value / total) * 100);
+          }
+          else {
+            const value = regionValueFunction(regionRows);
+            valuesByRegionId[regionId] = value;
+          }
         }
       }
 
       const domainExtent = extent(Object.values(valuesByRegionId));
 
+      let domain;
       let colourGetter;
       if (regionsColourScale === "binned") {
         const colorRange = colourPalette.entries;
-        const domain = ticks(domainExtent[0], domainExtent[1], colorRange.length);
+        domain = ticks(domainExtent[0], domainExtent[1], colorRange.length);
         colourGetter = scaleThreshold()
           .domain(domain)
           .range(colorRange);
-
-        for (const value of domain) {
-          legendEntries.push({ value, colour: colourGetter(value) });
-        }
       }
       else {
-        const domain = domainExtent;
+        domain = domainExtent;
         const range = [
           Array.isArray(colourPalette.entries[0]) ? colourPalette.entries[0][1] : colourPalette.entries[0],
           Array.isArray(colourPalette.entries[colourPalette.entries.length - 1]) ? colourPalette.entries[colourPalette.entries.length - 1][1] : colourPalette.entries[colourPalette.entries.length - 1],
@@ -172,9 +164,13 @@ const regionColoursSelector = createKeyedStateSelector(
         colourGetter = scaleLinear()
           .domain(domain)
           .range(range);
-        for (const value of domain) {
-          legendEntries.push({ value, colour: colourGetter(value) });
-        }
+      }
+
+      for (const value of domain) {
+        legendEntries.push({
+          "value": value,
+          "colour": colourGetter(value),
+        });
       }
 
       // const colorRange = [
