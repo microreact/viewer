@@ -28,7 +28,7 @@ const geojsonLayerStyleSelector = createKeyedStateSelector(
         feature.properties["mr-region-id"],
         coloursByRegionId[feature.properties["mr-region-id"]]
         ??
-        (totalRowCountByRegion[feature.properties["mr-region-id"]] > 0 ? "lightgray" : undefined)
+        (totalRowCountByRegion[feature.properties["mr-region-id"]] > 0 ? "lightgrey" : undefined)
         ??
         "transparent",
       ]);
