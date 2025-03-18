@@ -64,6 +64,8 @@ const InteractiveMap = React.memo(
           !props.hideScaleControl && (<ScaleControl />)
         }
 
+        { props.children }
+
       </ReactMapGL>
     );
   }
@@ -72,6 +74,7 @@ const InteractiveMap = React.memo(
 InteractiveMap.displayName = "InteractiveMap";
 
 InteractiveMap.propTypes = {
+  children: PropTypes.node.isRequired,
   height: PropTypes.number.isRequired,
   hideScaleControl: PropTypes.bool,
   mapboxApiAccessToken: PropTypes.string.isRequired,
@@ -201,8 +204,8 @@ class MapPane extends React.PureComponent {
           this.setState({
             hover: {
               marker,
-              x: event.originalEvent.offsetX,
-              y: event.originalEvent.offsetY,
+              longitude: event.lngLat.lng,
+              latitude: event.lngLat.lat,
             },
           });
         }
@@ -213,13 +216,14 @@ class MapPane extends React.PureComponent {
     if (this.props.showRegions) {
       const region = event.features && event.features.find((x) => x.layer.id === "mr-geojson-layer");
       if (region) {
-        console.log(event, region);
         if (region !== this.state.hover?.region) {
           this.setState({
             hover: {
               region,
-              x: event.originalEvent.offsetX,
-              y: event.originalEvent.offsetY,
+              // x: event.originalEvent.offsetX,
+              // y: event.originalEvent.offsetY,
+              longitude: event.lngLat.lng,
+              latitude: event.lngLat.lat,
             },
           });
         }
@@ -307,7 +311,10 @@ class MapPane extends React.PureComponent {
       return (
         <MapTooltip
           mapId={this.props.mapId}
-          {...state.hover}
+          marker={state.hover.marker}
+          region={state.hover.region}
+          longitude={state.hover.longitude}
+          latitude={state.hover.latitude}
         />
       );
     }
@@ -342,9 +349,11 @@ class MapPane extends React.PureComponent {
           width={props.width}
           // markersOverlayRef={this.markersOverlayRef}
           // lassoOverlayRef={this.lassoOverlayRef}
-        />
+        >
 
         { this.renderTooltip() }
+
+        </InteractiveMap>
 
         {
           props.hasLegend && (

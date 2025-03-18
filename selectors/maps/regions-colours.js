@@ -128,6 +128,7 @@ const regionColoursSelector = createKeyedStateSelector(
     const legendEntries = [];
     // const type = regionsColourScale ?? "gradient";
     const showProportions = (regionsColourMethod === "proportion");
+    let hasProportions = false;
 
     if (colourPalette) {
       for (const [ regionId, regionRows ] of Object.entries(rowsByRegion)) {
@@ -135,7 +136,13 @@ const regionColoursSelector = createKeyedStateSelector(
           if (showProportions) {
             const value = regionRows.length;
             const total = totalRowCountByRegion[regionId];
-            valuesByRegionId[regionId] = (value === total) ? value : ((value / total) * 100);
+            if (value !== total) {
+              hasProportions = true;
+              valuesByRegionId[regionId] = (value / total) * 100;
+            }
+            else {
+              valuesByRegionId[regionId] = value;
+            }
           }
           else {
             const value = regionValueFunction(regionRows);
@@ -168,7 +175,7 @@ const regionColoursSelector = createKeyedStateSelector(
 
       for (const value of domain) {
         legendEntries.push({
-          "value": value,
+          "value": hasProportions ? `${value}%` : value,
           "colour": colourGetter(value),
         });
       }
