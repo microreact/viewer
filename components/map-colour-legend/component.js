@@ -41,6 +41,13 @@ function renderGradient(regionColourLegendItems) {
 }
 
 function renderStep(stepIndex, step, allSteps) {
+  if (allSteps.length === 1) {
+    return (
+      <td style={{ textAlign: "left" }}>
+        {toNumber(step.value)}
+      </td>
+    );
+  }
   if (stepIndex === 0) {
     return (
       <td style={{ textAlign: "left" }}>
