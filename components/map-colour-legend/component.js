@@ -115,6 +115,36 @@ function MapColourLegend(props) {
         </tr>
       </thead> */}
       <tbody style={{ height: "calc(100% - 16px)" }}>
+        <tr>
+          <td
+            style={
+              {
+                background: "#f2f2f2",
+                minWidth: "8px",
+              }
+            }
+          >
+            &nbsp;
+          </td>
+          <td style={{ textAlign: "left" }}>
+            No data
+          </td>
+        </tr>
+        <tr>
+          <td
+            style={
+              {
+                background: "#d3d3d3",
+                minWidth: "8px",
+              }
+            }
+          >
+            &nbsp;
+          </td>
+          <td style={{ textAlign: "left" }}>
+            0
+          </td>
+        </tr>
         {
           props.regionsColourScale === "binned"
             ?
