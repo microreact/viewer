@@ -8,7 +8,7 @@ import {
   min,
   sum,
   count,
-  // ticks,
+  ticks,
 } from "d3-array";
 
 import {
@@ -169,18 +169,22 @@ const regionColoursSelector = createKeyedStateSelector(
         //   "#ff0000",
         //   "#000000",
         // ];
-        // domain = ticks(domainExtent[0], domainExtent[1], colorRange.length);
-        domain = [
-          // 1,
-          10,
-          50,
-          100,
-          500,
-          1000,
-          5000,
-          10000,
-          50000,
-        ];
+        if (showProportions) {
+          domain = ticks(domainExtent[0], domainExtent[1], colorRange.length);
+        }
+        else {
+          domain = [
+            // 1,
+            10,
+            50,
+            100,
+            500,
+            1000,
+            5000,
+            10000,
+            50000,
+          ];
+        }
         colourGetter = scaleThreshold()
           .domain(domain)
           .range(colorRange);
