@@ -8,7 +8,7 @@ import {
   min,
   sum,
   count,
-  ticks,
+  // ticks,
 } from "d3-array";
 
 import {
@@ -157,7 +157,30 @@ const regionColoursSelector = createKeyedStateSelector(
       let colourGetter;
       if (regionsColourScale === "binned") {
         const colorRange = colourPalette.entries;
-        domain = ticks(domainExtent[0], domainExtent[1], colorRange.length);
+        // const colorRange = [
+        //   "grey",
+        //   "grey",
+        //   "#ee82ee",
+        //   "#0000ff",
+        //   "#00ffff",
+        //   "#008000",
+        //   "#ffff00",
+        //   "#ffa500",
+        //   "#ff0000",
+        //   "#000000",
+        // ];
+        // domain = ticks(domainExtent[0], domainExtent[1], colorRange.length);
+        domain = [
+          // 1,
+          10,
+          50,
+          100,
+          500,
+          1000,
+          5000,
+          10000,
+          50000,
+        ];
         colourGetter = scaleThreshold()
           .domain(domain)
           .range(colorRange);

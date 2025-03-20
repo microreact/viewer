@@ -3,7 +3,7 @@ import React from "react";
 
 function toNumber(value) {
   if (value?.toFixed) {
-    return parseFloat(value.toFixed(4));
+    return parseFloat(value.toFixed(4)).toLocaleString();
   }
   return value;
 }
@@ -41,32 +41,37 @@ function renderGradient(regionColourLegendItems) {
 }
 
 function renderStep(stepIndex, step, allSteps) {
-  if (allSteps.length === 1) {
-    return (
-      <td style={{ textAlign: "left" }}>
-        {toNumber(step.value)}
-      </td>
-    );
-  }
-  if (stepIndex === 0) {
-    return (
-      <td style={{ textAlign: "left" }}>
-        &nbsp;≤&nbsp;{toNumber(step.value)}
-      </td>
-    );
-  }
-  if (stepIndex === allSteps.length - 1) {
-    return (
-      <td style={{ textAlign: "left" }}>
-        &nbsp;≥&nbsp;{toNumber(step.value)}
-      </td>
-    );
-  }
   return (
     <td style={{ textAlign: "left" }}>
-      &nbsp;≤&nbsp;{toNumber(allSteps[stepIndex].value)}
+      &nbsp;{ toNumber(step.value) }
     </td>
   );
+  // if (allSteps.length === 1) {
+  //   return (
+  //     <td style={{ textAlign: "left" }}>
+  //       {toNumber(step.value)}
+  //     </td>
+  //   );
+  // }
+  // if (stepIndex === 0) {
+  //   return (
+  //     <td style={{ textAlign: "left" }}>
+  //       &nbsp;≤&nbsp;{toNumber(step.value)}
+  //     </td>
+  //   );
+  // }
+  // if (stepIndex === allSteps.length - 1) {
+  //   return (
+  //     <td style={{ textAlign: "left" }}>
+  //       &nbsp;≥&nbsp;{toNumber(step.value)}
+  //     </td>
+  //   );
+  // }
+  // return (
+  //   <td style={{ textAlign: "left" }}>
+  //     &nbsp;≤&nbsp;{toNumber(allSteps[stepIndex].value)}
+  //   </td>
+  // );
   // return (
   //   <td style={{ textAlign: "left" }}>
   //     &nbsp;{toNumber(allSteps[stepIndex - 1].value)} - {toNumber(step.value - 1)}
@@ -143,7 +148,7 @@ function MapColourLegend(props) {
             &nbsp;
           </td>
           <td style={{ textAlign: "left" }}>
-            No data
+            &nbsp;No data
           </td>
         </tr>
         <tr>
@@ -158,7 +163,7 @@ function MapColourLegend(props) {
             &nbsp;
           </td>
           <td style={{ textAlign: "left" }}>
-            0
+            &nbsp;0
           </td>
         </tr>
         {
