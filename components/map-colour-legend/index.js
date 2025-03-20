@@ -3,6 +3,7 @@ import React from "react";
 
 import { usePresentSelector } from "microreact-viewer/utils/hooks.js";
 import regionColoursSelector from "../../selectors/maps/regions-colours.js";
+import entryLabelsSelector from "../../selectors/config/entry-labels.js";
 
 import Component from "./component.js";
 
@@ -15,10 +16,18 @@ function MapColourLegend(props) {
     return state.maps[props.mapId].regionsColourScale;
   });
 
+  const regionsColourMethod = usePresentSelector((state) => {
+    return state.maps[props.mapId].regionsColourMethod;
+  });
+
+  const entryLabels = usePresentSelector(entryLabelsSelector);
+
   return (
     <Component
-      regionsColourScale={regionsColourScale}
       colourLegendEntries={regionColours.legendEntries}
+      entryLabels={entryLabels}
+      regionsColourMethod={regionsColourMethod}
+      regionsColourScale={regionsColourScale}
     />
   );
 }

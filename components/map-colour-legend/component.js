@@ -108,16 +108,28 @@ function MapColourLegend(props) {
       role="presentation"
       className="mr-legend-table"
     >
-      {/* <thead style={{ height: "16px" }}>
+      <thead style={{ height: "16px" }}>
         <tr>
-          <td
-            colSpan="2"
-            title="Region Colour"
-          >
-            # entries
+          <td colSpan="2">
+            {
+              props.regionsColourMethod === "entries" && (
+                <React.Fragment>
+                  Number of <br /> { props.entryLabels[1] }
+                </React.Fragment>
+              )
+            }
+
+            {
+              props.regionsColourMethod === "proportion" && (
+                <React.Fragment>
+                  Proportion <br /> of { props.entryLabels[1] }
+                </React.Fragment>
+              )
+            }
+
           </td>
         </tr>
-      </thead> */}
+      </thead>
       <tbody style={{ height: "calc(100% - 16px)" }}>
         <tr>
           <td
@@ -164,8 +176,10 @@ function MapColourLegend(props) {
 MapColourLegend.displayName = "MapLegend";
 
 MapColourLegend.propTypes = {
-  regionsColourScale: PropTypes.string.isRequired,
   colourLegendEntries: PropTypes.array.isRequired,
+  entryLabels: PropTypes.array.isRequired,
+  regionsColourMethod: PropTypes.string.isRequired,
+  regionsColourScale: PropTypes.string.isRequired,
 };
 
 export default MapColourLegend;
