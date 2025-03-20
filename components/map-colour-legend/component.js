@@ -51,22 +51,27 @@ function renderStep(stepIndex, step, allSteps) {
   if (stepIndex === 0) {
     return (
       <td style={{ textAlign: "left" }}>
-        &nbsp;≤{toNumber(step.value)}
+        &nbsp;≤&nbsp;{toNumber(step.value)}
       </td>
     );
   }
   if (stepIndex === allSteps.length - 1) {
     return (
       <td style={{ textAlign: "left" }}>
-        &nbsp;≥{toNumber(step.value)}
+        &nbsp;≥&nbsp;{toNumber(step.value)}
       </td>
     );
   }
   return (
     <td style={{ textAlign: "left" }}>
-      &nbsp;{toNumber(allSteps[stepIndex - 1].value)} - {toNumber(step.value)}
+      &nbsp;≤&nbsp;{toNumber(allSteps[stepIndex].value)}
     </td>
   );
+  // return (
+  //   <td style={{ textAlign: "left" }}>
+  //     &nbsp;{toNumber(allSteps[stepIndex - 1].value)} - {toNumber(step.value - 1)}
+  //   </td>
+  // );
 }
 
 function renderBins(regionColourLegendItems) {
@@ -80,7 +85,6 @@ function renderBins(regionColourLegendItems) {
                 style={
                   {
                     background: `${item.colour}`,
-                    minWidth: "8px",
                   }
                 }
               >
