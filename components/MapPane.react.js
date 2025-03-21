@@ -143,7 +143,7 @@ class MapPane extends React.PureComponent {
       // https://github.com/visgl/react-map-gl/blob/2b32363feb181e614eb02edf13628ba8e88b7a1f/examples/zoom-to-bounds/src/app.tsx#L28
       this.reactMapRef.current.fitBounds(
         props.viewport.bounds,
-        { padding: 40, duration: 1000 },
+        { padding: props.viewport.padding ?? 40, duration: 1000 },
       );
     }
   }
