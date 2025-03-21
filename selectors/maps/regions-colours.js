@@ -158,7 +158,7 @@ const regionColoursSelector = createKeyedStateSelector(
       if (regionsColourScale === "binned") {
         // const colorRange = colourPalette.entries;
         const colorRange = [
-          "#f7fcfd",
+          // "#f7fcfd",
           "#e0ecf4",
           "#bfd3e6",
           "#9ebcda",
@@ -166,7 +166,7 @@ const regionColoursSelector = createKeyedStateSelector(
           "#8c6bb1",
           "#88419d",
           "#810f7c",
-          "#4d004b",
+          "black",
         ];
         // const colorRange = [
         //   "grey",
@@ -185,8 +185,8 @@ const regionColoursSelector = createKeyedStateSelector(
         }
         else {
           domain = [
-            // 1,
-            10,
+            1,
+            // 10,
             50,
             100,
             500,
@@ -196,9 +196,11 @@ const regionColoursSelector = createKeyedStateSelector(
             50000,
           ];
         }
+        const [ _, ...scaledDomain ] = domain;
         colourGetter = scaleThreshold()
-          .domain(domain)
+          .domain(scaledDomain)
           .range(colorRange);
+
       }
       else {
         domain = domainExtent;
@@ -209,6 +211,12 @@ const regionColoursSelector = createKeyedStateSelector(
         colourGetter = scaleLinear()
           .domain(domain)
           .range(range);
+        for (const value of domain) {
+          legendEntries.push({
+            "value": hasProportions ? `${value}%` : value,
+            "colour": colourGetter(value),
+          });
+        }
       }
 
       for (const value of domain) {
