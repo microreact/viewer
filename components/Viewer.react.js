@@ -2,12 +2,12 @@
 import Paper from "@mui/material/Paper";
 import PropTypes from "prop-types";
 import React from "react";
-import { GlobalHotKeys } from "react-hotkeys";
+// import { GlobalHotKeys } from "react-hotkeys";
 import clsx from "clsx";
 
 // import "../styles/viewer.css";
 
-import { keyMap } from "../utils/shortcuts";
+// import { keyMap } from "../utils/shortcuts";
 import { nextFrame } from "../utils/browser";
 import { clearCache } from "../utils/state";
 import { emptyObject } from "../constants";
@@ -60,12 +60,15 @@ class Viewer extends React.PureComponent {
 
   renderViewerContent() {
     const { props } = this;
+    // return props.children;
     return (
       <React.Fragment>
+        {/*
         <GlobalHotKeys
           keyMap={keyMap}
           handlers={this.handlers}
         />
+        */}
 
         <HeaderBar
           appendNavButtons={props.slots.appendNavButtons}
