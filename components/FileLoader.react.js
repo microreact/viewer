@@ -10,7 +10,7 @@ class FileLoader extends React.PureComponent {
 
   state = {
     bytesUsed: 0,
-  }
+  };
 
   componentDidMount() {
     const { props } = this;
