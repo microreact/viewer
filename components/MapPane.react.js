@@ -74,7 +74,7 @@ const InteractiveMap = React.memo(
 InteractiveMap.displayName = "InteractiveMap";
 
 InteractiveMap.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   height: PropTypes.number.isRequired,
   hideScaleControl: PropTypes.bool,
   mapboxApiAccessToken: PropTypes.string.isRequired,
