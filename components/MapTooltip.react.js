@@ -17,16 +17,17 @@ const MapTooltip = React.memo(
         if (key === "ISO 3166-1 alpha-2") {
           properties.push(
             <div key={key}>
-              Name: <strong>{countryCodeToName(props.region.properties[key])}</strong>
+              <strong>{countryCodeToName(props.region.properties[key])}</strong> ({props.region.properties[key]})
             </div>
           );
         }
-
-        properties.push(
-          <div key={key}>
-            {key}: <strong>{props.region.properties[key]}</strong>
-          </div>
-        );
+        else {
+          properties.push(
+            <div key={key}>
+              {key}: <strong>{props.region.properties[key]}</strong>
+            </div>
+          );
+        }
       }
 
       const numberOfRowsInRegion = props.rowsByRegion[props.region.properties["mr-region-id"]].length;
@@ -37,7 +38,7 @@ const MapTooltip = React.memo(
       }
       else if (numberOfRowsInRegion !== totalRowCountInRegion) {
         labels.push(
-          <div>
+          <div key="count">
             <strong>{ numberOfRowsInRegion }</strong>
             { " out of " }
             <strong>{ totalRowCountInRegion }</strong>
@@ -51,7 +52,7 @@ const MapTooltip = React.memo(
       }
       else {
         labels.push(
-          <div>
+          <div key="count">
             <strong>{ totalRowCountInRegion }</strong> { (totalRowCountInRegion === 1) ? props.entryLabels[0] : props.entryLabels[1] }
           </div>
         );
