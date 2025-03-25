@@ -155,7 +155,7 @@ function MapColourLegend(props) {
           <td
             style={
               {
-                background: "#d3d3d3",
+                background: "#aaaaaa",
                 minWidth: "8px",
               }
             }
