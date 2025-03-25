@@ -166,7 +166,7 @@ const regionColoursSelector = createKeyedStateSelector(
           "#8c6bb1",
           "#88419d",
           "#810f7c",
-          "black",
+          "#4d004b",
         ];
         // const colorRange = [
         //   "grey",
