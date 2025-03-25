@@ -43,21 +43,27 @@ const DataColumnFilterByValues = React.memo(
           )
         }
       >
-        <Divider />
-        <Box
-          alignItems="center"
-          display="flex"
-          flexDirection="row-reverse"
-          justifyContent="space-between"
-        >
-          <Button
-            color="primary"
-            disabled={selectedValues.length === 0}
-            onClick={() => props.onColumnFilterChange(null)}
-          >
-            Clear
-          </Button>
-        </Box>
+        {
+          !props.disableClear && (
+            <React.Fragment>
+              <Divider />
+              <Box
+                alignItems="center"
+                display="flex"
+                flexDirection="row-reverse"
+                justifyContent="space-between"
+              >
+                <Button
+                  color="primary"
+                  disabled={selectedValues.length === 0}
+                  onClick={() => props.onColumnFilterChange(null)}
+                >
+                  Clear
+                </Button>
+              </Box>
+            </React.Fragment>
+          )
+        }
       </UiFloatingFilter>
     );
   }
@@ -66,6 +72,7 @@ const DataColumnFilterByValues = React.memo(
 DataColumnFilterByValues.displayName = "DataColumnFilterByValues";
 
 DataColumnFilterByValues.propTypes = {
+  disableClear: PropTypes.bool,
   filter: DataFilter,
   height: PropTypes.number,
   onColumnFilterChange: PropTypes.func.isRequired,
