@@ -23,6 +23,10 @@ import mapStateSelector from "./map-state";
 import rowsByRegionSelector from "./rows-by-region";
 import totalRowCountByRegionSelector from "./total-row-count-by-region";
 
+function formatNumber(number) {
+  return number.toString().replace(/000$/g, "k");
+}
+
 const regionsColourPaletteSelector = (state, mapId) => {
   const mapState = mapStateSelector(state, mapId);
   return colourPaletteByNameSelector(state, mapState.regionsColourPalette);
@@ -200,7 +204,25 @@ const regionColoursSelector = createKeyedStateSelector(
         colourGetter = scaleThreshold()
           .domain(scaledDomain)
           .range(colorRange);
-
+        for (let index = 0; index < domain.length - 1; index++) {
+          const value1 = domain[index];
+          const value2 = domain[index + 1];
+          legendEntries.push({
+            "value": hasProportions ? `${value1}% - ${value2}%` : `${formatNumber(value1)} - ${formatNumber(value2)}`,
+            "colour": colourGetter(value1),
+          });
+        }
+        const value = domain[domain.length - 1];
+        legendEntries.push({
+          "value": hasProportions ? `${value}%+` : `${formatNumber(value)}+`,
+          "colour": colourGetter(value),
+        });
+        // for (const value of domain) {
+        //   legendEntries.push({
+        //     "value": hasProportions ? `${value}%` : `${value}`,
+        //     "colour": colourGetter(value),
+        //   });
+        // }
       }
       else {
         domain = domainExtent;
@@ -217,13 +239,6 @@ const regionColoursSelector = createKeyedStateSelector(
             "colour": colourGetter(value),
           });
         }
-      }
-
-      for (const value of domain) {
-        legendEntries.push({
-          "value": hasProportions ? `${value}%` : value,
-          "colour": colourGetter(value),
-        });
       }
 
       // const colorRange = [
