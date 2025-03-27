@@ -1,6 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Popup } from "react-map-gl";
+import { sum } from "d3-array";
+
 import { countryCodeToName } from "../utils/maps";
 import { calculatePercentage } from "../utils/number";
 
@@ -30,7 +32,10 @@ const MapTooltip = React.memo(
         }
       }
 
-      const numberOfRowsInRegion = props.rowsByRegion[props.region.properties["mr-region-id"]].length;
+      const numberOfRowsInRegion = sum(
+        props.rowsByRegion[props.region.properties["mr-region-id"]],
+        (x) => x["--mr-scalar"] ?? 1,
+      );
       const totalRowCountInRegion = props.totalRowCountByRegion[props.region.properties["mr-region-id"]];
       const labels = [];
       if (totalRowCountInRegion === 0) {

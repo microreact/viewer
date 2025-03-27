@@ -1,4 +1,5 @@
 import GeoJsonPolygonLookup from "geojson-geometries-lookup";
+import { sum } from "d3-array";
 
 import { createKeyedStateSelector } from "../../utils/state";
 
@@ -41,7 +42,10 @@ const totalRowCountByRegionSelector = createKeyedStateSelector(
         });
 
         for (const feature of collection.features) {
-          rowCountByRegion[feature.properties["mr-region-id"]] += marker.rows.length;
+          rowCountByRegion[feature.properties["mr-region-id"]] += sum(
+            marker.rows,
+            (x) => x["--mr-scalar"] ?? 1,
+          );
         }
       }
     }
@@ -49,17 +53,20 @@ const totalRowCountByRegionSelector = createKeyedStateSelector(
       const geodataLinkDataField = dataColumnsByFieldMap.get(geodata.linkField);
       if (geodata.linkField && geodata.linkPropertyName && geodataLinkDataField) {
         // Group data rows by geodata linked column to speed up lookups
-        const rowsByLinkedColumn = {};
+        const rowCountByLinkedColumn = {};
         for (const row of allRows) {
           const value = row[geodataLinkDataField.name];
-          rowsByLinkedColumn[value] ??= [];
-          rowsByLinkedColumn[value].push(row);
+          rowCountByLinkedColumn[value] = (
+            (rowCountByLinkedColumn[value] ?? 0)
+            +
+            (row["--mr-scalar"] ?? 1)
+          );
         }
 
         for (const feature of geojson.features) {
           const propertyValue = feature.properties[geodata.linkPropertyName];
 
-          rowCountByRegion[feature.properties["mr-region-id"]] = rowsByLinkedColumn[propertyValue]?.length ?? 0;
+          rowCountByRegion[feature.properties["mr-region-id"]] = rowCountByLinkedColumn[propertyValue] ?? 0;
         }
       }
     }
