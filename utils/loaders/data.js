@@ -78,6 +78,7 @@ export async function loadCsvFile(fileBlobOrUrl, settings, onProgress) {
           row[key] = cleanUpFalsyCsvValue(row[key]);
         }
         rows.push(row);
+        settings?.transform?.(row);
         index += 1;
       }
     }
