@@ -38,7 +38,6 @@ export async function loadCsvFile(fileBlobOrUrl, settings, onProgress) {
   };
 
   let rows;
-
   if (settings?.aggregate) {
     const groups = {};
     let index = 1;
