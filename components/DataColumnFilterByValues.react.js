@@ -4,8 +4,8 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 
-import { DataFilter } from "../utils/prop-types";
 import { emptyArray } from "../constants";
+import { DataFilter } from "../utils/prop-types";
 
 import UiSelectList from "./UiSelectList.react";
 import UiFloatingFilter from "./UiFloatingFilter.react";
@@ -16,12 +16,14 @@ const DataColumnFilterByValues = React.memo(
     const selectedValues = valuesFilter ? valuesFilter.value : emptyArray;
     return (
       <UiFloatingFilter
+        disabled={props.disableFilter}
         items={props.uniqueValues}
         label="Search"
         valueGetter={(x) => x.label?.toString()?.toLowerCase()}
         renderItems= {
           (items) => (
             <UiSelectList
+              disableSelectAll={props.disableSelectAll}
               items={items}
               onChange={
                 (selection) => {
@@ -73,6 +75,8 @@ DataColumnFilterByValues.displayName = "DataColumnFilterByValues";
 
 DataColumnFilterByValues.propTypes = {
   disableClear: PropTypes.bool,
+  disableFilter: PropTypes.bool,
+  disableSelectAll: PropTypes.bool,
   filter: DataFilter,
   height: PropTypes.number,
   onColumnFilterChange: PropTypes.func.isRequired,
