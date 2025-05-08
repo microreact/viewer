@@ -6,19 +6,16 @@ import paneSizeSelector from "../panes/pane-size";
 import laneFieldSelector from "./lane-field";
 import filteredRangeUnitSelector from "./filtered-range-unit";
 import coloursDataColumnSelector from "../styles/colours-data-column";
-import defaults from "../../defaults.js";
 
 const chartSpecSelector = createKeyedStateSelector(
-  (_state, _timelineId, theme) => theme?.typography?.body1?.fontFamily || defaults.theme.fonts.body,
   (state, timelineId) => filteredRangeUnitSelector(state, timelineId),
   (state, timelineId) => state.timelines[timelineId].style,
   (state, timelineId) => state.timelines[timelineId].nodeSize,
   (state, timelineId) => laneFieldSelector(state, timelineId),
   (state, timelineId) => paneSizeSelector(state, timelineId),
-  (state) => configSelector(state).fontFamily,
+  (state) => configSelector(state).theme.fonts.body,
   (state) => coloursDataColumnSelector(state),
   (
-    fontStack,
     unit,
     style,
     nodeSize,
@@ -48,23 +45,6 @@ const chartSpecSelector = createKeyedStateSelector(
         view: {
           stroke: "transparent",
         },
-        font: fontStack,
-        title: {
-          font: fontStack,
-        },
-        axis: {
-          labelFont: fontStack,
-          titleFont: fontStack,
-        },
-        legend: {
-          labelFont: fontStack,
-          titleFont: fontStack,
-        },
-        tooltip: {
-          font: fontStack,
-          labelFont: fontStack,
-          titleFont: fontStack,
-        }
       },
       data: { name: "dataset" },
       mark: "bar",

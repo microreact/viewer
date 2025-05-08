@@ -1,15 +1,12 @@
-import defaults from "../../defaults.js";
 import { createKeyedStateSelector } from "../../utils/state";
 
 import configSelector from "../config";
 import paneSizeSelector from "../panes/pane-size";
 
 const fullRangeChartSpecSelector = createKeyedStateSelector(
-  (_state, _timelineId, theme) => theme?.typography?.body1?.fontFamily || defaults.theme.fonts.body,
   (state, timelineId) => paneSizeSelector(state, timelineId),
   (state) => configSelector(state),
   (
-    fontStack,
     size,
     defaults,
   ) => {
@@ -26,21 +23,9 @@ const fullRangeChartSpecSelector = createKeyedStateSelector(
         view: {
           stroke: "transparent",
         },
-        font: fontStack,
-        title: {
-          font: fontStack,
-        },
         axis: {
-          labelFont: fontStack,
-          titleFont: fontStack,
+          labelFont: defaults.theme.fonts.body,
         },
-        legend: {
-          labelFont: fontStack,
-          titleFont: fontStack,
-        },
-        tooltip: {
-          font: fontStack,
-        }
       },
       encoding: {
         x: {

@@ -46,7 +46,7 @@ function HeatmapChart(props) {
 
       return fields;
     },
-    [rawSeriesFields],
+    [dataColumnsByFieldMap, rawSeriesFields],
   );
 
   const categoriesField = useChartStateSelector(

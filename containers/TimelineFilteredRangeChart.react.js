@@ -10,13 +10,13 @@ const onParseError = (err) => console.error("Timeline", err);
 
 const handler = new Handler({ theme: "timeline" });
 
-const mapStateToProps = (state, { timelineId, theme }) => {
+const mapStateToProps = (state, { timelineId }) => {
   return {
     className: "mr-timeline-filtered-range-chart",
     data: filteredRangeChartDataSelector(state, timelineId),
     onError,
     onParseError,
-    spec: filteredRangeChartSpecSelector(state, timelineId, theme),
+    spec: filteredRangeChartSpecSelector(state, timelineId),
     tooltip: handler.call,
   };
 };

@@ -47,7 +47,6 @@ const nodeStylesSelector = createKeyedStateSelector(
 
 const phylocanvasPropsSelector = createKeyedStateSelector(
   (_, treeId) => treeId,
-  (_state, _treeId, theme) => theme,
   (state, treeId) => treeFileSelector(state, treeId)?._content,
   (state, treeId) => state.trees[treeId],
   (state, treeId) => nodeStylesSelector(state, treeId),
@@ -59,7 +58,6 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
   (state) => configSelector(state),
   (
     treeId,
-    theme,
     treeFileContent,
     phylocanvasProps,
     styles,
@@ -81,7 +79,7 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
       blocks: metadataBlocks,
       branchLengthsDigits: phylocanvasProps.roundBranchLengths ? phylocanvasProps.branchLengthsDigits : 0,
       branchLengthsFormat: phylocanvasProps.roundBranchLengths ? "decimal" : "scientific",
-      fontFamily: theme?.typography?.body1?.fontFamily || defaults?.theme?.fonts?.body,
+      fontFamily: defaults?.theme?.fonts?.body,
       id: treeId,
       interactive: true,
       internalLabelsFilterRange: phylocanvasProps.filterInternalLabels ? phylocanvasProps.internalLabelsFilterRange : undefined,
@@ -95,7 +93,7 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
       size,
       source,
       strokeColour: "#222",
-      highlightColour: theme?.palette?.primary?.main || defaults?.theme?.primary?.main,
+      highlightColour: defaults?.theme?.primary?.main,
       styles,
     };
   },
