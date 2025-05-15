@@ -23,7 +23,7 @@
 /*#region Expanded legend */
 
 .mr-map-legend {
-  background-color: hsla(0,0%,100%,.75);
+  background-color: hsla(0,0%,100%,.84);
   border-radius: 8px;
   bottom: 56px;
   max-height: calc(100% - 80px);

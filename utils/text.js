@@ -27,7 +27,7 @@ export function measureWidth(text, fontSize = 14, strong = false) {
   const weight = strong ? 700 : 400;
   context ??= createContext();
   // set fallback font
-  context.font = "400 14px Open Sans, Helvetica, Arial, sans-serif";
+  context.font = "400 14px Open Sans Variable, Helvetica, Arial, sans-serif";
   const fontFamily = getCssVariable("--body-font");
   context.font = `${weight} ${fontSize}px ${fontFamily}`;
   const textMetrics = context.measureText(text);

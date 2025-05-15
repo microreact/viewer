@@ -35,6 +35,7 @@ const mapStyles = [
 
 const colourMethods = [
   { value: "entries", label: "Number of entries" },
+  { value: "proportion", label: "Proportion of entries" },
 
   { value: "unique", label: "Number of unique values in a column" },
   { value: "value", label: "Number of specific values in a column" },

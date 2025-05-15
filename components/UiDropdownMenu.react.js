@@ -22,7 +22,7 @@ const UiDropdownMenu = React.memo(
           ...props.buttonProps,
         }}
         className="mr-ui-dropdown-menu"
-        direction="right"
+        direction={props.direction ?? "right"}
         disableCloseButton
         hideOnClick={props.hideOnClick}
       >
