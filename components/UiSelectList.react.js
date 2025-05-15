@@ -49,6 +49,7 @@ class UiSelectList extends React.PureComponent {
               props.value,
               [ item[props.valueProperty] ],
             ),
+            [ item[props.valueProperty] ],
           )
         }
         role={undefined}
