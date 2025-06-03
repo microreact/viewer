@@ -140,17 +140,25 @@ const regionColoursSelector = createKeyedStateSelector(
           if (showProportions) {
             const value = regionRows.length;
             const total = totalRowCountByRegion[regionId];
+            valuesByRegionId[regionId] = value;
             if (value !== total) {
               hasProportions = true;
-              valuesByRegionId[regionId] = (value / total) * 100;
-            }
-            else {
-              valuesByRegionId[regionId] = value;
+              break;
             }
           }
           else {
             const value = regionValueFunction(regionRows);
             valuesByRegionId[regionId] = value;
+          }
+        }
+      }
+
+      if (hasProportions) {
+        for (const [ regionId, regionRows ] of Object.entries(rowsByRegion)) {
+          if (regionRows.length) {
+            const value = regionRows.length;
+            const total = totalRowCountByRegion[regionId];
+            valuesByRegionId[regionId] = (value / total) * 100;
           }
         }
       }
@@ -214,7 +222,7 @@ const regionColoursSelector = createKeyedStateSelector(
         }
         const value = domain[domain.length - 1];
         legendEntries.push({
-          "value": hasProportions ? `${value}%+` : `${formatNumber(value)}+`,
+          "value": hasProportions ? `${value}%${value < 100 ? "+" : ""}` : `${formatNumber(value)}+`,
           "colour": colourGetter(value),
         });
         // for (const value of domain) {
