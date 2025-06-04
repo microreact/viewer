@@ -225,6 +225,20 @@ const reducer = (state = initialState, action) => {
       };
     }
 
+    case "MICROREACT VIEWER/RESET FIELDS FILTER": {
+      const dataFilters = [ ...state.dataFilters ];
+      for (const field of action.payload) {
+        const index = dataFilters.findIndex((x) => x.field === field);
+        if (index >= 0) {
+          dataFilters.splice(index, 1);
+        }
+      }
+      return {
+        ...state,
+        dataFilters,
+      };
+    }
+
     case "MICROREACT VIEWER/SET SEARCH OPERATOR": {
       return {
         ...state,

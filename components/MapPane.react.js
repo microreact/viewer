@@ -6,7 +6,6 @@ import debounce from "lodash.debounce";
 
 // import "../styles/map-pane.css";
 
-import ZoomControls from "./ZoomControls.react";
 import MapMarkersLayer from "../containers/MapMarkersLayer.react";
 import MapLassoOverlay from "../containers/MapLassoLayer.react";
 import MapControls from "../containers/MapControls.react";
@@ -18,6 +17,7 @@ import { downloadDataUrl } from "../utils/downloads";
 import { MapboxStyle, MapMarker, ReactRef } from "../utils/prop-types";
 import * as HtmlUtils from "../utils/html";
 import { subscribe } from "../utils/events";
+import ZoomControls from "./ZoomControls.react";
 
 const interactiveLayerIds = [ "mr-geojson-layer" ];
 
@@ -64,6 +64,8 @@ const InteractiveMap = React.memo(
           !props.hideScaleControl && (<ScaleControl />)
         }
 
+        { props.children }
+
       </ReactMapGL>
     );
   }
@@ -72,6 +74,7 @@ const InteractiveMap = React.memo(
 InteractiveMap.displayName = "InteractiveMap";
 
 InteractiveMap.propTypes = {
+  children: PropTypes.node,
   height: PropTypes.number.isRequired,
   hideScaleControl: PropTypes.bool,
   mapboxApiAccessToken: PropTypes.string.isRequired,
@@ -135,6 +138,14 @@ class MapPane extends React.PureComponent {
     if (props.trackViewport && props.trackViewport !== prevProps.trackViewport) {
       this.handleViewportFilter();
     }
+
+    if (props.viewport !== prevProps.viewport && props.viewport.bounds) {
+      // https://github.com/visgl/react-map-gl/blob/2b32363feb181e614eb02edf13628ba8e88b7a1f/examples/zoom-to-bounds/src/app.tsx#L28
+      this.reactMapRef.current.fitBounds(
+        props.viewport.bounds,
+        { padding: props.viewport.padding ?? 40, duration: 1000 },
+      );
+    }
   }
 
   findMarkerAtPoint(point) {
@@ -193,8 +204,8 @@ class MapPane extends React.PureComponent {
           this.setState({
             hover: {
               marker,
-              x: event.originalEvent.offsetX,
-              y: event.originalEvent.offsetY,
+              longitude: event.lngLat.lng,
+              latitude: event.lngLat.lat,
             },
           });
         }
@@ -209,8 +220,10 @@ class MapPane extends React.PureComponent {
           this.setState({
             hover: {
               region,
-              x: event.originalEvent.offsetX,
-              y: event.originalEvent.offsetY,
+              // x: event.originalEvent.offsetX,
+              // y: event.originalEvent.offsetY,
+              longitude: event.lngLat.lng,
+              latitude: event.lngLat.lat,
             },
           });
         }
@@ -218,6 +231,10 @@ class MapPane extends React.PureComponent {
       }
     }
 
+    this.handleResetHover();
+  };
+
+  handleResetHover = () => {
     if (this.state.hover) {
       this.setState({ hover: null });
     }
@@ -294,7 +311,10 @@ class MapPane extends React.PureComponent {
       return (
         <MapTooltip
           mapId={this.props.mapId}
-          {...state.hover}
+          marker={state.hover.marker}
+          region={state.hover.region}
+          longitude={state.hover.longitude}
+          latitude={state.hover.latitude}
         />
       );
     }
@@ -311,6 +331,7 @@ class MapPane extends React.PureComponent {
       <div
         className={state.hover ? "mr-map mr-hovered" : "mr-map"}
         ref={this.elementRef}
+        onMouseLeave={this.handleResetHover}
       >
         <InteractiveMap
           height={props.height}
@@ -328,9 +349,11 @@ class MapPane extends React.PureComponent {
           width={props.width}
           // markersOverlayRef={this.markersOverlayRef}
           // lassoOverlayRef={this.lassoOverlayRef}
-        />
+        >
 
         { this.renderTooltip() }
+
+        </InteractiveMap>
 
         {
           props.hasLegend && (

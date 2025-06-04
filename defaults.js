@@ -49,8 +49,8 @@ export default {
       contrast: "#000000",
     },
     fonts: {
-      headline: `"Space Grotesk", "Helvetica", "Arial", sans-serif`,
-      body: `"Open Sans", "Helvetica", "Arial", sans-serif`,
+      headline: `"Space Grotesk Variable", "Helvetica", "Arial", sans-serif`,
+      body: `"Open Sans Variable", "Helvetica", "Arial", sans-serif`,
     },
   },
 

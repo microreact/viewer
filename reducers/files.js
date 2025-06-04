@@ -37,6 +37,7 @@ const reducer = (state = initialState, action) => {
             size: file.size,
             type: file.type,
             url: file.url,
+            settings: file.settings,
           };
         }
       }
