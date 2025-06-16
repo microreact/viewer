@@ -1,5 +1,20 @@
 import iso3166Codes from "microreact-data/iso-3166-codes";
 
+const regionNamesInEnglish = new Intl.DisplayNames(
+  ["en"],
+  { type: "region" },
+);
+
+// export function createCountryCodeToNameConvertor() {
+//   return (code) => regionNamesInEnglish.of(code).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+// }
+
+export function countryCodeToName(code) {
+  // const convertor = createCountryCodeToNameConvertor();
+  // return convertor(code);
+  return regionNamesInEnglish.of(code).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 const codes = new Map();
 
 for (const row of iso3166Codes) {
@@ -10,7 +25,7 @@ for (const row of iso3166Codes) {
         row[1],
         row[2],
       ],
-      row[3],
+      row[0].length === 2 ? countryCodeToName(row[0]) : row[3],
     ]
   );
 }

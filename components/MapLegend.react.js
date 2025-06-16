@@ -5,6 +5,7 @@ import React from "react";
 
 // import "../styles/map-legend.css";
 import { DataColumn } from "../utils/prop-types";
+import MapColourLegend from "./map-colour-legend/index.js";
 
 function toNumber(value) {
   if (value?.toFixed) {
@@ -158,48 +159,9 @@ class MapLegend extends React.PureComponent {
               {
                 props.hasRegionColourLegend && (
                   <td>
-                    <table
-                      role="presentation"
-                      className="mr-legend-table"
-                    >
-                      <thead style={{ height: "16px" }}>
-                        <tr>
-                          <td
-                            colSpan="2"
-                            title="Region Colour"
-                          >
-                            { props.scaleMarkersDataField ? props.scaleMarkersDataField.name : "# entries" }
-                          </td>
-                        </tr>
-                      </thead>
-                      <tbody style={{ height: "calc(100% - 16px)" }}>
-                        <tr>
-                          <td
-                            style={
-                              {
-                                background: `linear-gradient(${props.regionColourLegendItems[0]?.colour}, ${props.regionColourLegendItems[props.regionColourLegendItems.length - 1]?.colour})`,
-                                minWidth: "8px",
-                              }
-                            }
-                            rowSpan="2"
-                          >
-                            &nbsp;
-                          </td>
-                          <td
-                            style={{ verticalAlign: "top", textAlign: "left" }}
-                          >
-                            &nbsp;{toNumber(props.regionColourLegendItems[0]?.value)}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td
-                            style={{ verticalAlign: "bottom", textAlign: "left" }}
-                          >
-                            &nbsp;{toNumber(props.regionColourLegendItems[props.regionColourLegendItems.length - 1]?.value)}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
+                    <MapColourLegend
+                      mapId={props.mapId}
+                    />
                   </td>
                 )
               }
@@ -223,6 +185,7 @@ MapLegend.propTypes = {
   onSelectRows: PropTypes.func.isRequired,
   regionColourLegendItems: PropTypes.array,
   scaleMarkersDataField: DataColumn,
+  mapId: PropTypes.string.isRequired,
 };
 
 export default MapLegend;

@@ -1,5 +1,3 @@
-import { connect } from "react-redux";
-
 import { selectRows } from "../actions/filters";
 import { update } from "../actions/maps";
 
@@ -10,7 +8,6 @@ import minScaledMarkerNodeSelector from "../selectors/maps/min-scaled-marker-siz
 import MapLegend from "../components/MapLegend.react";
 import scaleMarkersFieldSelector from "../selectors/maps/scale-markers-field";
 import markersLayerDataSelector from "../selectors/maps/markers-layer-data";
-import regionColourLegendItemsSelector from "../selectors/maps/region-colour-legend-items";
 import hasMarkerSizeLegendSelector from "../selectors/maps/has-marker-size-legend";
 import hasRegionColourLegendSelector from "../selectors/maps/has-region-colour-legend";
 import { connectToPresentState } from "../utils/state";
@@ -27,7 +24,6 @@ const mapStateToProps = (state, { mapId }) => {
     maxScaledMarkerSize: maxScaledMarkerRadiusSelector(state, mapId),
     minScaledMarkerSize: minScaledMarkerNodeSelector(state, mapId),
     nodeSize: mapState.nodeSize,
-    regionColourLegendItems: hasRegionColourLegend ? regionColourLegendItemsSelector(state, mapId) : null,
     scaleMarkersDataField: scaleMarkersFieldSelector(state, mapId),
   };
 };

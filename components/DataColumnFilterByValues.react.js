@@ -4,11 +4,11 @@ import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
 
+import { emptyArray } from "../constants";
 import { DataFilter } from "../utils/prop-types";
+
 import UiSelectList from "./UiSelectList.react";
 import UiFloatingFilter from "./UiFloatingFilter.react";
-
-import { emptyArray } from "../constants";
 
 const DataColumnFilterByValues = React.memo(
   (props) => {
@@ -16,12 +16,14 @@ const DataColumnFilterByValues = React.memo(
     const selectedValues = valuesFilter ? valuesFilter.value : emptyArray;
     return (
       <UiFloatingFilter
+        disabled={props.disableFilter}
         items={props.uniqueValues}
         label="Search"
         valueGetter={(x) => x.label?.toString()?.toLowerCase()}
         renderItems= {
           (items) => (
             <UiSelectList
+              disableSelectAll={props.disableSelectAll}
               items={items}
               onChange={
                 (selection) => {
@@ -43,21 +45,27 @@ const DataColumnFilterByValues = React.memo(
           )
         }
       >
-        <Divider />
-        <Box
-          alignItems="center"
-          display="flex"
-          flexDirection="row-reverse"
-          justifyContent="space-between"
-        >
-          <Button
-            color="primary"
-            disabled={selectedValues.length === 0}
-            onClick={() => props.onColumnFilterChange(null)}
-          >
-            Clear
-          </Button>
-        </Box>
+        {
+          !props.disableClear && (
+            <React.Fragment>
+              <Divider />
+              <Box
+                alignItems="center"
+                display="flex"
+                flexDirection="row-reverse"
+                justifyContent="space-between"
+              >
+                <Button
+                  color="primary"
+                  disabled={selectedValues.length === 0}
+                  onClick={() => props.onColumnFilterChange(null)}
+                >
+                  Clear
+                </Button>
+              </Box>
+            </React.Fragment>
+          )
+        }
       </UiFloatingFilter>
     );
   }
@@ -66,6 +74,9 @@ const DataColumnFilterByValues = React.memo(
 DataColumnFilterByValues.displayName = "DataColumnFilterByValues";
 
 DataColumnFilterByValues.propTypes = {
+  disableClear: PropTypes.bool,
+  disableFilter: PropTypes.bool,
+  disableSelectAll: PropTypes.bool,
   filter: DataFilter,
   height: PropTypes.number,
   onColumnFilterChange: PropTypes.func.isRequired,

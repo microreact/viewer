@@ -3,10 +3,10 @@ import { extent } from "d3-array";
 
 import { createKeyedStateSelector } from "../../utils/state";
 
-import colourPaletteForFieldSelector from "./colour-palette-for-field";
 import uniqueValuesSelector from "../datasets/unique-values";
 import dataColumnByFieldSelector from "../datasets/data-column-by-field";
 import colourModeForFieldSelector from "./colour-mode-for-field";
+import colourPaletteForFieldSelector from "./colour-palette-for-field";
 
 const discreteValueToColourMapSelector = createKeyedStateSelector(
   (state, field) => colourPaletteForFieldSelector(state, field),

@@ -1,11 +1,10 @@
 import { createSelector } from "reselect";
 
-import idFieldNameSelector from "./id-field-name";
-import mainDatasetConfigSelector from "./main-dataset-config";
-
 import { createFullDataset, mergeBasicDatasets } from "../../utils/datasets";
 import { emptyObject } from "../../constants";
 import { createCombinedStateSelector } from "../../utils/state";
+import idFieldNameSelector from "./id-field-name";
+import mainDatasetConfigSelector from "./main-dataset-config";
 
 const dataFilesKeysSelector = (state) => {
   const keys = [];
@@ -86,6 +85,9 @@ const fullDatasetSelector = createSelector(
         }
         else {
           row["--mr-scalar"] = row["--mr-scalar"] ?? 1;
+        }
+        if (mainDatasetConfig?.transform) {
+          mainDatasetConfig.transform(row);
         }
       }
 

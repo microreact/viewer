@@ -3,11 +3,24 @@
   flex-direction: column;
 }
 
+.mr-ui-select-list .MuiButtonBase-root.MuiListItem-root:hover {
+  background-color: unset;
+}
+
+.mr-ui-select-list.has-groups .MuiListItem-root {
+  padding-left: 16px;
+}
+
 .mr-ui-select-list .MuiListSubheader-root {
   display: flex;
+  line-height: 28px;
+  padding: 0;
+  cursor: pointer;
 }
+
 .mr-ui-select-list .MuiListSubheader-root .MuiListItemText-root {
   margin: 0;
+  flex: 1 1 auto;
 }
 
 .mr-ui-select-list .mr-select-only {
@@ -18,7 +31,7 @@
 
 .mr-ui-select-list .MuiListSubheader-root:hover .mr-select-only,
 .mr-ui-select-list .MuiListItem-root:hover .mr-select-only {
-  display: flex;
+  display: unset;
 }
 
 .mr-ui-select-list .mr-select-all {
