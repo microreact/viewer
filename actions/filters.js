@@ -166,7 +166,7 @@ export const resetAllFilters = () => ({
 export function resetFieldsFilters(fields) {
   return {
     delay: true,
-    label: `Filters: Reset feild filters`,
+    label: `Filters: Reset field filters`,
     group: "Filters/reset",
     payload: fields,
     type: "MICROREACT VIEWER/RESET FIELDS FILTER",
