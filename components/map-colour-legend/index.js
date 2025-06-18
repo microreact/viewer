@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-import { usePresentSelector } from "microreact-viewer/utils/hooks.js";
+import { usePresentSelector } from "../../utils/hooks.js";
 import regionColoursSelector from "../../selectors/maps/regions-colours.js";
 import entryLabelsSelector from "../../selectors/config/entry-labels.js";
 
