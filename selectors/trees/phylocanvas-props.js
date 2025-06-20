@@ -94,6 +94,7 @@ const phylocanvasPropsSelector = createKeyedStateSelector(
       source,
       strokeColour: "#222",
       highlightColour: defaults?.theme?.primary?.main,
+      backgroundColour: [ 255, 255, 255 ],
       styles,
     };
   },
