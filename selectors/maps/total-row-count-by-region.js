@@ -65,8 +65,9 @@ const totalRowCountByRegionSelector = createKeyedStateSelector(
 
         for (const feature of geojson.features) {
           const propertyValue = feature.properties[geodata.linkPropertyName];
-
-          rowCountByRegion[feature.properties["mr-region-id"]] = rowCountByLinkedColumn[propertyValue] ?? 0;
+          if (propertyValue in rowCountByLinkedColumn) {
+            rowCountByRegion[feature.properties["mr-region-id"]] = rowCountByLinkedColumn[propertyValue] ?? 0;
+          }
         }
       }
     }

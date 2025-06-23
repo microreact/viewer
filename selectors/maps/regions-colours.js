@@ -212,6 +212,12 @@ const regionColoursSelector = createKeyedStateSelector(
         colourGetter = scaleThreshold()
           .domain(scaledDomain)
           .range(colorRange);
+        if (Object.keys(valuesByRegionId).length < Object.keys(totalRowCountByRegion).length) {
+          legendEntries.push({
+            "value": hasProportions ? `0%` : `0`,
+            "colour": "#aaaaaa",
+          });
+        }
         for (let index = 0; index < domain.length - 1; index++) {
           const value1 = domain[index];
           const value2 = domain[index + 1];

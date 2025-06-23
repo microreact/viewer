@@ -151,6 +151,7 @@ function MapColourLegend(props) {
             &nbsp;No data
           </td>
         </tr>
+        {/*
         <tr>
           <td
             style={
@@ -166,6 +167,7 @@ function MapColourLegend(props) {
             &nbsp;0
           </td>
         </tr>
+        */}
         {
           props.regionsColourScale === "binned"
             ?

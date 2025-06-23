@@ -36,7 +36,7 @@ const MapTooltip = React.memo(
         props.rowsByRegion[props.region.properties["mr-region-id"]],
         (x) => x["--mr-scalar"] ?? 1,
       );
-      const totalRowCountInRegion = props.totalRowCountByRegion[props.region.properties["mr-region-id"]];
+      const totalRowCountInRegion = props.totalRowCountByRegion[props.region.properties["mr-region-id"]] || 0;
       const labels = [];
       if (totalRowCountInRegion === 0) {
         labels.push(<div key="empty">No data</div>);
