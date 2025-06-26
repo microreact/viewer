@@ -152,11 +152,11 @@ class TreePane extends React.PureComponent {
             onClick={this.handleMenuClose}
           >
               <TreeContextMenu
+                menuPosition={this.state.contextMenuPosition}
                 onAlignLabelsChange={this.props.onAlignLabelsChange}
                 onShowLeafLabelsChange={this.props.onShowLeafLabelsChange}
                 phylocanvasProps={this.props.phylocanvasProps}
                 tree={this.tree}
-                menuPosition={this.state.contextMenuPosition}
                 node={this.state.contextMenuNode}
               />
           </div>
