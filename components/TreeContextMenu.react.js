@@ -136,10 +136,7 @@ const TreeContextMenu = React.memo((props) => {
       <div className="mr-ui-context-menu-item single-action">
         <button
           onClick={
-            () => {
-              tree.setSource(tree.getGraphWithoutLayout().originalSource);
-              tree.selectNode(); // Make all unselected nodes visible
-            }
+            () => tree.setSource(tree.getGraphWithoutLayout().originalSource)
           }
         >
           Redraw Original Tree
