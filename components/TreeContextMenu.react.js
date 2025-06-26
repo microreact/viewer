@@ -106,6 +106,25 @@ const TreeContextMenu = React.memo((props) => {
     );
   }
 
+  if (node && node.isLeaf) {
+    return (
+      <React.Fragment>
+        <div className="mr-ui-context-menu-item single-action">
+          <button
+            onClick={() => tree.pinNode(node)}
+          >
+            { tree.props.pinnedIds?.includes(node.id) ? "Unpin" : "Pin" } Leaf
+          </button>
+        </div>
+
+        <div className="mr-ui-context-menu-divider" />
+
+        { Link }
+
+      </React.Fragment>
+    );
+  }
+
   return (
     <React.Fragment>
       <div
