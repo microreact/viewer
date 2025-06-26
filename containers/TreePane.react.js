@@ -1,4 +1,3 @@
-import { selectRows } from "../actions/filters";
 import {
   selectTreeRows,
   setPhylocanvasProps,
