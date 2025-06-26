@@ -4,7 +4,7 @@ import Menu from "@mui/material/Menu";
 
 import phylocanvasPlugin from "../plugins/phylocanvas";
 import { downloadDataUrl } from "../utils/downloads";
-import { GeometricPoint, TreeType } from "../utils/prop-types";
+import { TreeType } from "../utils/prop-types";
 
 // import "../styles/tree.css";
 import TreeControls from "../containers/TreeControls.react";
