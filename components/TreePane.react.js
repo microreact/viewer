@@ -17,6 +17,10 @@ import TreeLasso from "../containers/TreeLasso";
 // import { triggerEvent } from "../utils/browser";
 // import UiContextMenu from "./UiContextMenu.react";
 
+function handleContextMenu(event) {
+  event.preventDefault();
+}
+
 class TreePane extends React.PureComponent {
 
   state = {};
@@ -84,16 +88,6 @@ class TreePane extends React.PureComponent {
 
   // framerateRef = React.createRef()
 
-  handleContextMenu = (event) => {
-    event.preventDefault();
-    // this.setState({
-    //   contextMenuPosition: {
-    //     left: event.clientX,
-    //     top: event.clientY,
-    //   },
-    // });
-  };
-
   handleMenuClose = () => {
     this.setState({ contextMenuPosition: null });
   };
@@ -146,7 +140,7 @@ class TreePane extends React.PureComponent {
       <div
         className="mr-tree"
         ref={this.canvasRef}
-        onContextMenu={this.handleContextMenu}
+        onContextMenu={handleContextMenu}
       >
         <Menu
           open={!!this.state.contextMenuPosition}
