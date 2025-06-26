@@ -139,8 +139,8 @@ class TreePane extends React.PureComponent {
     return (
       <div
         className="mr-tree"
-        ref={this.canvasRef}
         onContextMenu={handleContextMenu}
+        ref={this.canvasRef}
       >
         <Menu
           open={!!this.state.contextMenuPosition}
