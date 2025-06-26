@@ -143,10 +143,10 @@ class TreePane extends React.PureComponent {
         ref={this.canvasRef}
       >
         <Menu
-          open={!!this.state.contextMenuPosition}
           onClose={this.handleMenuClose}
           anchorReference="anchorPosition"
           anchorPosition={this.state.contextMenuPosition ?? undefined}
+          open={!!this.state.contextMenuPosition}
         >
           <div
             onClick={this.handleMenuClose}
