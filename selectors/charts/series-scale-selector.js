@@ -40,7 +40,7 @@ const seriesScaleSelector = createKeyedStateSelector(
     for (const row of rows) {
       if (!filteredIds || filteredIds.has(row[0])) {
         const value = row[seriesDataColumn.name];
-        uniqueValues.add(value);
+        uniqueValues.add(value.valueOf());
       }
     }
     const uniqueSeriesValues = Array.from(uniqueValues).sort();
@@ -54,7 +54,6 @@ const seriesScaleSelector = createKeyedStateSelector(
       colours = Array.from(colours);
 
     }
-
     return {
       domain: uniqueSeriesValues,
       range: colours,
