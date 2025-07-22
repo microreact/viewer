@@ -17,9 +17,7 @@ data = projectJson;
 
 const App = dynamic(
   () => import("../dev/App"),
-  {
-    ssr: false,
-  },
+  { ssr: false },
 );
 
 export default function Viewer() {
