@@ -25,7 +25,7 @@ export function makePredicate(operator, expression) {
     }
 
     case "in": {
-      return (x) => ((Array.isArray(expression) ? expression : expression.split(",")).includes(x?.valueOf()));
+      return (x) => ((Array.isArray(expression) ? expression : expression.split(",")).includes(x === "" ? null : x?.valueOf()));
     }
 
     case "in-csv": {
