@@ -203,13 +203,13 @@ const reducer = (state = initialState, action) => {
         index = dataFilters.length - 1;
       }
       if (action.payload.operator) {
-        if (action.payload.operator === "in") {
-          for (let valueIndex = 0; valueIndex < action.payload.value.length; valueIndex++) {
-            if (action.payload.value[valueIndex] === null) {
-              action.payload.value[valueIndex] = undefined;
-            }
-          }
-        }
+        // if (action.payload.operator === "in") {
+        //   for (let valueIndex = 0; valueIndex < action.payload.value.length; valueIndex++) {
+        //     if (action.payload.value[valueIndex] === null) {
+        //       action.payload.value[valueIndex] = undefined;
+        //     }
+        //   }
+        // }
         dataFilters[index] = {
           ...dataFilters[index],
           operator: action.payload.operator,

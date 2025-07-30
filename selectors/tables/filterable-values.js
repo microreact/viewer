@@ -63,7 +63,7 @@ const filterableValuesSelector = createKeyedStateSelector(
 
     if (blankCount > 0) {
       items.push({
-        value: undefined,
+        value: null,
         count: blankCount,
         label: "(blank)",
       });
