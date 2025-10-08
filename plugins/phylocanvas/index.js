@@ -1,4 +1,8 @@
-import PhylocanvasGL, { TreeTypes, plugins } from "@phylocanvas/phylocanvas.gl";
+import PhylocanvasGL, {
+  TreeTypes,
+  Defaults,
+  plugins,
+} from "@phylocanvas/phylocanvas.gl";
 
 import convertState from "./convert-state";
 
@@ -178,6 +182,13 @@ export default function (treePane) {
         (pointX * this.getBranchScale()) + root.x,
         (pointY * this.getStepScale()) + root.y,
       ];
+    }
+
+    resetCollapsedNodes() {
+      super.setProps({
+        "collapsedIds": Defaults.collapsedIds,
+      });
+      treePane.props.onAddHistoryEntry("Reset collapsed nodes");
     }
 
     // Moved to componentDidMount to avoid updating the store when tree loads
