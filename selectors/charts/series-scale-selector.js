@@ -40,7 +40,9 @@ const seriesScaleSelector = createKeyedStateSelector(
     for (const row of rows) {
       if (!filteredIds || filteredIds.has(row[0])) {
         const value = row[seriesDataColumn.name];
-        uniqueValues.add(value.valueOf());
+        if (value !== null) {
+          uniqueValues.add(value.valueOf());
+        }
       }
     }
     const uniqueSeriesValues = Array.from(uniqueValues).sort();
