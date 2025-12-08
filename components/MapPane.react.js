@@ -149,11 +149,13 @@ class MapPane extends React.PureComponent {
   }
 
   findMarkerAtPoint(point) {
-    // Reverse order so that markers on top are tested first
-    for (let index = this.props.markers.length - 1; index >= 0; index--) {
-      const marker = this.props.markers[index];
-      if (point.x >= marker.minx && point.x <= marker.maxx && point.y >= marker.miny && point.y <= marker.maxy) {
-        return this.props.markers[index];
+    if (this.props.markers) {
+      // Reverse order so that markers on top are tested first
+      for (let index = this.props.markers.length - 1; index >= 0; index--) {
+        const marker = this.props.markers[index];
+        if (point.x >= marker.minx && point.x <= marker.maxx && point.y >= marker.miny && point.y <= marker.maxy) {
+          return this.props.markers[index];
+        }
       }
     }
 
