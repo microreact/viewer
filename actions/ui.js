@@ -26,6 +26,7 @@ import { newickLabels } from "../utils/trees";
 import updateSchema, { version } from "../schema";
 import isValidTreeSelector from "../selectors/trees/is-valid-tree";
 import isValidNetworkSelector from "../selectors/networks/is-valid-network";
+import numberOfRowsSelector from "../selectors/datasets/number-of-rows.js";
 import { emptyArray } from "../constants";
 import { getPageHash, setPageHash } from "../utils/browser";
 import { addMissingPaneTabs } from "../utils/panes";
@@ -539,6 +540,7 @@ export function save() {
         publish("after-screenshot");
 
         const state = getPresentState(getState());
+        const numberOfRows = numberOfRowsSelector(state);
         const doc = { ...state };
 
         await compactMrDocument(doc);
@@ -547,6 +549,7 @@ export function save() {
         doc.schema = `https://microreact.org/schema/v${version}.json`;
         doc.meta = { ...doc.meta };
         doc.meta.image = image;
+        doc.meta.size = numberOfRows;
         doc.meta.timestamp = (new Date()).toISOString();
 
         // Remove config attributes
