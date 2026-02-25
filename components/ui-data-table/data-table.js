@@ -176,6 +176,9 @@ function UiDataTable(props) {
     // debugTable: true,
     // debugHeaders: true,
     // debugColumns: true,
+    meta: {
+      headerClickMode: props.headerClickMode ?? "colour",
+    },
     state: {
       columnOrder: columnOrderState,
       columnPinning: columnPinningState,

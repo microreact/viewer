@@ -6,7 +6,10 @@ import {
   resizeColumns,
   sortColumn,
 } from "../actions/tables";
-import { setColourByField } from "../actions/styles";
+import {
+  setColourByField,
+  setLabelByField,
+} from "../actions/styles";
 
 import selectedIdsListSelector from "../selectors/filters/selected-ids-list";
 import sortStateSelector from "../selectors/tables/sort-state";
@@ -29,6 +32,7 @@ const mapStateToProps = (state, { tableId }) => {
     sort,
     selectedIds,
     displayMode: tableState.displayMode,
+    headerClickMode: tableState.headerClickMode,
     columns: tableState.columns,
     hasSelectionColumn: tableState.hasSelectionColumn,
     dataColumnsByFieldMap: dataColumnsByFieldMapSelector(state),
@@ -37,6 +41,7 @@ const mapStateToProps = (state, { tableId }) => {
 };
 
 const mapDispatchToProps = (dispatch, { tableId }) => ({
+  onLabelByFieldChange: (field) => dispatch(setLabelByField(field)),
   onColourByFieldChange: (field) => dispatch(setColourByField(field)),
   onColumnExpand: (field) => dispatch(expandColumn(tableId, field)),
   onColumnOrderChange: (newColumnOrder) => dispatch(reorderColumns(tableId, newColumnOrder)),

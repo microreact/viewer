@@ -150,10 +150,17 @@ class TablePane extends React.PureComponent {
   };
 
   renderHeader = (
-    _,
+    header,
     columnDef,
   ) => {
     const { props } = this;
+
+    const { headerClickMode } = header.getContext().table.options.meta;
+
+    const handlers = {
+      colour: props.onColourByFieldChange,
+      label: props.onLabelByFieldChange,
+    };
 
     return (
       <React.Fragment>
@@ -169,8 +176,8 @@ class TablePane extends React.PureComponent {
 
         <Button
           className={styles["mr-table-header-cell-label"]}
-          onClick={() => props.onColourByFieldChange(columnDef.id)}
-          title={`Set colour by column to ${columnDef.label}`}
+          onClick={() => handlers[headerClickMode](columnDef.id)}
+          title={`Set ${headerClickMode} by column to ${columnDef.label}`}
           variant="text"
         >
           {columnDef.label}
@@ -246,6 +253,7 @@ class TablePane extends React.PureComponent {
           onColumnOrderChange={props.onColumnOrderChange}
           onColumnExpand={props.onColumnExpand}
           onSelectedRowIdsChange={props.onSelectRows}
+          headerClickMode={props.headerClickMode}
           // meta={{ onColourByFieldChange: props.onColourByFieldChange }}
           // groupableColumns={false}
           // onColumnSort={
