@@ -247,6 +247,7 @@ function UiDataTable(props) {
       //   minWidth: header.getSize(),
       //   maxWidth: header.getSize(),
       // };
+      // For group headers, we don't have a column associated with them
       return (
         <props.components.TableHeader
           className={(header.column.id === lastPinnedColumn) ? styles["is-pinned"] : undefined}
