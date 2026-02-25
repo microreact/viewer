@@ -243,10 +243,6 @@ function UiDataTable(props) {
 
   const renderTableHeader = (header) => {
     if (header.isPlaceholder) {
-      // const headerStyle = {
-      //   minWidth: header.getSize(),
-      //   maxWidth: header.getSize(),
-      // };
       // For group headers, we don't have a column associated with them
       return (
         <props.components.TableHeader
