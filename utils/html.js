@@ -17,24 +17,30 @@ export function exportHtmlElementAsDataUrl(
     )
     .then(
       (canvas) => {
-        if (resize) {
-          const thumbnailCanvas = document.createElement("canvas");
-          let width = 240;
-          let height = 240;
-          if (canvas.width > canvas.height) {
-            height = canvas.height * (width / canvas.width);
+        try {
+          if (resize) {
+            const thumbnailCanvas = document.createElement("canvas");
+            let width = 240;
+            let height = 240;
+            if (canvas.width > canvas.height) {
+              height = canvas.height * (width / canvas.width);
+            }
+            if (canvas.height > canvas.width) {
+              width = canvas.width * (height / canvas.height);
+            }
+            thumbnailCanvas.setAttribute("width", width);
+            thumbnailCanvas.setAttribute("height", height);
+            const ctx = thumbnailCanvas.getContext("2d");
+            ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, width, height);
+            return thumbnailCanvas.toDataURL();
           }
-          if (canvas.height > canvas.width) {
-            width = canvas.width * (height / canvas.height);
+          else {
+            return canvas.toDataURL();
           }
-          thumbnailCanvas.setAttribute("width", width);
-          thumbnailCanvas.setAttribute("height", height);
-          const ctx = thumbnailCanvas.getContext("2d");
-          ctx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, width, height);
-          return thumbnailCanvas.toDataURL();
         }
-        else {
-          return canvas.toDataURL();
+        catch (err) {
+          console.error("Error exporting HTML element as image:", err);
+          return null;
         }
       }
     );
