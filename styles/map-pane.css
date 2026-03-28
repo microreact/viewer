@@ -4,29 +4,18 @@
 }
 
 /*#region Re-position map controls and attribution */
-.mr-map .mapboxgl-ctrl-logo,
-.mr-map .maplibregl-ctrl-logo {
-  margin-bottom: -8px;
-  margin-left: -8px;
-}
 
-.mr-map .mapboxgl-ctrl.mapboxgl-ctrl-scale,
 .mr-map .maplibregl-ctrl.maplibregl-ctrl-scale {
-  bottom: 28px;
+  bottom: 4px;
   left: 0px;
   margin-left: 4px;
   margin-bottom: 0;
   position: absolute;
 }
-.mr-map .mapboxgl-ctrl-attrib-button,
-.mr-map .maplibregl-ctrl-attrib-button {
-  display: none;
-}
 
-.mr-map .mapboxgl-ctrl-attrib.mapboxgl-compact,
 .mr-map .maplibregl-ctrl-attrib.maplibregl-compact {
   margin-right: 2px !important;
-  margin-bottom: 0px;
+  margin-bottom: 4px;
 }
 
 .mr-map .mr-tooltip {
@@ -43,7 +32,6 @@
 
 /*#region Hovered styles */
 
-.mr-map.mr-hovered .mapboxgl-canvas-container,
 .mr-map.mr-hovered .maplibregl-canvas-container {
   cursor: pointer !important;
 }
@@ -57,7 +45,6 @@
 
 /*#region  */
 
-.mr-map .mapboxgl-ctrl-top-right .mr-custom-overlay,
 .mr-map .maplibregl-ctrl-top-right .mr-custom-overlay {
   bottom: 0;
   left: 0;
