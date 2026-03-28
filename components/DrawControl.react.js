@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
-import { useControl } from "react-map-gl";
+import { useControl } from "react-map-gl/maplibre";
 
 function getGeoJson(path) {
   return {

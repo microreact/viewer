@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { useControl } from "react-map-gl";
+import { useControl } from "react-map-gl/maplibre";
 
 // Based on template in https://docs.mapbox.com/mapbox-gl-js/api/markers/#icontrol
 class OverlayControl {

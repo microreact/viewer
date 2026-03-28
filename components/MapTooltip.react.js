@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Popup } from "react-map-gl";
+import { Popup } from "react-map-gl/maplibre";
 import { sum } from "d3-array";
 
 import { countryCodeToName } from "../utils/maps";

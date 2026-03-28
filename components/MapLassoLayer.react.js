@@ -1,5 +1,5 @@
 import React from "react";
-import { useMap } from "react-map-gl";
+import { useMap } from "react-map-gl/maplibre";
 
 import PropTypes from "prop-types";
 import ReactPortalOverlay from "./ReactPortalOverlay";
@@ -38,7 +38,7 @@ function MapLasso(props) {
     );
 
     return (
-      // <ReactPortalOverlay>
+    // <ReactPortalOverlay>
         <SvgLasso
           height={height}
           isActive={props.isActive}
@@ -51,7 +51,7 @@ function MapLasso(props) {
           version={props.version}
           width={width}
         />
-      // </ReactPortalOverlay>
+    // </ReactPortalOverlay>
     );
   }
 
@@ -81,4 +81,4 @@ export default function MapLassoLayer(props) {
   }
 
   return null;
-};
+}

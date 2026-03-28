@@ -1,5 +1,5 @@
 import React from "react";
-import { useControl } from "react-map-gl";
+import { useControl } from "react-map-gl/maplibre";
 import { createPortal } from "react-dom";
 
 // Based on template in https://docs.mapbox.com/mapbox-gl-js/api/markers/#icontrol

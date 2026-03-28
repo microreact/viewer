@@ -3,6 +3,74 @@ import configSelector from "../config";
 
 import mapStyleTypeSelector from "./style-type";
 
+const rasterStyleDefinitions = {
+  basic: {
+    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+    tiles: [ "https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png" ],
+  },
+  bright: {
+    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+    tiles: [ "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png" ],
+  },
+  dark: {
+    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+    tiles: [ "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" ],
+  },
+  light: {
+    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+    tiles: [ "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" ],
+  },
+  satellite: {
+    attribution: "Tiles &copy; Esri",
+    tiles: [ "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" ],
+  },
+  streets: {
+    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+    tiles: [ "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png" ],
+  },
+};
+
+function createRasterStyle(name) {
+  const definition = rasterStyleDefinitions[name] || rasterStyleDefinitions.light;
+
+  return {
+    version: 8,
+    sources: {
+      basemap: {
+        type: "raster",
+        attribution: definition.attribution,
+        tileSize: 256,
+        tiles: definition.tiles,
+      },
+    },
+    layers: [
+      {
+        id: "basemap",
+        type: "raster",
+        source: "basemap",
+      },
+    ],
+  };
+}
+
+function normalizeStyleName(style) {
+  if (!style) {
+    return "light";
+  }
+
+  if (style.startsWith("mapbox://styles/mapbox/")) {
+    return style
+      .replace("mapbox://styles/mapbox/", "")
+      .replace(/-v\d+$/, "");
+  }
+
+  if (style.startsWith("mapbox://")) {
+    return style.split("/").pop() || "light";
+  }
+
+  return style;
+}
+
 // const categories = [ "labels", "roads", "buildings", "parks", "water", "background" ];
 // const layerSelector = {
 //   background: /background/,
@@ -15,7 +83,7 @@ import mapStyleTypeSelector from "./style-type";
 
 const mapboxStyleSelector = createKeyedStateSelector(
   (state, mapId) => mapStyleTypeSelector(state, mapId),
-  (state) => configSelector(state).mapVectorFiles ?? `${location.origin}/public/vector`,
+  (state) => configSelector(state).mapVectorFiles ?? "/public/vector",
   (
     style,
     mapVectorFiles,
@@ -42,14 +110,14 @@ const mapboxStyleSelector = createKeyedStateSelector(
             },
           },
           {
-            id: "country-glow-outer",
-            type: "line",
-            source: "countries",
+            "id": "country-glow-outer",
+            "type": "line",
+            "source": "countries",
             "source-layer": "country",
-            layout: {
+            "layout": {
               "line-join": "round",
             },
-            paint: {
+            "paint": {
               "line-color": "#226688",
               "line-width": 5,
               "line-opacity": {
@@ -57,14 +125,14 @@ const mapboxStyleSelector = createKeyedStateSelector(
               },
             },
           }, {
-            id: "country-glow-inner",
-            type: "line",
-            source: "countries",
+            "id": "country-glow-inner",
+            "type": "line",
+            "source": "countries",
             "source-layer": "country",
-            layout: {
+            "layout": {
               "line-join": "round",
             },
-            paint: {
+            "paint": {
               "line-color": "#226688",
               "line-width": {
                 stops: [[0, 1.2], [1, 1.6], [2, 2], [3, 2.4]],
@@ -74,21 +142,21 @@ const mapboxStyleSelector = createKeyedStateSelector(
             // rainbow start
           },
           {
-            id: "area-white",
-            type: "fill",
-            source: "countries",
+            "id": "area-white",
+            "type": "fill",
+            "source": "countries",
             // "filter":["in","ADM0_A3",'ATA'],
             "source-layer": "country",
-            paint: {
+            "paint": {
               "fill-color": "#efefee",
             },
           },
           {
-            id: "geo-lines",
-            type: "line",
-            source: "countries",
+            "id": "geo-lines",
+            "type": "line",
+            "source": "countries",
             "source-layer": "geo-lines",
-            paint: {
+            "paint": {
               "line-color": "#226688",
               "line-width": {
                 stops: [[0, 0.2], [4, 1]],
@@ -96,11 +164,11 @@ const mapboxStyleSelector = createKeyedStateSelector(
               "line-dasharray": [6, 2],
             },
           }, {
-            id: "land-border-country",
-            type: "line",
-            source: "countries",
+            "id": "land-border-country",
+            "type": "line",
+            "source": "countries",
             "source-layer": "land-border-country",
-            paint: {
+            "paint": {
               "line-color": "#fff",
               "line-width": {
                 base: 1.5,
@@ -108,13 +176,13 @@ const mapboxStyleSelector = createKeyedStateSelector(
               },
             },
           }, {
-            id: "state",
-            type: "line",
-            source: "countries",
+            "id": "state",
+            "type": "line",
+            "source": "countries",
             "source-layer": "state",
-            minzoom: 3,
-            filter: ["in", "ADM0_A3", "USA", "CAN", "AUS"],
-            paint: {
+            "minzoom": 3,
+            "filter": ["in", "ADM0_A3", "USA", "CAN", "AUS"],
+            "paint": {
               "line-color": "#226688",
               "line-opacity": 0.25,
               "line-dasharray": [6, 2, 2, 2],
@@ -123,13 +191,13 @@ const mapboxStyleSelector = createKeyedStateSelector(
             // LABELS
           },
           {
-            id: "country-abbrev",
-            type: "symbol",
-            source: "countries",
+            "id": "country-abbrev",
+            "type": "symbol",
+            "source": "countries",
             "source-layer": "country-name",
-            minzoom: 1.8,
-            maxzoom: 3,
-            layout: {
+            "minzoom": 1.8,
+            "maxzoom": 3,
+            "layout": {
               "text-field": "{ABBREV}",
               "text-font": ["Open Sans Semibold"],
               "text-transform": "uppercase",
@@ -144,17 +212,17 @@ const mapboxStyleSelector = createKeyedStateSelector(
                 stops: [[5, 1.2], [6, 2]],
               },
             },
-            paint: {
+            "paint": {
               "text-halo-color": "#fff",
               "text-halo-width": 1.5,
             },
           }, {
-            id: "country-name",
-            type: "symbol",
-            source: "countries",
+            "id": "country-name",
+            "type": "symbol",
+            "source": "countries",
             "source-layer": "country-name",
-            minzoom: 3,
-            layout: {
+            "minzoom": 3,
+            "layout": {
               "text-field": "{NAME}",
               "text-font": ["Open Sans Semibold"],
               "text-transform": "uppercase",
@@ -163,17 +231,17 @@ const mapboxStyleSelector = createKeyedStateSelector(
                 stops: [[3, 10], [4, 11], [5, 12], [6, 16]],
               },
             },
-            paint: {
+            "paint": {
               "text-halo-color": "#fff",
               "text-halo-width": 1.5,
             },
           }, {
-            id: "geo-lines-lables",
-            type: "symbol",
-            source: "countries",
+            "id": "geo-lines-lables",
+            "type": "symbol",
+            "source": "countries",
             "source-layer": "geo-lines",
-            minzoom: 1,
-            layout: {
+            "minzoom": 1,
+            "layout": {
               "text-field": "{DISPLAY}",
               "text-font": ["Open Sans Semibold"],
               "text-offset": [0, 1],
@@ -181,7 +249,7 @@ const mapboxStyleSelector = createKeyedStateSelector(
               "symbol-spacing": 600,
               "text-size": 9,
             },
-            paint: {
+            "paint": {
               "text-color": "#226688",
               "text-halo-width": 1.5,
             },
@@ -206,12 +274,7 @@ const mapboxStyleSelector = createKeyedStateSelector(
 
       // return mapboxStyle;
     }
-    else if (style.startsWith("mapbox://")) {
-      return style;
-    }
-    else {
-      return `mapbox://styles/mapbox/${style || "light"}-v9`;
-    }
+    return createRasterStyle(normalizeStyleName(style));
   },
 );
 

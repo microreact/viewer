@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+
 import * as React from "react";
 import { Html, Head, Main, NextScript } from "next/document";
 import {
@@ -20,11 +22,6 @@ export default function MyDocument(props) {
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/react-base-table@1.13.2/styles.css"
-        />
-
-        <link
-          rel="stylesheet"
-          href="https://api.mapbox.com/mapbox-gl-js/v2.10.0/mapbox-gl.css"
         />
 
         <link

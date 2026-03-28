@@ -1,7 +1,7 @@
 import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
-import ReactMapGL, { ScaleControl } from "react-map-gl";
+import ReactMapGL, { ScaleControl } from "react-map-gl/maplibre";
 import debounce from "lodash.debounce";
 
 // import "../styles/map-pane.css";
@@ -34,7 +34,7 @@ const InteractiveMap = React.memo(
       <ReactMapGL
         {...props.viewport}
         interactiveLayerIds={props.showRegions ? interactiveLayerIds : undefined}
-        mapboxAccessToken={props.mapboxApiAccessToken}
+        mapLib={import("maplibre-gl")}
         mapId={props.mapId}
         mapStyle={props.mapboxStyle}
         onClick={props.onClick}
@@ -77,7 +77,7 @@ InteractiveMap.propTypes = {
   children: PropTypes.node,
   height: PropTypes.number.isRequired,
   hideScaleControl: PropTypes.bool,
-  mapboxApiAccessToken: PropTypes.string.isRequired,
+  mapboxApiAccessToken: PropTypes.string,
   mapboxStyle: MapboxStyle.isRequired,
   mapId: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
@@ -388,7 +388,7 @@ MapPane.propTypes = {
   hasLegend: PropTypes.bool.isRequired,
   height: PropTypes.number.isRequired,
   hideScaleControl: PropTypes.bool,
-  mapboxApiAccessToken: PropTypes.string.isRequired,
+  mapboxApiAccessToken: PropTypes.string,
   mapboxStyle: MapboxStyle.isRequired,
   mapId: PropTypes.string.isRequired,
   markers: PropTypes.arrayOf(MapMarker).isRequired,

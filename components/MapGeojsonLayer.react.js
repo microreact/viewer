@@ -3,7 +3,7 @@ import React from "react";
 import {
   Source,
   Layer,
-} from "react-map-gl";
+} from "react-map-gl/maplibre";
 
 const MapGeojsonLayer = React.memo(
   (props) => {
