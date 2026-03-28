@@ -5,7 +5,6 @@ const initialState = {
   editor: null,
   isBuzy: false,
   isDirty: false,
-  mapboxApiAccessToken: null,
   pendingFiles: null,
   readOnly: false,
   theme: null,
