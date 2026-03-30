@@ -3,30 +3,18 @@ import configSelector from "../config";
 
 import mapStyleTypeSelector from "./style-type";
 
+const vectorStyleDefinitions = {
+  basic: "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json",
+  bright: "https://basemaps.cartocdn.com/gl/voyager-nolabels-gl-style/style.json",
+  dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
+  light: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
+  streets: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+};
+
 const rasterStyleDefinitions = {
-  basic: {
-    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
-    tiles: [ "https://a.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}.png" ],
-  },
-  bright: {
-    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
-    tiles: [ "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png" ],
-  },
-  dark: {
-    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
-    tiles: [ "https://a.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png" ],
-  },
-  light: {
-    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
-    tiles: [ "https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png" ],
-  },
   satellite: {
     attribution: "Tiles &copy; Esri",
     tiles: [ "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" ],
-  },
-  streets: {
-    attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
-    tiles: [ "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png" ],
   },
 };
 
@@ -69,6 +57,10 @@ function normalizeStyleName(style) {
   }
 
   return style;
+}
+
+function createStyle(name) {
+  return vectorStyleDefinitions[name] || createRasterStyle(name);
 }
 
 // const categories = [ "labels", "roads", "buildings", "parks", "water", "background" ];
@@ -274,7 +266,7 @@ const mapboxStyleSelector = createKeyedStateSelector(
 
       // return mapboxStyle;
     }
-    return createRasterStyle(normalizeStyleName(style));
+    return createStyle(normalizeStyleName(style));
   },
 );
 
