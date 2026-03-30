@@ -23,6 +23,11 @@
   pointer-events: none;
 }
 
+.mr-map .mr-zoom-controls {
+  bottom: 32px;
+  right: 4px;
+}
+
 .mr-map .overlays > div[style="position: absolute;"] {
   position: unset !important;
 }
