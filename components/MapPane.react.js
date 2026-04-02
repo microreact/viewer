@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import ReactMapGL, { ScaleControl } from "react-map-gl/maplibre";
 import debounce from "lodash.debounce";
 
-// import "../styles/map-pane.css";
+import "maplibre-gl/dist/maplibre-gl.css";
 
 import MapMarkersLayer from "../containers/MapMarkersLayer.react";
 import MapLassoOverlay from "../containers/MapLassoLayer.react";
@@ -18,6 +18,8 @@ import { MapboxStyle, MapMarker, ReactRef } from "../utils/prop-types";
 import * as HtmlUtils from "../utils/html";
 import { subscribe } from "../utils/events";
 import ZoomControls from "./ZoomControls.react";
+
+// import "../styles/map-pane.css";
 
 const interactiveLayerIds = [ "mr-geojson-layer" ];
 
