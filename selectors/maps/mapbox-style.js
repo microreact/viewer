@@ -259,11 +259,9 @@ const mapboxStyleSelector = createKeyedStateSelector(
       // for (const layer of mapboxStyle.layers) {
       //   return categories.every(name => visibility[name] || !layerSelector[name].test(layer.id));
       // }
-
       // mapboxStyle.layers = mapboxStyle.layers.filter(layer => {
       //   return categories.every(name => visibility[name] || !layerSelector[name].test(layer.id));
       // })
-
       // return mapboxStyle;
     }
     return createStyle(normalizeStyleName(style));
