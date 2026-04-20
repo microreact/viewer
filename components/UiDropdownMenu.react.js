@@ -3,6 +3,7 @@ import MenuList from "@mui/material/MenuList";
 import PropTypes from "prop-types";
 import React from "react";
 import Button from "@mui/material/Button";
+import Divider from '@mui/material/Divider';
 
 // import "../styles/ui-dropdown-menu.css";
 import UiPopoverMenu from "./UiPopoverMenu.react";
@@ -52,5 +53,7 @@ UiDropdownMenu.defaultProps = {
 };
 
 UiDropdownMenu.Item = MenuItem;
+
+UiDropdownMenu.Divider = Divider;
 
 export default UiDropdownMenu;
