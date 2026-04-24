@@ -79,6 +79,7 @@ InteractiveMap.propTypes = {
   children: PropTypes.node,
   height: PropTypes.number.isRequired,
   hideScaleControl: PropTypes.bool,
+  mapboxApiAccessToken: PropTypes.string,
   mapboxStyle: MapboxStyle.isRequired,
   mapId: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
@@ -339,6 +340,7 @@ class MapPane extends React.PureComponent {
         <InteractiveMap
           height={props.height}
           hideScaleControl={props.hideScaleControl}
+          mapboxApiAccessToken={props.mapboxApiAccessToken}
           mapboxStyle={props.mapboxStyle}
           mapId={props.mapId}
           onClick={this.handleMarkerClick}
@@ -388,6 +390,7 @@ MapPane.propTypes = {
   hasLegend: PropTypes.bool.isRequired,
   height: PropTypes.number.isRequired,
   hideScaleControl: PropTypes.bool,
+  mapboxApiAccessToken: PropTypes.string,
   mapboxStyle: MapboxStyle.isRequired,
   mapId: PropTypes.string.isRequired,
   markers: PropTypes.arrayOf(MapMarker).isRequired,

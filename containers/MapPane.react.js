@@ -21,6 +21,7 @@ function mapStateToProps(state, { mapId }) {
     controls: mapState.controls,
     hasLegend: hasMarkerSizeLegendSelector(state, mapId) || hasRegionColourLegendSelector(state, mapId),
     hideScaleControl: mapState.hideScaleControl,
+    mapboxApiAccessToken: mapState.mapboxApiAccessToken || configSelector(state).mapboxApiAccessToken,
     mapboxStyle: mapboxStyleSelector(state, mapId),
     markers: markersLayerDataSelector(state, mapId),
     renderWorldCopies: mapState.renderWorldCopies,

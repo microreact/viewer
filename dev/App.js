@@ -48,7 +48,9 @@ setFetcher(async (originalUrl) => {
   }
 });
 
-const defaultConfig = {};
+const defaultConfig = {
+  mapboxApiAccessToken: "pk.eyJ1IjoiY2dwc2Rldi1hbXJ3YXRjaCIsImEiOiJjbDZvd2d0cXMwMHBsM2Ntdmw1N3hrcG01In0.Epc_uol4lu4FtlHdJ0i2Hw",
+};
 
 class App extends React.PureComponent {
 
