@@ -1,7 +1,7 @@
-import { createKeyedStateSelector } from "../../utils/state";
-import configSelector from "../config";
+import { createKeyedStateSelector } from "../../utils/state.js";
+import configSelector from "../config.js";
 
-import mapStyleTypeSelector from "./style-type";
+import mapStyleTypeSelector from "./style-type.js";
 
 const vectorStyleDefinitions = {
   basic: "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json",
