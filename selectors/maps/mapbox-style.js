@@ -2,13 +2,14 @@ import { createKeyedStateSelector } from "../../utils/state.js";
 import configSelector from "../config.js";
 
 import mapStyleTypeSelector from "./style-type.js";
+import { isMapboxStyleUrl } from "../../utils/mapbox.js";
 
 const vectorStyleDefinitions = {
   basic: "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json",
   bright: "https://basemaps.cartocdn.com/gl/voyager-nolabels-gl-style/style.json",
   dark: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json",
   light: "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
-  streets: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+  // streets: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
 };
 
 const rasterStyleDefinitions = {
@@ -18,8 +19,12 @@ const rasterStyleDefinitions = {
   },
 };
 
+const mapboxStyles = {
+  streets: "mapbox://styles/mapbox/streets-v9",
+};
+
 function createRasterStyle(name) {
-  const definition = rasterStyleDefinitions[name] || rasterStyleDefinitions.light;
+  const definition = rasterStyleDefinitions[name];
 
   return {
     version: 8,
@@ -41,26 +46,44 @@ function createRasterStyle(name) {
   };
 }
 
-function normalizeStyleName(style) {
-  if (!style) {
-    return "light";
-  }
-
-  if (style.startsWith("mapbox://styles/mapbox/")) {
-    return style
-      .replace("mapbox://styles/mapbox/", "")
-      .replace(/-v\d+$/, "");
-  }
-
-  if (style.startsWith("mapbox://")) {
-    return style.split("/").pop() || "light";
-  }
-
-  return style;
+function isStyleUrl(style) {
+  return (
+    typeof style === "string"
+    &&
+    (
+      isMapboxStyleUrl(style)
+      ||
+      /^https?:\/\//i.test(style)
+      ||
+      style.startsWith("/")
+      ||
+      style.endsWith(".json")
+    )
+  );
 }
 
-function createStyle(name) {
-  return vectorStyleDefinitions[name] || createRasterStyle(name);
+function createStyle(style) {
+  if (typeof style !== "string") {
+    return style;
+  }
+
+  if (isStyleUrl(style)) {
+    return style;
+  }
+
+  if (style in mapboxStyles) {
+    return mapboxStyles[style];
+  }
+
+  if (style in vectorStyleDefinitions) {
+    return vectorStyleDefinitions[style];
+  }
+
+  if (style in rasterStyleDefinitions) {
+    return createRasterStyle(style);
+  }
+
+  return vectorStyleDefinitions.light;
 }
 
 // const categories = [ "labels", "roads", "buildings", "parks", "water", "background" ];
@@ -75,7 +98,7 @@ function createStyle(name) {
 
 const mapboxStyleSelector = createKeyedStateSelector(
   (state, mapId) => mapStyleTypeSelector(state, mapId),
-  (state) => configSelector(state).mapVectorFiles ?? "/public/vector",
+  (state) => configSelector(state).mapVectorFiles ?? `${location.origin}/public/vector`, // eslint-disable-line no-restricted-globals, no-undef
   (
     style,
     mapVectorFiles,
@@ -264,7 +287,7 @@ const mapboxStyleSelector = createKeyedStateSelector(
       // })
       // return mapboxStyle;
     }
-    return createStyle(normalizeStyleName(style));
+    return createStyle(style ?? "light");
   },
 );
 

@@ -17,6 +17,8 @@ import { downloadDataUrl } from "../utils/downloads";
 import { MapboxStyle, MapMarker, ReactRef } from "../utils/prop-types";
 import * as HtmlUtils from "../utils/html";
 import { subscribe } from "../utils/events";
+import { createMapboxRequestTransform } from "../utils/mapbox";
+
 import ZoomControls from "./ZoomControls.react";
 
 // import "../styles/map-pane.css";
@@ -32,12 +34,17 @@ const InteractiveMap = React.memo(
       }),
       [ props.width, props.height ]
     );
+    const transformRequest = React.useMemo(
+      () => createMapboxRequestTransform(props.mapboxApiAccessToken),
+      [ props.mapboxApiAccessToken ]
+    );
     return (
       <ReactMapGL
         {...props.viewport}
         interactiveLayerIds={props.showRegions ? interactiveLayerIds : undefined}
         mapLib={import("maplibre-gl")}
         mapId={props.mapId}
+        mapboxAccessToken={props.mapboxApiAccessToken}
         mapStyle={props.mapboxStyle}
         onClick={props.onClick}
         onMouseMove={props.onHover}
@@ -45,6 +52,7 @@ const InteractiveMap = React.memo(
         ref={props.reactMapRef}
         renderWorldCopies={props.renderWorldCopies}
         style={style}
+        transformRequest={transformRequest}
       >
         {
           props.showRegions && (
