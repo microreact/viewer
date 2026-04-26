@@ -2,6 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 import ReactMapGL, { ScaleControl } from "react-map-gl/maplibre";
+
 import debounce from "lodash.debounce";
 
 import "maplibre-gl/dist/maplibre-gl.css";
@@ -49,6 +50,7 @@ const InteractiveMap = React.memo(
         onClick={props.onClick}
         onMouseMove={props.onHover}
         onMove={props.onViewportChange}
+        projection={props.projection}
         ref={props.reactMapRef}
         renderWorldCopies={props.renderWorldCopies}
         style={style}
@@ -93,6 +95,7 @@ InteractiveMap.propTypes = {
   onClick: PropTypes.func.isRequired,
   onHover: PropTypes.func.isRequired,
   onViewportChange: PropTypes.func.isRequired,
+  projection: PropTypes.string,
   reactMapRef: ReactRef,
   renderWorldCopies: PropTypes.bool.isRequired,
   showRegions: PropTypes.bool.isRequired,
@@ -354,6 +357,7 @@ class MapPane extends React.PureComponent {
           onClick={this.handleMarkerClick}
           onHover={this.handleMapHover}
           onViewportChange={this.handleViewportChange}
+          projection={props.projection}
           reactMapRef={this.reactMapRef}
           renderWorldCopies={props.renderWorldCopies}
           showRegions={props.showRegions}
@@ -406,6 +410,7 @@ MapPane.propTypes = {
   onSelectRegion: PropTypes.func.isRequired,
   onSelectRows: PropTypes.func.isRequired,
   onViewportChange: PropTypes.func.isRequired,
+  projection: PropTypes.string,
   renderWorldCopies: PropTypes.bool.isRequired,
   showMarkers: PropTypes.bool.isRequired,
   showRegions: PropTypes.bool.isRequired,

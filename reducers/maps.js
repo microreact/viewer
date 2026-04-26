@@ -20,6 +20,7 @@ const initialState = {
   minNodeSize: 4,
   nodeSize: 14,
   path: null,
+  projection: "mercator",
   regionsColourField: null,
   regionsColourMethod: "entries",
   regionsColourOpacity: 100,
@@ -47,6 +48,13 @@ const queryPropMap = {
   minMarkerSize: { key: "mmnr", type: Number },
   maxMarkerSize: { key: "mxnr", type: Number },
   scaleMarkers: { key: "msm", type: Boolean },
+  projection: {
+    key: "mp",
+    values: {
+      mercator: "m",
+      globe: "g",
+    },
+  },
   style: { key: "ms" },
   tileLayerOpts: { key: "mto" },
   tileLayerUrl: { key: "mtu" },
@@ -62,7 +70,7 @@ const queryPropMap = {
   },
 };
 
-export default function (state = {}, action) {
+export default function (state = {}, action = {}) {
   switch (action.type) {
     case "MICROREACT VIEWER/ADD GEO DATA": {
       const mapId = action.mapId || Object.keys(state)[0] || "map-1";
@@ -207,4 +215,4 @@ export default function (state = {}, action) {
     default:
       return state;
   }
-};
+}

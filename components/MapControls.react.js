@@ -3,7 +3,6 @@ import React from "react";
 import Divider from "@mui/material/Divider";
 import MenuIcon from "@mui/icons-material/Menu";
 import CropFreeOutlinedIcon from "@mui/icons-material/CropFreeOutlined";
-import Box from "@mui/material/Box";
 
 // import "../styles/map-controls.css";
 
@@ -31,6 +30,11 @@ const mapStyles = [
   { value: "satellite", label: "Satellite" },
   { value: "basic", label: "Basic" },
   { value: "bright", label: "Bright" },
+];
+
+const mapProjections = [
+  { value: "mercator", label: "Mercator" },
+  { value: "globe", label: "Globe" },
 ];
 
 const colourMethods = [
@@ -116,6 +120,15 @@ const MapControls = React.memo(
               items={mapStyles}
               onChange={props.onStyleChange}
               value={props.style}
+            />
+            <UiRadioList.Divider />
+            <UiRadioList.Header>
+              Projection
+            </UiRadioList.Header>
+            <UiRadioList
+              items={mapProjections}
+              onChange={props.onProjectionChange}
+              value={props.projection}
             />
           </UiControlsMenu>
 
@@ -376,10 +389,12 @@ MapControls.propTypes = {
   onMaxMarkerSizeChange: PropTypes.func.isRequired,
   onMinMarkerSizeChange: PropTypes.func.isRequired,
   onNodeSizeChange: PropTypes.func.isRequired,
+  onProjectionChange: PropTypes.func.isRequired,
   onRegionsColourFieldChange: PropTypes.func.isRequired,
   onRegionsColourMethodChange: PropTypes.func.isRequired,
   onRegionsColourOpacityChange: PropTypes.func.isRequired,
   onRegionsColourPaletteChange: PropTypes.func.isRequired,
+  onRegionsColourValuesChange: PropTypes.func.isRequired,
   onScaleMarkersChange: PropTypes.func.isRequired,
   onScaleTypeChange: PropTypes.func.isRequired,
   onShowMarkersChange: PropTypes.func.isRequired,
@@ -391,6 +406,8 @@ MapControls.propTypes = {
   regionsColourMethod: PropTypes.oneOf(colourMethods.map((x) => x.value)),
   regionsColourOpacity: PropTypes.number,
   regionsColourPalette: PropTypes.string,
+  regionsColourValues: PropTypes.array,
+  projection: PropTypes.oneOf(mapProjections.map((x) => x.value)).isRequired,
   scaleMarkers: PropTypes.bool.isRequired,
   scaleType: PropTypes.string,
   showMarkers: PropTypes.bool,

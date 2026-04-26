@@ -10,6 +10,7 @@ import hasMarkerSizeLegendSelector from "../selectors/maps/has-marker-size-legen
 import hasRegionColourLegendSelector from "../selectors/maps/has-region-colour-legend";
 import mapboxStyleSelector from "../selectors/maps/mapbox-style";
 import mapViewportSelector from "../selectors/maps/map-viewport";
+import mapProjectionTypeSelector from "../selectors/maps/projection-type";
 
 import Component from "../components/MapPane.react";
 import markersLayerDataSelector from "../selectors/maps/markers-layer-data";
@@ -24,6 +25,7 @@ function mapStateToProps(state, { mapId }) {
     mapboxApiAccessToken: mapState.mapboxApiAccessToken || configSelector(state).mapboxApiAccessToken,
     mapboxStyle: mapboxStyleSelector(state, mapId),
     markers: markersLayerDataSelector(state, mapId),
+    projection: mapProjectionTypeSelector(state, mapId),
     renderWorldCopies: mapState.renderWorldCopies,
     showMarkers: mapState.showMarkers,
     showRegions: !!mapState.geodata && mapState.showRegions,

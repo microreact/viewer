@@ -145,13 +145,14 @@ export function update(mapId, key, value) {
         (key === "regionsColourField") ? `Map: Set regions colour by column to ${value}` :
           (key === "regionsColourMethod") ? `Map: Set regions colour method to ${value}` :
             (key === "regionsColourPalette") ? `Map: Set regions colour palaette to ${value}` :
-              (key === "style") ? `Map: Set map style to ${value}` :
-                (key === "scaleMarkers") ? "Map: Toggle scale markers" :
-                  (key === "showMarkers") ? "Map: Toggle show markers" :
-                    (key === "showRegions") ? "Map: Toggle show regions" :
-                      (key === "showRegionOutlines") ? "Map: Toggle region borders" :
-                        (key === "regionsColourOpacity") ? `Map: Set regions colour opacity to ${value}` :
-                          undefined,
+              (key === "projection") ? `Map: Set map projection to ${value}` :
+                (key === "style") ? `Map: Set map style to ${value}` :
+                  (key === "scaleMarkers") ? "Map: Toggle scale markers" :
+                    (key === "showMarkers") ? "Map: Toggle show markers" :
+                      (key === "showRegions") ? "Map: Toggle show regions" :
+                        (key === "showRegionOutlines") ? "Map: Toggle region borders" :
+                          (key === "regionsColourOpacity") ? `Map: Set regions colour opacity to ${value}` :
+                            undefined,
     mapId,
     payload: { [key]: value },
     type: "MICROREACT VIEWER/UPDATE MAP",

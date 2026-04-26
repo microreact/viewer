@@ -9,6 +9,7 @@ import hasGeojsonDataSelector from "../selectors/maps/has-geojson-data";
 import colourPalettesSelector from "../selectors/styles/colour-palettes";
 import { connectToPresentState } from "../utils/state";
 import configSelector from "../selectors/config";
+import mapProjectionTypeSelector from "../selectors/maps/projection-type";
 import mapStyleTypeSelector from "../selectors/maps/style-type";
 
 const mapStateToProps = (state, { mapId }) => {
@@ -27,6 +28,7 @@ const mapStateToProps = (state, { mapId }) => {
     maxScaledMarkerSize: maxScaledMarkerRadiusSelector(state, mapId),
     minNodeSize: mapState.minNodeSize,
     nodeSize: mapState.nodeSize,
+    projection: mapProjectionTypeSelector(state, mapId),
     regionsColourField: mapState.regionsColourField,
     regionsColourValues: mapState.regionsColourValues,
     regionsColourMethod: mapState.regionsColourMethod,
@@ -52,6 +54,7 @@ const mapDispatchToProps = (dispatch, { mapId }) => ({
   onMaxMarkerSizeChange: (value) => dispatch(update(mapId, "maxMarkerSize", value)),
   onMinMarkerSizeChange: (value) => dispatch(update(mapId, "minMarkerSize", value)),
   onNodeSizeChange: (value) => dispatch(update(mapId, "nodeSize", Number(value))),
+  onProjectionChange: (value) => dispatch(update(mapId, "projection", value)),
   onRegionsColourFieldChange: (value) => dispatch(update(mapId, "regionsColourField", value)),
   onRegionsColourMethodChange: (value) => dispatch(update(mapId, "regionsColourMethod", value)),
   onRegionsColourOpacityChange: (value) => dispatch(update(mapId, "regionsColourOpacity", value)),
