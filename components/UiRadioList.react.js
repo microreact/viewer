@@ -89,6 +89,18 @@ UiRadioList.defaultProps = {
   valueProperty: "value",
 };
 
+UiRadioList.Header = function UiRadioListHeader(props) {
+  return (
+    <header className="mr-header">
+      { props.children }
+    </header>
+  );
+};
+
+UiRadioList.Header.propTypes = {
+  children: PropTypes.node,
+};
+
 UiRadioList.Divider = Divider;
 
 export default UiRadioList;
