@@ -5,6 +5,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import React from "react";
 import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
+import Divider from "@mui/material/Divider";
 
 // import "../styles/ui-radio-list.css";
 
@@ -87,5 +88,7 @@ UiRadioList.defaultProps = {
   nullOptionLabel: "None",
   valueProperty: "value",
 };
+
+UiRadioList.Divider = Divider;
 
 export default UiRadioList;
