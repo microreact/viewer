@@ -12,7 +12,17 @@ const regionNamesInEnglish = new Intl.DisplayNames(
 export function countryCodeToName(code) {
   // const convertor = createCountryCodeToNameConvertor();
   // return convertor(code);
-  return regionNamesInEnglish.of(code).normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  let name;
+  try {
+    name = regionNamesInEnglish.of(code);
+  }
+  catch (error) {
+    console.error(`Error occurred while fetching country name for code: ${code}`, error);
+  }
+  if (name) {
+    return name.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+  return undefined;
 }
 
 const codes = new Map();
