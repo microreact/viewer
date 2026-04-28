@@ -51,10 +51,6 @@ export default function MyDocument(props) {
           defer
           src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.js"
         ></script>
-        <script
-          defer
-          data-domain="microreact.org" src="https://analytics.cgps.dev/js/plausible.js"
-        ></script>
         <Main />
         <NextScript />
       </body>
