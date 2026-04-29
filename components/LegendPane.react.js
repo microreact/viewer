@@ -1,35 +1,32 @@
 import clsx from "clsx";
 import Divider from "@mui/material/Divider";
-import htmlToSvg from "htmlsvg";
 import ListSubheader from "@mui/material/ListSubheader";
 import PropTypes from "prop-types";
 import React from "react";
 
 // import "../styles/legend-pane.css";
 
+import { icons } from "../constants";
+import { downloadDataUrl } from "../utils/downloads";
+import {
+  exportHtmlElementAsDataUrl,
+  exportHtmlElementAsSvg,
+} from "../utils/html";
+import LegendsList from "./LegendsList.react";
 import UiDropdownMenu from "./UiDropdownMenu.react";
 import UiIconButton from "./UiIconButton.react";
-
-import { icons } from "../constants";
-import LegendsList from "./LegendsList.react";
-import { exportHtmlElementAsDataUrl } from "../utils/html";
-import { downloadDataUrl } from "../utils/downloads";
 import UiSidePaneHeader from "./UiSidePaneHeader.react";
 
 class LegendPane extends React.PureComponent {
 
   elRef = React.createRef();
 
-  downloadSvg = async (legendId) => {
+  downloadSvg = (legendId) => {
     const htmlElement = this.elRef.current.querySelector(`[id="${legendId}"]`);
-    await htmlToSvg(
-      htmlElement,
-      {
-        downloadSvg: true,
-        downloadPng: false,
-        convertDataUrl: false, // you need to convert images to dataurl if you wanna download png image
-        filename: legendId,
-      },
+    downloadDataUrl(
+      exportHtmlElementAsSvg(htmlElement),
+      `${legendId}.svg`,
+      "image/svg+xml",
     );
   };
 
