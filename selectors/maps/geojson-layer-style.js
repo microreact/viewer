@@ -11,12 +11,14 @@ const geojsonLayerStyleSelector = createKeyedStateSelector(
   (state, mapId) => totalRowCountByRegionSelector(state, mapId),
   (state, mapId) => mapStateSelector(state, mapId).showRegionOutlines,
   (state, mapId) => mapStateSelector(state, mapId).regionsColourOpacity,
+  (state, mapId) => mapStateSelector(state, mapId).regionsNoColour,
   (
     geojson,
     { coloursByRegionId },
     totalRowCountByRegion,
     showRegionOutlines,
     regionsColourOpacity,
+    regionsNoColour,
   ) => {
     const color = {
       property: "mr-region-id",
@@ -29,6 +31,8 @@ const geojsonLayerStyleSelector = createKeyedStateSelector(
         coloursByRegionId[feature.properties["mr-region-id"]]
         ??
         (totalRowCountByRegion[feature.properties["mr-region-id"]] > 0 ? "#aaaaaa" : undefined)
+        ??
+        regionsNoColour
         ??
         "transparent",
       ]);
