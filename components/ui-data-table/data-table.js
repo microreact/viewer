@@ -55,7 +55,37 @@ function getColumnStyle(type, column) {
   return style;
 }
 
-function UiDataTable(props) {
+const defaultProps = {
+  borders: "both",
+  components: {
+    TableContainer: "div",
+    Table: "table",
+    TableHead: "thead",
+    TableRow: "tr",
+    TableHeader: "th",
+    TableBody: "tbody",
+    TableCell: "td",
+  },
+  // components: {
+  //   TableContainer,
+  //   Table,
+  //   TableHead,
+  //   TableRow,
+  //   TableHeader: TableCell,
+  //   TableBody,
+  //   TableCell,
+  // },
+  displayMode: "comfortable",
+  dragableColumns: true,
+  groupableColumns: true,
+  hasSelectionColumn: true,
+  minColumnWidth: 300,
+  pinnableColumns: true,
+  resizableColumns: true,
+};
+
+function UiDataTable(rawProps) {
+  const props = { ...defaultProps, ...rawProps };
   const [columns, columnSizingState, columnPinningState, columnOrderState] = React.useMemo(
     () => {
       const cols = [];
@@ -429,35 +459,6 @@ UiDataTable.propTypes = {
   selectableRows: PropTypes.bool,
   selectedRowIds: PropTypes.array,
   width: PropTypes.number.isRequired,
-};
-
-UiDataTable.defaultProps = {
-  borders: "both",
-  components: {
-    TableContainer: "div",
-    Table: "table",
-    TableHead: "thead",
-    TableRow: "tr",
-    TableHeader: "th",
-    TableBody: "tbody",
-    TableCell: "td",
-  },
-  // components: {
-  //   TableContainer,
-  //   Table,
-  //   TableHead,
-  //   TableRow,
-  //   TableHeader: TableCell,
-  //   TableBody,
-  //   TableCell,
-  // },
-  displayMode: "comfortable",
-  dragableColumns: true,
-  groupableColumns: true,
-  hasSelectionColumn: true,
-  minColumnWidth: 300,
-  pinnableColumns: true,
-  resizableColumns: true,
 };
 
 export default UiDataTable;
