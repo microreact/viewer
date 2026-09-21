@@ -1,8 +1,8 @@
 import { createKeyedStateSelector } from "../../utils/state.js";
 import configSelector from "../config.js";
 
-import mapStyleTypeSelector from "./style-type.js";
 import { isMapboxStyleUrl } from "../../utils/mapbox.js";
+import mapStyleTypeSelector from "./style-type.js";
 
 const vectorStyleDefinitions = {
   basic: "https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json",
