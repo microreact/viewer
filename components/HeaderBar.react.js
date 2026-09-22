@@ -31,6 +31,7 @@ class HeaderBar extends React.PureComponent {
             variant="h6"
             color="inherit"
             noWrap
+            className="mr-header-title"
           >
             <TitleEditor />
             {props.appendTitle}
