@@ -26,7 +26,12 @@ class HeaderBar extends React.PureComponent {
         <Toolbar variant="dense">
           {props.drawerButton}
 
-          <Typography component="h1" variant="h6" color="inherit" noWrap>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+          >
             <TitleEditor />
             {props.appendTitle}
             <InfoMenu />
